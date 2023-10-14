@@ -11,6 +11,7 @@ export const AppLayout: FC<LayoutProps> = ({ children }) => {
 
 const AppLayoutContainer = styled.div`
   min-height: 100vh;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,5 +19,5 @@ const AppLayoutContainer = styled.div`
   background: ${({ theme }) => theme.colors.background.primary};
   background-size: 400% 400%;
   animation: main-background 10s ease infinite;
-  transition: background 0.5s ease-in-out;
+  transition: background 0.3s ease-in-out;
 `;

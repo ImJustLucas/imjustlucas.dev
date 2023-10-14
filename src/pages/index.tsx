@@ -1,6 +1,11 @@
-import { HomeScreen } from "@screens/Homepage";
+import { Footer } from "@components/Footer";
+import { Header } from "@components/Header";
 
 export default function Home() {
-  // ! Delete the HomeScreen component to remove the landing page
-  return <HomeScreen />;
+  return (
+    <>
+      <Header />
+      <Footer />
+    </>
+  );
 }

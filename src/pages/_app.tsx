@@ -1,3 +1,4 @@
+import "@styles/index.css";
 import "remixicon/fonts/remixicon.css";
 
 import React from "react";
@@ -15,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover, height=device-height"
         />
-        <title>Next - Boilerplate</title>
+        <title>ImJustLucas</title>
       </Head>
       <AppLayout>
         <GlobalStyle />

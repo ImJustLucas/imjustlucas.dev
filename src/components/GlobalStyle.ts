@@ -205,6 +205,11 @@ export default createGlobalStyle`
         }
     }
 
+    p {
+        transition: all 0.2s;
+        color: ${({ theme }) => theme.colors.text.contrast};
+    }
+
     /* animations */
 
     @keyframes fadeIn {
