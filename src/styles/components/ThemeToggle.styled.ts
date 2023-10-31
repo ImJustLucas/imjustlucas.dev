@@ -57,7 +57,7 @@ export const ToggleContainer = styled.label`
     transform: scale(0.5) rotate(0deg);
     transition:
       transform 0.3s ease 0.1s,
-      box-shadow 0.2s ease 0s;
+      box-shadow 0.3s ease 0s;
   }
 
   input:checked + div::before {
