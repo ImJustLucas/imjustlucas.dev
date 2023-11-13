@@ -8,17 +8,17 @@ export default function Home() {
     <>
       <Header />
       <HeroContainer>
-        <div className="dev--info">
+        <DevInfo>
           <PreTitle>one, two, three</PreTitle>
           <Title>Yooo, I&apos;m Lucas</Title>
-          <p>
+          <Description>
             I&apos;m a software developer based in the heart of Paris, France,
             with a focus on crafting high-quality websites and applications.
-          </p>
-        </div>
+          </Description>
+        </DevInfo>
         <AvatarContainer>
           <Image
-            src="/chibi-avatar-transparent.png"
+            src="/chibi-avatar-transparent-without-border.png"
             alt="Lucas"
             width={0}
             height={0}
@@ -34,8 +34,10 @@ export default function Home() {
 }
 
 const HeroContainer = styled.div`
-  width: calc(100% - 64px);
-  height: calc(100vh - 160px);
+  margin: 0 auto;
+  width: calc(100% - 32px);
+  max-width: 1200px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,8 +51,21 @@ const HeroContainer = styled.div`
   }
 `;
 
+const DevInfo = styled.div`
+  width: 50%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
 const AvatarContainer = styled.div`
   width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 100%;
@@ -72,6 +87,15 @@ const PreTitle = styled.h2`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.text.contrast};
   transition: all 0.3s;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+const Description = styled.p`
+  font-size: 18px;
+  width: 60%;
 
   @media (max-width: 768px) {
     font-size: 16px;
