@@ -53,6 +53,7 @@ const HeroContainer = styled.div`
 
 const DevInfo = styled.div`
   width: 50%;
+  padding-left: 32px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -65,7 +66,8 @@ const AvatarContainer = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 32px;
 
   img {
     width: 100%;
