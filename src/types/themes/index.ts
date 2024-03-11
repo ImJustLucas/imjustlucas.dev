@@ -5,6 +5,16 @@ type ButtonTheme = {
   outline: string;
 };
 
+type Spacing = {
+  xxs: string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+};
+
 export type Theme = {
   id: number;
   name: string;
@@ -24,6 +34,20 @@ export type Theme = {
       contrast: string;
     };
 
-    button: ButtonTheme;
+    gray: {
+      50: string;
+      100: string;
+      200: string;
+      300: string;
+      400: string;
+      500: string;
+      600: string;
+      700: string;
+      800: string;
+      900: string;
+      950: string;
+    };
   };
+  button: ButtonTheme;
+  spacing: Spacing;
 };
