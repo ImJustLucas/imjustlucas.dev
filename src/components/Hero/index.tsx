@@ -1,3 +1,4 @@
+import { TextBasic } from "@styles/typography";
 import Image from "next/image";
 import styled from "styled-components";
 
@@ -6,6 +7,10 @@ export const HeroSection: React.FC = () => {
     <HeroContainer>
       <PreTitle>Yoooo, I&apos;mm</PreTitle>
       <Title>Lucas</Title>
+      <Description>
+        I&apos;m a software developer based in the heart of Paris, France, with
+        a focus on crafting high-quality websites and applications.
+      </Description>
       <AvatarContainer>
         <Image
           src="/chibi-avatar-transparent-without-border.png"
@@ -22,7 +27,7 @@ export const HeroSection: React.FC = () => {
 };
 
 const HeroContainer = styled.div`
-  margin: calc(8px * 16) auto 0 auto;
+  margin: calc(8px * 10) auto 0 auto;
   width: calc(100% - 32px);
   max-width: 1200px;
 `;
@@ -60,4 +65,10 @@ const AvatarContainer = styled.div`
   @media (max-width: 768px) {
     padding: 0;
   }
+`;
+
+const Description = styled(TextBasic)`
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto 64px auto;
 `;
