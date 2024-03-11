@@ -144,7 +144,6 @@ export default createGlobalStyle`
         font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Fira Sans", Avenir, "Helvetica Neue",
             "Lucida Grande", sans-serif;
         background-color: ${({ theme }) => theme.colors.background.primary};
-        
     }
 
     option {
@@ -156,6 +155,8 @@ export default createGlobalStyle`
     html,
     body {
         scrollbar-color: rgba(0, 0, 0, 0.6) rgba(0, 0, 0, 0.3);
+        scroll-behavior: smooth;        
+
     }
 
     ::-webkit-scrollbar {
