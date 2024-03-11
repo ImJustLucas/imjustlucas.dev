@@ -1,12 +1,20 @@
 import { FC } from "react";
+import { Menu } from "@components/Menu";
 import { ThemeToggleButton } from "@components/ThemeToggle";
 import styled from "styled-components";
 
 export const Header: FC = () => {
   return (
     <HeaderWrapper>
-      <HeaderTitle>&gt; ImJustLucas</HeaderTitle>
-      <ThemeToggleButton />
+      <TitleContainer>
+        <HeaderTitle>&gt; ImJustLucas</HeaderTitle>
+      </TitleContainer>
+      <MenuContainer>
+        <Menu />
+      </MenuContainer>
+      <ThemeToggleContainer>
+        <ThemeToggleButton />
+      </ThemeToggleContainer>
     </HeaderWrapper>
   );
 };
@@ -22,6 +30,27 @@ const HeaderWrapper = styled.header`
   height: 80px;
   background: ${({ theme }) => theme.colors.background.primary};
   transition: background 0.3s ease-in-out;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+`;
+
+const MenuContainer = styled.div`
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ThemeToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
 `;
 
 const HeaderTitle = styled.h2`

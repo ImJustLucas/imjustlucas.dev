@@ -4,14 +4,8 @@ import styled from "styled-components";
 export const HeroSection: React.FC = () => {
   return (
     <HeroContainer>
-      <DevInfo>
-        <PreTitle>Lets goooo</PreTitle>
-        <Title>Yooo, I&apos;m Lucas</Title>
-        <Description>
-          I&apos;m a software developer based in the heart of Paris, France,
-          with a focus on crafting high-quality websites and applications.
-        </Description>
-      </DevInfo>
+      <PreTitle>Yoooo, I&apos;mm</PreTitle>
+      <Title>Lucas</Title>
       <AvatarContainer>
         <Image
           src="/chibi-avatar-transparent-without-border.png"
@@ -20,7 +14,7 @@ export const HeroSection: React.FC = () => {
           height={0}
           sizes="100vw"
           priority
-          style={{ width: "100%", height: "auto", maxWidth: "300px" }}
+          style={{ width: "100%", height: "auto", maxWidth: "615px" }}
         />
       </AvatarContainer>
     </HeroContainer>
@@ -28,41 +22,36 @@ export const HeroSection: React.FC = () => {
 };
 
 const HeroContainer = styled.div`
-  margin: 0 auto;
+  margin: calc(8px * 16) auto 0 auto;
   width: calc(100% - 32px);
   max-width: 1200px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column-reverse;
-    height: auto;
-    justify-content: flex-start;
-    gap: 32px;
-    padding: 0;
-  }
 `;
 
-const DevInfo = styled.div`
-  width: 50%;
-  padding-left: 32px;
+const Title = styled.h1`
+  color: ${({ theme }) => theme.colors.text.contrast};
+  text-align: center;
+  font-family: "Roslindale Display";
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  margin-top: ${({ theme }) => theme.spacing.md};
+`;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    align-items: center;
-    padding: 0;
-    text-align: center;
-  }
+const PreTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.text.contrast};
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 const AvatarContainer = styled.div`
-  width: 50%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 32px;
+  justify-content: center;
 
   img {
     width: 100%;
@@ -70,37 +59,5 @@ const AvatarContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 0;
-  }
-`;
-
-const Title = styled.h1`
-  font-size: 64px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.text.contrast};
-  transition: all 0.3s;
-
-  @media (max-width: 768px) {
-    font-size: 32px;
-  }
-`;
-
-const PreTitle = styled.h2`
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.text.contrast};
-  transition: all 0.3s;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 18px;
-  width: 70%;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
   }
 `;
