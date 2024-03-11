@@ -2,11 +2,13 @@ import "@styles/index.css";
 import "remixicon/fonts/remixicon.css";
 
 import React from "react";
+
+import type { AppProps } from "next/app";
+import Head from "next/head";
+
 import { GlobalThemeProvider } from "@contexts/GlobalTheme";
 import { AppLayout } from "@layouts/AppLayout";
 import GlobalStyle from "@styles/GlobalStyle";
-import type { AppProps } from "next/app";
-import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

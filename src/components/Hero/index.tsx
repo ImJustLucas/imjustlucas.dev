@@ -1,12 +1,16 @@
-import { TextBasic } from "@styles/typography";
-import Image from "next/image";
 import styled from "styled-components";
+
+import Image from "next/image";
+
+import { TextBasic, TextMegaLarge } from "@styles/typography";
+
+import { IconStarContainer } from "./IconContainer";
 
 export const HeroSection: React.FC = () => {
   return (
     <HeroContainer>
       <PreTitle>Yoooo, I&apos;mm</PreTitle>
-      <Title>Lucas</Title>
+      <TextMegaLarge>Lucas</TextMegaLarge>
       <Description>
         I&apos;m a software developer based in the heart of Paris, France, with
         a focus on crafting high-quality websites and applications.
@@ -19,9 +23,9 @@ export const HeroSection: React.FC = () => {
           height={0}
           sizes="100vw"
           priority
-          style={{ width: "100%", height: "auto", maxWidth: "615px" }}
         />
       </AvatarContainer>
+      <IconStarContainer />
     </HeroContainer>
   );
 };
@@ -30,18 +34,8 @@ const HeroContainer = styled.div`
   margin: calc(8px * 10) auto 0 auto;
   width: calc(100% - 32px);
   max-width: 1200px;
-`;
-
-const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.text.contrast};
-  text-align: center;
-  font-family: "Roslindale Display";
-  font-size: 96px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-  margin-top: ${({ theme }) => theme.spacing.md};
+  position: relative;
+  z-index: 1;
 `;
 
 const PreTitle = styled.h2`
@@ -60,10 +54,20 @@ const AvatarContainer = styled.div`
 
   img {
     width: 100%;
+    height: auto;
+    max-width: 615px;
   }
 
-  @media (max-width: 768px) {
-    padding: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoint.tablet}) {
+    img {
+      max-width: 500px;
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
+    img {
+      max-width: 280px;
+    }
   }
 `;
 

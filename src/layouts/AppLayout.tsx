@@ -1,5 +1,6 @@
-import { FC } from "react";
 import styled from "styled-components";
+
+import { FC } from "react";
 
 type LayoutProps = {
   children: JSX.Element[] | JSX.Element | string | string[];
@@ -20,4 +21,5 @@ const AppLayoutContainer = styled.div`
   background-size: 400% 400%;
   animation: main-background 10s ease infinite;
   transition: background 0.3s ease-in-out;
+  scroll-behavior: smooth;
 `;

@@ -1,6 +1,7 @@
+import styled from "styled-components";
+
 import Image from "next/image";
 import Link from "next/link";
-import styled from "styled-components";
 
 export const Menu: React.FC = () => {
   return (
@@ -11,10 +12,10 @@ export const Menu: React.FC = () => {
         width={35}
         height={35}
       />
-      <MenuItem href={"/"}>Me</MenuItem>
-      <MenuItem href={"/"}>About</MenuItem>
-      <MenuItem href={"/"}>Work</MenuItem>
-      <MenuItem href={"/"}>Contact</MenuItem>
+      <MenuItem href={"#Header"}>Me</MenuItem>
+      <MenuItem href={"#About"}>About</MenuItem>
+      <MenuItem href={"#Work"}>Work</MenuItem>
+      <MenuItem href={"#Contact"}>Contact</MenuItem>
     </MenuWrapper>
   );
 };

@@ -1,11 +1,13 @@
+import styled from "styled-components";
+
 import { FC } from "react";
+
 import { Menu } from "@components/Menu";
 import { ThemeToggleButton } from "@components/ThemeToggle";
-import styled from "styled-components";
 
 export const Header: FC = () => {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper id="Header">
       <TitleContainer>
         <HeaderTitle>&gt; ImJustLucas</HeaderTitle>
       </TitleContainer>
