@@ -17,11 +17,34 @@ const light: Theme = {
       secondary: "",
       contrast: "#2b2d42",
     },
-    button: {
-      background: "",
-      text: "",
-      outline: "",
+
+    gray: {
+      50: "#F7F7F7",
+      100: "#EDEDED",
+      200: "#E2E2E2",
+      300: "#C8C8C8",
+      400: "#ADADAD",
+      500: "#999999",
+      600: "#888888",
+      700: "#7B7B7B",
+      800: "#676767",
+      900: "#545454",
+      950: "#363636",
     },
+  },
+  button: {
+    background: "",
+    text: "",
+    outline: "",
+  },
+  spacing: {
+    xxs: "4px",
+    xs: "8px",
+    sm: "16px",
+    md: "24px",
+    lg: "32px",
+    xl: "48px",
+    xxl: "64px",
   },
 };
 
