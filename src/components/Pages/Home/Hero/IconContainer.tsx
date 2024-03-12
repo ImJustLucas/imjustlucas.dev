@@ -18,6 +18,7 @@ const IconContainer = styled.div`
   position: absolute;
   height: 100%;
   top: 0;
+  z-index: -1;
 
   & > svg path {
     fill: ${({ theme }) => theme.colors.text.contrast};

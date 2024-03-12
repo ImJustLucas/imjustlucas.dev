@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { FC } from "react";
 
-import { Menu } from "@components/Menu";
+import { Menu } from "@components/Layouts/Menu";
 import { ThemeToggleButton } from "@components/ThemeToggle";
 
 export const Header: FC = () => {
