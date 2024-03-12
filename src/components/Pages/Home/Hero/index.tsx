@@ -9,7 +9,7 @@ import { IconStarContainer } from "./IconContainer";
 export const HeroSection: React.FC = () => {
   return (
     <HeroContainer>
-      <PreTitle>Yoooo, I&apos;mm</PreTitle>
+      <PreTitle>Yoooo, I&apos;m</PreTitle>
       <TextMegaLarge>Lucas</TextMegaLarge>
       <Description>
         I&apos;m a software developer based in the heart of Paris, France, with
