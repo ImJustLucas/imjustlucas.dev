@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+
 import { GlobalThemeContext } from "@contexts/GlobalTheme";
 import useThemeDetector from "@hooks/useThemeDetector";
 import { ToggleContainer } from "@styles/components/ThemeToggle.styled";
