@@ -2,8 +2,8 @@ import { Footer } from "@components/Layouts/Footer";
 import { Header } from "@components/Layouts/Header";
 import { AboutMeCard } from "@components/Pages/Home/About";
 import { BestProject } from "@components/Pages/Home/BestProject";
+import { Contact } from "@components/Pages/Home/Contact";
 import { HeroSection } from "@components/Pages/Home/Hero";
-// import { ProjectsSection } from "@components/Projects";
 
 export default function Home() {
   return (
@@ -12,6 +12,7 @@ export default function Home() {
       <HeroSection />
       <AboutMeCard />
       <BestProject />
+      <Contact />
       <Footer />
     </>
   );

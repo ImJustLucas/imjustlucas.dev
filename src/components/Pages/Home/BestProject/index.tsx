@@ -5,7 +5,7 @@ import { TextTitleSection } from "@styles/typography";
 export const BestProject: React.FC = () => {
   return (
     <Container>
-      <TextTitleSection id="work">My work</TextTitleSection>
+      <TextTitleSection id="Work">My work</TextTitleSection>
     </Container>
   );
 };
