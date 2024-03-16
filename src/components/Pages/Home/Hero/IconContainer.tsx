@@ -36,6 +36,7 @@ const IconContainer = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
       top: 70%;
+      left: 5%;
     }
   }
 
@@ -49,8 +50,7 @@ const IconContainer = styled.div`
     }
 
     @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
-      top: 20%;
-      left: 80%;
+      top: 25%;
     }
   }
 

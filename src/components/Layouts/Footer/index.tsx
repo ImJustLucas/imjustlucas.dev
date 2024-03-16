@@ -8,8 +8,8 @@ export const Footer: FC = () => {
   return (
     <FooterWrapper>
       <SocialBar />
-      <span>•</span>
-      <span>Made with 💙 by ImJustLucas</span>
+      <Dot>•</Dot>
+      <span>Made with 💖 by ImJustLucas</span>
     </FooterWrapper>
   );
 };
@@ -25,5 +25,17 @@ const FooterWrapper = styled.footer`
 
   svg path {
     fill: ${({ theme }) => theme.colors.text.contrast};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.tablet}) {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: ${({ theme }) => theme.spacing.md};
+  }
+`;
+
+const Dot = styled.span`
+  @media (max-width: ${({ theme }) => theme.breakpoint.tablet}) {
+    display: none;
   }
 `;

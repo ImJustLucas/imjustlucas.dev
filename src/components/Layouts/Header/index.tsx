@@ -38,6 +38,10 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
+    display: none;
+  }
 `;
 
 const MenuContainer = styled.div`
@@ -46,6 +50,13 @@ const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+  }
 `;
 
 const ThemeToggleContainer = styled.div`
@@ -53,6 +64,13 @@ const ThemeToggleContainer = styled.div`
   align-items: center;
   flex: 1;
   justify-content: flex-end;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobile}) {
+    position: fixed;
+    z-index: 10;
+    bottom: 16px;
+    right: 16px;
+  }
 `;
 
 const HeaderTitle = styled.h2`
