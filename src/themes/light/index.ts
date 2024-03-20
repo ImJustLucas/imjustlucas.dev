@@ -18,7 +18,7 @@ const light: Theme = {
       contrast: "#2b2d42",
     },
 
-    gray: {
+    grey: {
       50: "#F7F7F7",
       100: "#EDEDED",
       200: "#E2E2E2",

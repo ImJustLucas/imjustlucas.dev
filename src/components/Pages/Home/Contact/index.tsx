@@ -21,7 +21,6 @@ export const Contact: React.FC = () => {
 };
 
 const Container = styled.div`
-  margin: 0 auto;
   padding: 80px 16px;
   margin: 0 auto;
   width: calc(100% - 32px);
@@ -32,7 +31,7 @@ const Container = styled.div`
     text-align: left;
 
     span {
-      color: ${({ theme }) => theme.colors.gray[800]};
+      color: ${({ theme }) => theme.colors.grey[800]};
     }
   }
 
@@ -41,7 +40,7 @@ const Container = styled.div`
     padding-top: 24px;
 
     & > a {
-      color: ${({ theme }) => theme.colors.gray[800]};
+      color: ${({ theme }) => theme.colors.grey[800]};
       text-decoration: none;
     }
 

@@ -27,15 +27,15 @@ const MenuWrapper = styled.menu`
   padding: 8px 24px;
   gap: ${({ theme }) => theme.spacing.sm};
   border-radius: 100px;
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  background-color: ${({ theme }) => theme.colors.gray[50]};
+  border: 1px solid ${({ theme }) => theme.colors.grey[200]};
+  background-color: ${({ theme }) => theme.colors.grey[50]};
   transition: all 0.3s;
 `;
 
 const MenuItem = styled(Link)`
-  color: ${({ theme }) => theme.colors.gray[700]};
+  color: ${({ theme }) => theme.colors.grey[700]};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.gray[900]};
+    color: ${({ theme }) => theme.colors.grey[900]};
   }
 `;

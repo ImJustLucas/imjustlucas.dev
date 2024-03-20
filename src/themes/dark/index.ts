@@ -18,7 +18,7 @@ const dark: Theme = {
       contrast: "#f8f9fa",
     },
 
-    gray: {
+    grey: {
       50: "#363636",
       100: "#545454",
       200: "#676767",

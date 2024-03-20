@@ -34,7 +34,7 @@ export type Theme = {
       contrast: string;
     };
 
-    gray: {
+    grey: {
       50: string;
       100: string;
       200: string;

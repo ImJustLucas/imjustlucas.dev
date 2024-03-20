@@ -26,8 +26,8 @@ export const AboutMeCard: React.FC = () => {
 
 const AboutMeCardContainer = styled.div`
   border-radius: ${({ theme }) => theme.spacing.sm};
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  background: ${({ theme }) => theme.colors.gray[50]};
+  border: 1px solid ${({ theme }) => theme.colors.grey[200]};
+  background: ${({ theme }) => theme.colors.grey[50]};
   padding: 32px 64px;
   display: flex;
   justify-content: center;
