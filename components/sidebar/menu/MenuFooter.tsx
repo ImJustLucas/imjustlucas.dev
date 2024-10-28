@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TypographySmall } from "@/components/typography";
+import { TypographyMuted, TypographySmall } from "@/components/typography";
 
 const socialLinks = [
   {
@@ -18,7 +18,7 @@ export function MenuFooter() {
   return (
     <footer className="bg-background mt-auto">
       presence la
-      <div className="container flex flex-col w-full items-center justify-between gap-4 py-4 md:h-24 md:flex-row md:py-0 border-y ">
+      <div className="container flex flex-col w-full items-center justify-between gap-4 py-4 md:h-16 md:flex-row md:py-0 border-y ">
         <div className="flex w-full justify-center gap-4">
           {socialLinks.map((link) => (
             <Button key={link.href} variant="ghost" size="icon" asChild>
@@ -31,7 +31,7 @@ export function MenuFooter() {
         </div>
       </div>
       <div className="text-center pt-4">
-        <TypographySmall>Made with 💖 by ImJustLucas</TypographySmall>
+        <TypographyMuted>Made with 💖 by ImJustLucas</TypographyMuted>
       </div>
     </footer>
   );

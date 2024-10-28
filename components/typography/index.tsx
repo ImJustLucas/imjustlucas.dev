@@ -33,3 +33,7 @@ export const TypographySmall: React.FC<TypographyType> = ({ children }) => {
     <small className={`text-sm font-medium leading-none`}>{children}</small>
   );
 };
+
+export const TypographyMuted: React.FC<TypographyType> = ({ children }) => {
+  return <p className="text-sm text-muted-foreground">{children}</p>;
+};

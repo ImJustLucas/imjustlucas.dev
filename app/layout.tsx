@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -35,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
+        <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
         <MobileMenuProvider>
           <ClientLayout>{children}</ClientLayout>
         </MobileMenuProvider>
