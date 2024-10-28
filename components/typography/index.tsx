@@ -27,3 +27,9 @@ export const TypographyP: React.FC<TypographyType> = ({ children }) => {
     </p>
   );
 };
+
+export const TypographySmall: React.FC<TypographyType> = ({ children }) => {
+  return (
+    <small className={`text-sm font-medium leading-none`}>{children}</small>
+  );
+};
