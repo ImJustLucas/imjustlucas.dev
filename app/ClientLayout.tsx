@@ -13,7 +13,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     <div className="p-3 bg-background w-screen h-screen flex relative">
       <Sidebar />
       <div
-        className={`bg-primary-foreground w-full md:w-10/12 h-full rounded-lg p-2 ${
+        className={`bg-primary-foreground w-full md:w-9/12 h-full rounded-lg p-2 ${
           isOpen ? "blur-sm" : ""
         }`}
       >

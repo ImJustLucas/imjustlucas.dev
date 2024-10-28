@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypographyMuted, TypographySmall } from "@/components/typography";
+import { PresenceBlock } from "@/components/presence/Presence";
 
 const socialLinks = [
   {
@@ -14,10 +15,10 @@ const socialLinks = [
   { icon: Github, href: "https://github.com/ImJustLucas", label: "GitHub" },
 ];
 
-export function MenuFooter() {
+export function SidebarFooter() {
   return (
     <footer className="bg-background mt-auto">
-      presence la
+      <PresenceBlock />
       <div className="container flex flex-col w-full items-center justify-between gap-4 py-4 md:h-16 md:flex-row md:py-0 border-y ">
         <div className="flex w-full justify-center gap-4">
           {socialLinks.map((link) => (

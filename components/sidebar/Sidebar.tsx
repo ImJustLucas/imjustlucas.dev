@@ -4,15 +4,15 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypographyH3 } from "@/components/typography";
 import MenuContainer from "./menu/MenuContainer";
-import { MenuFooter } from "./menu/MenuFooter";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import { SidebarFooter } from "./SidebarFooter";
 
 export const Sidebar: React.FC = ({}) => {
   const { isOpen, toggleMenu } = useMobileMenu();
 
   return (
     <>
-      <div className="hidden md:flex p-2 h-full w-2/12 flex-col">
+      <div className="hidden md:flex p-2 h-full w-3/12 flex-col">
         <SideBarContent />
       </div>
 
@@ -43,7 +43,7 @@ const SideBarContent = () => {
     <>
       <TypographyH3>&gt; ImJustLucas</TypographyH3>
       <MenuContainer />
-      <MenuFooter />
+      <SidebarFooter />
     </>
   );
 };
