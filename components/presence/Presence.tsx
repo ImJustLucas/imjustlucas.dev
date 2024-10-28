@@ -23,8 +23,6 @@ export const PresenceBlock = () => {
     } else if (status?.listening_to_spotify) {
       setPresence("listening");
     }
-
-    console.log(status);
   }, [status, currentActivity]);
 
   return (
