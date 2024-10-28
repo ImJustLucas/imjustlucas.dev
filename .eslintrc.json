@@ -27,22 +27,22 @@
       {
         "groups": [
           /* Style imports */
-          ["^.+\\.?(css)$", "^styled-components$"],
+          ["^.+\\.?(css)$"],
 
-          /* React imports */
-          ["^react", "^@react"],
+          /* React et Next imports */
+          ["^react", "^@react", "^next"],
 
-          /* Next imports */
-          ["^next"],
+          ["^[a-z]"],
 
-          /* Imports starting with @ */
-          ["^@"],
+          ["^@/"],
 
-          /* Parent imports. Put .. last */
-          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-
-          /* Other relative imports. Put same-folder imports and . last */
-          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
+          [
+            "^\\.\\.(?!/?$)",
+            "^\\.\\./?$",
+            "^\\./(?=.*/)(?!/?$)",
+            "^\\.(?!/?$)",
+            "^\\./?$"
+          ]
         ]
       }
     ],
