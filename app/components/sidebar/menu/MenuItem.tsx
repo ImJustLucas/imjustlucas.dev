@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import useSound from "use-sound";
 
 interface MenuItemProps {
   label: string;
@@ -11,8 +12,10 @@ interface MenuItemProps {
 export default function MenuItem({
   label,
   isActive = false,
-  onClick,
+  onClick: onClickProp,
 }: MenuItemProps) {
+  const [play] = useSound("/sounds/click.mp3");
+
   return (
     <Button
       variant="ghost"
@@ -23,7 +26,10 @@ export default function MenuItem({
         "active:scale-95",
         isActive && "bg-primary/10 text-primary font-medium",
       )}
-      onClick={onClick}
+      onClick={() => {
+        onClickProp?.();
+        play();
+      }}
     >
       <span className="flex-1 text-left">{label}</span>
       {isActive && (
