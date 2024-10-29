@@ -1,5 +1,3 @@
-import { YoutubeIcon } from "lucide-react";
-
 import {
   TypographyH2,
   TypographyP,
