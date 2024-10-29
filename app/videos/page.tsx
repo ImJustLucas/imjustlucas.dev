@@ -1,4 +1,10 @@
-import { TypographyH2, TypographyP } from "@/components/typography";
+import { YoutubeIcon } from "lucide-react";
+
+import {
+  TypographyH2,
+  TypographyP,
+  TypographySmall,
+} from "@/components/typography";
 
 export default function What() {
   return (
@@ -9,6 +15,18 @@ export default function What() {
         start making videos about software development, lifestyle, life in
         general and other things that i find interesting. Keep an eye on this
         page 🤓
+        <br />
+        <TypographySmall>
+          Pssst, you can subscribe to my channel{" "}
+          <a
+            href="https://youtube.com/@imjustlucas"
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            right here
+          </a>
+        </TypographySmall>
       </TypographyP>
     </div>
   );
