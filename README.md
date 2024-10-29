@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# imjustlucas.dev
+
+This repository contains the codebase for the **imjustlucas.dev** project, a web application using Next.js, Shadcn UI, and Tailwind CSS to deliver a highly interactive and customizable user experience. Built with a modern front-end stack, this project leverages the power of TypeScript, ESLint, and PostCSS to ensure code quality and maintainability.
+
+## Table of Contents
+
+- [imjustlucas.dev](#imjustlucasdev)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running the Project](#running-the-project)
+  - [Technologies Used](#technologies-used)
+  - [Project Scripts](#project-scripts)
+  - [License](#license)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Make sure you have Node.js installed on your system, preferably the latest LTS version.
+
+### Installation
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/imjustlucas/imjustlucas.dev.git
+   cd imjustlucas.dev
+   ```
+
+2. Install dependencies using your preferred package manager (pnpm recommended):
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Running the Project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To start the development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm run dev
+```
 
-## Learn More
+For production builds:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm run build
+pnpm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Lint your code:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm run lint
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js (v15)**: Framework for React applications with built-in routing and optimization.
+- **React (v19 RC)**: JavaScript library for building user interfaces.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Shadcn UI**: Accessible, unstyled components for building high-quality UIs.
+- **TypeScript**: Static type-checking for JavaScript, enhancing code reliability.
+- **ESLint & Prettier**: For consistent and high-quality code.
+
+## Project Scripts
+
+| Script  | Description                           |
+| ------- | ------------------------------------- |
+| `dev`   | Runs the development server           |
+| `build` | Builds the application for production |
+| `start` | Starts the production build           |
+| `lint`  | Lints the codebase using ESLint       |
+
+---
+
+## License
+
+This project is open-source and free to use under the MIT License. Feel free to reuse, modify, and distribute the code and design as you wish.
+
+> **Note**: Contributions and forks are always welcome. Let’s build something great together!
