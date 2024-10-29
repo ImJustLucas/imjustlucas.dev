@@ -30,7 +30,7 @@ export const TypographyH3: React.FC<TypographyType> = ({
   return (
     <h3
       className={cn(
-        "scroll-m-20 text-2xl  tracking-tight",
+        "scroll-m-20 text-2xl  tracking-tight  mt-4",
         bold && "font-semibold",
       )}
     >

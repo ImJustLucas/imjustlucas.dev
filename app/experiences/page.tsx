@@ -1,7 +1,9 @@
 import {
   TypographyH2,
+  TypographyH3,
   TypographyH4,
   TypographyMuted,
+  TypographyP,
   TypographySmall,
 } from "@/components/typography";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +30,7 @@ export default function Experiences() {
                 </div>
                 <a href={event.link}>
                   <div>
-                    <p className="text-sm font-medium">{event.date}</p>
+                    <TypographyP>{event.date}</TypographyP>
                     <TypographyH4>{event.title}</TypographyH4>
                     <TypographySmall>{event.contract}</TypographySmall>
                     <TypographyMuted>{event.description}</TypographyMuted>
@@ -39,6 +41,7 @@ export default function Experiences() {
           </div>
         </CardContent>
       </Card>
+      <TypographyH3>Diplomas</TypographyH3>
     </div>
   );
 }
