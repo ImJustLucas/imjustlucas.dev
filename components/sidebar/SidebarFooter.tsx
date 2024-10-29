@@ -7,6 +7,8 @@ import { PresenceBlock } from "@/components/presence/Presence";
 import { TypographyMuted } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 
+import { ModeToggle } from "../theme-switch";
+
 const socialLinks = [
   {
     icon: Linkedin,
@@ -31,6 +33,7 @@ export function SidebarFooter() {
               </Link>
             </Button>
           ))}
+          <ModeToggle />
         </div>
       </div>
       <div className="text-center pt-4">

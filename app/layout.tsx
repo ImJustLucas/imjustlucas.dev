@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ThemeProvider } from "next-themes";
 
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 
@@ -33,14 +34,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
-        <MobileMenuProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </MobileMenuProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
+          <MobileMenuProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </MobileMenuProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

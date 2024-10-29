@@ -1,6 +1,26 @@
+import { cn } from "@/lib/utils";
+
 type TypographyType = {
   children: React.ReactNode;
   bold?: boolean;
+};
+
+export const TypographyH2: React.FC<
+  TypographyType & {
+    border?: boolean;
+  }
+> = ({ children, bold = true, border = true }) => {
+  return (
+    <h2
+      className={cn(
+        "scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0",
+        bold && "font-semibold",
+        border && "border-b",
+      )}
+    >
+      {children}
+    </h2>
+  );
 };
 
 export const TypographyH3: React.FC<TypographyType> = ({
@@ -9,9 +29,10 @@ export const TypographyH3: React.FC<TypographyType> = ({
 }) => {
   return (
     <h3
-      className={`scroll-m-20 text-2xl  tracking-tight  ${
-        bold ? "font-semibold" : ""
-      }`.trim()}
+      className={cn(
+        "scroll-m-20 text-2xl  tracking-tight",
+        bold && "font-semibold",
+      )}
     >
       {children}
     </h3>
@@ -28,4 +49,8 @@ export const TypographySmall: React.FC<TypographyType> = ({ children }) => {
 
 export const TypographyMuted: React.FC<TypographyType> = ({ children }) => {
   return <p className="text-sm text-muted-foreground">{children}</p>;
+};
+
+export const Bold: React.FC<TypographyType> = ({ children }) => {
+  return <span className="font-semibold">{children}</span>;
 };
