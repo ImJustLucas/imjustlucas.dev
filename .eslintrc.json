@@ -26,16 +26,10 @@
       "error",
       {
         "groups": [
-          /* Style imports */
           ["^.+\\.?(css)$"],
-
-          /* React et Next imports */
           ["^react", "^@react", "^next"],
-
           ["^[a-z]"],
-
           ["^@/"],
-
           [
             "^\\.\\.(?!/?$)",
             "^\\.\\./?$",
@@ -48,11 +42,11 @@
     ],
     "simple-import-sort/exports": "error",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
-    "react/jsx-props-no-spreading": [0],
+    "react/jsx-props-no-spreading": 0,
     "react/no-unknown-property": ["error", { "ignore": ["jsx"] }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-indent-props": ["error", 2],
-    "import/extensions": [0],
+    "import/extensions": 0,
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
     "no-console": 0,
@@ -60,7 +54,6 @@
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "overrides": [
-    // Only uses Testing Library lint rules in test files
     {
       "files": [
         "**/__tests__/**/*.[jt]s?(x)",
