@@ -39,6 +39,22 @@ export const TypographyH3: React.FC<TypographyType> = ({
   );
 };
 
+export const TypographyH4: React.FC<TypographyType> = ({
+  children,
+  bold = true,
+}) => {
+  return (
+    <h4
+      className={cn(
+        "scroll-m-20 text-xl  tracking-tight",
+        bold && "font-semibold",
+      )}
+    >
+      {children}
+    </h4>
+  );
+};
+
 export const TypographyP: React.FC<TypographyType> = ({ children }) => {
   return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>;
 };

@@ -3,6 +3,7 @@ import * as React from "react";
 import useSound from "use-sound";
 
 import { Button } from "@/components/ui/button";
+import { useMobileMenu } from "@/contexts/menu-mobile.context";
 import { cn } from "@/lib/utils";
 
 interface MenuItemProps {
@@ -17,6 +18,7 @@ export default function MenuItem({
   onClick: onClickProp,
 }: MenuItemProps) {
   const [play] = useSound("/sounds/click.mp3");
+  const { closeMenu } = useMobileMenu();
 
   return (
     <Button
@@ -29,6 +31,7 @@ export default function MenuItem({
         isActive && "bg-primary/10 text-primary font-medium",
       )}
       onClick={() => {
+        closeMenu();
         onClickProp?.();
         play();
       }}

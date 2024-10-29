@@ -2,7 +2,7 @@ import { Bold, TypographyH2, TypographyP } from "@/components/typography";
 
 export default function Home() {
   return (
-    <div className="w-2/3">
+    <div className="md:w-2/3 w-full">
       <TypographyH2 border={false}>Who am i?</TypographyH2>
       <TypographyP>
         Yoooo, I&apos;m <Bold>Lucas</Bold>! <br />A french software developer

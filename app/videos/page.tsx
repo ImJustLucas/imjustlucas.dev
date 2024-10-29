@@ -6,7 +6,7 @@ import {
 
 export default function What() {
   return (
-    <div className="w-2/3">
+    <div className="md:w-2/3 w-full">
       <TypographyH2 border={false}>youtube videos</TypographyH2>
       <TypographyP>
         This section is a bit empty right now, i know. I&apos;m planning to

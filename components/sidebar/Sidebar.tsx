@@ -14,7 +14,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
-      <div className="hidden md:flex p-2 h-full w-3/12 flex-col">
+      <div className="hidden md:flex p-2 h-full w-80 flex-col">
         <SideBarContent />
       </div>
 
