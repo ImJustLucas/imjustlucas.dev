@@ -1,4 +1,4 @@
-import { TechCard } from "@/components/tech-i-use/TechnologieCard";
+import { TechCard } from "@/components/tech-i-use/TechCard";
 import { TypographyH2, TypographyP } from "@/components/typography";
 
 import { techCategories } from "./config/categories";
