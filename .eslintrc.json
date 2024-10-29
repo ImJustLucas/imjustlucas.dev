@@ -49,6 +49,7 @@
     "quotes": ["error", "double"],
     "no-console": 0,
     "no-control-regex": 0,
+    "react/prop-types": "off",
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
   "overrides": [

@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
+
 import { Github, Linkedin, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { TypographyMuted, TypographySmall } from "@/components/typography";
+
 import { PresenceBlock } from "@/components/presence/Presence";
+import { TypographyMuted } from "@/components/typography";
+import { Button } from "@/components/ui/button";
 
 const socialLinks = [
   {

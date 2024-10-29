@@ -1,6 +1,8 @@
 import React from "react";
+
+import { CodeIcon, RatIcon } from "lucide-react";
+
 import { Card, CardContent } from "@/components/ui/card";
-import { RatIcon, CodeIcon } from "lucide-react";
 
 export default function VSCodeInfoCard() {
   return (

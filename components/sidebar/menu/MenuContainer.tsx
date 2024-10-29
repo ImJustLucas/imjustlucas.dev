@@ -1,12 +1,12 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import MenuItem from "./MenuItem";
+
 import { ROUTES } from "@/config/ROUTES";
 
-interface IMenuContainer {}
+import MenuItem from "./MenuItem";
 
-export default function MenuContainer({}: IMenuContainer) {
+export default function MenuContainer() {
   const router = useRouter();
   const pathName = usePathname();
 

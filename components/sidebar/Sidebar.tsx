@@ -1,13 +1,15 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 import { TypographyH3 } from "@/components/typography";
-import MenuContainer from "./menu/MenuContainer";
+import { Button } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+
+import MenuContainer from "./menu/MenuContainer";
 import { SidebarFooter } from "./SidebarFooter";
 
-export const Sidebar: React.FC = ({}) => {
+export const Sidebar: React.FC = () => {
   const { isOpen, toggleMenu } = useMobileMenu();
 
   return (

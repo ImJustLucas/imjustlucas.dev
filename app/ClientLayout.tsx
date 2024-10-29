@@ -1,6 +1,7 @@
 "use client";
 
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+
 import { Sidebar } from "../components/sidebar/Sidebar";
 
 interface ClientLayoutProps {

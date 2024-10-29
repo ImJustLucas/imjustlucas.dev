@@ -3,10 +3,12 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { Analytics } from "@vercel/analytics/react";
-
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
+
 import ClientLayout from "./ClientLayout";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

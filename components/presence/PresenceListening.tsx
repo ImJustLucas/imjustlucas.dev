@@ -1,7 +1,9 @@
 import React from "react";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { Spotify } from "react-use-lanyard";
+import Image from "next/image";
+
+import { Card, CardContent } from "@/components/ui/card";
+
 import { TypographyMuted } from "../typography";
 
 type PresenceListeningProps = {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLanyard } from "react-use-lanyard";
+
 import { PresenceActivity } from "./PresenceActivity";
 import { PresenceListening } from "./PresenceListening";
 

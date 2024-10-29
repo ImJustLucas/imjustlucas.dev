@@ -3,15 +3,13 @@ type TypographyType = {
   bold?: boolean;
 };
 
-const BASE_CLASS = "font-geist-sans text-neutral-50";
-
 export const TypographyH3: React.FC<TypographyType> = ({
   children,
   bold = true,
 }) => {
   return (
     <h3
-      className={`${BASE_CLASS} scroll-m-20 text-2xl  tracking-tight  ${
+      className={`scroll-m-20 text-2xl  tracking-tight  ${
         bold ? "font-semibold" : ""
       }`.trim()}
     >
@@ -21,17 +19,11 @@ export const TypographyH3: React.FC<TypographyType> = ({
 };
 
 export const TypographyP: React.FC<TypographyType> = ({ children }) => {
-  return (
-    <p className={`${BASE_CLASS} leading-7 [&:not(:first-child)]:mt-6`}>
-      {children}
-    </p>
-  );
+  return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>;
 };
 
 export const TypographySmall: React.FC<TypographyType> = ({ children }) => {
-  return (
-    <small className={`text-sm font-medium leading-none`}>{children}</small>
-  );
+  return <small className="text-sm font-medium leading-none">{children}</small>;
 };
 
 export const TypographyMuted: React.FC<TypographyType> = ({ children }) => {
