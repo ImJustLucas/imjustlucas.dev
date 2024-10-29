@@ -5,12 +5,11 @@
     "es2021": true
   },
   "extends": [
-    "next",
+    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "next/core-web-vitals"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -46,7 +45,6 @@
     "react/no-unknown-property": ["error", { "ignore": ["jsx"] }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-indent-props": ["error", 2],
-    "import/extensions": 0,
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
     "no-console": 0,
