@@ -11,10 +11,10 @@ interface ClientLayoutProps {
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const { isOpen } = useMobileMenu();
   return (
-    <div className="p-3 bg-background w-screen h-screen flex relative gap-3 select-none	">
+    <div className="p-3 bg-background w-screen h-dvh flex relative gap-3 select-none	">
       <Sidebar />
       <div
-        className={`bg-primary-foreground w-full h-full rounded-lg p-4 overflow-y-scroll	 ${
+        className={`bg-primary-foreground w-full h-full rounded-lg p-4 pb-8 overflow-y-scroll	 ${
           isOpen ? "blur-sm" : ""
         }`}
       >

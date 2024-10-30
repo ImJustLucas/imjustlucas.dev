@@ -57,7 +57,7 @@ export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
         </div>
       </CardContent>
 
-      <CardFooter className="flex justify-between flex-none bg-card/80 backdrop-blur-sm relative z-10">
+      <CardFooter className="flex justify-between flex-none bg-card/80 backdrop-blur-sm relative z-[5]">
         {project.openSource && (
           <LinkButton
             href={project.links.github || "https://github.com/imjustlucas"}
