@@ -48,7 +48,7 @@ export const projects: Project[] = [
   {
     title: "Bun Elysia Boilerplate",
     date: "May 2024",
-    image: "",
+    image: "/images/projects/bun-elysia-boilerplate.png",
     description: "🩶 Gorgeous Bun-Elysia boilerplate with TypeScript",
     techs: [
       { name: "Bun", color: "bg-stone-200 text-white" },
