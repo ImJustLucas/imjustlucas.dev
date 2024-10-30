@@ -2,9 +2,9 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    title: "Rider Fund",
+    title: "Riders Fund",
     date: "October 2024",
-    image: "/projects/rider-fund.png",
+    image: "/images/projects/riders-fund.png",
     description: "A platform to help riders in need of financial assistance.",
     techs: [
       { name: "React", color: "bg-blue-400 text-white" },
