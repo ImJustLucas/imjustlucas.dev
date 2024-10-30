@@ -14,7 +14,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     <div className="p-3 bg-background w-screen h-screen flex relative gap-3 select-none	">
       <Sidebar />
       <div
-        className={`bg-primary-foreground w-full h-full rounded-lg p-4 ${
+        className={`bg-primary-foreground w-full h-full rounded-lg p-4 overflow-y-scroll	 ${
           isOpen ? "blur-sm" : ""
         }`}
       >

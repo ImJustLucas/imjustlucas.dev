@@ -1,3 +1,4 @@
+import { DiplomaTable } from "@/components/diplomas/AllDiplomas";
 import {
   TypographyH2,
   TypographyH3,
@@ -42,6 +43,7 @@ export default function Experiences() {
         </CardContent>
       </Card>
       <TypographyH3>Diplomas</TypographyH3>
+      <DiplomaTable />
     </div>
   );
 }
