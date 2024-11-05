@@ -10,6 +10,7 @@ import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import ClientLayout from "./ClientLayout";
 
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,6 +46,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Analytics />
+          <SpeedInsights />
           <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
           <div className="fixed bottom-5 right-5 z-10 hover:cursor-pointer">
             <Image
