@@ -9,7 +9,6 @@ import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 
 import ClientLayout from "./ClientLayout";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = localFont({
@@ -45,6 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Analytics />
           <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
           <div className="fixed bottom-5 right-5 z-10 hover:cursor-pointer">
             <Image
