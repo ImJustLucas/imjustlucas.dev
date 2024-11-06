@@ -40,7 +40,14 @@ export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
         <CardTitle className="text-2xl font-bold line-clamp-1 group-hover:text-primary transition-colors">
           {project.title}
         </CardTitle>
-        <CardDescription>{project.date}</CardDescription>
+        <CardDescription>
+          <span className="text-sm">{project.date}</span>
+          {project.wip && (
+            <Badge className="ml-2 text-xs bg-yellow-400 text-black hover:bg-yellow-400 ">
+              WIP
+            </Badge>
+          )}
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="flex-grow overflow-auto relative z-10">

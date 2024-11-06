@@ -5,6 +5,7 @@ export const projects: Project[] = [
     title: "Riders Fund",
     date: "October 2024",
     image: "/images/projects/riders-fund.png",
+    wip: true,
     description: "A platform to help riders in need of financial assistance.",
     techs: [
       { name: "React", color: "bg-blue-400 text-white" },
@@ -17,6 +18,23 @@ export const projects: Project[] = [
         name: "Tailwind CSS",
 
         color: "bg-teal-400 text-white",
+      },
+    ],
+    links: {},
+    openSource: false,
+  },
+
+  {
+    title: "Qotum",
+    date: "2024 - now",
+    image: "/images/projects/qotum.png",
+    wip: true,
+    description: "Qotum - The smartest way to respond to your ratings with AI.",
+    techs: [
+      { name: "Next.js", color: "bg-black text-white" },
+      {
+        name: "NestJS",
+        color: "bg-red-500 text-white",
       },
     ],
     links: {},
