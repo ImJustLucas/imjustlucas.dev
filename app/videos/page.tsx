@@ -3,29 +3,40 @@ import {
   TypographyP,
   TypographySmall,
 } from "@/components/typography";
+import { VideoCardBadge } from "@/components/VideoCard";
+import { videos } from "@/app/videos/config/videos";
 
-export default function What() {
+export default function VideosPage() {
   return (
-    <div className="md:w-2/3 w-full">
+    <div className="w-full">
       <TypographyH2 border={false}>youtube videos</TypographyH2>
-      <TypographyP>
-        This section is a bit empty right now, i know. I&apos;m planning to
-        start making videos about software development, lifestyle, life in
-        general and other things that i find interesting. Keep an eye on this
-        page 🤓
-        <br />
-        <TypographySmall>
-          Pssst, you can subscribe to my channel{" "}
-          <a
-            href="https://youtube.com/@imjustlucas"
-            className="underline"
-            target="_blank"
-            rel="noreferrer"
-          >
-            right here
-          </a>
-        </TypographySmall>
-      </TypographyP>
+
+      {videos.length === 0 ? (
+        <TypographyP>
+          Cette section est un peu vide pour le moment. Je prévois de commencer
+          à faire des vidéos sur le développement logiciel, le lifestyle, la vie
+          en général et d&apos;autres sujets qui m&apos;intéressent. Gardez un
+          œil sur cette page 🤓
+          <br />
+          <TypographySmall>
+            Psst, vous pouvez vous abonner à ma chaîne{" "}
+            <a
+              href="https://youtube.com/@imjustlucas"
+              className="underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              ici
+            </a>
+          </TypographySmall>
+        </TypographyP>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          {videos.map((video) => (
+            <VideoCardBadge key={video.id} video={video} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

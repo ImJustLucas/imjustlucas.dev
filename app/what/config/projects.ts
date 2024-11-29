@@ -83,6 +83,6 @@ export const projects: Project[] = [
       github: "https://github.com/ImJustLucas/bun-elysia-boilerplate",
     },
     openSource: true,
-    stars: 25,
+    stars: 27,
   },
 ];
