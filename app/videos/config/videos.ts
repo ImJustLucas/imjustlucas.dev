@@ -9,10 +9,19 @@ export interface YouTubeVideo {
 export const videos: YouTubeVideo[] = [
   {
     id: "1",
-    title: "Comment j'ai créé mon Portfolio avec Next.js",
+    title: "Une journée avec un développeur web étudiant | vlog dev",
     thumbnail: "/images/videos/Video1.png",
     url: "https://youtu.be/xzs5jgJWWVU",
-    publishedAt: "13/11/2024",
+    publishedAt: "24-11-2024",
+    new: false,
+  },
+  {
+    id: "2",
+    title:
+      "On upgrade (un peu) mon setup | Une journée en télétravail d’un alternant",
+    thumbnail: "/images/videos/Video2.png",
+    url: "https://youtu.be/xpul90E3VXM?si=kiqaWnQCWnTRpoH8",
+    publishedAt: "8-12-2024",
     new: true,
   },
 ];
