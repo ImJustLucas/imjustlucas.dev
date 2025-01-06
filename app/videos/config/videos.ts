@@ -30,7 +30,7 @@ export const videos: YouTubeVideo[] = [
       "Comment devenir développeur web ? Mes études et mon parcours d'étudiant",
     thumbnail: "/images/videos/Video3.png",
     url: "https://youtu.be/xpul90E3VXM?si=kiqaWnQCWnTRpoH8",
-    publishedAt: "8-12-2024",
+    publishedAt: "22-12-2024",
     new: false,
   },
   {
@@ -39,7 +39,7 @@ export const videos: YouTubeVideo[] = [
       "EP03: Une journée dans la vie d'un développeur web étudiant | Mes objectif pour 2025",
     thumbnail: "/images/videos/Video4.png",
     url: "https://youtu.be/xpul90E3VXM?si=kiqaWnQCWnTRpoH8",
-    publishedAt: "8-12-2024",
+    publishedAt: "5-01-2026",
     new: true,
   },
 ];
