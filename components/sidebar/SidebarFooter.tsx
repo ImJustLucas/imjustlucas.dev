@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { Github, Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
+import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { PresenceBlock } from "@/components/presence/Presence";
 import { TypographyMuted } from "@/components/typography";
