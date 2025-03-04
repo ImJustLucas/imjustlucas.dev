@@ -2,29 +2,6 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    title: "Riders Fund",
-    date: "October 2024",
-    image: "/images/projects/riders-fund.png",
-    wip: true,
-    description: "A platform to help riders in need of financial assistance.",
-    techs: [
-      { name: "React", color: "bg-blue-400 text-white" },
-      { name: "Next.js", color: "bg-black text-white" },
-      {
-        name: "Shadcn/ui",
-        color: "bg-purple-500 text-white",
-      },
-      {
-        name: "Tailwind CSS",
-
-        color: "bg-teal-400 text-white",
-      },
-    ],
-    links: {},
-    openSource: false,
-  },
-
-  {
     title: "Qotum",
     date: "2024 - now",
     image: "/images/projects/qotum.png",
@@ -38,6 +15,26 @@ export const projects: Project[] = [
       },
     ],
     links: {},
+    openSource: false,
+  },
+
+  {
+    title: "Tricks",
+    date: "2021 - 2023",
+    image: "/images/projects/tricks.png",
+    wip: false,
+    description:
+      "Creation of a social network intended for extreme sports on web and mobile platforms 🤙",
+    techs: [
+      { name: "Nuxt.js", color: "bg-green-400 text-white" },
+      {
+        name: "Strapi",
+        color: "bg-purple-600 text-white",
+      },
+    ],
+    links: {
+      external: "https://tonytrancard.fr/projects_side/thetricksnetwork",
+    },
     openSource: false,
   },
 
