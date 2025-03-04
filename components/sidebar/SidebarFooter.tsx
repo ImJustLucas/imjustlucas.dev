@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { PresenceBlock } from "@/components/presence/Presence";
 import { TypographyMuted } from "@/components/typography";
@@ -15,8 +15,17 @@ const socialLinks = [
     href: "https://www.linkedin.com/in/lucasbellier/",
     label: "LinkedIn",
   },
-  { icon: Twitter, href: "https://x.com/ImJustLucas_", label: "Twitter" },
   { icon: Github, href: "https://github.com/ImJustLucas", label: "GitHub" },
+  {
+    icon: Youtube,
+    href: "https://www.youtube.com/channel/UCLw4N_gccAY1Y4K4S20IPog",
+    label: "Youtube",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/imjustlucas_/",
+    label: "Instagram",
+  },
 ];
 
 export function SidebarFooter() {
