@@ -30,8 +30,8 @@ export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
         <Image
           src={project.image || "/placeholder.svg?height=200&width=400"}
           alt="Project Image"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover", objectPosition: "top" }}
           className="transition-transform duration-300"
         />
       </div>
