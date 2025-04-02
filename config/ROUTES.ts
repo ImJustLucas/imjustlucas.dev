@@ -5,4 +5,5 @@ export const ROUTES = {
   EXPERIENCES: "/experiences",
   VIDEOS: "/videos",
   CONTACT: "/contact",
+  MDF: "/mdf-2025",
 };
