@@ -22,15 +22,16 @@ export default function Home() {
         based in the heart of Paris, France, with a focus on crafting
         high-quality websites and applications.
       </TypographyP>
+
       <Separator className="my-8" />
 
       <TypographyH4>Creative Mindset</TypographyH4>
       <TypographyP>
         I love tackling projects with a creative approach. My process usually
         starts with a good brainstorming session, lots of inspiration-hunting,
-        and diving deep into the latest tech tools. Whether it’s building from
-        scratch or refining an existing idea, I aim to create with both quality
-        and originality in mind.
+        and diving deep into the latest tech tools. Whether it&apos;s building
+        from scratch or refining an existing idea, I aim to create with both
+        quality and originality in mind.
       </TypographyP>
 
       <Separator className="my-8" />
