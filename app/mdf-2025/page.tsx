@@ -1,4 +1,5 @@
 import { TypographyH2 } from "@/components/typography";
+
 import MasterDevScene from "./components/master-dev-scene";
 
 export default function MasterDevFrance2025Page() {
