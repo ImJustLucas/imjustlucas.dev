@@ -1,11 +1,13 @@
+/* eslint-disable react/no-unknown-property */
 "use client";
 
-import { useRef, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import { shaderMaterial } from "@react-three/drei";
-import { extend } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
 import React from "react";
+import { shaderMaterial } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { extend } from "@react-three/fiber";
+
+import * as THREE from "three";
 
 const GlowMaterial = shaderMaterial(
   {
@@ -71,23 +73,25 @@ const GlowEffect: React.FC<GlowEffectProps> = ({
   glowIntensity = 0.8,
   pulseSpeed = 0.5,
 }) => {
-  const materialRef = useRef<any>("");
+  const materialRef = useRef("");
 
   const colorObj = useMemo(() => new THREE.Color(color), [color]);
   const glowColorObj = useMemo(() => new THREE.Color(glowColor), [glowColor]);
 
-  // Update time uniform on each frame
   useFrame(({ clock }) => {
     if (materialRef.current) {
+      //@ts-expect-error unknown property
       materialRef.current.time = clock.getElapsedTime();
     }
   });
 
   return (
     <group>
-      {React.Children.map(children, (child: any) => {
+      {React.Children.map(children, (child) => {
+        // @ts-expect-error: Custom material extended via @react-three/fiber
         return React.cloneElement(child, {
           material: (
+            // @ts-expect-error: Custom material extended via @react-three/fiber
             <glowMaterial
               ref={materialRef}
               color={colorObj}

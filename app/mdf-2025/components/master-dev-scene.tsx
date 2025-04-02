@@ -1,19 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/no-unknown-property */
 "use client";
 
-import { useRef, useState, useMemo, useEffect, useCallback } from "react";
-import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  OrbitControls,
   Environment,
-  Float,
-  MeshWobbleMaterial,
-  Stars,
-  MeshTransmissionMaterial,
+  OrbitControls,
   shaderMaterial,
+  Stars,
 } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
+import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
+
 import * as THREE from "three";
 
+import { Certificate } from "./certificate";
 import SceneLoader from "./scene-loader";
 
 const GoldenShaderMaterial = shaderMaterial(
@@ -67,56 +68,6 @@ const playImpactSound = () => {
   audio.play().catch((e) => console.error("Audio play failed:", e));
 };
 
-const Certificate = ({
-  position = [0, 0, 0],
-}: {
-  position?: [number, number, number];
-}) => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<any>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.position.y =
-        position[1] + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
-      meshRef.current.rotation.y =
-        Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
-    }
-
-    if (materialRef.current) {
-      materialRef.current.transmission = 0.95;
-      materialRef.current.color.set("#ffffff");
-      materialRef.current.needsUpdate = true;
-    }
-  });
-
-  return (
-    <group position={position}>
-      <mesh ref={meshRef} receiveShadow>
-        <boxGeometry args={[5, 3, 0.05]} />
-        <MeshTransmissionMaterial
-          ref={materialRef}
-          roughness={0.2}
-          clearcoat={0.3}
-          clearcoatRoughness={0.25}
-          thickness={1}
-          chromaticAberration={0.5}
-          anisotropy={1}
-          distortion={0.2}
-          distortionScale={0.5}
-          temporalDistortion={0.2}
-          reflectivity={0.3}
-          transmission={0.95}
-          metalness={0.1}
-          color={"#ffffff"}
-          toneMapped={false} // Important to prevent tone mapping from accumulating
-          background={new THREE.Color("#ffffff")}
-        />
-      </mesh>
-    </group>
-  );
-};
-
 const CustomCoin = ({
   position = [0, 0, 0],
   scale = 1,
@@ -131,7 +82,7 @@ const CustomCoin = ({
   onInactive?: () => void;
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const shaderRef = useRef<any>(null);
+  const shaderRef = useRef(null);
   const [fallen, setFallen] = useState(false);
   const fallSpeed = useMemo(() => Math.random() * 0.03 + 0.02, []);
   const rotationSpeed = useMemo(() => Math.random() * 0.02 + 0.01, []);
@@ -173,6 +124,7 @@ const CustomCoin = ({
       meshRef.current.rotation.x += rotationSpeed * 0.5;
 
       if (shaderRef.current) {
+        //@ts-expect-error unknown property
         shaderRef.current.time = state.clock.elapsedTime;
       }
 
@@ -257,6 +209,7 @@ const CustomCoin = ({
     <mesh ref={meshRef} position={position} scale={scale} castShadow>
       <cylinderGeometry args={[0.5, 0.5, 0.1, 32]} />
 
+      {/*@ts-expect-error unknown property */}
       <goldenShaderMaterial ref={shaderRef} />
     </mesh>
   );
@@ -324,6 +277,7 @@ const Scene = () => {
 
   const handleClick = useCallback(() => {
     const cameraPosition = camera.position.clone();
+    camera.far = 4;
 
     const mouseX = (mouse.x * viewport.width) / 2;
     const mouseY = (mouse.y * viewport.height) / 2;
@@ -368,9 +322,7 @@ const Scene = () => {
       <Environment preset="sunset" />
       <Stars radius={100} depth={50} count={1000} factor={4} />
 
-      <Float floatIntensity={0.2} rotationIntensity={0.1} speed={2}>
-        <Certificate position={[0, 0, 0]} />
-      </Float>
+      <Certificate position={[0, 0, 0]} />
 
       <Coins count={15} />
 
