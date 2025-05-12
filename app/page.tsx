@@ -1,9 +1,12 @@
+import { Download } from "lucide-react";
+
 import {
   Bold,
   TypographyH2,
   TypographyH4,
   TypographyP,
 } from "@/components/typography";
+import { Button } from "@/components/ui/button";
 
 import {
   Accordion,
@@ -32,6 +35,20 @@ export default function Home() {
         scratch or refining an existing idea, I aim to create with both quality
         and originality in mind.
       </TypographyP>
+
+      <Separator className="my-8" />
+
+      <div className="mt-4 flex items-center gap-4">
+        <Button asChild>
+          <a href="/pdf/CV Lucas 12-05-2025.pdf" download>
+            <Download className="mr-2 h-4 w-4" />
+            Download my resume
+          </a>
+        </Button>
+        <span className="text-sm text-muted-foreground">
+          Last updated: May 12, 2025
+        </span>
+      </div>
 
       <Separator className="my-8" />
 

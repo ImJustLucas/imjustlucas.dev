@@ -25,8 +25,15 @@ export const techCategories = [
       },
       {
         name: "Tailwind CSS",
-
         color: "bg-teal-400 text-white",
+      },
+      {
+        name: "Tanstack",
+        color: "bg-red-500 text-white",
+      },
+      {
+        name: "Zod",
+        color: "bg-green-500 text-white",
       },
     ],
   },
@@ -43,7 +50,6 @@ export const techCategories = [
       { name: "MongoDB", color: "bg-green-500 text-white" },
       {
         name: "PostgreSQL",
-
         color: "bg-blue-600 text-white",
       },
     ],
