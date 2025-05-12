@@ -46,6 +46,11 @@ export default function MenuContainer() {
         onClick={() => router.push(ROUTES.CONTACT)}
         isActive={isActive(ROUTES.CONTACT)}
       />
+      <MenuItem
+        label="MDF 2025"
+        onClick={() => router.push(ROUTES.MDF)}
+        isActive={isActive(ROUTES.MDF)}
+      />
     </div>
   );
 }
