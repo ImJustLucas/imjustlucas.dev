@@ -41,13 +41,13 @@ export default function Home() {
 
       <div className="mt-4 flex items-center gap-4">
         <Button asChild>
-          <a href="/pdf/CV Lucas 12-05-2025.pdf" download>
+          <a href="/pdf/cv-lucas.pdf" download>
             <Download className="mr-2 h-4 w-4" />
             Download my resume
           </a>
         </Button>
         <span className="text-sm text-muted-foreground">
-          Last updated: May 12, 2025
+          Last updated: May 28, 2025
         </span>
       </div>
 
