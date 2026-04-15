@@ -2,6 +2,18 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
+    title: "Predi.GG",
+    date: "2025 - now",
+    image: "/images/projects/predi.png",
+    wip: true,
+    description: "Predi.GG - Predict, compete, and win. 🔮",
+    techs: [],
+    links: {
+      external: "https://predi.gg",
+    },
+    openSource: false,
+  },
+  {
     title: "Qotum",
     date: "2024 - now",
     image: "/images/projects/qotum.png",
