@@ -8,7 +8,21 @@ interface TimelineEvent {
 
 export const timeline: TimelineEvent[] = [
   {
-    date: "2023 - Today",
+    date: "September 2025 - Today",
+    title: "Predi.GG - Co-Founder",
+    contract: "Entrepreneurship",
+    link: "https://predi.gg",
+    description: "Co-founded Predi.GG 🔮",
+  },
+  {
+    date: "January 2026 - Today",
+    title: "Bam Karaoke - Fullstack Developer",
+    contract: "CDI",
+    link: "https://bamkaraoke.com",
+    description: "Fullstack development for Bam Karaoke 🎤",
+  },
+  {
+    date: "2023 - 2025",
     title: "Favikon - Fullstack Developer",
     contract: "Work-study contract",
     link: "https://favikon.com",

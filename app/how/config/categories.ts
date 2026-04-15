@@ -64,4 +64,14 @@ export const techCategories = [
       { name: "VS Code", color: "bg-blue-600 text-white" },
     ],
   },
+  {
+    name: "AI",
+    description: "AI tools I use to build faster and smarter",
+    techs: [
+      { name: "Claude", color: "bg-orange-500 text-white" },
+      { name: "Claude Code", color: "bg-orange-600 text-white" },
+      { name: "Gemini", color: "bg-blue-500 text-white" },
+      { name: "Cursor", color: "bg-violet-600 text-white" },
+    ],
+  },
 ];
