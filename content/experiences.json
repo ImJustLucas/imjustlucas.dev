@@ -49,8 +49,8 @@
     "contractType": "internship",
     "link": "https://tony.tnytr.me/",
     "description": {
-      "en": "First professional experience, creation of a website for a cascadevent",
-      "fr": "Première expérience professionnelle : création d'un site web pour un événement de cascade"
+      "en": "First professional experience: rebuilt the Cascadevents website",
+      "fr": "Première expérience professionnelle : refonte du site de Cascadevents"
     },
     "period": { "start": "2021", "end": "2021" }
   }
