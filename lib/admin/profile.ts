@@ -7,7 +7,7 @@ import {
   saveContent,
   type Upload,
 } from "@/lib/admin/admin-action";
-import { resumePdfError } from "@/lib/admin/resume-pdf";
+import { checkUpload } from "@/lib/admin/upload";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
 import type { Revision } from "@/lib/content/repository";
 import type { Profile } from "@/lib/content/schema";
@@ -86,13 +86,13 @@ export const uploadResume = (
     saveContent(input.revision, (content) =>
       Effect.map(readUpload(input.file), (file) => {
         const current = content.profile.resumes[input.locale];
-        const error = resumePdfError(file);
-        if (error)
+        const checked = checkUpload("pdf", file);
+        if (checked.kind === "invalid")
           return {
             kind: "edited",
             message: "",
             documents: content,
-            fieldErrors: { file: error },
+            fieldErrors: { file: checked.error },
           };
         return {
           kind: "edited",

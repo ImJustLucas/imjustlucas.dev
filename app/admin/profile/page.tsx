@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import { AdminField, AdminForm } from "@/app/admin/admin-form";
 import { SignOutButton } from "@/app/admin/admin-screens";
+import { FileField } from "@/app/admin/file-field";
 import {
   updateProfileAction,
   uploadResumeAction,
 } from "@/app/admin/profile/actions";
-import { ResumeField } from "@/app/admin/profile/resume-field";
 import {
   TypographyH2,
   TypographyH3,
@@ -119,7 +119,12 @@ export default async function ProfileEditorPage() {
                   resetOnSave
                 >
                   <input type="hidden" name="locale" value={locale} readOnly />
-                  <ResumeField />
+                  <FileField
+                    name="file"
+                    kind="pdf"
+                    label="Nouveau PDF"
+                    required
+                  />
                 </AdminForm>
               </li>
             );

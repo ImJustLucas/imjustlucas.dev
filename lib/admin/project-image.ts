@@ -1,30 +1,9 @@
+import { checkUpload } from "@/lib/admin/upload";
+
 /**
- * Where an uploaded Project image is stored, and which files are accepted.
- * Plain code, no Effect (ADR-0002): the Admin's image field reads the limits.
+ * Where an uploaded Project image is stored. Plain code, no Effect
+ * (ADR-0002); which files are accepted is `lib/admin/upload.ts`.
  */
-
-/** Keeps the whole upload under Vercel's 4.5 MB request body cap. */
-export const PROJECT_IMAGE_MAX_BYTES = 4 * 1024 * 1024;
-
-/** For the file input's `accept`. */
-export const PROJECT_IMAGE_TYPES = "image/png,image/jpeg,image/webp,image/avif";
-
-const FORMATS: ReadonlyArray<{
-  readonly extension: string;
-  /** Recognises the format from the file's first bytes. */
-  readonly matches: (bytes: Uint8Array) => boolean;
-}> = [
-  { extension: "png", matches: (b) => startsWith(b, [0x89, 0x50, 0x4e, 0x47]) },
-  { extension: "jpg", matches: (b) => startsWith(b, [0xff, 0xd8, 0xff]) },
-  {
-    extension: "webp",
-    matches: (b) => ascii(b, 0, 4) === "RIFF" && ascii(b, 8, 12) === "WEBP",
-  },
-  {
-    extension: "avif",
-    matches: (b) => ascii(b, 4, 8) === "ftyp" && ascii(b, 8, 12) === "avif",
-  },
-];
 
 export type ProjectImage =
   | {
@@ -44,23 +23,11 @@ export const projectImage = (
   title: string,
   bytes: Uint8Array,
 ): ProjectImage => {
-  const format = FORMATS.find((candidate) => candidate.matches(bytes));
-  if (!format)
-    return {
-      kind: "invalid",
-      error: "Image attendue au format PNG, JPEG, WebP ou AVIF",
-    };
-  if (bytes.length > PROJECT_IMAGE_MAX_BYTES)
-    return { kind: "invalid", error: "Image trop lourde : 4 Mo au maximum" };
-  const url = `/images/projects/${slug(title)}-${fingerprint(bytes)}.${format.extension}`;
+  const checked = checkUpload("image", bytes);
+  if (checked.kind === "invalid") return checked;
+  const url = `/images/projects/${slug(title)}-${fingerprint(bytes)}.${checked.extension}`;
   return { kind: "image", path: `public${url}`, url };
 };
-
-const startsWith = (bytes: Uint8Array, prefix: ReadonlyArray<number>) =>
-  prefix.every((byte, i) => bytes[i] === byte);
-
-const ascii = (bytes: Uint8Array, from: number, to: number) =>
-  String.fromCharCode(...bytes.subarray(from, to));
 
 /** `Tricks Network` → `tricks-network`; `project` when nothing is left. */
 const slug = (title: string) =>

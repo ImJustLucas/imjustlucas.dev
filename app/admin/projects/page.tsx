@@ -2,13 +2,13 @@ import Link from "next/link";
 
 import { AdminField, AdminForm, LocalizedField } from "@/app/admin/admin-form";
 import { SignOutButton } from "@/app/admin/admin-screens";
+import { FileField } from "@/app/admin/file-field";
 import { PeriodField } from "@/app/admin/period-field";
 import {
   createProjectAction,
   deleteProjectAction,
   updateProjectAction,
 } from "@/app/admin/projects/actions";
-import { ProjectImageField } from "@/app/admin/projects/image-field";
 import { TechPicker } from "@/app/admin/techs/tech-picker";
 import {
   TypographyH2,
@@ -81,7 +81,13 @@ const ProjectFields: React.FC<{
         defaultChecked={project?.wip}
       />
     </div>
-    <ProjectImageField current={project?.image} />
+    {/* Left empty, the Project keeps its image. */}
+    <FileField
+      name="image"
+      kind="image"
+      label={project?.image ? "Remplacer l'image" : "Image"}
+      current={project?.image}
+    />
   </>
 );
 
