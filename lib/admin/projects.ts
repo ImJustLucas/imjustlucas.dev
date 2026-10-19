@@ -61,30 +61,11 @@ const upload = (input: ProjectFields, current: string | undefined) => {
       };
 };
 
-/** What the Admin edits of a Project; anything else in an entry is kept. */
-const EDITED: ReadonlyArray<string> = [
-  "title",
-  "description",
-  "image",
-  "wip",
-  "period",
-  "techs",
-  "externalLink",
-  "repository",
-  "openSource",
-];
-
 /**
  * The Project entry the fields describe, keys in document order. `image` is
- * the asset path of its image, if it has one; `kept` is the entry it
- * replaces, whose fields the Admin does not edit (stored star counts, until
- * they leave the content) stay as they are.
+ * the asset path of its image, if it has one.
  */
-const project = (
-  input: ProjectFields,
-  image: string | undefined,
-  kept: Project | undefined,
-) => ({
+const project = (input: ProjectFields, image: string | undefined) => ({
   title: input.title,
   description: { en: input.description.en, fr: input.description.fr },
   ...(image && { image }),
@@ -94,9 +75,6 @@ const project = (
   ...(input.externalLink && { externalLink: input.externalLink }),
   ...(input.repository && { repository: input.repository }),
   openSource: input.openSource,
-  ...Object.fromEntries(
-    Object.entries(kept ?? {}).filter(([key]) => !EDITED.includes(key)),
-  ),
 });
 
 export const createProject = (
@@ -108,7 +86,7 @@ export const createProject = (
       kind: "edited",
       message: `${MESSAGE} add Project '${input.title}'`,
       documents: documents(content, {
-        projects: [...content.projects, project(input, image, undefined)],
+        projects: [...content.projects, project(input, image)],
       }),
       entry: ["projects", content.projects.length],
       ...uploaded,
@@ -128,7 +106,7 @@ export const updateProject = (
       message: `${MESSAGE} update Project '${input.title}'`,
       documents: documents(content, {
         projects: content.projects.map((entry, i) =>
-          i === input.index ? project(input, image, existing) : entry,
+          i === input.index ? project(input, image) : entry,
         ),
       }),
       entry: ["projects", input.index],
