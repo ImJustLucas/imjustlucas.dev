@@ -6,15 +6,14 @@ import {
   TypographyH4,
   TypographyP,
 } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@radix-ui/react-accordion";
-import { Separator } from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
   return (
@@ -57,21 +56,17 @@ export default function Home() {
 
       <div className="w-full max-w-2xl">
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1" className="border-b border-border">
-            <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Why imjustlucas?
-            </AccordionTrigger>
-            <AccordionContent className="pt-1 pb-4 text-muted-foreground">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Why imjustlucas?</AccordionTrigger>
+            <AccordionContent>
               It&apos;s my reminder to keep it real and stay humble, no matter
               where I go in my career.
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-2" className="border-b border-border">
-            <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Favorite languages?
-            </AccordionTrigger>
-            <AccordionContent className="pt-1 pb-4 text-muted-foreground">
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Favorite languages?</AccordionTrigger>
+            <AccordionContent>
               JavaScript and TypeScript. JavaScript for its versatility and
               dynamic nature, and TypeScript for adding that extra layer of type
               safety and structure. Together, they&apos;re the perfect duo for
@@ -79,11 +74,9 @@ export default function Home() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-3" className="border-b border-border">
-            <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Coffee or tea?
-            </AccordionTrigger>
-            <AccordionContent className="pt-1 pb-4 text-muted-foreground">
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Coffee or tea?</AccordionTrigger>
+            <AccordionContent>
               Definitely coffee. Paris runs on it, after all!
             </AccordionContent>
           </AccordionItem>
