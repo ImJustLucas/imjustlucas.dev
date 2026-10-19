@@ -1,0 +1,3 @@
+# Effect on the server only
+
+We use Effect (v4) for everything server-side: reading and validating content, fetching stars and Videos from GitHub and YouTube, the Admin's writes, and the tests that swap those data sources for test versions. React components stay plain React, receive ready-to-render data, and never import Effect, so it never reaches the client bundle. Effect is heavier than this site strictly needs; we accept that because typed errors, retries and swappable data sources pay off once the Admin and the external fetches exist, and because learning Effect is an explicit goal of this project.
