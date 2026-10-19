@@ -1,12 +1,16 @@
+import { PageHeader, routeMetadata } from "@/components/page-header";
 import { TechCard } from "@/components/tech-i-use/TechCard";
-import { TypographyH2, TypographyP } from "@/components/typography";
+import { TypographyP } from "@/components/typography";
+import { ROUTES } from "@/config/routes";
 
 import { techCategories } from "./config/categories";
+
+export const generateMetadata = routeMetadata(ROUTES.how);
 
 export default function What() {
   return (
     <div className="">
-      <TypographyH2 border={false}>How i create my apps?</TypographyH2>
+      <PageHeader route={ROUTES.how} />
       <TypographyP>
         I leverage cutting-edge technologies to build robust and scalable
         applications. Here&apos;s an overview of my technical expertise:

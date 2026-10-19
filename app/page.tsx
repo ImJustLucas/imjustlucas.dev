@@ -1,11 +1,7 @@
 import { Download } from "lucide-react";
 
-import {
-  Bold,
-  TypographyH2,
-  TypographyH4,
-  TypographyP,
-} from "@/components/typography";
+import { PageHeader, routeMetadata } from "@/components/page-header";
+import { Bold, TypographyH4, TypographyP } from "@/components/typography";
 import {
   Accordion,
   AccordionContent,
@@ -14,11 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ROUTES } from "@/config/routes";
+
+export const generateMetadata = routeMetadata(ROUTES.me);
 
 export default function Home() {
   return (
     <div className="md:w-2/3 w-full">
-      <TypographyH2 border={false}>Who am i?</TypographyH2>
+      <PageHeader route={ROUTES.me} />
       <TypographyP>
         Yoooo, I&apos;m <Bold>Lucas</Bold>! <br />A french software developer
         based in the heart of Paris, France, with a focus on crafting

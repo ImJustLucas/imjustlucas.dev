@@ -1,10 +1,10 @@
 import { videos } from "@/app/videos/config/videos";
-import {
-  TypographyH2,
-  TypographyP,
-  TypographySmall,
-} from "@/components/typography";
+import { PageHeader, routeMetadata } from "@/components/page-header";
+import { TypographyP, TypographySmall } from "@/components/typography";
 import { VideoCardBadge } from "@/components/VideoCard";
+import { ROUTES } from "@/config/routes";
+
+export const generateMetadata = routeMetadata(ROUTES.videos);
 
 export default function VideosPage() {
   const parseDate = (dateStr: string) => {
@@ -20,7 +20,7 @@ export default function VideosPage() {
 
   return (
     <div className="w-full">
-      <TypographyH2 border={false}>youtube videos</TypographyH2>
+      <PageHeader route={ROUTES.videos} />
 
       {sortedVideos.length === 0 ? (
         <TypographyP>

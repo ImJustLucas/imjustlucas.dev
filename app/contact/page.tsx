@@ -1,13 +1,13 @@
-import {
-  TypographyH2,
-  TypographyH3,
-  TypographyP,
-} from "@/components/typography";
+import { PageHeader, routeMetadata } from "@/components/page-header";
+import { TypographyH3, TypographyP } from "@/components/typography";
+import { ROUTES } from "@/config/routes";
+
+export const generateMetadata = routeMetadata(ROUTES.contact);
 
 export default function What() {
   return (
     <div className="md:w-2/3 w-full">
-      <TypographyH2 border={false}>Contact me</TypographyH2>
+      <PageHeader route={ROUTES.contact} />
       <TypographyP>
         If you want to contact me, you can do so via my Linkedin DMs, I will
         respond as quickly as possible
