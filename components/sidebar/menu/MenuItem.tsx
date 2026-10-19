@@ -1,10 +1,11 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import useSound from "use-sound";
 
 import { Button } from "@/components/ui/button";
 import type { Route } from "@/config/routes";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface MenuItemProps {
@@ -15,6 +16,7 @@ interface MenuItemProps {
 export default function MenuItem({ route, isActive = false }: MenuItemProps) {
   const [play] = useSound("/sounds/click.mp3");
   const { closeMenu } = useMobileMenu();
+  const t = useTranslations("Routes");
 
   return (
     <Button
@@ -36,7 +38,9 @@ export default function MenuItem({ route, isActive = false }: MenuItemProps) {
           play();
         }}
       >
-        <span className="flex-1 text-left">{route.label}</span>
+        <span className="flex-1 text-left">
+          {t(`${route.messageKey}.label`)}
+        </span>
         {isActive && (
           <span className="h-2 w-2 rounded-full bg-primary transition-all duration-200 ease-in-out" />
         )}

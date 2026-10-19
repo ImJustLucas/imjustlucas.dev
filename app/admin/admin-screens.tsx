@@ -33,7 +33,9 @@ export const SignInScreen: React.FC<{
           Connecte-toi avec ton compte GitHub pour modifier le contenu du site.
         </TypographyP>
         <Button asChild>
-          {/* A plain link: the sign-in route redirects to GitHub, nothing to prefetch. */}
+          {/* A full-page navigation: the sign-in Route Handler redirects to
+              GitHub, which client-side routing cannot follow. */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a href="/admin/auth/sign-in">
             <Github />
             Se connecter avec GitHub

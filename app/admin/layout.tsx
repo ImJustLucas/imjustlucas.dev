@@ -1,17 +1,11 @@
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 
 import { SignInScreen } from "@/app/admin/admin-screens";
+import { geistMono, geistSans } from "@/app/fonts";
 import { currentOwnerAccess } from "@/lib/admin/session";
-
-const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Admin · ImJustLucas",
@@ -29,7 +23,9 @@ export default async function AdminLayout({
   const access = await currentOwnerAccess();
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`${geistSans.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

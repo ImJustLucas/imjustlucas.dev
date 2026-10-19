@@ -1,4 +1,4 @@
-import { videos } from "@/app/videos/config/videos";
+import { videos } from "@/app/[locale]/videos/config/videos";
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import { TypographyP, TypographySmall } from "@/components/typography";
 import { VideoCardBadge } from "@/components/VideoCard";

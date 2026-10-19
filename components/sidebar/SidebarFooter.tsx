@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
@@ -7,6 +8,7 @@ import { PresenceBlock } from "@/components/presence/Presence";
 import { TypographyMuted } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 
+import { LocaleSwitcher } from "../locale-switcher";
 import { ModeToggle } from "../theme-switch";
 
 const socialLinks = [
@@ -29,11 +31,13 @@ const socialLinks = [
 ];
 
 export function SidebarFooter() {
+  const t = useTranslations("Layout");
+
   return (
     <footer className="bg-background mt-auto">
       <PresenceBlock />
       <div className="container flex flex-col w-full items-center justify-between gap-4 py-4 md:h-16 md:flex-row md:py-0 border-y ">
-        <div className="flex w-full justify-center gap-4">
+        <div className="flex w-full justify-center gap-2">
           {socialLinks.map((link) => (
             <Button key={link.href} variant="ghost" size="icon" asChild>
               <Link href={link.href} target="_blank" rel="noopener noreferrer">
@@ -42,11 +46,12 @@ export function SidebarFooter() {
               </Link>
             </Button>
           ))}
+          <LocaleSwitcher />
           <ModeToggle />
         </div>
       </div>
       <div className="text-center pt-4">
-        <TypographyMuted>Made with 💖 by ImJustLucas</TypographyMuted>
+        <TypographyMuted>{t("madeBy")}</TypographyMuted>
       </div>
     </footer>
   );

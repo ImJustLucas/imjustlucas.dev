@@ -1,0 +1,78 @@
+{
+  "Metadata": {
+    "siteName": "ImJustLucas",
+    "description": "Je suis développeur logiciel en plein cœur de Paris, et je conçois des sites et des applications de qualité."
+  },
+  "Routes": {
+    "me": {
+      "label": "moi",
+      "title": "Qui suis-je ?",
+      "description": "Lucas, développeur logiciel français basé à Paris, qui conçoit des sites et des applications de qualité."
+    },
+    "what": {
+      "label": "ce que j'ai fait",
+      "title": "Ce que j'ai fait",
+      "description": "Les projets de Lucas, des projets perso aux projets pro."
+    },
+    "how": {
+      "label": "comment je fais",
+      "title": "Comment je crée mes apps ?",
+      "description": "Les langages, frameworks et outils que Lucas utilise pour créer ses apps."
+    },
+    "experiences": {
+      "label": "mes expériences",
+      "title": "Mes expériences",
+      "description": "Les expériences professionnelles et les diplômes de Lucas."
+    },
+    "videos": {
+      "label": "vidéos yt",
+      "title": "vidéos youtube",
+      "description": "Les dernières vidéos de la chaîne YouTube de Lucas."
+    },
+    "contact": {
+      "label": "contact",
+      "title": "Me contacter",
+      "description": "Comment entrer en contact avec Lucas."
+    },
+    "mdf2025": {
+      "label": "MDF 2025",
+      "title": "MasterDevFrance 2025",
+      "description": "Lucas a remporté le concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique en développement logiciel."
+    }
+  },
+  "Layout": {
+    "avatarAlt": "Avatar d'ImJustLucas",
+    "madeBy": "Fait avec 💖 par ImJustLucas"
+  },
+  "ThemeSwitch": {
+    "toggle": "Changer de thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "LocaleSwitcher": {
+    "switch": "English"
+  },
+  "Home": {
+    "intro": "Yoooo, moi c'est <bold>Lucas</bold> ! <br></br>Développeur logiciel français en plein cœur de Paris, je conçois des sites et des applications de qualité.",
+    "creativeMindsetTitle": "Esprit créatif",
+    "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
+    "downloadResume": "Télécharger mon CV",
+    "resumeLastUpdated": "Dernière mise à jour : {date, date, long}",
+    "faqTitle": "FAQ",
+    "faq": {
+      "whyImjustlucas": {
+        "question": "Pourquoi imjustlucas ?",
+        "answer": "C'est mon rappel pour rester vrai et humble, peu importe où ma carrière me mène."
+      },
+      "favoriteLanguages": {
+        "question": "Langages préférés ?",
+        "answer": "JavaScript et TypeScript. JavaScript pour sa polyvalence et son côté dynamique, TypeScript pour la couche de typage et de structure en plus. Ensemble, c'est le duo parfait pour créer des applications solides !"
+      },
+      "coffeeOrTea": {
+        "question": "Café ou thé ?",
+        "answer": "Café, sans hésiter. Paris carbure au café, après tout !"
+      }
+    }
+  }
+}
