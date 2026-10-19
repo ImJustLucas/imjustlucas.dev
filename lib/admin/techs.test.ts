@@ -31,6 +31,15 @@ const frontend = {
   techs: ["typescript", "react"],
 };
 
+const portfolio = {
+  title: "Portfolio",
+  description: { en: "This site", fr: "Ce site" },
+  wip: false,
+  period: { start: "2024", end: "ongoing" },
+  techs: ["typescript"],
+  openSource: true,
+};
+
 const TECHS = "content/techs.json";
 const CATEGORIES = "content/tech-categories.json";
 
@@ -46,6 +55,8 @@ const admin = (
     const memory = yield* makeInMemoryRepository({
       [TECHS]: JSON.stringify(documents.techs ?? [typescript, react, docker]),
       [CATEGORIES]: JSON.stringify(documents.techCategories ?? [frontend]),
+      "content/projects.json": JSON.stringify([portfolio]),
+      "content/experiences.json": "[]",
     });
     const access = AdminAccess.layer({
       identities: { current: async () => identity },
@@ -196,6 +207,25 @@ describe("Admin actions on Techs", () => {
           kind: "refused",
           reason:
             "React est encore utilisé par la Tech category « Frontend ». Retire-le d'abord de là pour pouvoir le supprimer.",
+        });
+        expect(yield* commits).toEqual([]);
+      }),
+  );
+
+  it.effect(
+    "deleting a Tech still used by a Project is refused, naming every use",
+    () =>
+      Effect.gen(function* () {
+        const { run, commits } = yield* admin(owner);
+
+        const result = yield* run(
+          deleteTech({ revision: "memory-0", id: "typescript" }),
+        );
+
+        expect(result).toEqual({
+          kind: "refused",
+          reason:
+            "TypeScript est encore utilisé par la Tech category « Frontend », le Project « Portfolio ». Retire-le d'abord de là pour pouvoir le supprimer.",
         });
         expect(yield* commits).toEqual([]);
       }),

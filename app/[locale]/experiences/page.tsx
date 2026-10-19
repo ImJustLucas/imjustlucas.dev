@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import { DiplomaTable } from "@/components/diplomas/AllDiplomas";
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import {
@@ -9,12 +11,16 @@ import {
 } from "@/components/typography";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ROUTES } from "@/config/routes";
-
-import { timeline } from "./config/timeline";
+import { formatPeriod } from "@/lib/content/format-period";
+import { getExperiences } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.experiences);
 
-export default function Experiences() {
+// Experience texts in English until the catalog takes the Locale (#16).
+export default async function Experiences() {
+  const experiences = await getExperiences();
+  const t = await getTranslations("Experiences");
+
   return (
     <div className="">
       <PageHeader route={ROUTES.experiences} />
@@ -24,20 +30,31 @@ export default function Experiences() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {timeline.map((event, index) => (
-              <div key={index} className="flex">
+            {experiences.map((experience, index) => (
+              <div
+                key={`${experience.company} ${experience.period.start}`}
+                className="flex"
+              >
                 <div className="flex flex-col items-center mr-4">
                   <div className="w-3 h-3 bg-primary rounded-full" />
-                  {index !== timeline.length - 1 && (
+                  {index !== experiences.length - 1 && (
                     <div className="w-0.5 h-full bg-border" />
                   )}
                 </div>
-                <a href={event.link}>
+                <a href={experience.link}>
                   <div>
-                    <TypographyP>{event.date}</TypographyP>
-                    <TypographyH4>{event.title}</TypographyH4>
-                    <TypographySmall>{event.contract}</TypographySmall>
-                    <TypographyMuted>{event.description}</TypographyMuted>
+                    <TypographyP>
+                      {formatPeriod(experience.period, "en")}
+                    </TypographyP>
+                    <TypographyH4>
+                      {experience.company} - {experience.role.en}
+                    </TypographyH4>
+                    <TypographySmall>
+                      {t(`contractTypes.${experience.contractType}`)}
+                    </TypographySmall>
+                    <TypographyMuted>
+                      {experience.description.en}
+                    </TypographyMuted>
                   </div>
                 </a>
               </div>

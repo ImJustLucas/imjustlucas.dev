@@ -1,12 +1,13 @@
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ROUTES } from "@/config/routes";
-
-import { projects } from "./config/projects";
+import { getProjects } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.what);
 
-export default function What() {
+export default async function What() {
+  const projects = await getProjects();
+
   return (
     <div className="">
       <PageHeader route={ROUTES.what} />

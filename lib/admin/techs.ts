@@ -100,10 +100,14 @@ export const deleteTech = (
   });
 
 /** Where a Tech is referenced, in words, e.g. `la Tech category « Frontend »`. */
-const techReferences = (content: Content, tech: Tech) =>
-  content.techCategories
+const techReferences = (content: Content, tech: Tech) => [
+  ...content.techCategories
     .filter((category) => category.techs.includes(tech.id))
-    .map((category) => `la Tech category « ${category.name.fr} »`);
+    .map((category) => `la Tech category « ${category.name.fr} »`),
+  ...content.projects
+    .filter((project) => project.techs.includes(tech.id))
+    .map((project) => `le Project « ${project.title} »`),
+];
 
 const techGone = (id: string) =>
   ({

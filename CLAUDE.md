@@ -25,16 +25,21 @@ The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its p
 
 **Layout** — `app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar content is mounted once and only restyled between the desktop column and the mobile overlay, so there is a single Lanyard connection and a single set of menu sounds; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
 
-**Content** — Techs and Tech categories live as JSON documents in `content/` (`techs.json`, `tech-categories.json`); edit them by hand or through the Admin. Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
+**Content** — Techs, Tech categories, Projects and Experiences live as JSON documents in `content/` (`techs.json`, `tech-categories.json`, `projects.json`, `experiences.json`); edit them by hand or through the Admin (Techs and Tech categories so far). Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
 
-- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
+- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category, Project, Experience) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
+- `period.ts` — the `Period` schema (start `YYYY` or `YYYY-MM`; end the same or `"ongoing"`; end not before start) and the ordering by start, most recent first, ongoing first on equal starts (a year counts as its January). Shared by every kind that has a Period.
+- `format-period.ts` — `formatPeriod(period, locale)`, the plain Period formatting function (month names per Locale, "Today" / "Aujourd'hui"); no Effect import, so components may use it. Tested in `format-period.test.ts`.
 - `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only), `repository-github.ts` (the Admin: Git Data API with the Owner's token, one commit per save on `main`, text or binary files, fast-forward only so a moved `main` is a `ContentConflict`; tested against a fake GitHub `fetch`) and `repository-in-memory.ts` (tests; `makeInMemoryRepository` also lists the commits made).
-- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (e.g. `techCategories` with resolved Techs). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
-- `server.ts` — what pages call (`getTechCategories()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (`techCategories` with resolved Techs; `projects` ordered by Period, with resolved Techs, a `repository` only for open-source Projects and no zero star count; `experiences` ordered by Period; `videos` most recent first, with only the latest marked `isNew` while under 30 days old, read with Effect `Clock`). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts` and `catalog-videos.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `youtube-channel.ts` — the `YouTubeChannel` source, consumed only by the catalog: `layer` reads the channel's public Atom feed (no API key; any failure is `VideosUnavailable`), `layerTest` serves fixed Videos per channel. The channel identifier is `YOUTUBE_CHANNEL_ID` in `catalog.ts` until the Profile holds it.
+- `server.ts` — what pages call (`getTechCategories()`, `getProjects()`, `getExperiences()`, `getVideos()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
 
 Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
 
-Content not migrated yet stays in co-located config files: `app/[locale]/what/config/projects.ts`, `app/[locale]/experiences/config/timeline.ts`, `app/[locale]/videos/config/videos.ts`.
+An Experience's contract type is an identifier (`entrepreneurship`, `permanent`, `work-study`, `internship`); its label is an interface string under `Experiences.contractTypes` in the message dictionaries.
+
+Videos are never written by hand. The Videos page has `revalidate = 86400`: it is regenerated on every deploy and then once a day. `getVideos()` rejects when the feed fails at runtime, so Next keeps serving the previous page; during `next build` (`NEXT_PHASE`) it returns no Videos instead, so the page shows its empty state and the build does not fail.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
@@ -55,9 +60,9 @@ Admin environment variables (`.env.local` locally, Vercel Production); `scripts/
 
 **UI components** — Shadcn/ui components live in `components/ui/`. Custom typography primitives (`TypographyH2`, `TypographyH3`, `TypographyH4`, `TypographyP`, `Bold`, etc.) are in `components/typography/index.tsx`; prefer these over raw HTML tags for text. They take `children` and an optional `className`; adjust styling through `className` rather than adding props.
 
-**Types** — shared TypeScript types are in `types/` (`project.ts`). Lanyard types come from `react-use-lanyard`.
+**Types** — content types for components come from `lib/content/types.ts`; Lanyard types come from `react-use-lanyard`.
 
-**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`, and `*.ytimg.com/vi/**` for Video thumbnails). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 
