@@ -7,13 +7,18 @@ import {
   ownerAccess,
 } from "@/lib/admin/owner-access";
 import { loadContent } from "@/lib/content/catalog";
-import type { ContentRepository, Revision } from "@/lib/content/repository";
+import type {
+  ContentChange,
+  ContentRepository,
+  Revision,
+} from "@/lib/content/repository";
 import { Content, DOCUMENT_PATHS } from "@/lib/content/schema";
 
 /**
  * The shape every Admin action follows: check the Owner, read the content,
  * apply the edit, validate the result with the content schemas, then publish
- * the changed documents as one commit on top of the revision the Admin read.
+ * the changed documents (and any uploaded files) as one commit on top of the
+ * revision the Admin read.
  * Each step that stops the save returns its `AdminActionResult`.
  */
 
@@ -67,6 +72,13 @@ export type ContentEdit =
        * inside it are reported as field errors of the input.
        */
       readonly entry?: readonly [keyof ContentDocuments, number];
+      /** Files committed with the documents, e.g. an uploaded image. */
+      readonly assets?: ReadonlyArray<ContentChange>;
+      /**
+       * Errors in input the content schemas do not see (e.g. an upload):
+       * reported with the schema's field errors, and nothing is committed.
+       */
+      readonly fieldErrors?: Readonly<Record<string, string>>;
     };
 
 /**
@@ -94,9 +106,21 @@ export const saveContent = (
         Effect.succeed({ rejected: rejection(error, outcome.entry) }),
       ),
     );
-    if ("rejected" in validated) return validated.rejected;
+    const fieldErrors = outcome.fieldErrors ?? {};
+    if ("rejected" in validated)
+      return validated.rejected.kind === "invalid"
+        ? ({
+            kind: "invalid",
+            fieldErrors: { ...fieldErrors, ...validated.rejected.fieldErrors },
+          } as const)
+        : validated.rejected;
+    if (Object.keys(fieldErrors).length > 0)
+      return { kind: "invalid", fieldErrors } as const;
 
-    const changes = changedDocuments(content, validated.next);
+    const changes = [
+      ...changedDocuments(content, validated.next),
+      ...(outcome.assets ?? []),
+    ];
     if (changes.length === 0) return { kind: "saved", revision } as const;
 
     const next = yield* repository.commit({
@@ -175,6 +199,23 @@ const FRENCH: ReadonlyArray<
   [
     /^Tech identifier defined more than once: (.*)$/,
     (m) => `Un Tech utilise déjà cet identifiant : ${m[1]}`,
+  ],
+  [
+    /^Expected a year \(YYYY\) or a year-month \(YYYY-MM\)$/,
+    () => "Année (AAAA) ou mois (AAAA-MM) attendu",
+  ],
+  [
+    /^Expected a year \(YYYY\), a year-month \(YYYY-MM\) or ongoing$/,
+    () => "Année (AAAA), mois (AAAA-MM) ou « en cours » attendu",
+  ],
+  [
+    /^End must not precede start$/,
+    () => "La fin ne peut pas précéder le début",
+  ],
+  [/^Expected an http\(s\) URL$/, () => "Adresse http(s) attendue"],
+  [
+    /^Expected https:\/\/github\.com\/<owner>\/<repository>$/,
+    () => "Adresse attendue au format https://github.com/<compte>/<dépôt>",
   ],
 ];
 
