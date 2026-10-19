@@ -1,21 +1,19 @@
 import { Clock, Effect } from "effect";
 
 import type { Locale } from "@/i18n/routing";
-import type { AdminActionResult } from "@/lib/admin/action-result";
 import {
-  AdminAccess,
+  type AdminAction,
+  commitMessage,
+  documents,
+  openEditor,
   readUpload,
   saveContent,
+  type Saved,
   type Upload,
 } from "@/lib/admin/admin-action";
 import { checkUpload } from "@/lib/admin/upload";
-import { type CatalogError, loadContent } from "@/lib/content/catalog";
-import type { Revision } from "@/lib/content/repository";
-import type { Profile } from "@/lib/content/schema";
 
 /** Admin actions on the Profile, the one document of Lucas's identity. */
-
-type Saved = { readonly revision: Revision };
 
 /** The Profile's identity fields as the Owner types them (unvalidated). */
 type ProfileFields = {
@@ -29,17 +27,12 @@ type ProfileFields = {
   readonly discordUserId: string;
 };
 
-const MESSAGE = "📝 Admin:";
-
 /** Edits the social links and account identifiers; Resumes are uploaded. */
-export const updateProfile = (
-  input: Saved & ProfileFields,
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+export const updateProfile = (input: Saved & ProfileFields): AdminAction =>
   saveContent(input.revision, (content) => ({
     kind: "edited",
-    message: `${MESSAGE} update Profile`,
-    documents: {
-      ...content,
+    message: commitMessage("update Profile"),
+    documents: documents(content, {
       profile: {
         links: {
           github: input.links.github,
@@ -51,7 +44,7 @@ export const updateProfile = (
         discordUserId: input.discordUserId,
         resumes: content.profile.resumes,
       },
-    },
+    }),
     entry: ["profile"],
   }));
 
@@ -79,7 +72,7 @@ const dayInParis = (millis: number) =>
  */
 export const uploadResume = (
   input: Saved & { readonly locale: Locale; readonly file: Upload },
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+): AdminAction =>
   Effect.flatMap(Clock.currentTimeMillis, (now) =>
     saveContent(input.revision, (content) =>
       Effect.map(readUpload(input.file), (file) => {
@@ -94,9 +87,8 @@ export const uploadResume = (
           };
         return {
           kind: "edited",
-          message: `${MESSAGE} upload ${RESUME_NAMES[input.locale]}`,
-          documents: {
-            ...content,
+          message: commitMessage(`upload ${RESUME_NAMES[input.locale]}`),
+          documents: documents(content, {
             profile: {
               ...content.profile,
               resumes: {
@@ -107,7 +99,7 @@ export const uploadResume = (
                 },
               },
             },
-          },
+          }),
           entry: ["profile"],
           assets: [{ path: `public${current.asset}`, content: file }],
         };
@@ -115,28 +107,7 @@ export const uploadResume = (
     ),
   );
 
-/** What the Profile editor shows: the Profile and the revision it was read at. */
-export type ProfileEditor =
-  | {
-      readonly kind: "owner";
-      readonly revision: Revision;
-      readonly profile: Profile;
-    }
-  | { readonly kind: "not-owner" };
-
-export const openProfileEditor: Effect.Effect<
-  ProfileEditor,
-  CatalogError,
-  AdminAccess
-> = Effect.gen(function* () {
-  const repository = yield* (yield* AdminAccess).repository;
-  // The revision first: content read after it is at least as recent, so a
-  // save based on it can only be refused, never overwrite newer content.
-  const revision = yield* repository.head;
-  const content = yield* loadContent(repository);
-  return { kind: "owner", revision, profile: content.profile } as const;
-}).pipe(
-  Effect.catchTag("NotOwner", () =>
-    Effect.succeed({ kind: "not-owner" } as const),
-  ),
-);
+/** What the Profile editor shows: the Profile. */
+export const openProfileEditor = openEditor((content) => ({
+  profile: content.profile,
+}));

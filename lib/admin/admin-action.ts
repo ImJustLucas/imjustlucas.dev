@@ -6,7 +6,7 @@ import {
   type Owner,
   ownerAccess,
 } from "@/lib/admin/owner-access";
-import { loadContent } from "@/lib/content/catalog";
+import { type CatalogError, loadContent } from "@/lib/content/catalog";
 import { byStartMostRecentFirst, type Period } from "@/lib/content/period";
 import type {
   ContentChange,
@@ -16,11 +16,13 @@ import type {
 import { Content, DOCUMENT_PATHS } from "@/lib/content/schema";
 
 /**
- * The shape every Admin action follows: check the Owner, read the content,
- * apply the edit (reading any upload only then), validate the result with the content schemas, then publish
- * the changed documents (and any uploaded files) as one commit on top of the
- * revision the Admin read.
- * Each step that stops the save returns its `AdminActionResult`.
+ * The shape every Admin action follows: check the Owner, read the content at
+ * the revision the editor was opened at, apply the edit (reading any upload
+ * only then), validate the result with the content schemas, then publish the
+ * changed documents (and any uploaded files) as one commit on top of that
+ * revision. Each step that stops the save returns its `AdminActionResult`.
+ * Also here: what every `lib/admin/<kind>.ts` shares (`Saved`,
+ * `commitMessage`, `documents`, `gone`, `openEditor`).
  */
 
 /** Whoever called is not the signed-in Owner. */
@@ -97,6 +99,56 @@ export const inPeriodOrder = <A extends { readonly period: Period }>(
 /** Every content document, in its JSON shape. */
 export type ContentDocuments = typeof Content.Encoded;
 
+/** An Admin action, ready to run with the Admin's access to content. */
+export type AdminAction = Effect.Effect<AdminActionResult, never, AdminAccess>;
+
+/** What every save's input carries: the revision its editor was opened at. */
+export type Saved = { readonly revision: Revision };
+
+/** Every Admin commit's message, e.g. `📝 Admin: add Tech 'Effect'`. */
+export const commitMessage = (change: string) => `📝 Admin: ${change}`;
+
+/** Every document, with those `change` replaces. */
+export const documents = (
+  content: Content,
+  change: Partial<ContentDocuments>,
+): ContentDocuments => ({ ...content, ...change });
+
+/**
+ * The refusal when the entry the editor showed no longer exists, e.g.
+ * `gone("Cette Experience")`.
+ */
+export const gone = (entry: string) =>
+  ({
+    kind: "refused",
+    reason: `${entry} n'existe plus. Recharge la page.`,
+  }) as const;
+
+/** What an editor shows the Owner, read at `revision`; nothing to others. */
+export type Editor<A> =
+  | ({ readonly kind: "owner"; readonly revision: Revision } & A)
+  | { readonly kind: "not-owner" };
+
+/**
+ * Opens an editor: reads the current revision, then the content at exactly
+ * that revision, which `view` turns into what the editor shows. Saves are
+ * based on that revision, so they rebuild nothing the editor did not show.
+ */
+export const openEditor = <A extends object>(
+  view: (content: Content) => A,
+): Effect.Effect<Editor<A>, CatalogError, AdminAccess> =>
+  Effect.gen(function* () {
+    const repository = yield* (yield* AdminAccess).repository;
+    const revision = yield* repository.head;
+    const content = yield* loadContent(repository, revision);
+    const editor: Editor<A> = { kind: "owner", revision, ...view(content) };
+    return editor;
+  }).pipe(
+    Effect.catchTag("NotOwner", () =>
+      Effect.succeed<Editor<A>>({ kind: "not-owner" }),
+    ),
+  );
+
 /** What an action makes of the current content. */
 export type ContentEdit =
   | { readonly kind: "refused"; readonly reason: string }
@@ -135,7 +187,7 @@ export const saveContent = (
   edit: (
     content: Content,
   ) => ContentEdit | Effect.Effect<ContentEdit, UploadUnreadable>,
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+): AdminAction =>
   Effect.gen(function* () {
     const repository = yield* (yield* AdminAccess).repository;
     const content = yield* loadContent(repository, revision);

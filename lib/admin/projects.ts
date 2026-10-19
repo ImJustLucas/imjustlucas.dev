@@ -1,27 +1,25 @@
 import { Effect } from "effect";
 
-import type { AdminActionResult, PeriodInput } from "@/lib/admin/action-result";
+import type { PeriodInput } from "@/lib/admin/action-result";
 import {
-  AdminAccess,
-  type ContentDocuments,
+  type AdminAction,
+  commitMessage,
+  documents,
+  gone,
   inPeriodOrder,
+  openEditor,
   readUpload,
   saveContent,
+  type Saved,
   type Upload,
 } from "@/lib/admin/admin-action";
 import { projectImage } from "@/lib/admin/project-image";
-import { type CatalogError, loadContent } from "@/lib/content/catalog";
-import type { Revision } from "@/lib/content/repository";
-import type {
-  Content,
-  LocalizedText,
-  Project,
-  Tech,
-} from "@/lib/content/schema";
+import type { LocalizedText } from "@/lib/content/schema";
 
-/** Admin actions on Projects. */
-
-type Saved = { readonly revision: Revision };
+/**
+ * Admin actions on Projects. Projects have no identifier: they are addressed
+ * by their position in the stored document.
+ */
 
 /** A Project as the Owner types it (unvalidated). Star counts are not in it. */
 type ProjectFields = {
@@ -39,13 +37,6 @@ type ProjectFields = {
   /** A new image, uploaded: committed with the Project. */
   readonly image?: Upload;
 };
-
-const MESSAGE = "📝 Admin:";
-
-const documents = (
-  content: Content,
-  change: Partial<ContentDocuments>,
-): ContentDocuments => ({ ...content, ...change });
 
 /**
  * The image a save gives the Project: the uploaded one, committed alongside
@@ -80,13 +71,13 @@ const project = (input: ProjectFields, image: string | undefined) => ({
   openSource: input.openSource,
 });
 
-export const createProject = (
-  input: Saved & ProjectFields,
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+const projectGone = gone("Ce Project");
+
+export const createProject = (input: Saved & ProjectFields): AdminAction =>
   saveContent(input.revision, (content) =>
     Effect.map(upload(input, undefined), ({ image, ...uploaded }) => ({
       kind: "edited",
-      message: `${MESSAGE} add Project '${input.title}'`,
+      message: commitMessage(`add Project '${input.title}'`),
       documents: documents(content, {
         projects: [...content.projects, project(input, image)],
       }),
@@ -95,10 +86,9 @@ export const createProject = (
     })),
   );
 
-/** Projects have no identifier: they are addressed by position. */
 export const updateProject = (
   input: Saved & ProjectFields & { readonly index: number },
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+): AdminAction =>
   saveContent(input.revision, (content) => {
     const existing = content.projects[input.index];
     if (!existing) return projectGone;
@@ -106,7 +96,7 @@ export const updateProject = (
       upload(input, existing.image),
       ({ image, ...uploaded }) => ({
         kind: "edited",
-        message: `${MESSAGE} update Project '${input.title}'`,
+        message: commitMessage(`update Project '${input.title}'`),
         documents: documents(content, {
           projects: content.projects.map((entry, i) =>
             i === input.index ? project(input, image) : entry,
@@ -120,59 +110,27 @@ export const updateProject = (
 
 export const deleteProject = (
   input: Saved & { readonly index: number },
-): Effect.Effect<AdminActionResult, never, AdminAccess> =>
+): AdminAction =>
   saveContent(input.revision, (content) => {
     const existing = content.projects[input.index];
     if (!existing) return projectGone;
     return {
       kind: "edited",
-      message: `${MESSAGE} delete Project '${existing.title}'`,
+      message: commitMessage(`delete Project '${existing.title}'`),
       documents: documents(content, {
         projects: content.projects.filter((entry) => entry !== existing),
       }),
     };
   });
 
-const projectGone = {
-  kind: "refused",
-  reason: "Ce Project n'existe plus. Recharge la page.",
-} as const;
-
-/** What the Projects editor shows: the content and the revision it was read at. */
-export type ProjectsEditor =
-  | {
-      readonly kind: "owner";
-      readonly revision: Revision;
-      readonly techs: ReadonlyArray<Tech>;
-      /** In display order; `index` is the Project's position in its document. */
-      readonly projects: ReadonlyArray<{
-        readonly index: number;
-        readonly project: Project;
-      }>;
-    }
-  | { readonly kind: "not-owner" };
-
-export const openProjectsEditor: Effect.Effect<
-  ProjectsEditor,
-  CatalogError,
-  AdminAccess
-> = Effect.gen(function* () {
-  const repository = yield* (yield* AdminAccess).repository;
-  // The revision first: content read after it is at least as recent, so a
-  // save based on it can only be refused, never overwrite newer content.
-  const revision = yield* repository.head;
-  const content = yield* loadContent(repository);
-  return {
-    kind: "owner",
-    revision,
-    techs: content.techs,
-    projects: inPeriodOrder(content.projects).map(({ index, entry }) => ({
-      index,
-      project: entry,
-    })),
-  } as const;
-}).pipe(
-  Effect.catchTag("NotOwner", () =>
-    Effect.succeed({ kind: "not-owner" } as const),
-  ),
-);
+/**
+ * What the Projects editor shows: the Techs to pick from, and the Projects
+ * in display order, each with `index`, its stored position.
+ */
+export const openProjectsEditor = openEditor((content) => ({
+  techs: content.techs,
+  projects: inPeriodOrder(content.projects).map(({ index, entry }) => ({
+    index,
+    project: entry,
+  })),
+}));
