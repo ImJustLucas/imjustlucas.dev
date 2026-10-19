@@ -34,6 +34,16 @@ export default async function AdminHome() {
             Experiences
           </Link>
         </li>
+        <li>
+          <Link href="/admin/projects" className="underline underline-offset-4">
+            Projects
+          </Link>
+        </li>
+        <li>
+          <Link href="/admin/profile" className="underline underline-offset-4">
+            Profile (liens et CV)
+          </Link>
+        </li>
       </ul>
     </div>
   );

@@ -7,13 +7,18 @@ import {
   ownerAccess,
 } from "@/lib/admin/owner-access";
 import { loadContent } from "@/lib/content/catalog";
-import type { ContentRepository, Revision } from "@/lib/content/repository";
+import type {
+  ContentChange,
+  ContentRepository,
+  Revision,
+} from "@/lib/content/repository";
 import { Content, DOCUMENT_PATHS } from "@/lib/content/schema";
 
 /**
  * The shape every Admin action follows: check the Owner, read the content,
  * apply the edit, validate the result with the content schemas, then publish
- * the changed documents as one commit on top of the revision the Admin read.
+ * the changed documents (and any uploaded files) as one commit on top of the
+ * revision the Admin read.
  * Each step that stops the save returns its `AdminActionResult`.
  */
 
@@ -63,10 +68,20 @@ export type ContentEdit =
       /** Every document after the edit. */
       readonly documents: ContentDocuments;
       /**
-       * The entry the action's input became (document and index): issues found
-       * inside it are reported as field errors of the input.
+       * The entry the action's input became (document and index, or the whole
+       * document, e.g. the Profile): issues found inside it are reported as
+       * field errors of the input.
        */
-      readonly entry?: readonly [keyof ContentDocuments, number];
+      readonly entry?:
+        | readonly [keyof ContentDocuments, number]
+        | readonly [keyof ContentDocuments];
+      /** Files committed with the documents, e.g. an uploaded image. */
+      readonly assets?: ReadonlyArray<ContentChange>;
+      /**
+       * Errors in input the content schemas do not see (e.g. an upload):
+       * reported with the schema's field errors, and nothing is committed.
+       */
+      readonly fieldErrors?: Readonly<Record<string, string>>;
     };
 
 /**
@@ -94,9 +109,21 @@ export const saveContent = (
         Effect.succeed({ rejected: rejection(error, outcome.entry) }),
       ),
     );
-    if ("rejected" in validated) return validated.rejected;
+    const fieldErrors = outcome.fieldErrors ?? {};
+    if ("rejected" in validated)
+      return validated.rejected.kind === "invalid"
+        ? ({
+            kind: "invalid",
+            fieldErrors: { ...fieldErrors, ...validated.rejected.fieldErrors },
+          } as const)
+        : validated.rejected;
+    if (Object.keys(fieldErrors).length > 0)
+      return { kind: "invalid", fieldErrors } as const;
 
-    const changes = changedDocuments(content, validated.next);
+    const changes = [
+      ...changedDocuments(content, validated.next),
+      ...(outcome.assets ?? []),
+    ];
     if (changes.length === 0) return { kind: "saved", revision } as const;
 
     const next = yield* repository.commit({
@@ -135,7 +162,7 @@ const formatter = SchemaIssue.makeFormatterStandardSchemaV1();
  */
 const rejection = (
   error: Schema.SchemaError,
-  entry: readonly [string, number] | undefined,
+  entry: readonly [string, number] | readonly [string] | undefined,
 ): AdminActionResult => {
   const fieldErrors: Record<string, string> = {};
   const elsewhere: Array<string> = [];
@@ -144,8 +171,8 @@ const rejection = (
       typeof segment === "object" ? segment.key : segment,
     );
     const message = inFrench(issue.message);
-    if (entry && path[0] === entry[0] && path[1] === entry[1]) {
-      const field = path.slice(2).map(String).join(".");
+    if (entry?.every((segment, i) => path[i] === segment)) {
+      const field = path.slice(entry.length).map(String).join(".");
       fieldErrors[field] ??= message;
     } else {
       elsewhere.push(message);
@@ -197,6 +224,20 @@ const FRENCH: ReadonlyArray<
     /^Expected "entrepreneurship"( \| "[\w-]+")*$/,
     () => "Type de contrat inconnu",
   ],
+  [
+    /^Expected https:\/\/github\.com\/<owner>\/<repository>$/,
+    () => "Lien attendu au format https://github.com/<compte>/<dépôt>",
+  ],
+  [
+    /^Expected a YouTube channel identifier \(UC…\)$/,
+    () => "Identifiant de chaîne YouTube attendu (commençant par UC)",
+  ],
+  [
+    /^Expected a Discord account identifier$/,
+    () => "Identifiant de compte Discord attendu (17 à 20 chiffres)",
+  ],
+  // The Profile's YouTube link must be its channel's URL.
+  [/^Expected (https:\/\/\S+)$/, (m) => `Lien attendu : ${m[1]}`],
 ];
 
 const inFrench = (message: string) => {
