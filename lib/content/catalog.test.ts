@@ -2,6 +2,7 @@ import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
 import { layerInMemory } from "./repository-in-memory";
+import { YouTubeChannel } from "./youtube-channel";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -28,6 +29,7 @@ const catalogWith = (documents: {
         "content/experiences.json": JSON.stringify(documents.experiences ?? []),
       }),
     ),
+    Layer.provide(YouTubeChannel.layerTest({})),
   );
 
 describe("ContentCatalog.techCategories", () => {
@@ -173,6 +175,7 @@ describe("ContentCatalog.techCategories", () => {
               "content/experiences.json": "[]",
             }),
           ),
+          Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),
     ),

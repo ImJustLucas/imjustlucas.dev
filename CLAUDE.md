@@ -31,14 +31,15 @@ The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its p
 - `period.ts` — the `Period` schema (start `YYYY` or `YYYY-MM`; end the same or `"ongoing"`; end not before start) and the ordering by start, most recent first, ongoing first on equal starts (a year counts as its January). Shared by every kind that has a Period.
 - `format-period.ts` — `formatPeriod(period, locale)`, the plain Period formatting function (month names per Locale, "Today" / "Aujourd'hui"); no Effect import, so components may use it. Tested in `format-period.test.ts`.
 - `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only) and `repository-in-memory.ts` (tests).
-- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (`techCategories` with resolved Techs; `projects` ordered by Period, with resolved Techs, a `repository` only for open-source Projects and no zero star count; `experiences` ordered by Period). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
-- `server.ts` — what pages call (`getTechCategories()`, `getProjects()`, `getExperiences()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (`techCategories` with resolved Techs; `projects` ordered by Period, with resolved Techs, a `repository` only for open-source Projects and no zero star count; `experiences` ordered by Period; `videos` most recent first, with only the latest marked `isNew` while under 30 days old, read with Effect `Clock`). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts` and `catalog-videos.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `youtube-channel.ts` — the `YouTubeChannel` source, consumed only by the catalog: `layer` reads the channel's public Atom feed (no API key; any failure is `VideosUnavailable`), `layerTest` serves fixed Videos per channel. The channel identifier is `YOUTUBE_CHANNEL_ID` in `catalog.ts` until the Profile holds it.
+- `server.ts` — what pages call (`getTechCategories()`, `getProjects()`, `getExperiences()`, `getVideos()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
 
 Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
 
 An Experience's contract type is an identifier (`entrepreneurship`, `permanent`, `work-study`, `internship`); its label is an interface string under `Experiences.contractTypes` in the message dictionaries.
 
-Content not migrated yet stays in a co-located config file: `app/[locale]/videos/config/videos.ts`.
+Videos are never written by hand. The Videos page has `revalidate = 86400`: it is regenerated on every deploy and then once a day. `getVideos()` rejects when the feed fails at runtime, so Next keeps serving the previous page; during `next build` (`NEXT_PHASE`) it returns no Videos instead, so the page shows its empty state and the build does not fail.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
@@ -59,7 +60,7 @@ Admin environment variables (`.env.local` locally, Vercel Production); `scripts/
 
 **Types** — content types for components come from `lib/content/types.ts`; Lanyard types come from `react-use-lanyard`.
 
-**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`, and `*.ytimg.com/vi/**` for Video thumbnails). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 

@@ -4,6 +4,7 @@ export type {
   ResolvedExperience,
   ResolvedProject,
   ResolvedTechCategory,
+  Video,
 } from "./catalog";
 export type { Period } from "./period";
 export type { ContractType, LocalizedText, Tech } from "./schema";

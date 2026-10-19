@@ -2,6 +2,7 @@ import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
 import { layerLocalFilesystem } from "./repository-local-filesystem";
+import { YouTubeChannel } from "./youtube-channel";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -22,6 +23,7 @@ describe("the content folder", () => {
       Effect.provide(
         ContentCatalog.layer.pipe(
           Layer.provide(layerLocalFilesystem(repositoryRoot)),
+          Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),
     ),

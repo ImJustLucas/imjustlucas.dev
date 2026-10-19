@@ -26,6 +26,7 @@
     "clsx": "^2.1.1",
     "effect": "~4.0.5",
     "eslint-plugin-testing-library": "^6.4.0",
+    "fast-xml-parser": "5.11.2",
     "iron-session": "9.0.1",
     "lucide-react": "^0.453.0",
     "next": "16.4.2",

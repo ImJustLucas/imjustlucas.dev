@@ -82,5 +82,11 @@
       "work-study": "Alternance",
       "internship": "Stage"
     }
+  },
+  "Videos": {
+    "new": "Nouveau",
+    "watch": "Regarder",
+    "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Gardez un œil sur cette page 🤓",
+    "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>"
   }
 }

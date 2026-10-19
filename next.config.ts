@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
       new URL("https://cdn.discordapp.com/**"),
       new URL("https://media.discordapp.net/**"),
       new URL("https://i.scdn.co/**"),
+      // Video thumbnails: the channel feed serves them from i1, i2 or i3.
+      { protocol: "https", hostname: "*.ytimg.com", pathname: "/vi/**" },
     ],
   },
   async redirects() {
