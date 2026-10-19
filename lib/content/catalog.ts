@@ -14,12 +14,10 @@ import {
   DOCUMENT_PATHS,
   type Experience,
   type LocalizedText,
+  type Profile,
   type Tech,
 } from "./schema";
 import { type ChannelVideo, YouTubeChannel } from "./youtube-channel";
-
-/** The YouTube channel the Videos come from. Moves to the Profile (#13). */
-export const YOUTUBE_CHANNEL_ID = "UCLw4N_gccAY1Y4K4S20IPog";
 
 /** A Video as pages render it. */
 export type Video = ChannelVideo & {
@@ -45,7 +43,10 @@ export type ResolvedProject = {
   readonly period: Period;
   readonly techs: ReadonlyArray<Tech>;
   readonly externalLink?: string;
-  /** Only for an open-source Project with a repository link. */
+  /**
+   * Only for an open-source Project: its repository, or else the Profile's
+   * GitHub link.
+   */
   readonly repository?: string;
   /** Only when there is at least one star. */
   readonly stars?: number;
@@ -80,8 +81,13 @@ export class ContentCatalog extends Context.Service<
       ReadonlyArray<ResolvedExperience>,
       CatalogError
     >;
-    /** The channel's latest Videos, most recent first. */
-    readonly videos: Effect.Effect<ReadonlyArray<Video>, VideosUnavailable>;
+    /** The Profile's channel's latest Videos, most recent first. */
+    readonly videos: Effect.Effect<
+      ReadonlyArray<Video>,
+      VideosUnavailable | CatalogError
+    >;
+    /** Lucas's public identity: links, channel, Discord account, Resumes. */
+    readonly profile: Effect.Effect<Profile, CatalogError>;
   }
 >()("content/ContentCatalog") {
   /** Needs a `ContentRepository` and the `YouTubeChannel` source. */
@@ -117,8 +123,10 @@ export class ContentCatalog extends Context.Service<
                 ...(project.externalLink && {
                   externalLink: project.externalLink,
                 }),
-                ...(project.openSource &&
-                  project.repository && { repository: project.repository }),
+                ...(project.openSource && {
+                  repository:
+                    project.repository ?? content.profile.links.github,
+                }),
                 ...(project.stars && { stars: project.stars }),
               }),
             );
@@ -131,7 +139,8 @@ export class ContentCatalog extends Context.Service<
         ),
 
         videos: Effect.gen(function* () {
-          const videos = yield* channel.latestVideos(YOUTUBE_CHANNEL_ID);
+          const { profile } = yield* load;
+          const videos = yield* channel.latestVideos(profile.youtubeChannelId);
           const now = yield* Clock.currentTimeMillis;
           return [...videos]
             .sort(
@@ -143,6 +152,8 @@ export class ContentCatalog extends Context.Service<
                 i === 0 && now - Date.parse(video.publishedAt) < NEW_VIDEO_AGE,
             }));
         }),
+
+        profile: Effect.map(load, (content) => content.profile),
       };
     }),
   );

@@ -4,7 +4,7 @@ import { PageHeader, routeMetadata } from "@/components/page-header";
 import { TypographyP, TypographySmall } from "@/components/typography";
 import { VideoCard } from "@/components/videos/VideoCard";
 import { ROUTES } from "@/config/routes";
-import { getVideos } from "@/lib/content/server";
+import { getProfile, getVideos } from "@/lib/content/server";
 
 /** Videos are read from the channel at build time, then once a day. */
 export const revalidate = 86400;
@@ -12,8 +12,9 @@ export const revalidate = 86400;
 export const generateMetadata = routeMetadata(ROUTES.videos);
 
 export default async function VideosPage() {
-  const [videos, t] = await Promise.all([
+  const [videos, profile, t] = await Promise.all([
     getVideos(),
+    getProfile(),
     getTranslations("Videos"),
   ]);
 
@@ -29,7 +30,7 @@ export default async function VideosPage() {
             {t.rich("subscribe", {
               link: (chunks) => (
                 <a
-                  href="https://youtube.com/@imjustlucas"
+                  href={profile.links.youtube}
                   className="underline"
                   target="_blank"
                   rel="noreferrer"

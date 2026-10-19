@@ -41,8 +41,11 @@ export const getProjects = () => fromCatalog((catalog) => catalog.projects);
 export const getExperiences = () =>
   fromCatalog((catalog) => catalog.experiences);
 
+/** Lucas's public identity: social links, channel, Discord account, Resumes. */
+export const getProfile = () => fromCatalog((catalog) => catalog.profile);
+
 /**
- * The channel's latest Videos, most recent first. If the channel cannot be
+ * The Profile's channel's latest Videos, most recent first. If the channel cannot be
  * read during a build there is no previous page to keep, so the page gets no
  * Videos (its empty state) instead of failing the build.
  */

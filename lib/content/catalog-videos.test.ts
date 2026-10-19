@@ -1,8 +1,9 @@
 import { Effect, Layer } from "effect";
 import { TestClock } from "effect/testing";
 
-import { ContentCatalog, YOUTUBE_CHANNEL_ID } from "./catalog";
+import { ContentCatalog } from "./catalog";
 import { layerInMemory } from "./repository-in-memory";
+import { testProfile } from "./test-profile";
 import { type ChannelVideo, YouTubeChannel } from "./youtube-channel";
 
 import { describe, expect, it } from "@effect/vitest";
@@ -15,12 +16,32 @@ const video = (id: string, publishedAt: string): ChannelVideo => ({
   url: `https://www.youtube.com/watch?v=${id}`,
 });
 
-/** A catalog whose channel holds these Videos, in the feed's order. */
+const YOUTUBE_CHANNEL_ID = testProfile.youtubeChannelId;
+
+/** Content whose Profile names this YouTube channel. */
+const contentWithChannel = (youtubeChannelId: string) =>
+  layerInMemory({
+    "content/techs.json": "[]",
+    "content/tech-categories.json": "[]",
+    "content/projects.json": "[]",
+    "content/experiences.json": "[]",
+    "content/profile.json": JSON.stringify({
+      ...testProfile,
+      youtubeChannelId,
+      links: {
+        ...testProfile.links,
+        youtube: `https://www.youtube.com/channel/${youtubeChannelId}`,
+      },
+    }),
+  });
+
+/** A catalog whose channels hold these Videos, in the feed's order. */
 const catalogWithChannel = (
   channels: Readonly<Record<string, ReadonlyArray<ChannelVideo>>>,
+  youtubeChannelId = YOUTUBE_CHANNEL_ID,
 ) =>
   ContentCatalog.layer.pipe(
-    Layer.provide(layerInMemory({})),
+    Layer.provide(contentWithChannel(youtubeChannelId)),
     Layer.provide(YouTubeChannel.layerTest(channels)),
   );
 
@@ -39,6 +60,24 @@ describe("ContentCatalog.videos", () => {
             video("c", "2026-01-04T12:01:44+00:00"),
           ],
         }),
+      ),
+    ),
+  );
+
+  it.effect("reads the channel the Profile names", () =>
+    Effect.gen(function* () {
+      const videos = yield* (yield* ContentCatalog).videos;
+
+      expect(videos.map((v) => v.id)).toEqual(["other"]);
+    }).pipe(
+      Effect.provide(
+        catalogWithChannel(
+          {
+            [YOUTUBE_CHANNEL_ID]: [video("lucas", "2026-01-04T12:01:44Z")],
+            UCxxxxxxxxxxxxxxxxxxxxxx: [video("other", "2026-01-04T12:01:44Z")],
+          },
+          "UCxxxxxxxxxxxxxxxxxxxxxx",
+        ),
       ),
     ),
   );

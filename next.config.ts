@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
     // 404 page for URLs outside Locale routing (`app/global-not-found.tsx`).
     globalNotFound: true,
   },
+  // The content catalog reads `content/` with fs at runtime when a page
+  // revalidates (Videos, and every page's layout reads the Profile), so the
+  // documents must ship with each function.
+  outputFileTracingIncludes: {
+    "/**": ["./content/**/*.json"],
+  },
   images: {
     remotePatterns: [
       new URL("https://cdn.discordapp.com/**"),
