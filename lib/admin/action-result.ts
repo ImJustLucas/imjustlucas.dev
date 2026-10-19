@@ -1,7 +1,15 @@
 /**
- * What every Admin action returns to the Admin's forms. Plain data, no Effect
- * (ADR-0002), so client components can import it.
+ * What every Admin action returns to the Admin's forms, and the plain shapes
+ * its forms send. Plain data, no Effect (ADR-0002), so client components can
+ * import it.
  */
+
+/**
+ * A Period as the Owner types it, unvalidated: start `YYYY` or `YYYY-MM`,
+ * end the same or `ongoing` (the content schemas report anything else).
+ */
+export type PeriodInput = { readonly start: string; readonly end: string };
+
 export type AdminActionResult =
   /** Published: one commit on `main`, live after the redeploy. */
   | { readonly kind: "saved"; readonly revision: string }

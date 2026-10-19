@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 
-import type { AdminActionResult } from "@/lib/admin/action-result";
+import type { AdminActionResult, PeriodInput } from "@/lib/admin/action-result";
 import {
   AdminAccess,
   inPeriodOrder,
@@ -30,8 +30,7 @@ type ExperienceFields = {
   readonly contractType: string;
   readonly link: string;
   readonly description: LocalizedText;
-  /** Start `YYYY` or `YYYY-MM`; end the same or `ongoing`. */
-  readonly period: { readonly start: string; readonly end: string };
+  readonly period: PeriodInput;
 };
 
 const MESSAGE = "📝 Admin:";

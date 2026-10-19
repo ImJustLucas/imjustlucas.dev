@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 
-import type { AdminActionResult } from "@/lib/admin/action-result";
+import type { AdminActionResult, PeriodInput } from "@/lib/admin/action-result";
 import {
   AdminAccess,
   type ContentDocuments,
@@ -28,8 +28,7 @@ type ProjectFields = {
   readonly title: string;
   readonly description: LocalizedText;
   readonly wip: boolean;
-  /** `end` is a point in time or `ongoing`. */
-  readonly period: { readonly start: string; readonly end: string };
+  readonly period: PeriodInput;
   /** Tech identifiers, in display order. */
   readonly techs: ReadonlyArray<string>;
   /** Empty: none. */

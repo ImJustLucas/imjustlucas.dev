@@ -1,5 +1,7 @@
 // Plain functions shared by `PeriodField` and the Server Actions reading it.
 
+import type { PeriodInput } from "@/lib/admin/action-result";
+
 /**
  * A Period entered in the Admin: a year and an optional month for the start
  * and for the end, or "ongoing" as the end. `PeriodField` names its inputs
@@ -21,10 +23,7 @@ const readPoint = (form: FormData, name: string) => {
 };
 
 /** The Period a `PeriodField` posted, unvalidated. */
-export const readPeriod = (
-  form: FormData,
-  name: string,
-): { readonly start: string; readonly end: string } => ({
+export const readPeriod = (form: FormData, name: string): PeriodInput => ({
   start: readPoint(form, `${name}.start`),
   end: form.get(`${name}.end.ongoing`)
     ? "ongoing"
