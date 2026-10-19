@@ -40,6 +40,17 @@ Content not migrated yet stays in co-located config files: `app/[locale]/experie
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
+**Admin** — `app/admin/` is the Owner's private space: French, server-rendered, `noindex`, out of the menu and outside Locale routing (so no `proxy` logic; the access check lives in the Admin itself). `app/admin/layout.tsx` is the Admin's own root layout and its gate: anyone but the signed-in Owner gets the sign-in or refusal screen. Sign-in is GitHub OAuth (scope `public_repo`, the token later used to commit content): `app/admin/auth/sign-in` redirects to GitHub, `app/admin/auth/callback` keeps the identity in an iron-session sealed cookie (no database; the token is kept for the Owner only). The Owner check is `lib/admin/owner-access.ts` behind the `AdminIdentitySource` interface: every Admin page calls `currentOwnerAccess()` and every Admin Server Action starts with `requireOwnerSession()` (both in `lib/admin/session.ts`), since Server Actions are public endpoints. Tests use a fake identity source (`owner-access.test.ts`) and a fake GitHub (`github-sign-in.test.ts`).
+
+Admin environment variables (`.env.local` locally, Vercel Production); `scripts/wizards/admin-github-oauth.sh` creates the OAuth apps and sets them all:
+
+| Variable | Value |
+| --- | --- |
+| `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | GitHub OAuth app credentials; one app per environment, callback `<origin>/admin/auth/callback` |
+| `SESSION_SECRET` | ≥ 32 characters, encrypts the session cookie; changing it signs everyone out |
+| `OWNER_GITHUB_ID` | The Owner's numeric GitHub id (`gh api user -q .id`); unset means nobody gets in |
+| `AUTH_REDIRECT_URI` | Optional, pins the callback URL (set on Production); otherwise derived from the request |
+
 **3D scene** — `app/[locale]/mdf-2025/` contains a Three.js/React Three Fiber scene celebrating a competition win. Uses `@react-three/fiber`, `@react-three/drei`, and `@react-three/postprocessing`.
 
 **UI components** — Shadcn/ui components live in `components/ui/`. Custom typography primitives (`TypographyH2`, `TypographyH3`, `TypographyH4`, `TypographyP`, `Bold`, etc.) are in `components/typography/index.tsx`; prefer these over raw HTML tags for text. They take `children` and an optional `className`; adjust styling through `className` rather than adding props.
