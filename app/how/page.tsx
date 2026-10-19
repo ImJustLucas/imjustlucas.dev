@@ -1,13 +1,14 @@
 import { PageHeader, routeMetadata } from "@/components/page-header";
-import { TechCard } from "@/components/tech-i-use/TechCard";
+import { TechCategoryCard } from "@/components/tech/TechCategoryCard";
 import { TypographyP } from "@/components/typography";
 import { ROUTES } from "@/config/routes";
-
-import { techCategories } from "./config/categories";
+import { getTechCategories } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.how);
 
-export default function What() {
+export default async function How() {
+  const techCategories = await getTechCategories();
+
   return (
     <div className="">
       <PageHeader route={ROUTES.how} />
@@ -17,7 +18,7 @@ export default function What() {
       </TypographyP>
       <div className="grid grid-cols-1 md:grid-cols-2 pt-4 gap-6">
         {techCategories.map((category) => (
-          <TechCard key={category.name} category={category} />
+          <TechCategoryCard key={category.name.en} category={category} />
         ))}
       </div>
     </div>

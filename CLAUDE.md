@@ -11,7 +11,7 @@ pnpm lint       # ESLint CLI with flat config in eslint.config.mjs (runs in CI o
 pnpm test       # Vitest, runs every *.test.ts once (runs in CI on every push)
 ```
 
-Tests use Vitest (`vitest.config.ts`, Node environment, `@/` alias resolved from `tsconfig.json`). They sit next to the module they cover as `*.test.ts` and exercise plain functions through their public interface; React components are not tested. The pre-commit hook exists but its commands are commented out.
+Tests use Vitest (`vitest.config.ts`, Node environment, `@/` alias resolved from `tsconfig.json`, `server-only` aliased to a no-op). They sit next to the module they cover as `*.test.ts` and exercise plain functions, or Effect services through `@effect/vitest` (`it.effect`), through their public interface; React components are not tested. The pre-commit hook exists but its commands are commented out.
 
 ## Architecture
 
@@ -21,13 +21,16 @@ Personal portfolio site built with Next.js 16 (App Router, Turbopack), React 19,
 
 **Layout** — `app/layout.tsx` wraps everything in `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar content is mounted once and only restyled between the desktop column and the mobile overlay, so there is a single Lanyard connection and a single set of menu sounds; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
 
-**Content config** — page-specific data is kept in co-located config files, not in the components themselves:
-- `app/what/config/projects.ts` — project list
-- `app/how/config/categories.ts` — tech stack categories
-- `app/experiences/config/timeline.ts` — career timeline
-- `app/videos/config/videos.ts` — video list
+**Content** — Techs and Tech categories live as JSON documents in `content/` (`techs.json`, `tech-categories.json`); edit them by hand or, later, through the Admin. Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
 
-To add or update content on those pages, edit the relevant config file.
+- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
+- `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only) and `repository-in-memory.ts` (tests).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (e.g. `techCategories` with resolved Techs). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `server.ts` — what pages call (`getTechCategories()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+
+Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
+
+Content not migrated yet stays in co-located config files: `app/what/config/projects.ts`, `app/experiences/config/timeline.ts`, `app/videos/config/videos.ts`.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
