@@ -60,9 +60,12 @@ export const getProjects = () => fromCatalog((catalog) => catalog.projects);
 export const getExperiences = () =>
   fromCatalog((catalog) => catalog.experiences);
 
+/** Lucas's public identity: social links, channel, Discord account, Resumes. */
+export const getProfile = () => fromCatalog((catalog) => catalog.profile);
+
 /**
- * The channel's latest Videos, most recent first; none (the page's empty
- * state) when the channel cannot be read on a cold build. The page declares
- * `dynamic = "force-static"` and `revalidate = 86400`.
+ * The Profile's channel's latest Videos, most recent first; none (the page's
+ * empty state) when the channel cannot be read on a cold build. The page
+ * declares `dynamic = "force-static"` and `revalidate = 86400`.
  */
 export const getVideos = () => fromCatalog((catalog) => catalog.videos);

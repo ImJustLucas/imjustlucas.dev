@@ -6,9 +6,14 @@ import { PresenceActivity } from "./PresenceActivity";
 import { PresenceListening } from "./PresenceListening";
 import { selectPresence } from "./select-presence";
 
-export const PresenceBlock = () => {
+type PresenceBlockProps = {
+  /** The Profile's Discord account. */
+  discordUserId: string;
+};
+
+export const PresenceBlock = ({ discordUserId }: PresenceBlockProps) => {
   const { status } = useLanyard({
-    userId: "127063570616811520",
+    userId: discordUserId,
     socket: true,
   });
 

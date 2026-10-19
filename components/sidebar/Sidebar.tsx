@@ -5,12 +5,17 @@ import { Menu, X } from "lucide-react";
 import { TypographyH3 } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import type { Profile } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
 import MenuContainer from "./menu/MenuContainer";
 import { SidebarFooter } from "./SidebarFooter";
 
-export const Sidebar: React.FC = () => {
+type SidebarProps = {
+  profile: Profile;
+};
+
+export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
   const { isOpen, toggleMenu } = useMobileMenu();
 
   return (
@@ -24,7 +29,7 @@ export const Sidebar: React.FC = () => {
             : "hidden",
         )}
       >
-        <SideBarContent />
+        <SideBarContent profile={profile} />
       </div>
 
       {/* Mobile Menu Button */}
@@ -40,12 +45,12 @@ export const Sidebar: React.FC = () => {
   );
 };
 
-const SideBarContent = () => {
+const SideBarContent: React.FC<SidebarProps> = ({ profile }) => {
   return (
     <>
       <TypographyH3>&gt; ImJustLucas</TypographyH3>
       <MenuContainer />
-      <SidebarFooter />
+      <SidebarFooter profile={profile} />
     </>
   );
 };

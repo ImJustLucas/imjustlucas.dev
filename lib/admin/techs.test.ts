@@ -12,6 +12,7 @@ import {
   updateTechCategory,
 } from "@/lib/admin/techs";
 import { makeInMemoryRepository } from "@/lib/content/repository-in-memory";
+import { testProfile } from "@/lib/content/test-profile";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -57,6 +58,7 @@ const admin = (
       [CATEGORIES]: JSON.stringify(documents.techCategories ?? [frontend]),
       "content/projects.json": JSON.stringify([portfolio]),
       "content/experiences.json": "[]",
+      "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
       identities: { current: async () => identity },

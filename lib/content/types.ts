@@ -7,4 +7,10 @@ export type {
   Video,
 } from "./catalog";
 export type { Period } from "./period";
-export type { ContractType, LocalizedText, Tech } from "./schema";
+export type {
+  ContractType,
+  LocalizedText,
+  Profile,
+  Resume,
+  Tech,
+} from "./schema";

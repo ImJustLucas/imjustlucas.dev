@@ -9,6 +9,7 @@ import {
 } from "@/lib/admin/experiences";
 import type { SignedInIdentity } from "@/lib/admin/owner-access";
 import { makeInMemoryRepository } from "@/lib/content/repository-in-memory";
+import { testProfile } from "@/lib/content/test-profile";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -55,6 +56,7 @@ const admin = (
       "content/tech-categories.json": "[]",
       "content/projects.json": "[]",
       [EXPERIENCES]: JSON.stringify(experiences),
+      "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
       identities: { current: async () => identity },
