@@ -268,6 +268,11 @@ const FRENCH: ReadonlyArray<
     /^Expected a Discord account identifier$/,
     () => "Identifiant de compte Discord attendu (17 à 20 chiffres)",
   ],
+  [
+    /^Expected an image \(PNG, JPEG, WebP or AVIF\) in (\S+)$/,
+    (m) => `Image attendue (PNG, JPEG, WebP ou AVIF) dans ${m[1]}`,
+  ],
+  [/^Expected a PDF in (\S+)$/, (m) => `PDF attendu dans ${m[1]}`],
   // The Profile's YouTube link must be its channel's URL.
   [/^Expected (https:\/\/\S+)$/, (m) => `Lien attendu : ${m[1]}`],
 ];

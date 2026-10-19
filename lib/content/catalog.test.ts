@@ -829,3 +829,92 @@ describe("ContentCatalog.profile", () => {
     ),
   );
 });
+
+describe("asset paths", () => {
+  const ongoing = { start: "2024", end: "ongoing" };
+
+  it.effect(
+    "accept Project images and Resumes where the Admin stores them",
+    () =>
+      Effect.gen(function* () {
+        const catalog = yield* ContentCatalog;
+
+        expect((yield* catalog.projects).map((p) => p.image)).toEqual([
+          "/images/projects/tricks-network-0a1b2c3d.webp",
+          "/images/projects/predi.png",
+        ]);
+        expect((yield* catalog.profile).resumes.fr.asset).toBe(
+          "/pdf/cv-lucas-fr.pdf",
+        );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            projects: [
+              project("Tricks Network", ongoing, {
+                image: "/images/projects/tricks-network-0a1b2c3d.webp",
+              }),
+              project(
+                "Predi",
+                { start: "2023", end: "2023" },
+                {
+                  image: "/images/projects/predi.png",
+                },
+              ),
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect(
+    "refuse a Project image outside its folder, traversing, or not an image",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+        expect(error._tag).toBe("ContentInvalid");
+        for (const at of [0, 1, 2, 3, 4])
+          expect(error.message).toContain(
+            `content/projects.json at [${at}].image: Expected an image (PNG, JPEG, WebP or AVIF) in /images/projects/`,
+          );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            projects: [
+              "/images/projects/../../../package.json",
+              "/images/projects/../../pdf/cv-lucas.png",
+              "/pdf/cv-lucas.pdf",
+              "/images/projects/nested/predi.png",
+              "/images/projects/logo.svg",
+            ].map((image) => project("Bad", ongoing, { image })),
+          }),
+        ),
+      ),
+  );
+
+  it.effect(
+    "refuse a Resume outside its folder, traversing, or not a PDF",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).profile);
+
+        expect(error._tag).toBe("ContentInvalid");
+        for (const locale of ["en", "fr"])
+          expect(error.message).toContain(
+            `content/profile.json at resumes.${locale}.asset: Expected a PDF in /pdf/`,
+          );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            profile: {
+              ...testProfile,
+              resumes: {
+                en: { asset: "/pdf/../../.env.pdf", lastUpdated: "2025-05-28" },
+                fr: { asset: "/images/cv.png", lastUpdated: "2025-10-07" },
+              },
+            },
+          }),
+        ),
+      ),
+  );
+});

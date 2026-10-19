@@ -56,18 +56,41 @@ export const GitHubRepository = Schema.String.check(
   }),
 );
 
-/** A file of the public assets folder, by its URL path, e.g. `/images/a.png`. */
-export const AssetPath = Schema.String.check(
-  Schema.isPattern(/^\/\S+$/, {
-    message: "Expected a path under public/, starting with /",
-  }),
+/**
+ * A file of one folder of the public assets, by its URL path: a plain file
+ * name (no sub-folder, no `..`) with one of `extensions`. The Admin commits
+ * uploads to `public<path>`, so nothing else under the repository is ever
+ * reachable through one.
+ */
+const assetIn = (
+  folder: string,
+  extensions: string,
+  message: string,
+): Schema.Codec<string> =>
+  Schema.String.check(
+    Schema.isPattern(
+      new RegExp(
+        `^${folder}(?!.*\\.\\.)[a-z0-9][a-z0-9._-]*\\.(${extensions})$`,
+      ),
+      { message },
+    ),
+  );
+
+/** A Project image, e.g. `/images/projects/predi.png`. */
+export const ProjectImagePath = assetIn(
+  "/images/projects/",
+  "png|jpe?g|webp|avif",
+  "Expected an image (PNG, JPEG, WebP or AVIF) in /images/projects/",
 );
+
+/** A Resume PDF, e.g. `/pdf/cv-lucas.pdf`. */
+export const ResumePath = assetIn("/pdf/", "pdf", "Expected a PDF in /pdf/");
 
 export const Project = Schema.Struct({
   /** Not translated: a proper noun. */
   title: Schema.NonEmptyString,
   description: LocalizedText,
-  image: Schema.optionalKey(AssetPath),
+  image: Schema.optionalKey(ProjectImagePath),
   /** Work in progress. */
   wip: Schema.Boolean,
   period: Period,
@@ -114,7 +137,7 @@ export const CalendarDate = Schema.String.check(
 
 /** One Locale's Resume: a PDF of the public assets folder. */
 export const Resume = Schema.Struct({
-  asset: AssetPath,
+  asset: ResumePath,
   lastUpdated: CalendarDate,
 }).pipe(
   Schema.annotateKey({ messageMissingKey: "Missing Resume for this Locale" }),
