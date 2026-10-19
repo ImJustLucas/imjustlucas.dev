@@ -432,4 +432,59 @@ describe("the Techs editor", () => {
       expect(yield* run(openTechsEditor)).toEqual({ kind: "not-owner" });
     }),
   );
+
+  it.effect("tells the Owner which content file is missing", () =>
+    Effect.gen(function* () {
+      const { run } = yield* withoutTechs(owner);
+
+      expect(yield* run(openTechsEditor)).toEqual({
+        kind: "unavailable",
+        reason: "Le fichier content/techs.json est introuvable.",
+      });
+    }),
+  );
 });
+
+describe("a branch without the content", () => {
+  it.effect("a save fails with the missing file named, nothing committed", () =>
+    Effect.gen(function* () {
+      const { run, commits } = yield* withoutTechs(owner);
+
+      const result = yield* run(
+        createTech({
+          revision: "memory-0",
+          id: "effect",
+          name: "Effect",
+          color: "#7c3aed",
+        }),
+      );
+
+      expect(result).toEqual({
+        kind: "failed",
+        reason: "Le fichier content/techs.json est introuvable.",
+      });
+      expect(yield* commits).toHaveLength(0);
+    }),
+  );
+});
+
+/** The Admin over a repository with every content document but the Techs. */
+const withoutTechs = (identity: SignedInIdentity | undefined) =>
+  Effect.gen(function* () {
+    const memory = yield* makeInMemoryRepository({
+      [CATEGORIES]: JSON.stringify([frontend]),
+      "content/projects.json": JSON.stringify([portfolio]),
+      "content/experiences.json": "[]",
+      "content/profile.json": JSON.stringify(testProfile),
+    });
+    const access = AdminAccess.layer({
+      identities: { current: async () => identity },
+      ownerGithubId: OWNER_GITHUB_ID,
+      repositoryFor: () => memory.repository,
+    });
+    return {
+      run: <A, E>(action: Effect.Effect<A, E, AdminAccess>) =>
+        Effect.provide(action, access),
+      commits: memory.commits,
+    };
+  });

@@ -6,7 +6,10 @@ import {
   FieldError,
   LocalizedField,
 } from "@/app/admin/admin-form";
-import { SignOutButton } from "@/app/admin/admin-screens";
+import {
+  ContentUnavailableScreen,
+  SignOutButton,
+} from "@/app/admin/admin-screens";
 import {
   createExperienceAction,
   deleteExperienceAction,
@@ -18,6 +21,7 @@ import {
   TypographyH3,
   TypographyMuted,
 } from "@/components/typography";
+import { contentBranch } from "@/lib/admin/config";
 import { getExperiencesEditor } from "@/lib/admin/server";
 import { formatPeriod } from "@/lib/content/format-period";
 import type { ContractType } from "@/lib/content/types";
@@ -87,9 +91,16 @@ const ExperienceFields: React.FC<{ experience?: StoredExperience }> = ({
   </>
 );
 
-/** The Owner edits Experiences, as they are on `main`. */
+/** The Owner edits Experiences, as they are on the content branch. */
 export default async function ExperiencesEditorPage() {
   const editor = await getExperiencesEditor();
+  if (editor.kind === "unavailable")
+    return (
+      <ContentUnavailableScreen
+        reason={editor.reason}
+        branch={contentBranch()}
+      />
+    );
   if (editor.kind !== "owner") return null;
   const { revision, experiences } = editor;
 

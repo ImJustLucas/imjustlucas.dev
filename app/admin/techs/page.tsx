@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import { AdminField, AdminForm, LocalizedField } from "@/app/admin/admin-form";
-import { SignOutButton } from "@/app/admin/admin-screens";
+import {
+  ContentUnavailableScreen,
+  SignOutButton,
+} from "@/app/admin/admin-screens";
 import {
   createTechAction,
   createTechCategoryAction,
@@ -17,11 +20,19 @@ import {
   TypographyH3,
   TypographyMuted,
 } from "@/components/typography";
+import { contentBranch } from "@/lib/admin/config";
 import { getTechsEditor } from "@/lib/admin/server";
 
-/** The Owner edits Techs and Tech categories, as they are on `main`. */
+/** The Owner edits Techs and Tech categories, as they are on the content branch. */
 export default async function TechsEditorPage() {
   const editor = await getTechsEditor();
+  if (editor.kind === "unavailable")
+    return (
+      <ContentUnavailableScreen
+        reason={editor.reason}
+        branch={contentBranch()}
+      />
+    );
   if (editor.kind !== "owner") return null;
   const { revision, techs, techCategories } = editor;
 

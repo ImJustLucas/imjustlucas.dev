@@ -45,3 +45,26 @@ export const SignInScreen: React.FC<{
     )}
   </div>
 );
+
+/**
+ * What an editor shows the Owner when the content branch can't be read, e.g.
+ * before the content exists on it.
+ */
+export const ContentUnavailableScreen: React.FC<{
+  reason: string;
+  branch: string;
+}> = ({ reason, branch }) => (
+  <div className="mx-auto flex max-w-xl flex-col items-start gap-4 py-24">
+    <TypographyH2>Contenu indisponible</TypographyH2>
+    <TypographyP>
+      Impossible de lire le contenu sur la branche <Bold>{branch}</Bold> :{" "}
+      {reason}
+    </TypographyP>
+    <TypographyP>
+      Si le contenu n&apos;existe pas encore sur cette branche, règle{" "}
+      <Bold>CONTENT_BRANCH</Bold> sur une branche qui le contient, puis recharge
+      la page.
+    </TypographyP>
+    <SignOutButton />
+  </div>
+);

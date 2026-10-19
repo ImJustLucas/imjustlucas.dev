@@ -11,7 +11,7 @@
 export type PeriodInput = { readonly start: string; readonly end: string };
 
 export type AdminActionResult =
-  /** Published: one commit on `main`, live after the redeploy. */
+  /** Published: one commit on the content branch (`main`: live after the redeploy). */
   | { readonly kind: "saved"; readonly revision: string }
   /**
    * Nothing committed: some fields are invalid. Keys are field paths in the

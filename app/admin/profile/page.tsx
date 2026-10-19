@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import { AdminField, AdminForm } from "@/app/admin/admin-form";
-import { SignOutButton } from "@/app/admin/admin-screens";
+import {
+  ContentUnavailableScreen,
+  SignOutButton,
+} from "@/app/admin/admin-screens";
 import { FileField } from "@/app/admin/file-field";
 import {
   updateProfileAction,
@@ -13,6 +16,7 @@ import {
   TypographyMuted,
 } from "@/components/typography";
 import { type Locale, routing } from "@/i18n/routing";
+import { contentBranch } from "@/lib/admin/config";
 import { getProfileEditor } from "@/lib/admin/server";
 
 /** One Resume per Locale. */
@@ -33,9 +37,16 @@ const day = new Intl.DateTimeFormat("fr", {
   timeZone: "UTC",
 });
 
-/** The Owner edits the Profile, as it is on `main`. */
+/** The Owner edits the Profile, as it is on the content branch. */
 export default async function ProfileEditorPage() {
   const editor = await getProfileEditor();
+  if (editor.kind === "unavailable")
+    return (
+      <ContentUnavailableScreen
+        reason={editor.reason}
+        branch={contentBranch()}
+      />
+    );
   if (editor.kind !== "owner") return null;
   const { revision, profile } = editor;
 

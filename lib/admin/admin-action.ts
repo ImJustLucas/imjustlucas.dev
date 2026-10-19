@@ -124,10 +124,39 @@ export const gone = (entry: string) =>
     reason: `${entry} n'existe plus. Recharge la page.`,
   }) as const;
 
-/** What an editor shows the Owner, read at `revision`; nothing to others. */
+/**
+ * What an editor shows the Owner, read at `revision`; nothing to others; or,
+ * when the content can't be read (e.g. a branch without it), why, in French.
+ */
 export type Editor<A> =
   | ({ readonly kind: "owner"; readonly revision: Revision } & A)
-  | { readonly kind: "not-owner" };
+  | { readonly kind: "not-owner" }
+  | { readonly kind: "unavailable"; readonly reason: string };
+
+/**
+ * Why the content could not be read or written, in French for the Owner.
+ * Anything that isn't a content error keeps its own message.
+ */
+const describe = (error: { readonly message: string }): string => {
+  if (!("_tag" in error)) return error.message;
+  const content = error as CatalogError;
+  switch (content._tag) {
+    case "ContentNotFound":
+      return `Le fichier ${content.path} est introuvable.`;
+    case "ContentInvalid":
+      return [
+        "Le contenu est invalide :",
+        ...content.issues.map(
+          (issue) =>
+            `${issue.path}${issue.at ? ` (${issue.at})` : ""} : ${issue.message}`,
+        ),
+      ].join(" ");
+    case "ContentRepositoryError":
+      return `GitHub n'a pas pu être lu : ${content.message}`;
+    default:
+      return error.message;
+  }
+};
 
 /**
  * Opens an editor: reads the current revision, then the content at exactly
@@ -136,7 +165,7 @@ export type Editor<A> =
  */
 export const openEditor = <A extends object>(
   view: (content: Content) => A,
-): Effect.Effect<Editor<A>, CatalogError, AdminAccess> =>
+): Effect.Effect<Editor<A>, never, AdminAccess> =>
   Effect.gen(function* () {
     const repository = yield* (yield* AdminAccess).repository;
     const revision = yield* repository.head;
@@ -146,6 +175,12 @@ export const openEditor = <A extends object>(
   }).pipe(
     Effect.catchTag("NotOwner", () =>
       Effect.succeed<Editor<A>>({ kind: "not-owner" }),
+    ),
+    Effect.catch((error) =>
+      Effect.succeed<Editor<A>>({
+        kind: "unavailable",
+        reason: describe(error),
+      }),
     ),
   );
 
@@ -235,7 +270,7 @@ export const saveContent = (
       ContentConflict: () => Effect.succeed({ kind: "conflict" } as const),
     }),
     Effect.catch((error) =>
-      Effect.succeed({ kind: "failed", reason: error.message } as const),
+      Effect.succeed({ kind: "failed", reason: describe(error) } as const),
     ),
   );
 

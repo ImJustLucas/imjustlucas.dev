@@ -32,9 +32,18 @@ export const redirectUri = (requestUrl: string): string =>
   process.env.AUTH_REDIRECT_URI ||
   new URL("/admin/auth/callback", requestUrl).toString();
 
-/** The GitHub repository and branch the Admin's saves are committed to. */
-export const CONTENT_REPOSITORY = {
-  owner: "ImJustLucas",
-  repo: "imjustlucas.dev",
-  branch: "main",
-} as const;
+/**
+ * The branch the Admin reads and commits content to: `main` unless
+ * `CONTENT_BRANCH` names another one (e.g. a pull request's branch, to try the
+ * Admin before merging it).
+ */
+export const contentBranch = (): string =>
+  process.env.CONTENT_BRANCH?.trim() || "main";
+
+/** The GitHub repository and branch the Admin reads and commits content to. */
+export const contentRepository = () =>
+  ({
+    owner: "ImJustLucas",
+    repo: "imjustlucas.dev",
+    branch: contentBranch(),
+  }) as const;

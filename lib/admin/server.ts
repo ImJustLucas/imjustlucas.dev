@@ -2,7 +2,7 @@ import { Effect } from "effect";
 
 import type { AdminActionResult } from "@/lib/admin/action-result";
 import { AdminAccess, type AdminAction } from "@/lib/admin/admin-action";
-import { CONTENT_REPOSITORY, ownerGithubId } from "@/lib/admin/config";
+import { contentRepository, ownerGithubId } from "@/lib/admin/config";
 import { openExperiencesEditor } from "@/lib/admin/experiences";
 import { openProfileEditor } from "@/lib/admin/profile";
 import { openProjectsEditor } from "@/lib/admin/projects";
@@ -27,7 +27,7 @@ const run = <A, E>(effect: Effect.Effect<A, E, AdminAccess>): Promise<A> =>
         ownerGithubId: ownerGithubId(),
         repositoryFor: (owner) =>
           makeGitHubRepository({
-            ...CONTENT_REPOSITORY,
+            ...contentRepository(),
             token: owner.accessToken,
           }),
       }),
@@ -43,14 +43,14 @@ export const runAdminAction = <I>(
   input: I,
 ): Promise<AdminActionResult> => run(action(input));
 
-/** Reads the Techs editor's content from `main`, with its revision. */
+/** Reads the Techs editor's content from the content branch, with its revision. */
 export const getTechsEditor = () => run(openTechsEditor);
 
-/** Reads the Experiences editor's content from `main`, with its revision. */
+/** Reads the Experiences editor's content from the content branch, with its revision. */
 export const getExperiencesEditor = () => run(openExperiencesEditor);
 
-/** Reads the Projects editor's content from `main`, with its revision. */
+/** Reads the Projects editor's content from the content branch, with its revision. */
 export const getProjectsEditor = () => run(openProjectsEditor);
 
-/** Reads the Profile editor's content from `main`, with its revision. */
+/** Reads the Profile editor's content from the content branch, with its revision. */
 export const getProfileEditor = () => run(openProfileEditor);
