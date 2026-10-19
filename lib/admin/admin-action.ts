@@ -201,6 +201,10 @@ const FRENCH: ReadonlyArray<
     (m) => `Un Tech utilise déjà cet identifiant : ${m[1]}`,
   ],
   [
+    /^Expected an http\(s\) URL$/,
+    () => "Lien attendu, commençant par http:// ou https://",
+  ],
+  [
     /^Expected a year \(YYYY\) or a year-month \(YYYY-MM\)$/,
     () => "Année (AAAA) ou mois (AAAA-MM) attendu",
   ],
@@ -212,10 +216,14 @@ const FRENCH: ReadonlyArray<
     /^End must not precede start$/,
     () => "La fin ne peut pas précéder le début",
   ],
-  [/^Expected an http\(s\) URL$/, () => "Adresse http(s) attendue"],
+  // The ContractType literals, listed by the schema.
+  [
+    /^Expected "entrepreneurship"( \| "[\w-]+")*$/,
+    () => "Type de contrat inconnu",
+  ],
   [
     /^Expected https:\/\/github\.com\/<owner>\/<repository>$/,
-    () => "Adresse attendue au format https://github.com/<compte>/<dépôt>",
+    () => "Lien attendu au format https://github.com/<compte>/<dépôt>",
   ],
 ];
 

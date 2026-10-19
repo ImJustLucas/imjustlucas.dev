@@ -172,9 +172,9 @@ describe("Admin actions on Projects", () => {
         fieldErrors: {
           title: "Champ obligatoire",
           "description.fr": "Traduction manquante",
-          externalLink: "Adresse http(s) attendue",
+          externalLink: "Lien attendu, commençant par http:// ou https://",
           repository:
-            "Adresse attendue au format https://github.com/<compte>/<dépôt>",
+            "Lien attendu au format https://github.com/<compte>/<dépôt>",
         },
       });
       expect(yield* commits).toEqual([]);
