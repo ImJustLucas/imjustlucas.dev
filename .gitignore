@@ -39,3 +39,7 @@ next-env.d.ts
 ./.swc
 # agent instructions written by `next dev` (CLAUDE.md is the one kept)
 AGENTS.md
+
+# local Claude Code files
+.claude/worktrees/
+.claude/settings.local.json
