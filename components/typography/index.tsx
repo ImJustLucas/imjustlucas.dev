@@ -1,21 +1,19 @@
 import { cn } from "@/lib/utils";
 
-type TypographyType = {
+type TypographyProps = {
   children: React.ReactNode;
-  bold?: boolean;
+  className?: string;
 };
 
-export const TypographyH2: React.FC<
-  TypographyType & {
-    border?: boolean;
-  }
-> = ({ children, bold = true, border = true }) => {
+export const TypographyH2: React.FC<TypographyProps> = ({
+  children,
+  className,
+}) => {
   return (
     <h2
       className={cn(
         "scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0",
-        bold && "font-semibold",
-        border && "border-b",
+        className,
       )}
     >
       {children}
@@ -23,15 +21,15 @@ export const TypographyH2: React.FC<
   );
 };
 
-export const TypographyH3: React.FC<TypographyType> = ({
+export const TypographyH3: React.FC<TypographyProps> = ({
   children,
-  bold = true,
+  className,
 }) => {
   return (
     <h3
       className={cn(
-        "scroll-m-20 text-2xl  tracking-tight  mt-4",
-        bold && "font-semibold",
+        "scroll-m-20 text-2xl font-semibold tracking-tight mt-4",
+        className,
       )}
     >
       {children}
@@ -39,15 +37,15 @@ export const TypographyH3: React.FC<TypographyType> = ({
   );
 };
 
-export const TypographyH4: React.FC<TypographyType> = ({
+export const TypographyH4: React.FC<TypographyProps> = ({
   children,
-  bold = true,
+  className,
 }) => {
   return (
     <h4
       className={cn(
-        "scroll-m-20 text-xl  tracking-tight",
-        bold && "font-semibold",
+        "scroll-m-20 text-xl font-semibold tracking-tight",
+        className,
       )}
     >
       {children}
@@ -55,18 +53,37 @@ export const TypographyH4: React.FC<TypographyType> = ({
   );
 };
 
-export const TypographyP: React.FC<TypographyType> = ({ children }) => {
-  return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>;
+export const TypographyP: React.FC<TypographyProps> = ({
+  children,
+  className,
+}) => {
+  return (
+    <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
+      {children}
+    </p>
+  );
 };
 
-export const TypographySmall: React.FC<TypographyType> = ({ children }) => {
-  return <small className="text-sm font-medium leading-none">{children}</small>;
+export const TypographySmall: React.FC<TypographyProps> = ({
+  children,
+  className,
+}) => {
+  return (
+    <small className={cn("text-sm font-medium leading-none", className)}>
+      {children}
+    </small>
+  );
 };
 
-export const TypographyMuted: React.FC<TypographyType> = ({ children }) => {
-  return <p className="text-sm text-muted-foreground">{children}</p>;
+export const TypographyMuted: React.FC<TypographyProps> = ({
+  children,
+  className,
+}) => {
+  return (
+    <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
+  );
 };
 
-export const Bold: React.FC<TypographyType> = ({ children }) => {
-  return <span className="font-semibold">{children}</span>;
+export const Bold: React.FC<TypographyProps> = ({ children, className }) => {
+  return <span className={cn("font-semibold", className)}>{children}</span>;
 };
