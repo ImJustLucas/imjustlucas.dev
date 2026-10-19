@@ -1,0 +1,42 @@
+[
+  {
+    "name": { "en": "Languages", "fr": "Langages" },
+    "description": {
+      "en": "My core programming languages",
+      "fr": "Mes principaux langages de programmation"
+    },
+    "techs": ["typescript", "javascript"]
+  },
+  {
+    "name": { "en": "Frontend", "fr": "Frontend" },
+    "description": {
+      "en": "Building responsive and interactive UIs",
+      "fr": "Concevoir des interfaces adaptatives et interactives"
+    },
+    "techs": ["react", "nextjs", "shadcn-ui", "tailwind-css", "tanstack", "zod"]
+  },
+  {
+    "name": { "en": "Backend", "fr": "Backend" },
+    "description": {
+      "en": "Powering applications with robust server-side tech",
+      "fr": "Des technologies serveur robustes pour faire tourner les applications"
+    },
+    "techs": ["nodejs", "nestjs", "express", "mongodb", "postgresql"]
+  },
+  {
+    "name": { "en": "DevOps & Tools", "fr": "DevOps et outils" },
+    "description": {
+      "en": "Streamlining development and deployment processes",
+      "fr": "Simplifier le développement et le déploiement"
+    },
+    "techs": ["docker", "git", "github", "vscode"]
+  },
+  {
+    "name": { "en": "AI", "fr": "IA" },
+    "description": {
+      "en": "AI tools I use to build faster and smarter",
+      "fr": "Les outils d'IA que j'utilise pour développer plus vite et plus intelligemment"
+    },
+    "techs": ["claude", "claude-code", "gemini", "cursor"]
+  }
+]
