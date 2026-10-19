@@ -1,3 +1,5 @@
+import { getLocale } from "next-intl/server";
+
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ROUTES } from "@/config/routes";
@@ -11,7 +13,7 @@ export const revalidate = 86400;
 export const generateMetadata = routeMetadata(ROUTES.what);
 
 export default async function What() {
-  const projects = await getProjects();
+  const projects = await getProjects(await getLocale());
 
   return (
     <div className="">

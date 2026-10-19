@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
 import { ExternalLink, FolderCode, Github, Star } from "lucide-react";
 
@@ -14,14 +15,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatPeriod } from "@/lib/content/format-period";
-import type { ResolvedProject } from "@/lib/content/types";
+import type { ProjectInLocale } from "@/lib/content/types";
 
 type ProjectCardProps = {
-  project: ResolvedProject;
+  project: ProjectInLocale;
 };
 
-// English until the Projects page is translated (#16).
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const t = useTranslations("Projects");
+  const locale = useLocale();
+
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl max-w-sm h-[500px] flex flex-col">
       <div className="relative h-48 w-full shrink-0 overflow-hidden bg-muted">
@@ -45,17 +48,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.title}
         </CardTitle>
         <CardDescription>
-          <span className="text-sm">{formatPeriod(project.period, "en")}</span>
+          <span className="text-sm">
+            {formatPeriod(project.period, locale)}
+          </span>
           {project.wip && (
             <Badge className="ml-2 text-xs bg-yellow-400 text-black hover:bg-yellow-400 ">
-              WIP
+              {t("wip")}
             </Badge>
           )}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="flex-grow overflow-auto relative z-10">
-        <p className="mb-4 line-clamp-3">{project.description.en}</p>
+        <p className="mb-4 line-clamp-3">{project.description}</p>
         <div className="flex flex-wrap gap-2">
           {project.techs.map((tech) => (
             <TechBadge key={tech.id} tech={tech} />
@@ -97,7 +102,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               href={project.externalLink}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open ${project.title}`}
+              aria-label={t("open", { title: project.title })}
             >
               <ExternalLink />
             </a>

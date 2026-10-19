@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Menu, X } from "lucide-react";
 
 import { TypographyH3 } from "@/components/typography";
@@ -17,6 +19,7 @@ type SidebarProps = {
 
 export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
   const { isOpen, toggleMenu } = useMobileMenu();
+  const t = useTranslations("Sidebar");
 
   return (
     <>
@@ -38,8 +41,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
         size="icon"
         className="md:hidden fixed top-4 right-4 z-50"
         onClick={() => toggleMenu()}
+        aria-expanded={isOpen}
       >
         {isOpen ? <X /> : <Menu />}
+        <span className="sr-only">
+          {isOpen ? t("closeMenu") : t("openMenu")}
+        </span>
       </Button>
     </>
   );

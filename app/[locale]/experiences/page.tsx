@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { DiplomaTable } from "@/components/diplomas/AllDiplomas";
 import { PageHeader, routeMetadata } from "@/components/page-header";
@@ -16,17 +16,19 @@ import { getExperiences } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.experiences);
 
-// Experience texts in English until the catalog takes the Locale (#16).
 export default async function Experiences() {
-  const experiences = await getExperiences();
-  const t = await getTranslations("Experiences");
+  const locale = await getLocale();
+  const [experiences, t] = await Promise.all([
+    getExperiences(locale),
+    getTranslations("Experiences"),
+  ]);
 
   return (
     <div className="">
       <PageHeader route={ROUTES.experiences} />
       <Card className="mt-4">
         <CardHeader>
-          <CardTitle>Professional Experiences</CardTitle>
+          <CardTitle>{t("professionalTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -44,17 +46,15 @@ export default async function Experiences() {
                 <a href={experience.link}>
                   <div>
                     <TypographyP>
-                      {formatPeriod(experience.period, "en")}
+                      {formatPeriod(experience.period, locale)}
                     </TypographyP>
                     <TypographyH4>
-                      {experience.company} - {experience.role.en}
+                      {experience.company} - {experience.role}
                     </TypographyH4>
                     <TypographySmall>
                       {t(`contractTypes.${experience.contractType}`)}
                     </TypographySmall>
-                    <TypographyMuted>
-                      {experience.description.en}
-                    </TypographyMuted>
+                    <TypographyMuted>{experience.description}</TypographyMuted>
                   </div>
                 </a>
               </div>
@@ -62,7 +62,7 @@ export default async function Experiences() {
           </div>
         </CardContent>
       </Card>
-      <TypographyH3>Diplomas</TypographyH3>
+      <TypographyH3>{t("diplomasTitle")}</TypographyH3>
       <DiplomaTable />
     </div>
   );

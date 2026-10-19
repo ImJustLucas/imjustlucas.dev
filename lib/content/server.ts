@@ -2,6 +2,8 @@ import { PHASE_PRODUCTION_BUILD } from "next/constants";
 
 import { Effect, Layer, ManagedRuntime } from "effect";
 
+import type { Locale } from "@/i18n/routing";
+
 import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
 import { GitHubStars } from "./github-stars";
@@ -47,25 +49,34 @@ const fromCatalog = <A, E>(
     }).pipe(Effect.provideService(PageGeneration, pageGeneration())),
   );
 
-export const getTechCategories = () =>
-  fromCatalog((catalog) => catalog.techCategories);
+/** Tech categories, their names and descriptions in the Locale. */
+export const getTechCategories = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).techCategories);
 
 /**
- * With live star counts, omitted on a cold build when GitHub fails. The page
- * declares `dynamic = "force-static"` and `revalidate = 86400` (see
+ * Projects, their descriptions in the Locale, with live star counts, omitted
+ * on a cold build when GitHub fails. The page declares
+ * `dynamic = "force-static"` and `revalidate = 86400` (see
  * `fetchExternalText`).
  */
-export const getProjects = () => fromCatalog((catalog) => catalog.projects);
+export const getProjects = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).projects);
 
-export const getExperiences = () =>
-  fromCatalog((catalog) => catalog.experiences);
+/** Experiences, their roles and descriptions in the Locale. */
+export const getExperiences = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).experiences);
 
 /** Lucas's public identity: social links, channel, Discord account, Resumes. */
 export const getProfile = () => fromCatalog((catalog) => catalog.profile);
 
+/** The Profile's Resume in the Locale: its PDF and last-updated date. */
+export const getResume = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).resume);
+
 /**
  * The Profile's channel's latest Videos, most recent first; none (the page's
  * empty state) when the channel cannot be read on a cold build. The page
- * declares `dynamic = "force-static"` and `revalidate = 86400`.
+ * declares `dynamic = "force-static"` and `revalidate = 86400`. Video titles
+ * are not translated.
  */
 export const getVideos = () => fromCatalog((catalog) => catalog.videos);

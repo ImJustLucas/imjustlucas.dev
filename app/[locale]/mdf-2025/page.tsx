@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import { ROUTES } from "@/config/routes";
 
@@ -6,6 +8,8 @@ import MasterDevScene from "./components/master-dev-scene";
 export const generateMetadata = routeMetadata(ROUTES.mdf2025);
 
 export default function MasterDevFrance2025Page() {
+  const t = useTranslations("Mdf2025");
+
   return (
     <div className="w-full h-full">
       <PageHeader route={ROUTES.mdf2025} />
@@ -13,11 +17,7 @@ export default function MasterDevFrance2025Page() {
         <MasterDevScene />
       </div>
       <div className="mt-6 text-muted-foreground">
-        <p>
-          Proud winner of the MasterDevFrance 2025 competition - a national
-          recognition for technical excellence and innovation in software
-          development.
-        </p>
+        <p>{t("winner")}</p>
       </div>
     </div>
   );

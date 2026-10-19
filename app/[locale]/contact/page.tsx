@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import { PageHeader, routeMetadata } from "@/components/page-header";
 import { TypographyH3, TypographyP } from "@/components/typography";
 import { ROUTES } from "@/config/routes";
@@ -5,63 +7,47 @@ import { getProfile } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.contact);
 
-export default async function Contact() {
-  const { links } = await getProfile();
-  const linkedin = (label: string) => (
+const DESTINATIONS = ["northAmerica", "asia", "oceania"] as const;
+
+const externalLink = (href: string) => {
+  const ExternalLink = (chunks: React.ReactNode) => (
     <a
-      href={links.linkedin}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="underline"
     >
-      {label}
+      {chunks}
     </a>
   );
+  return ExternalLink;
+};
+
+export default async function Contact() {
+  const [{ links }, t] = await Promise.all([
+    getProfile(),
+    getTranslations("Contact"),
+  ]);
+  const linkedin = externalLink(links.linkedin);
 
   return (
     <div className="md:w-2/3 w-full">
       <PageHeader route={ROUTES.contact} />
+      <TypographyP>{t.rich("intro", { linkedin })}</TypographyP>
+      <TypographyH3>{t("inspirationTitle")}</TypographyH3>
       <TypographyP>
-        If you want to contact me, you can do so via my {linkedin("LinkedIn")}{" "}
-        DMs, I will respond as quickly as possible
+        {t.rich("inspiration", {
+          phineas: externalLink("https://github.com/phineas/phineas.io"),
+          antoinek: externalLink("https://antoinek.fr"),
+        })}
       </TypographyP>
-      <TypographyH3>Inspiration</TypographyH3>
-      <TypographyP>
-        The design is not mine basically, it is largely inspired by the sites of{" "}
-        <a
-          href="https://github.com/phineas/phineas.io"
-          target="_blank"
-          rel="noreferrer"
-          className="underline"
-        >
-          phineas
-        </a>{" "}
-        &{" "}
-        <a
-          href="https://antoinek.fr"
-          target="_blank"
-          rel="noreferrer"
-          className="underline"
-        >
-          antoinek
-        </a>
-        , big s/o to them
-      </TypographyP>
-      <TypographyH3>VIE</TypographyH3>
-      <TypographyP>
-        🇬🇧 If international recruiters come through here, I&apos;m looking of a
-        VIE for September 2025 do not hesitate to{" "}
-        {linkedin("send me a message")}
-        <br />
-        🇫🇷 Si des recruteurs internationaux passent par ici, je recherche un VIE
-        pour septembre 2025 ! N&apos;hésitez pas à{" "}
-        {linkedin("m'envoyer un message")}
-      </TypographyP>
-      <TypographyP>Preferred destination:</TypographyP>
+      <TypographyH3>{t("vieTitle")}</TypographyH3>
+      <TypographyP>{t.rich("vie", { linkedin })}</TypographyP>
+      <TypographyP>{t("destinationsTitle")}</TypographyP>
       <ol className="list-decimal pl-6">
-        <li>North America</li>
-        <li>Asia (Japan, South Korea)</li>
-        <li>Oceania (Australia, New Zealand)</li>
+        {DESTINATIONS.map((destination) => (
+          <li key={destination}>{t(`destinations.${destination}`)}</li>
+        ))}
       </ol>
     </div>
   );

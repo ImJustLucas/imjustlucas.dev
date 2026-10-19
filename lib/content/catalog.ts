@@ -1,5 +1,7 @@
 import { Clock, Context, Effect, Layer, Schema, SchemaIssue } from "effect";
 
+import type { Locale } from "@/i18n/routing";
+
 import {
   ContentInvalid,
   type ContentIssue,
@@ -17,6 +19,7 @@ import {
   type Experience,
   type LocalizedText,
   type Profile,
+  type Resume,
   type Tech,
 } from "./schema";
 import { type ChannelVideo, YouTubeChannel } from "./youtube-channel";
@@ -57,6 +60,50 @@ export type ResolvedProject = {
 /** An Experience as pages render it. */
 export type ResolvedExperience = Experience;
 
+/** A Tech category in one Locale: its name and description in that Locale. */
+export type TechCategoryInLocale = {
+  readonly name: string;
+  readonly description: string;
+  readonly techs: ReadonlyArray<Tech>;
+};
+
+/** A Project in one Locale: its description in that Locale. */
+export type ProjectInLocale = Omit<ResolvedProject, "description"> & {
+  readonly description: string;
+};
+
+/** An Experience in one Locale: its role and description in that Locale. */
+export type ExperienceInLocale = Omit<
+  ResolvedExperience,
+  "role" | "description"
+> & {
+  readonly role: string;
+  readonly description: string;
+};
+
+/**
+ * The content of one Locale, as pages render it: every descriptive text in
+ * that Locale; proper nouns (titles, Tech names) as they are.
+ */
+export type CatalogInLocale = {
+  readonly techCategories: Effect.Effect<
+    ReadonlyArray<TechCategoryInLocale>,
+    CatalogError
+  >;
+  /** Ordered by Period start, most recent first; ongoing first on ties. */
+  readonly projects: Effect.Effect<
+    ReadonlyArray<ProjectInLocale>,
+    CatalogError | GitHubStarsUnavailable
+  >;
+  /** Ordered by Period start, most recent first; ongoing first on ties. */
+  readonly experiences: Effect.Effect<
+    ReadonlyArray<ExperienceInLocale>,
+    CatalogError
+  >;
+  /** The Profile's Resume in this Locale. */
+  readonly resume: Effect.Effect<Resume, CatalogError>;
+};
+
 export type CatalogError =
   | ContentInvalid
   | ContentNotFound
@@ -90,6 +137,8 @@ export class ContentCatalog extends Context.Service<
     >;
     /** Lucas's public identity: links, channel, Discord account, Resumes. */
     readonly profile: Effect.Effect<Profile, CatalogError>;
+    /** The same content with its texts in one Locale, for public pages. */
+    readonly inLocale: (locale: Locale) => CatalogInLocale;
   }
 >()("content/ContentCatalog") {
   /**
@@ -105,81 +154,110 @@ export class ContentCatalog extends Context.Service<
       const channel = yield* YouTubeChannel;
       const load = loadContent(repository);
 
-      return {
-        techCategories: Effect.map(load, (content) => {
-          const resolve = techResolver(content);
-          return content.techCategories.map((category) => ({
+      const techCategories = Effect.map(load, (content) => {
+        const resolve = techResolver(content);
+        return content.techCategories.map(
+          (category): ResolvedTechCategory => ({
             name: category.name,
             description: category.description,
             techs: category.techs.map(resolve),
-          }));
-        }),
+          }),
+        );
+      });
 
-        projects: Effect.flatMap(load, (content) => {
-          const resolve = techResolver(content);
-          const projects = [...content.projects].sort((a, b) =>
-            byStartMostRecentFirst(a.period, b.period),
-          );
-          return Effect.forEach(
-            projects,
-            (project) => {
-              // Stars only for the Project's own repository, never for the
-              // Profile's GitHub link it falls back to.
-              const repository = project.openSource
-                ? project.repository
-                : undefined;
-              const resolved: ResolvedProject = {
-                title: project.title,
-                description: project.description,
-                ...(project.image && { image: project.image }),
-                wip: project.wip,
-                period: project.period,
-                techs: project.techs.map(resolve),
-                ...(project.externalLink && {
-                  externalLink: project.externalLink,
-                }),
-                ...(project.openSource && {
-                  repository: repository ?? content.profile.links.github,
-                }),
-              };
-              if (!repository) return Effect.succeed(resolved);
-              // No star count shown for a repository GitHub fails to give
-              // on a cold build.
-              return Effect.map(
-                stars.count(repository).pipe(orOnColdBuild(0)),
-                (count): ResolvedProject =>
-                  count > 0 ? { ...resolved, stars: count } : resolved,
-              );
-            },
-            { concurrency: "unbounded" },
-          );
-        }),
+      const projects = Effect.flatMap(load, (content) => {
+        const resolve = techResolver(content);
+        const projects = [...content.projects].sort((a, b) =>
+          byStartMostRecentFirst(a.period, b.period),
+        );
+        return Effect.forEach(
+          projects,
+          (project) => {
+            // Stars only for the Project's own repository, never for the
+            // Profile's GitHub link it falls back to.
+            const repository = project.openSource
+              ? project.repository
+              : undefined;
+            const resolved: ResolvedProject = {
+              title: project.title,
+              description: project.description,
+              ...(project.image && { image: project.image }),
+              wip: project.wip,
+              period: project.period,
+              techs: project.techs.map(resolve),
+              ...(project.externalLink && {
+                externalLink: project.externalLink,
+              }),
+              ...(project.openSource && {
+                repository: repository ?? content.profile.links.github,
+              }),
+            };
+            if (!repository) return Effect.succeed(resolved);
+            // No star count shown for a repository GitHub fails to give
+            // on a cold build.
+            return Effect.map(
+              stars.count(repository).pipe(orOnColdBuild(0)),
+              (count): ResolvedProject =>
+                count > 0 ? { ...resolved, stars: count } : resolved,
+            );
+          },
+          { concurrency: "unbounded" },
+        );
+      });
 
-        experiences: Effect.map(load, (content) =>
-          [...content.experiences].sort((a, b) =>
-            byStartMostRecentFirst(a.period, b.period),
-          ),
+      const experiences = Effect.map(load, (content) =>
+        [...content.experiences].sort((a, b) =>
+          byStartMostRecentFirst(a.period, b.period),
         ),
+      );
 
-        videos: Effect.gen(function* () {
-          const { profile } = yield* load;
-          // No Videos (the page's empty state) on a cold build.
-          const videos = yield* channel
-            .latestVideos(profile.youtubeChannelId)
-            .pipe(orOnColdBuild([]));
-          const now = yield* Clock.currentTimeMillis;
-          return [...videos]
-            .sort(
-              (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt),
-            )
-            .map((video, i) => ({
-              ...video,
-              isNew:
-                i === 0 && now - Date.parse(video.publishedAt) < NEW_VIDEO_AGE,
-            }));
+      const videos = Effect.gen(function* () {
+        const { profile } = yield* load;
+        // No Videos (the page's empty state) on a cold build.
+        const videos = yield* channel
+          .latestVideos(profile.youtubeChannelId)
+          .pipe(orOnColdBuild([]));
+        const now = yield* Clock.currentTimeMillis;
+        return [...videos]
+          .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+          .map((video, i) => ({
+            ...video,
+            isNew:
+              i === 0 && now - Date.parse(video.publishedAt) < NEW_VIDEO_AGE,
+          }));
+      });
+
+      const profile = Effect.map(load, (content) => content.profile);
+
+      return {
+        techCategories,
+        projects,
+        experiences,
+        videos,
+        profile,
+        inLocale: (locale): CatalogInLocale => ({
+          techCategories: Effect.map(techCategories, (all) =>
+            all.map((category) => ({
+              ...category,
+              name: category.name[locale],
+              description: category.description[locale],
+            })),
+          ),
+          projects: Effect.map(projects, (all) =>
+            all.map((project) => ({
+              ...project,
+              description: project.description[locale],
+            })),
+          ),
+          experiences: Effect.map(experiences, (all) =>
+            all.map((experience) => ({
+              ...experience,
+              role: experience.role[locale],
+              description: experience.description[locale],
+            })),
+          ),
+          resume: Effect.map(profile, (profile) => profile.resumes[locale]),
         }),
-
-        profile: Effect.map(load, (content) => content.profile),
       };
     }),
   );

@@ -13,17 +13,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/config/routes";
-import { getProfile } from "@/lib/content/server";
+import { getResume } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.me);
 
 export default async function Home() {
-  const [t, locale, profile] = await Promise.all([
+  const locale = await getLocale();
+  const [t, resume] = await Promise.all([
     getTranslations("Home"),
-    getLocale(),
-    getProfile(),
+    getResume(locale),
   ]);
-  const resume = profile.resumes[locale];
 
   return (
     <div className="md:w-2/3 w-full">

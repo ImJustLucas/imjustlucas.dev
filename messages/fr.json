@@ -81,6 +81,16 @@
       "permanent": "CDI",
       "work-study": "Alternance",
       "internship": "Stage"
+    },
+    "professionalTitle": "Expériences professionnelles",
+    "diplomasTitle": "Diplômes",
+    "diplomas": {
+      "diploma": "Diplôme",
+      "institution": "Établissement",
+      "year": "Année",
+      "master": "Master • Manager de l'Ingénierie numérique",
+      "bachelor": "Bachelor • Concepteur développeur web",
+      "baccalaureate": "Baccalauréat Scientifique"
     }
   },
   "Videos": {
@@ -88,5 +98,38 @@
     "watch": "Regarder",
     "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Gardez un œil sur cette page 🤓",
     "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>"
+  },
+  "Sidebar": {
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "Presence": {
+    "listeningBy": "par {artist}",
+    "spotifyLogo": "Logo Spotify"
+  },
+  "Projects": {
+    "wip": "En cours",
+    "open": "Ouvrir {title}"
+  },
+  "How": {
+    "intro": "Je m'appuie sur des technologies de pointe pour créer des applications solides et évolutives. Voici un aperçu de mes compétences techniques :"
+  },
+  "Contact": {
+    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible.",
+    "inspirationTitle": "Inspiration",
+    "inspiration": "Le design n'est pas vraiment de moi : il s'inspire largement des sites de <phineas>phineas</phineas> et <antoinek>antoinek</antoinek>, big up à eux",
+    "vieTitle": "VIE",
+    "vie": "Si des recruteurs internationaux passent par ici, je recherche un VIE pour septembre 2025 ! N'hésitez pas à <linkedin>m'envoyer un message</linkedin>",
+    "destinationsTitle": "Destinations préférées :",
+    "destinations": {
+      "northAmerica": "Amérique du Nord",
+      "asia": "Asie (Japon, Corée du Sud)",
+      "oceania": "Océanie (Australie, Nouvelle-Zélande)"
+    }
+  },
+  "Mdf2025": {
+    "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",
+    "loading": "Chargement...",
+    "loadingScene": "Chargement de la scène : {progress} %"
   }
 }

@@ -5,23 +5,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { ResolvedTechCategory } from "@/lib/content/types";
+import type { TechCategoryInLocale } from "@/lib/content/types";
 
 import { TechBadge } from "./TechBadge";
 
 type TechCategoryCardProps = {
-  category: ResolvedTechCategory;
+  category: TechCategoryInLocale;
 };
 
-// English until Locales exist (#16).
 export const TechCategoryCard: React.FC<TechCategoryCardProps> = ({
   category,
 }) => {
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <CardTitle>{category.name.en}</CardTitle>
-        <CardDescription>{category.description.en}</CardDescription>
+        <CardTitle>{category.name}</CardTitle>
+        <CardDescription>{category.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-2">

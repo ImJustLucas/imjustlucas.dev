@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -13,6 +14,7 @@ type PresenceListeningProps = {
 
 export const PresenceListening = ({ presence }: PresenceListeningProps) => {
   const { song, artist, artwork } = presence;
+  const t = useTranslations("Presence");
 
   return (
     <Card className="w-full cursor-pointer">
@@ -33,7 +35,7 @@ export const PresenceListening = ({ presence }: PresenceListeningProps) => {
             <div className="absolute -bottom-1 -right-1 h-5 w-5 overflow-hidden rounded-full border-2 border-background bg-black">
               <Image
                 src="/images/spotify-logo.png"
-                alt="Spotify Logo"
+                alt={t("spotifyLogo")}
                 width={20}
                 height={20}
               />
@@ -41,7 +43,7 @@ export const PresenceListening = ({ presence }: PresenceListeningProps) => {
           </div>
           <div className="space-y-1">
             <h5 className="font-medium text-primary">{song}</h5>
-            <TypographyMuted>by {artist}</TypographyMuted>
+            <TypographyMuted>{t("listeningBy", { artist })}</TypographyMuted>
           </div>
         </div>
       </CardContent>
