@@ -12,8 +12,9 @@ const nextConfig: NextConfig = {
     globalNotFound: true,
   },
   // The content catalog reads `content/` with fs at runtime too, when a page
-  // revalidates (live stars, Videos): ship the folder with every public
-  // page's function. Verify in `.next/server/app/**/page.js.nft.json`.
+  // revalidates (live stars, Videos, and every page's layout reads the
+  // Profile): ship the folder with every public page's function. Verify in
+  // `.next/server/app/**/page.js.nft.json`.
   outputFileTracingIncludes: {
     "/\\[locale\\]/**": ["./content/**/*.json"],
   },

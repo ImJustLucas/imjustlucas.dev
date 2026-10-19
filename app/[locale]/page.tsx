@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { Download } from "lucide-react";
 
@@ -13,12 +13,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/config/routes";
+import { getProfile } from "@/lib/content/server";
 
 export const generateMetadata = routeMetadata(ROUTES.me);
 
 export default async function Home() {
-  const t = await getTranslations("Home");
-  const resumeLastUpdated = new Date(Date.UTC(2025, 4, 28));
+  const [t, locale, profile] = await Promise.all([
+    getTranslations("Home"),
+    getLocale(),
+    getProfile(),
+  ]);
+  const resume = profile.resumes[locale];
 
   return (
     <div className="md:w-2/3 w-full">
@@ -39,13 +44,13 @@ export default async function Home() {
 
       <div className="mt-4 flex items-center gap-4">
         <Button asChild>
-          <a href="/pdf/cv-lucas.pdf" download>
+          <a href={resume.asset} download>
             <Download className="mr-2 h-4 w-4" />
             {t("downloadResume")}
           </a>
         </Button>
         <span className="text-sm text-muted-foreground">
-          {t("resumeLastUpdated", { date: resumeLastUpdated })}
+          {t("resumeLastUpdated", { date: new Date(resume.lastUpdated) })}
         </span>
       </div>
 

@@ -101,6 +101,69 @@ export const Experience = Schema.Struct({
 });
 export type Experience = typeof Experience.Type;
 
+/** A calendar day, as `YYYY-MM-DD`. */
+export const CalendarDate = Schema.String.check(
+  Schema.makeFilter((date) =>
+    /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+    !Number.isNaN(Date.parse(date)) &&
+    new Date(date).toISOString().startsWith(date)
+      ? undefined
+      : "Expected a date (YYYY-MM-DD)",
+  ),
+);
+
+/** One Locale's Resume: a PDF of the public assets folder. */
+export const Resume = Schema.Struct({
+  asset: AssetPath,
+  lastUpdated: CalendarDate,
+}).pipe(
+  Schema.annotateKey({ messageMissingKey: "Missing Resume for this Locale" }),
+);
+export type Resume = typeof Resume.Type;
+
+/** A YouTube channel identifier, e.g. `UCLw4N_gccAY1Y4K4S20IPog`. */
+export const YouTubeChannelId = Schema.String.check(
+  Schema.isPattern(/^UC[\w-]{22}$/, {
+    message: "Expected a YouTube channel identifier (UC…)",
+  }),
+);
+
+/** A Discord account identifier (a snowflake), e.g. `127063570616811520`. */
+export const DiscordUserId = Schema.String.check(
+  Schema.isPattern(/^\d{17,20}$/, {
+    message: "Expected a Discord account identifier",
+  }),
+);
+
+/** The canonical URL of a YouTube channel. */
+export const youtubeChannelUrl = (channelId: string) =>
+  `https://www.youtube.com/channel/${channelId}`;
+
+/**
+ * Lucas's public identity, defined once: social links, the YouTube channel
+ * the Videos come from, the Discord account Presence follows, and one Resume
+ * per Locale. The YouTube link is the channel's own URL, so they can't drift.
+ */
+export const Profile = Schema.Struct({
+  links: Schema.Struct({
+    github: Url,
+    linkedin: Url,
+    youtube: Url,
+    instagram: Url,
+  }),
+  youtubeChannelId: YouTubeChannelId,
+  discordUserId: DiscordUserId,
+  resumes: Schema.Struct({ en: Resume, fr: Resume }),
+}).check(
+  Schema.makeFilter((profile) => {
+    const expected = youtubeChannelUrl(profile.youtubeChannelId);
+    return profile.links.youtube === expected
+      ? undefined
+      : { path: ["links", "youtube"], issue: `Expected ${expected}` };
+  }),
+);
+export type Profile = typeof Profile.Type;
+
 /**
  * Every content document, keyed by kind, with the rules that span documents:
  * a Tech is defined once, and every referenced Tech exists.
@@ -110,6 +173,7 @@ export const Content = Schema.Struct({
   techCategories: Schema.Array(TechCategory),
   projects: Schema.Array(Project),
   experiences: Schema.Array(Experience),
+  profile: Profile,
 }).check(
   Schema.makeFilter((content) => {
     const seen = new Set<string>();
@@ -156,4 +220,5 @@ export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   techCategories: "content/tech-categories.json",
   projects: "content/projects.json",
   experiences: "content/experiences.json",
+  profile: "content/profile.json",
 };

@@ -4,6 +4,7 @@ import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
 import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
+import { testProfile } from "./test-profile";
 import { YouTubeChannel } from "./youtube-channel";
 
 import { describe, expect, it } from "@effect/vitest";
@@ -20,6 +21,7 @@ const catalogWith = (
     techCategories?: unknown;
     projects?: unknown;
     experiences?: unknown;
+    profile?: unknown;
   },
   sources: {
     /** Star count per repository link; GitHub fails for any other. */
@@ -35,6 +37,9 @@ const catalogWith = (
         ),
         "content/projects.json": JSON.stringify(documents.projects ?? []),
         "content/experiences.json": JSON.stringify(documents.experiences ?? []),
+        "content/profile.json": JSON.stringify(
+          documents.profile ?? testProfile,
+        ),
       }),
     ),
     Layer.provide(GitHubStars.layerTest(sources.stars ?? {})),
@@ -182,6 +187,7 @@ describe("ContentCatalog.techCategories", () => {
               "content/tech-categories.json": "[]",
               "content/projects.json": "[]",
               "content/experiences.json": "[]",
+              "content/profile.json": JSON.stringify(testProfile),
             }),
           ),
           Layer.provide(GitHubStars.layerTest({})),
@@ -315,47 +321,58 @@ describe("ContentCatalog.projects", () => {
     ),
   );
 
-  it.effect("links the repository of open-source Projects only", () =>
-    Effect.gen(function* () {
-      const projects = yield* (yield* ContentCatalog).projects;
+  it.effect(
+    "links open-source Projects to their repository, or else to the Profile's GitHub",
+    () =>
+      Effect.gen(function* () {
+        const projects = yield* (yield* ContentCatalog).projects;
 
-      expect(projects.map((p) => [p.title, p.repository])).toEqual([
-        ["Open", "https://github.com/ImJustLucas/open"],
-        ["Closed", undefined],
-        ["Open, no repository", undefined],
-      ]);
-    }).pipe(
-      Effect.provide(
-        catalogWith(
-          {
-            projects: [
-              project(
-                "Open",
-                { start: "2024", end: "2024" },
-                {
-                  openSource: true,
-                  repository: "https://github.com/ImJustLucas/open",
+        expect(projects.map((p) => [p.title, p.repository])).toEqual([
+          ["Open", "https://github.com/ImJustLucas/open"],
+          ["Closed", undefined],
+          ["Open, no repository", "https://github.com/someone-else"],
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith(
+            {
+              projects: [
+                project(
+                  "Open",
+                  { start: "2024", end: "2024" },
+                  {
+                    openSource: true,
+                    repository: "https://github.com/ImJustLucas/open",
+                  },
+                ),
+                project(
+                  "Closed",
+                  { start: "2023", end: "2023" },
+                  {
+                    openSource: false,
+                    repository: "https://github.com/ImJustLucas/closed",
+                  },
+                ),
+                project(
+                  "Open, no repository",
+                  { start: "2022", end: "2022" },
+                  { openSource: true },
+                ),
+              ],
+              profile: {
+                ...testProfile,
+                links: {
+                  ...testProfile.links,
+                  github: "https://github.com/someone-else",
                 },
-              ),
-              project(
-                "Closed",
-                { start: "2023", end: "2023" },
-                {
-                  openSource: false,
-                  repository: "https://github.com/ImJustLucas/closed",
-                },
-              ),
-              project(
-                "Open, no repository",
-                { start: "2022", end: "2022" },
-                { openSource: true },
-              ),
-            ],
-          },
-          { stars: { "https://github.com/ImJustLucas/open": 3 } },
+              },
+            },
+            // GitHub knows only the Project's own repository: asking it for
+            // the Profile's link would fail the catalog.
+            { stars: { "https://github.com/ImJustLucas/open": 3 } },
+          ),
         ),
       ),
-    ),
   );
 
   it.effect(
@@ -700,6 +717,113 @@ describe("ContentCatalog.experiences", () => {
       Effect.provide(
         catalogWith({
           experiences: [experience("Favikon", { start: "2025", end: "2023" })],
+        }),
+      ),
+    ),
+  );
+});
+
+const profileWith = (changes: object) => ({ ...testProfile, ...changes });
+
+describe("ContentCatalog.profile", () => {
+  it.effect(
+    "returns the social links, YouTube channel, Discord account and Resumes",
+    () =>
+      Effect.gen(function* () {
+        const profile = yield* (yield* ContentCatalog).profile;
+
+        expect(profile).toEqual({
+          links: {
+            github: "https://github.com/ImJustLucas",
+            linkedin: "https://www.linkedin.com/in/lucasbellier/",
+            youtube: "https://www.youtube.com/channel/UCLw4N_gccAY1Y4K4S20IPog",
+            instagram: "https://www.instagram.com/imjustlucas_/",
+          },
+          youtubeChannelId: "UCLw4N_gccAY1Y4K4S20IPog",
+          discordUserId: "127063570616811520",
+          resumes: {
+            en: { asset: "/pdf/cv-lucas.pdf", lastUpdated: "2025-05-28" },
+            fr: { asset: "/pdf/cv-lucas-fr.pdf", lastUpdated: "2025-10-07" },
+          },
+        });
+      }).pipe(Effect.provide(catalogWith({ profile: testProfile }))),
+  );
+
+  it.effect("fails on a Profile missing a Locale's Resume", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).profile);
+
+      expect(error._tag).toBe("ContentInvalid");
+      expect(error.message).toContain(
+        "content/profile.json at resumes.fr: Missing Resume for this Locale",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          profile: profileWith({ resumes: { en: testProfile.resumes.en } }),
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a Resume date that is not a calendar date", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).profile);
+
+      expect(error.message).toContain(
+        "content/profile.json at resumes.en.lastUpdated: Expected a date (YYYY-MM-DD)",
+      );
+      expect(error.message).toContain(
+        "content/profile.json at resumes.fr.lastUpdated: Expected a date (YYYY-MM-DD)",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          profile: profileWith({
+            resumes: {
+              en: { asset: "/pdf/cv-lucas.pdf", lastUpdated: "May 28, 2025" },
+              fr: { asset: "/pdf/cv-lucas-fr.pdf", lastUpdated: "2025-02-30" },
+            },
+          }),
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a missing social link", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).profile);
+
+      expect(error.message).toContain(
+        "content/profile.json at links.instagram",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          profile: profileWith({
+            links: { ...testProfile.links, instagram: undefined },
+          }),
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails when the YouTube link is not the Profile's channel", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).profile);
+
+      expect(error.message).toContain(
+        "content/profile.json at links.youtube: Expected https://www.youtube.com/channel/UCLw4N_gccAY1Y4K4S20IPog",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          profile: profileWith({
+            links: {
+              ...testProfile.links,
+              youtube: "https://youtube.com/@imjustlucas",
+            },
+          }),
         }),
       ),
     ),

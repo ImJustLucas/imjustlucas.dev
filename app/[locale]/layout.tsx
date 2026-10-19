@@ -10,6 +10,7 @@ import { ThemeProvider } from "next-themes";
 import { geistMono, geistSans } from "@/app/fonts";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
+import { getProfile } from "@/lib/content/server";
 
 import ClientLayout from "./ClientLayout";
 
@@ -42,7 +43,10 @@ export default async function LocaleLayout({
 }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
-  const t = await getTranslations({ locale, namespace: "Layout" });
+  const [t, profile] = await Promise.all([
+    getTranslations({ locale, namespace: "Layout" }),
+    getProfile(),
+  ]);
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -68,7 +72,7 @@ export default async function LocaleLayout({
               />
             </div>
             <MobileMenuProvider>
-              <ClientLayout>{children}</ClientLayout>
+              <ClientLayout profile={profile}>{children}</ClientLayout>
             </MobileMenuProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
