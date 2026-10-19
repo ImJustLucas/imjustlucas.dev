@@ -6,6 +6,8 @@ import {
   type ContentNotFound,
   type ContentRepositoryError,
 } from "./errors";
+import { orOnColdBuild } from "./external-source";
+import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
 import { byStartMostRecentFirst, type Period } from "./period";
 import { ContentRepository } from "./repository";
 import {
@@ -33,14 +35,15 @@ export type ResolvedProject = {
   readonly externalLink?: string;
   /** Only for an open-source Project with a repository link. */
   readonly repository?: string;
-  /** Only when there is at least one star. */
+  /** The repository's GitHub star count, only when there is at least one. */
   readonly stars?: number;
 };
 
 export type CatalogError =
   | ContentInvalid
   | ContentNotFound
-  | ContentRepositoryError;
+  | ContentRepositoryError
+  | GitHubStarsUnavailable;
 
 /**
  * The only way pages obtain content. Reads the content documents, validates
@@ -60,11 +63,12 @@ export class ContentCatalog extends Context.Service<
     >;
   }
 >()("content/ContentCatalog") {
-  /** Needs a `ContentRepository`. */
+  /** Needs a `ContentRepository` and `GitHubStars`. */
   static readonly layer = Layer.effect(
     ContentCatalog,
     Effect.gen(function* () {
       const repository = yield* ContentRepository;
+      const stars = yield* GitHubStars;
       const load = loadContent(repository);
 
       return {
@@ -77,12 +81,18 @@ export class ContentCatalog extends Context.Service<
           }));
         }),
 
-        projects: Effect.map(load, (content) => {
+        projects: Effect.flatMap(load, (content) => {
           const resolve = techResolver(content);
-          return [...content.projects]
-            .sort((a, b) => byStartMostRecentFirst(a.period, b.period))
-            .map(
-              (project): ResolvedProject => ({
+          const projects = [...content.projects].sort((a, b) =>
+            byStartMostRecentFirst(a.period, b.period),
+          );
+          return Effect.forEach(
+            projects,
+            (project) => {
+              const repository = project.openSource
+                ? project.repository
+                : undefined;
+              const resolved: ResolvedProject = {
                 title: project.title,
                 description: project.description,
                 ...(project.image && { image: project.image }),
@@ -92,11 +102,17 @@ export class ContentCatalog extends Context.Service<
                 ...(project.externalLink && {
                   externalLink: project.externalLink,
                 }),
-                ...(project.openSource &&
-                  project.repository && { repository: project.repository }),
-                ...(project.stars && { stars: project.stars }),
-              }),
-            );
+                ...(repository && { repository }),
+              };
+              if (!repository) return Effect.succeed(resolved);
+              return Effect.map(
+                stars.count(repository).pipe(orOnColdBuild(0)),
+                (count): ResolvedProject =>
+                  count > 0 ? { ...resolved, stars: count } : resolved,
+              );
+            },
+            { concurrency: "unbounded" },
+          );
         }),
       };
     }),

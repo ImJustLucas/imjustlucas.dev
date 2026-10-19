@@ -1,6 +1,8 @@
 import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
+import { PageGeneration } from "./external-source";
+import { GitHubStars } from "./github-stars";
 import { layerLocalFilesystem } from "./repository-local-filesystem";
 
 import { describe, expect, it } from "@effect/vitest";
@@ -17,9 +19,16 @@ describe("the content folder", () => {
       expect(categories.length).toBeGreaterThan(0);
       expect(projects.length).toBeGreaterThan(0);
     }).pipe(
+      // Offline: no star count is known, as on a cold build without GitHub.
+      Effect.provideService(PageGeneration, "cold-build"),
       Effect.provide(
         ContentCatalog.layer.pipe(
-          Layer.provide(layerLocalFilesystem(repositoryRoot)),
+          Layer.provide(
+            Layer.merge(
+              layerLocalFilesystem(repositoryRoot),
+              GitHubStars.layerTest({}),
+            ),
+          ),
         ),
       ),
     ),
