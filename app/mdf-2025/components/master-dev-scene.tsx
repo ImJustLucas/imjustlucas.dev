@@ -84,7 +84,10 @@ const CustomCoin = ({
   const meshRef = useRef<THREE.Mesh>(null);
   const shaderRef = useRef(null);
   const [fallen, setFallen] = useState(false);
+  // Random speeds are computed once per coin on purpose.
+  // eslint-disable-next-line react-hooks/purity
   const fallSpeed = useMemo(() => Math.random() * 0.03 + 0.02, []);
+  // eslint-disable-next-line react-hooks/purity
   const rotationSpeed = useMemo(() => Math.random() * 0.02 + 0.01, []);
   const certificateRef = useRef<THREE.Box3>(new THREE.Box3());
   const coinRef = useRef<THREE.Sphere>(new THREE.Sphere());
@@ -275,8 +278,11 @@ const Scene = () => {
     camera.position.set(0, 0, 8);
   }, [camera]);
 
+  // Mutating the R3F camera in an event handler is the intended pattern.
+  // eslint-disable-next-line react-hooks/immutability
   const handleClick = useCallback(() => {
     const cameraPosition = camera.position.clone();
+    // eslint-disable-next-line react-hooks/immutability
     camera.far = 4;
 
     const mouseX = (mouse.x * viewport.width) / 2;

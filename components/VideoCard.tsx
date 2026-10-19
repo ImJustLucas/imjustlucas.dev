@@ -15,9 +15,8 @@ export function VideoCardBadge({ video }: { video: YouTubeVideo }) {
         <Image
           src={video.thumbnail}
           alt={video.title}
-          className="w-full h-auto object-cover"
-          layout="fill"
-          objectFit="cover"
+          className="object-cover"
+          fill
         />
         {video.new && (
           <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">

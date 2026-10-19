@@ -5,16 +5,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm dev        # Start dev server with Turbopack
+pnpm dev        # Start dev server (Turbopack is the default bundler)
 pnpm build      # Production build
-pnpm lint       # ESLint check (runs in CI on every push)
+pnpm lint       # ESLint CLI with flat config in eslint.config.mjs (runs in CI on every push)
 ```
 
 There are no tests in this project. The pre-commit hook exists but its commands are commented out.
 
 ## Architecture
 
-Personal portfolio site built with Next.js 15 (App Router), React 19 RC, Tailwind CSS, and Shadcn/ui.
+Personal portfolio site built with Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS, and Shadcn/ui.
 
 **Routing** — all pages live under `app/` following Next.js App Router conventions. The canonical route list is in `config/ROUTES.ts`; use it when adding navigation links.
 
@@ -36,7 +36,7 @@ To add or update content on those pages, edit the relevant config file.
 
 **Types** — shared TypeScript types are in `types/` (`project.ts`, `presence.ts`).
 
-**Images** — external image domains are whitelisted in `next.config.mjs` (`cdn.discordapp.com`, `i.scdn.co`). Add new domains there if needed.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.mjs` (`cdn.discordapp.com`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 

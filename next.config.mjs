@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.discordapp.com", "i.scdn.co"],
+    remotePatterns: [
+      new URL("https://cdn.discordapp.com/**"),
+      new URL("https://i.scdn.co/**"),
+    ],
   },
 };
 

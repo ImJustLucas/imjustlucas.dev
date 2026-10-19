@@ -19,7 +19,9 @@ export const PresenceBlock = () => {
   );
 
   useEffect(() => {
+    // Presence stays on the last known state when Lanyard reports nothing.
     if (currentActivity) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPresence("activity");
     } else if (status?.listening_to_spotify) {
       setPresence("listening");
