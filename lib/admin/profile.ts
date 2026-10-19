@@ -1,5 +1,6 @@
 import { Clock, Effect } from "effect";
 
+import type { Locale } from "@/i18n/routing";
 import type { AdminActionResult } from "@/lib/admin/action-result";
 import {
   AdminAccess,
@@ -15,9 +16,6 @@ import type { Profile } from "@/lib/content/schema";
 /** Admin actions on the Profile, the one document of Lucas's identity. */
 
 type Saved = { readonly revision: Revision };
-
-/** A Locale the Profile holds a Resume for. */
-export type ResumeLocale = keyof Profile["resumes"];
 
 /** The Profile's identity fields as the Owner types them (unvalidated). */
 type ProfileFields = {
@@ -58,7 +56,7 @@ export const updateProfile = (
   }));
 
 /** How a commit message names a Locale's Resume. */
-const RESUME_NAMES: { readonly [L in ResumeLocale]: string } = {
+const RESUME_NAMES: { readonly [L in Locale]: string } = {
   en: "the English Resume",
   fr: "the French Resume",
 };
@@ -80,7 +78,7 @@ const dayInParis = (millis: number) =>
  * file, and the Profile dates that Resume to the upload day, in one save.
  */
 export const uploadResume = (
-  input: Saved & { readonly locale: ResumeLocale; readonly file: Upload },
+  input: Saved & { readonly locale: Locale; readonly file: Upload },
 ): Effect.Effect<AdminActionResult, never, AdminAccess> =>
   Effect.flatMap(Clock.currentTimeMillis, (now) =>
     saveContent(input.revision, (content) =>

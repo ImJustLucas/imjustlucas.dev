@@ -1,7 +1,9 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { hasLocale } from "next-intl";
 
+import { routing } from "@/i18n/routing";
 import type { AdminActionResult } from "@/lib/admin/action-result";
 import { saveProfile } from "@/lib/admin/server";
 
@@ -46,7 +48,7 @@ export async function uploadResumeAction(
   form: FormData,
 ): Promise<AdminActionResult> {
   const locale = field(form, "locale");
-  if (locale !== "en" && locale !== "fr")
+  if (!hasLocale(routing.locales, locale))
     return { kind: "refused", reason: "Locale inconnue." };
   const file = form.get("file");
   return published(

@@ -12,12 +12,14 @@ import {
   TypographyH3,
   TypographyMuted,
 } from "@/components/typography";
+import { type Locale, routing } from "@/i18n/routing";
 import { getProfileEditor } from "@/lib/admin/server";
 
-const RESUMES = [
-  ["fr", "CV français"],
-  ["en", "CV anglais"],
-] as const;
+/** One Resume per Locale. */
+const RESUME_LABELS: { readonly [L in Locale]: string } = {
+  en: "CV anglais",
+  fr: "CV français",
+};
 
 const LINKS = [
   ["github", "GitHub", "https://github.com/ImJustLucas"],
@@ -93,7 +95,8 @@ export default async function ProfileEditorPage() {
           de mise à jour devient celle du jour.
         </TypographyMuted>
         <ul className="grid gap-3 sm:grid-cols-2">
-          {RESUMES.map(([locale, label]) => {
+          {routing.locales.map((locale) => {
+            const label = RESUME_LABELS[locale];
             const resume = profile.resumes[locale];
             return (
               <li
