@@ -27,6 +27,21 @@ const FRENCH_RESUME = "public/pdf/cv-lucas-fr.pdf";
 const pdf = (...body: Array<number>) =>
   new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x37, ...body]);
 
+/** An upload of `bytes`, as the editor's form sends it. */
+const uploaded = (bytes: Uint8Array) => async () => bytes;
+
+/** An upload that records whether anything read it. */
+const watchedUpload = (bytes: Uint8Array) => {
+  const upload = Object.assign(
+    async () => {
+      upload.read = true;
+      return bytes;
+    },
+    { read: false },
+  );
+  return upload;
+};
+
 /**
  * The Admin over an in-memory content repository holding the test Profile
  * and its Resumes, with `identity` signed in. `commits` lists what the
@@ -163,7 +178,11 @@ describe("Resume uploads", () => {
         const resume = pdf(0x03, 0x04);
 
         const result = yield* run(
-          uploadResume({ revision: "memory-0", locale: "fr", file: resume }),
+          uploadResume({
+            revision: "memory-0",
+            locale: "fr",
+            file: uploaded(resume),
+          }),
         );
 
         expect(result).toEqual({ kind: "saved", revision: "memory-1" });
@@ -198,7 +217,11 @@ describe("Resume uploads", () => {
       ] as const) {
         expect(
           yield* run(
-            uploadResume({ revision: "memory-0", locale: "en", file }),
+            uploadResume({
+              revision: "memory-0",
+              locale: "en",
+              file: uploaded(file),
+            }),
           ),
         ).toEqual({ kind: "invalid", fieldErrors: { file: error } });
       }
@@ -226,7 +249,11 @@ describe("Profile saves", () => {
           ...fields,
           links: { ...fields.links, instagram: "https://instagram.com/lucas" },
         }),
-        uploadResume({ revision: "memory-0", locale: "fr", file: pdf() }),
+        uploadResume({
+          revision: "memory-0",
+          locale: "fr",
+          file: uploaded(pdf()),
+        }),
       ]) {
         expect(yield* run(action)).toEqual({ kind: "conflict" });
       }
@@ -245,11 +272,33 @@ describe("Profile saves", () => {
 
         for (const action of [
           updateProfile({ revision: "memory-0", ...fields }),
-          uploadResume({ revision: "memory-0", locale: "en", file: pdf() }),
+          uploadResume({
+            revision: "memory-0",
+            locale: "en",
+            file: uploaded(pdf()),
+          }),
         ]) {
           expect(yield* run(action)).toEqual({ kind: "not-owner" });
         }
         expect(yield* commits).toEqual([]);
+      }
+    }),
+  );
+});
+
+describe("Resume uploads by anyone but the Owner", () => {
+  it.effect("are never read", () =>
+    Effect.gen(function* () {
+      for (const identity of [
+        undefined,
+        { githubId: 7654321, login: "someone", accessToken: "gho_someone" },
+      ]) {
+        const { run } = yield* admin(identity);
+        const file = watchedUpload(pdf());
+
+        yield* run(uploadResume({ revision: "memory-0", locale: "en", file }));
+
+        expect(file.read).toBe(false);
       }
     }),
   );

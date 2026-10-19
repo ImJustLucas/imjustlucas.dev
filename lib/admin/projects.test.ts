@@ -91,6 +91,21 @@ const PNG = Uint8Array.from([
 const JPEG = Uint8Array.from([0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46]);
 const WEBP = new TextEncoder().encode("RIFF\x24\0\0\0WEBPVP8 ");
 
+/** An upload of `bytes`, as the editor's form sends it. */
+const uploaded = (bytes: Uint8Array) => async () => bytes;
+
+/** An upload that records whether anything read it. */
+const watchedUpload = (bytes: Uint8Array) => {
+  const upload = Object.assign(
+    async () => {
+      upload.read = true;
+      return bytes;
+    },
+    { read: false },
+  );
+  return upload;
+};
+
 describe("Admin actions on Projects", () => {
   it.effect("a valid new Project is published as one commit", () =>
     Effect.gen(function* () {
@@ -325,6 +340,34 @@ describe("Admin actions on Projects", () => {
     }),
   );
 
+  it.effect("an upload by anyone but the Owner is never read", () =>
+    Effect.gen(function* () {
+      for (const identity of [
+        undefined,
+        { githubId: 7654321, login: "someone", accessToken: "gho_someone" },
+      ]) {
+        const { run } = yield* admin(identity);
+        const created = watchedUpload(PNG);
+        const updated = watchedUpload(PNG);
+
+        yield* run(
+          createProject({ revision: "memory-0", ...tricks, image: created }),
+        );
+        yield* run(
+          updateProject({
+            revision: "memory-0",
+            index: 0,
+            ...tricks,
+            image: updated,
+          }),
+        );
+
+        expect(created.read).toBe(false);
+        expect(updated.read).toBe(false);
+      }
+    }),
+  );
+
   it.effect(
     "uploading an image commits the image and the updated Project in one save",
     () =>
@@ -337,7 +380,7 @@ describe("Admin actions on Projects", () => {
             index: 0,
             ...tricks,
             title: "Tricks Network",
-            image: JPEG,
+            image: uploaded(JPEG),
           }),
         );
 
@@ -360,7 +403,11 @@ describe("Admin actions on Projects", () => {
       const { run, commits, projects } = yield* admin(owner);
 
       yield* run(
-        createProject({ revision: "memory-0", ...tricks, image: WEBP }),
+        createProject({
+          revision: "memory-0",
+          ...tricks,
+          image: uploaded(WEBP),
+        }),
       );
 
       const [, asset] = (yield* commits)[0].changes;
@@ -382,7 +429,7 @@ describe("Admin actions on Projects", () => {
           revision: "memory-0",
           index: 0,
           ...tricks,
-          image: PNG,
+          image: uploaded(PNG),
         }),
       );
       yield* run(
@@ -390,7 +437,7 @@ describe("Admin actions on Projects", () => {
           revision: "memory-1",
           index: 0,
           ...tricks,
-          image: Uint8Array.from([...PNG, 1, 2, 3]),
+          image: uploaded(Uint8Array.from([...PNG, 1, 2, 3])),
         }),
       );
 
@@ -413,7 +460,7 @@ describe("Admin actions on Projects", () => {
           index: 0,
           ...tricks,
           period: { start: "2023", end: "2022" },
-          image: new TextEncoder().encode("%PDF-1.7"),
+          image: uploaded(new TextEncoder().encode("%PDF-1.7")),
         }),
       );
 
@@ -435,7 +482,11 @@ describe("Admin actions on Projects", () => {
       huge.set(PNG);
 
       const result = yield* run(
-        createProject({ revision: "memory-0", ...tricks, image: huge }),
+        createProject({
+          revision: "memory-0",
+          ...tricks,
+          image: uploaded(huge),
+        }),
       );
 
       expect(result).toEqual({

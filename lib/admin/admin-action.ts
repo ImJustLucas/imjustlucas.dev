@@ -16,7 +16,7 @@ import { Content, DOCUMENT_PATHS } from "@/lib/content/schema";
 
 /**
  * The shape every Admin action follows: check the Owner, read the content,
- * apply the edit, validate the result with the content schemas, then publish
+ * apply the edit (reading any upload only then), validate the result with the content schemas, then publish
  * the changed documents (and any uploaded files) as one commit on top of the
  * revision the Admin read.
  * Each step that stops the save returns its `AdminActionResult`.
@@ -54,6 +54,32 @@ export class AdminAccess extends Context.Service<
       ),
     });
 }
+
+/**
+ * A file the Owner uploaded with a form, read only when called. Admin actions
+ * read it after the Owner check, so nobody else can make the server load a
+ * file into memory.
+ */
+export type Upload = () => Promise<Uint8Array>;
+
+/** An upload could not be read from the request. */
+export class UploadUnreadable extends Data.TaggedError("UploadUnreadable")<{
+  readonly message: string;
+  readonly cause?: unknown;
+}> {}
+
+/** Reads an upload's bytes. */
+export const readUpload = (
+  upload: Upload,
+): Effect.Effect<Uint8Array, UploadUnreadable> =>
+  Effect.tryPromise({
+    try: upload,
+    catch: (cause) =>
+      new UploadUnreadable({
+        message: "Le fichier envoyé n'a pas pu être lu",
+        cause,
+      }),
+  });
 
 /** Every content document, in its JSON shape. */
 export type ContentDocuments = typeof Content.Encoded;
@@ -93,13 +119,17 @@ export type ContentEdit =
  */
 export const saveContent = (
   revision: Revision,
-  edit: (content: Content) => ContentEdit,
+  edit: (
+    content: Content,
+  ) => ContentEdit | Effect.Effect<ContentEdit, UploadUnreadable>,
 ): Effect.Effect<AdminActionResult, never, AdminAccess> =>
   Effect.gen(function* () {
     const repository = yield* (yield* AdminAccess).repository;
     const content = yield* loadContent(repository, revision);
 
-    const outcome = edit(content);
+    // An effectful edit reads an upload: only now, the Owner checked.
+    const edited = edit(content);
+    const outcome = Effect.isEffect(edited) ? yield* edited : edited;
     if (outcome.kind === "refused") return outcome;
 
     const validated = yield* Schema.decodeUnknownEffect(Content)(

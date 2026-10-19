@@ -4,7 +4,9 @@ import type { AdminActionResult } from "@/lib/admin/action-result";
 import {
   AdminAccess,
   type ContentDocuments,
+  readUpload,
   saveContent,
+  type Upload,
 } from "@/lib/admin/admin-action";
 import { projectImage } from "@/lib/admin/project-image";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
@@ -36,7 +38,7 @@ type ProjectFields = {
   readonly repository: string;
   readonly openSource: boolean;
   /** A new image, uploaded: committed with the Project. */
-  readonly image?: Uint8Array;
+  readonly image?: Upload;
 };
 
 const MESSAGE = "📝 Admin:";
@@ -51,14 +53,16 @@ const documents = (
  * (or a field error), else the one it had.
  */
 const upload = (input: ProjectFields, current: string | undefined) => {
-  if (!input.image) return { image: current };
-  const uploaded = projectImage(input.title, input.image);
-  return uploaded.kind === "invalid"
-    ? { image: current, fieldErrors: { image: uploaded.error } }
-    : {
-        image: uploaded.url,
-        assets: [{ path: uploaded.path, content: input.image }],
-      };
+  if (!input.image) return Effect.succeed({ image: current });
+  return Effect.map(readUpload(input.image), (bytes) => {
+    const uploaded = projectImage(input.title, bytes);
+    return uploaded.kind === "invalid"
+      ? { image: current, fieldErrors: { image: uploaded.error } }
+      : {
+          image: uploaded.url,
+          assets: [{ path: uploaded.path, content: bytes }],
+        };
+  });
 };
 
 /**
@@ -80,9 +84,8 @@ const project = (input: ProjectFields, image: string | undefined) => ({
 export const createProject = (
   input: Saved & ProjectFields,
 ): Effect.Effect<AdminActionResult, never, AdminAccess> =>
-  saveContent(input.revision, (content) => {
-    const { image, ...uploaded } = upload(input, undefined);
-    return {
+  saveContent(input.revision, (content) =>
+    Effect.map(upload(input, undefined), ({ image, ...uploaded }) => ({
       kind: "edited",
       message: `${MESSAGE} add Project '${input.title}'`,
       documents: documents(content, {
@@ -90,8 +93,8 @@ export const createProject = (
       }),
       entry: ["projects", content.projects.length],
       ...uploaded,
-    };
-  });
+    })),
+  );
 
 /** Projects have no identifier: they are addressed by position. */
 export const updateProject = (
@@ -100,18 +103,20 @@ export const updateProject = (
   saveContent(input.revision, (content) => {
     const existing = content.projects[input.index];
     if (!existing) return projectGone;
-    const { image, ...uploaded } = upload(input, existing.image);
-    return {
-      kind: "edited",
-      message: `${MESSAGE} update Project '${input.title}'`,
-      documents: documents(content, {
-        projects: content.projects.map((entry, i) =>
-          i === input.index ? project(input, image) : entry,
-        ),
+    return Effect.map(
+      upload(input, existing.image),
+      ({ image, ...uploaded }) => ({
+        kind: "edited",
+        message: `${MESSAGE} update Project '${input.title}'`,
+        documents: documents(content, {
+          projects: content.projects.map((entry, i) =>
+            i === input.index ? project(input, image) : entry,
+          ),
+        }),
+        entry: ["projects", input.index],
+        ...uploaded,
       }),
-      entry: ["projects", input.index],
-      ...uploaded,
-    };
+    );
   });
 
 export const deleteProject = (

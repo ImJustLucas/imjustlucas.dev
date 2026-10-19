@@ -1,7 +1,12 @@
 import { Clock, Effect } from "effect";
 
 import type { AdminActionResult } from "@/lib/admin/action-result";
-import { AdminAccess, saveContent } from "@/lib/admin/admin-action";
+import {
+  AdminAccess,
+  readUpload,
+  saveContent,
+  type Upload,
+} from "@/lib/admin/admin-action";
 import { resumePdfError } from "@/lib/admin/resume-pdf";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
 import type { Revision } from "@/lib/content/repository";
@@ -75,39 +80,41 @@ const dayInParis = (millis: number) =>
  * file, and the Profile dates that Resume to the upload day, in one save.
  */
 export const uploadResume = (
-  input: Saved & { readonly locale: ResumeLocale; readonly file: Uint8Array },
+  input: Saved & { readonly locale: ResumeLocale; readonly file: Upload },
 ): Effect.Effect<AdminActionResult, never, AdminAccess> =>
   Effect.flatMap(Clock.currentTimeMillis, (now) =>
-    saveContent(input.revision, (content) => {
-      const current = content.profile.resumes[input.locale];
-      const error = resumePdfError(input.file);
-      if (error)
+    saveContent(input.revision, (content) =>
+      Effect.map(readUpload(input.file), (file) => {
+        const current = content.profile.resumes[input.locale];
+        const error = resumePdfError(file);
+        if (error)
+          return {
+            kind: "edited",
+            message: "",
+            documents: content,
+            fieldErrors: { file: error },
+          };
         return {
           kind: "edited",
-          message: "",
-          documents: content,
-          fieldErrors: { file: error },
-        };
-      return {
-        kind: "edited",
-        message: `${MESSAGE} upload ${RESUME_NAMES[input.locale]}`,
-        documents: {
-          ...content,
-          profile: {
-            ...content.profile,
-            resumes: {
-              ...content.profile.resumes,
-              [input.locale]: {
-                asset: current.asset,
-                lastUpdated: dayInParis(now),
+          message: `${MESSAGE} upload ${RESUME_NAMES[input.locale]}`,
+          documents: {
+            ...content,
+            profile: {
+              ...content.profile,
+              resumes: {
+                ...content.profile.resumes,
+                [input.locale]: {
+                  asset: current.asset,
+                  lastUpdated: dayInParis(now),
+                },
               },
             },
           },
-        },
-        entry: ["profile"],
-        assets: [{ path: `public${current.asset}`, content: input.file }],
-      };
-    }),
+          entry: ["profile"],
+          assets: [{ path: `public${current.asset}`, content: file }],
+        };
+      }),
+    ),
   );
 
 /** What the Profile editor shows: the Profile and the revision it was read at. */

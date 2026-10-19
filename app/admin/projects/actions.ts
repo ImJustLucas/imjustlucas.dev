@@ -26,15 +26,18 @@ const localized = (form: FormData, name: string) => ({
   fr: field(form, `${name}.fr`),
 });
 
-/** The uploaded image's bytes; none when no file was picked. */
-const image = async (form: FormData) => {
+/**
+ * The uploaded image, read by the action only once the Owner is checked;
+ * none when no file was picked.
+ */
+const image = (form: FormData) => {
   const file = form.get("image");
   if (!(file instanceof File) || file.size === 0) return {};
-  return { image: new Uint8Array(await file.arrayBuffer()) };
+  return { image: async () => new Uint8Array(await file.arrayBuffer()) };
 };
 
 // Star counts are never read from the form: they are not editable.
-const projectFields = async (form: FormData) => ({
+const projectFields = (form: FormData) => ({
   revision: field(form, "revision"),
   title: field(form, "title"),
   description: localized(form, "description"),
@@ -46,7 +49,7 @@ const projectFields = async (form: FormData) => ({
   externalLink: field(form, "externalLink"),
   repository: field(form, "repository"),
   openSource: form.get("openSource") !== null,
-  ...(await image(form)),
+  ...image(form),
 });
 
 const index = (form: FormData) => Number.parseInt(field(form, "index"), 10);
@@ -58,13 +61,13 @@ const published = (result: AdminActionResult) => {
 };
 
 export async function createProjectAction(_: FormState, form: FormData) {
-  return published(await saveProjects.createProject(await projectFields(form)));
+  return published(await saveProjects.createProject(projectFields(form)));
 }
 
 export async function updateProjectAction(_: FormState, form: FormData) {
   return published(
     await saveProjects.updateProject({
-      ...(await projectFields(form)),
+      ...projectFields(form),
       index: index(form),
     }),
   );

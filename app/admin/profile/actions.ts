@@ -49,16 +49,16 @@ export async function uploadResumeAction(
   if (locale !== "en" && locale !== "fr")
     return { kind: "refused", reason: "Locale inconnue." };
   const file = form.get("file");
-  // No file picked: empty bytes, which the action reports as a field error.
-  const bytes =
-    file instanceof File
-      ? new Uint8Array(await file.arrayBuffer())
-      : new Uint8Array();
   return published(
     await saveProfile.uploadResume({
       revision: field(form, "revision"),
       locale,
-      file: bytes,
+      // Read by the action only once the Owner is checked. No file picked:
+      // empty bytes, which the action reports as a field error.
+      file: async () =>
+        file instanceof File
+          ? new Uint8Array(await file.arrayBuffer())
+          : new Uint8Array(),
     }),
   );
 }
