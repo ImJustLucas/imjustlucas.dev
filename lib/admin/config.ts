@@ -31,3 +31,10 @@ export const sessionSecret = () => required("SESSION_SECRET");
 export const redirectUri = (requestUrl: string): string =>
   process.env.AUTH_REDIRECT_URI ||
   new URL("/admin/auth/callback", requestUrl).toString();
+
+/** The GitHub repository and branch the Admin's saves are committed to. */
+export const CONTENT_REPOSITORY = {
+  owner: "ImJustLucas",
+  repo: "imjustlucas.dev",
+  branch: "main",
+} as const;
