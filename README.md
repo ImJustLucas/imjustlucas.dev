@@ -52,6 +52,12 @@ pnpm run build
 pnpm run start
 ```
 
+To sign in to the Admin (`/admin`), create the GitHub OAuth apps and set the environment variables, locally and on Vercel, with the setup wizard:
+
+```bash
+bash scripts/wizards/admin-github-oauth.sh
+```
+
 Lint your code:
 
 ```bash

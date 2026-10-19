@@ -1,21 +1,38 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Menu, X } from "lucide-react";
 
 import { TypographyH3 } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import type { Profile } from "@/lib/content/types";
+import { cn } from "@/lib/utils";
 
 import MenuContainer from "./menu/MenuContainer";
 import { SidebarFooter } from "./SidebarFooter";
 
-export const Sidebar: React.FC = () => {
+type SidebarProps = {
+  profile: Profile;
+};
+
+export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
   const { isOpen, toggleMenu } = useMobileMenu();
+  const t = useTranslations("Sidebar");
 
   return (
     <>
-      <div className="hidden md:flex p-2 h-full w-80 flex-col">
-        <SideBarContent />
+      {/* Mounted once: shown inline on desktop, as an overlay on mobile */}
+      <div
+        className={cn(
+          "md:static md:z-auto md:flex md:h-full md:w-80 md:flex-col md:p-2 md:bg-transparent md:backdrop-blur-none",
+          isOpen
+            ? "fixed inset-0 z-40 flex flex-col p-4 bg-background/80 backdrop-blur-sm"
+            : "hidden",
+        )}
+      >
+        <SideBarContent profile={profile} />
       </div>
 
       {/* Mobile Menu Button */}
@@ -24,28 +41,23 @@ export const Sidebar: React.FC = () => {
         size="icon"
         className="md:hidden fixed top-4 right-4 z-50"
         onClick={() => toggleMenu()}
+        aria-expanded={isOpen}
       >
         {isOpen ? <X /> : <Menu />}
+        <span className="sr-only">
+          {isOpen ? t("closeMenu") : t("openMenu")}
+        </span>
       </Button>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40">
-          <div className="p-4 h-full w-full flex flex-col">
-            <SideBarContent />
-          </div>
-        </div>
-      )}
     </>
   );
 };
 
-const SideBarContent = () => {
+const SideBarContent: React.FC<SidebarProps> = ({ profile }) => {
   return (
     <>
       <TypographyH3>&gt; ImJustLucas</TypographyH3>
       <MenuContainer />
-      <SidebarFooter />
+      <SidebarFooter profile={profile} />
     </>
   );
 };

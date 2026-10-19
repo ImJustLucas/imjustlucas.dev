@@ -1,38 +1,30 @@
-import { useEffect, useMemo, useState } from "react";
+"use client";
+
 import { useLanyard } from "react-use-lanyard";
 
 import { PresenceActivity } from "./PresenceActivity";
 import { PresenceListening } from "./PresenceListening";
+import { selectPresence } from "./select-presence";
 
-type PresenceProps = "activity" | "listening" | "custom";
+type PresenceBlockProps = {
+  /** The Profile's Discord account. */
+  discordUserId: string;
+};
 
-export const PresenceBlock = () => {
-  const [presence, setPresence] = useState<PresenceProps>();
-  const { status /*, websocket */ } = useLanyard({
-    userId: "127063570616811520",
+export const PresenceBlock = ({ discordUserId }: PresenceBlockProps) => {
+  const { status } = useLanyard({
+    userId: discordUserId,
     socket: true,
   });
 
-  const currentActivity = useMemo(
-    () => status?.activities?.filter((activity) => activity.type === 0)[0],
-    [status],
-  );
-
-  useEffect(() => {
-    if (currentActivity) {
-      setPresence("activity");
-    } else if (status?.listening_to_spotify) {
-      setPresence("listening");
-    }
-  }, [status, currentActivity]);
+  const presence = selectPresence(status);
+  if (presence.kind === "nothing") return null;
 
   return (
     <div className="pb-4">
-      {presence === "activity" && (
-        <PresenceActivity currentActivity={currentActivity} />
-      )}
-      {presence === "listening" && (
-        <PresenceListening spotify={status?.spotify} />
+      {presence.kind === "playing" && <PresenceActivity presence={presence} />}
+      {presence.kind === "listening" && (
+        <PresenceListening presence={presence} />
       )}
     </div>
   );

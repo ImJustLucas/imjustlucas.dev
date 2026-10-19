@@ -1,0 +1,140 @@
+{
+  "Metadata": {
+    "siteName": "ImJustLucas",
+    "description": "Je suis développeur logiciel en plein cœur de Paris, et je conçois des sites et des applications de qualité."
+  },
+  "Routes": {
+    "me": {
+      "label": "moi",
+      "title": "Qui suis-je ?",
+      "description": "Lucas, développeur logiciel français basé à Paris, qui conçoit des sites et des applications de qualité."
+    },
+    "what": {
+      "label": "ce que j'ai fait",
+      "title": "Ce que j'ai fait",
+      "description": "Les projets de Lucas, des projets perso aux projets pro."
+    },
+    "how": {
+      "label": "comment je fais",
+      "title": "Comment je crée mes apps ?",
+      "description": "Les langages, frameworks et outils que Lucas utilise pour créer ses apps."
+    },
+    "experiences": {
+      "label": "mes expériences",
+      "title": "Mes expériences",
+      "description": "Les expériences professionnelles et les diplômes de Lucas."
+    },
+    "videos": {
+      "label": "vidéos yt",
+      "title": "vidéos youtube",
+      "description": "Les dernières vidéos de la chaîne YouTube de Lucas."
+    },
+    "contact": {
+      "label": "contact",
+      "title": "Me contacter",
+      "description": "Comment entrer en contact avec Lucas."
+    },
+    "mdf2025": {
+      "label": "MDF 2025",
+      "title": "MasterDevFrance 2025",
+      "description": "Lucas a remporté le concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique en développement logiciel."
+    }
+  },
+  "Layout": {
+    "avatarAlt": "Avatar d'ImJustLucas",
+    "madeBy": "Fait avec 💖 par ImJustLucas"
+  },
+  "ThemeSwitch": {
+    "toggle": "Changer de thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "LocaleSwitcher": {
+    "switch": "English"
+  },
+  "Home": {
+    "intro": "Yoooo, moi c'est <bold>Lucas</bold> ! <br></br>Développeur logiciel français en plein cœur de Paris, je conçois des sites et des applications de qualité.",
+    "creativeMindsetTitle": "Esprit créatif",
+    "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
+    "downloadResume": "Télécharger mon CV",
+    "resumeLastUpdated": "Dernière mise à jour : {date, date, long}",
+    "faqTitle": "FAQ",
+    "faq": {
+      "whyImjustlucas": {
+        "question": "Pourquoi imjustlucas ?",
+        "answer": "C'est mon rappel pour rester vrai et humble, peu importe où ma carrière me mène."
+      },
+      "favoriteLanguages": {
+        "question": "Langages préférés ?",
+        "answer": "JavaScript et TypeScript. JavaScript pour sa polyvalence et son côté dynamique, TypeScript pour la couche de typage et de structure en plus. Ensemble, c'est le duo parfait pour créer des applications solides !"
+      },
+      "coffeeOrTea": {
+        "question": "Café ou thé ?",
+        "answer": "Café, sans hésiter. Paris carbure au café, après tout !"
+      }
+    }
+  },
+  "Experiences": {
+    "contractTypes": {
+      "entrepreneurship": "Entrepreneuriat",
+      "permanent": "CDI",
+      "work-study": "Alternance",
+      "internship": "Stage"
+    },
+    "professionalTitle": "Expériences professionnelles",
+    "diplomasTitle": "Diplômes",
+    "diplomas": {
+      "diploma": "Diplôme",
+      "institution": "Établissement",
+      "year": "Année",
+      "master": "Master • Manager de l'Ingénierie numérique",
+      "bachelor": "Bachelor • Concepteur développeur web",
+      "baccalaureate": "Baccalauréat Scientifique"
+    }
+  },
+  "Videos": {
+    "new": "Nouveau",
+    "watch": "Regarder",
+    "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Gardez un œil sur cette page 🤓",
+    "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>"
+  },
+  "Sidebar": {
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "Presence": {
+    "listeningBy": "par {artist}",
+    "spotifyLogo": "Logo Spotify"
+  },
+  "Projects": {
+    "wip": "En cours",
+    "open": "Ouvrir {title}"
+  },
+  "How": {
+    "intro": "Je m'appuie sur des technologies de pointe pour créer des applications solides et évolutives. Voici un aperçu de mes compétences techniques :"
+  },
+  "Contact": {
+    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible.",
+    "inspirationTitle": "Inspiration",
+    "inspiration": "Le design n'est pas vraiment de moi : il s'inspire largement des sites de <phineas>phineas</phineas> et <antoinek>antoinek</antoinek>, big up à eux",
+    "vieTitle": "VIE",
+    "vie": "Si des recruteurs internationaux passent par ici, je recherche un VIE pour septembre 2025 ! N'hésitez pas à <linkedin>m'envoyer un message</linkedin>",
+    "destinationsTitle": "Destinations préférées :",
+    "destinations": {
+      "northAmerica": "Amérique du Nord",
+      "asia": "Asie (Japon, Corée du Sud)",
+      "oceania": "Océanie (Australie, Nouvelle-Zélande)"
+    }
+  },
+  "Mdf2025": {
+    "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",
+    "loading": "Chargement...",
+    "loadingScene": "Chargement de la scène : {progress} %"
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "message": "Cette page n'existe pas, ou plus.",
+    "home": "Retour à l'accueil"
+  }
+}
