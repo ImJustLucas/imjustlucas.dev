@@ -25,7 +25,7 @@ export default function Home() {
         high-quality websites and applications.
       </TypographyP>
 
-      <Separator className="my-8" />
+      <Separator className="my-8 h-0" />
 
       <TypographyH4>Creative Mindset</TypographyH4>
       <TypographyP>
@@ -36,7 +36,7 @@ export default function Home() {
         quality and originality in mind.
       </TypographyP>
 
-      <Separator className="my-8" />
+      <Separator className="my-8 h-0" />
 
       <div className="mt-4 flex items-center gap-4">
         <Button asChild>
@@ -50,7 +50,7 @@ export default function Home() {
         </span>
       </div>
 
-      <Separator className="my-8" />
+      <Separator className="my-8 h-0" />
 
       <TypographyH4>FAQ</TypographyH4>
 
