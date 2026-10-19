@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Clock } from "lucide-react";
 
-import type { YouTubeVideo } from "@/app/videos/config/videos";
+import type { YouTubeVideo } from "@/app/[locale]/videos/config/videos";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";

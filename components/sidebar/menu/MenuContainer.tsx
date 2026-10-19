@@ -1,8 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 import { MENU_ROUTES } from "@/config/routes";
+import { usePathname } from "@/i18n/navigation";
 import { isActiveRoute } from "@/lib/routes/is-active-route";
 
 import MenuItem from "./MenuItem";

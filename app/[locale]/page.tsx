@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import { Download } from "lucide-react";
 
 import { PageHeader, routeMetadata } from "@/components/page-header";
@@ -15,26 +17,24 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export const generateMetadata = routeMetadata(ROUTES.me);
 
-export default function Home() {
+export default async function Home() {
+  const t = await getTranslations("Home");
+  const resumeLastUpdated = new Date(Date.UTC(2025, 4, 28));
+
   return (
     <div className="md:w-2/3 w-full">
       <PageHeader route={ROUTES.me} />
       <TypographyP>
-        Yoooo, I&apos;m <Bold>Lucas</Bold>! <br />A french software developer
-        based in the heart of Paris, France, with a focus on crafting
-        high-quality websites and applications.
+        {t.rich("intro", {
+          bold: (chunks) => <Bold>{chunks}</Bold>,
+          br: () => <br />,
+        })}
       </TypographyP>
 
       <Separator className="my-8" />
 
-      <TypographyH4>Creative Mindset</TypographyH4>
-      <TypographyP>
-        I love tackling projects with a creative approach. My process usually
-        starts with a good brainstorming session, lots of inspiration-hunting,
-        and diving deep into the latest tech tools. Whether it&apos;s building
-        from scratch or refining an existing idea, I aim to create with both
-        quality and originality in mind.
-      </TypographyP>
+      <TypographyH4>{t("creativeMindsetTitle")}</TypographyH4>
+      <TypographyP>{t("creativeMindset")}</TypographyP>
 
       <Separator className="my-8" />
 
@@ -42,48 +42,44 @@ export default function Home() {
         <Button asChild>
           <a href="/pdf/cv-lucas.pdf" download>
             <Download className="mr-2 h-4 w-4" />
-            Download my resume
+            {t("downloadResume")}
           </a>
         </Button>
         <span className="text-sm text-muted-foreground">
-          Last updated: May 28, 2025
+          {t("resumeLastUpdated", { date: resumeLastUpdated })}
         </span>
       </div>
 
       <Separator className="my-8" />
 
-      <TypographyH4>FAQ</TypographyH4>
+      <TypographyH4>{t("faqTitle")}</TypographyH4>
 
       <div className="w-full max-w-2xl">
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1" className="border-b border-border">
             <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Why imjustlucas?
+              {t("faq.whyImjustlucas.question")}
             </AccordionTrigger>
             <AccordionContent className="pt-1 pb-4 text-muted-foreground">
-              It&apos;s my reminder to keep it real and stay humble, no matter
-              where I go in my career.
+              {t("faq.whyImjustlucas.answer")}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-2" className="border-b border-border">
             <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Favorite languages?
+              {t("faq.favoriteLanguages.question")}
             </AccordionTrigger>
             <AccordionContent className="pt-1 pb-4 text-muted-foreground">
-              JavaScript and TypeScript. JavaScript for its versatility and
-              dynamic nature, and TypeScript for adding that extra layer of type
-              safety and structure. Together, they&apos;re the perfect duo for
-              building robust applications!
+              {t("faq.favoriteLanguages.answer")}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-3" className="border-b border-border">
             <AccordionTrigger className="flex justify-between items-center py-4 font-medium transition-all   [&[data-state=open]>svg]:rotate-180">
-              Coffee or tea?
+              {t("faq.coffeeOrTea.question")}
             </AccordionTrigger>
             <AccordionContent className="pt-1 pb-4 text-muted-foreground">
-              Definitely coffee. Paris runs on it, after all!
+              {t("faq.coffeeOrTea.answer")}
             </AccordionContent>
           </AccordionItem>
         </Accordion>

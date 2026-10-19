@@ -1,0 +1,78 @@
+{
+  "Metadata": {
+    "siteName": "ImJustLucas",
+    "description": "I'm a software developer based in the heart of Paris, France, with a focus on crafting high-quality websites and applications."
+  },
+  "Routes": {
+    "me": {
+      "label": "me",
+      "title": "Who am i?",
+      "description": "Lucas, a French software developer based in Paris, crafting high-quality websites and applications."
+    },
+    "what": {
+      "label": "what i've done",
+      "title": "What i've done ?",
+      "description": "The projects Lucas has built, from side projects to work."
+    },
+    "how": {
+      "label": "how i do it",
+      "title": "How i create my apps?",
+      "description": "The languages, frameworks and tools Lucas uses to build his apps."
+    },
+    "experiences": {
+      "label": "my experiences",
+      "title": "My experiences",
+      "description": "Lucas's professional experiences and diplomas."
+    },
+    "videos": {
+      "label": "yt videos",
+      "title": "youtube videos",
+      "description": "The latest videos from Lucas's YouTube channel."
+    },
+    "contact": {
+      "label": "contact",
+      "title": "Contact me",
+      "description": "How to get in touch with Lucas."
+    },
+    "mdf2025": {
+      "label": "MDF 2025",
+      "title": "MasterDevFrance 2025",
+      "description": "Lucas won the MasterDevFrance 2025 competition, a national recognition for technical excellence in software development."
+    }
+  },
+  "Layout": {
+    "avatarAlt": "ImJustLucas head avatar",
+    "madeBy": "Made with 💖 by ImJustLucas"
+  },
+  "ThemeSwitch": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "LocaleSwitcher": {
+    "switch": "Français"
+  },
+  "Home": {
+    "intro": "Yoooo, I'm <bold>Lucas</bold>! <br></br>A french software developer based in the heart of Paris, France, with a focus on crafting high-quality websites and applications.",
+    "creativeMindsetTitle": "Creative Mindset",
+    "creativeMindset": "I love tackling projects with a creative approach. My process usually starts with a good brainstorming session, lots of inspiration-hunting, and diving deep into the latest tech tools. Whether it's building from scratch or refining an existing idea, I aim to create with both quality and originality in mind.",
+    "downloadResume": "Download my resume",
+    "resumeLastUpdated": "Last updated: {date, date, long}",
+    "faqTitle": "FAQ",
+    "faq": {
+      "whyImjustlucas": {
+        "question": "Why imjustlucas?",
+        "answer": "It's my reminder to keep it real and stay humble, no matter where I go in my career."
+      },
+      "favoriteLanguages": {
+        "question": "Favorite languages?",
+        "answer": "JavaScript and TypeScript. JavaScript for its versatility and dynamic nature, and TypeScript for adding that extra layer of type safety and structure. Together, they're the perfect duo for building robust applications!"
+      },
+      "coffeeOrTea": {
+        "question": "Coffee or tea?",
+        "answer": "Definitely coffee. Paris runs on it, after all!"
+      }
+    }
+  }
+}

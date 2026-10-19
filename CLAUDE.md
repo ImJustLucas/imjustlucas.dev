@@ -17,27 +17,31 @@ The pre-commit hook exists but its commands are commented out.
 
 Personal portfolio site built with Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS, and Shadcn/ui.
 
-**Routing** — all pages live under `app/` following Next.js App Router conventions. The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its path, menu label, page title, description and whether it is in the menu. The sidebar menu is generated from it (real `next/link` links; the active-Route rule is `lib/routes/is-active-route.ts`). Every page renders `<PageHeader route={ROUTES.x} />` and exports `generateMetadata = routeMetadata(ROUTES.x)` from `components/page-header`. Adding a page is one entry in `ROUTES`.
+**Routing** — every public page lives under `app/[locale]/` (Locales `en`, default, and `fr`, defined in `i18n/routing.ts`) and is statically generated for both. `app/[locale]/layout.tsx` is a root layout (there is no `app/layout.tsx`, as `next/root-params` needs the Locale segment to be the root), so the Admin path can add its own root layout beside it; shared fonts are in `app/fonts/index.ts`. `proxy.ts` (next-intl middleware) sends the root address to the Locale from the `NEXT_LOCALE` cookie, then the browser language, falling back to English; it skips `/admin`, `/api`, Next internals and files. Legacy unprefixed Route URLs redirect permanently (308) to English through `redirects()` in `next.config.ts`. Unknown URLs render `app/global-not-found.tsx`. Internal links use `Link`/`usePathname` from `@/i18n/navigation` (Locale-aware), never `next/link` with a bare path.
 
-**Layout** — `app/layout.tsx` wraps everything in `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar handles both desktop and mobile (slide-over) layouts; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
+The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its path, the key of its texts under `Routes` in the message dictionaries (`label`, `title`, `description`) and whether it is in the menu. The sidebar menu is generated from it (real links; the active-Route rule is `lib/routes/is-active-route.ts`, applied to the Locale-stripped path). Every page renders `<PageHeader route={ROUTES.x} />` and exports `generateMetadata = routeMetadata(ROUTES.x)` from `components/page-header`, which also declares the page's alternate-Locale URLs. The legacy redirects are derived from `ROUTES` too. Adding a page is one entry in `ROUTES` plus its texts in every dictionary.
+
+**Interface strings** — one message dictionary per Locale in `messages/` (`en.json` is the reference; `global.d.ts` types keys from it, and `messages/messages.test.ts` checks every dictionary has the same keys). Server components use `getTranslations` (from `next-intl/server`), client components `useTranslations`; the Locale comes from the root param (`i18n/request.ts`), so pages need no `setRequestLocale`. Proper nouns (Project titles, Tech names, company names) stay untranslated.
+
+**Layout** — `app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar handles both desktop and mobile (slide-over) layouts; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
 
 **Content config** — page-specific data is kept in co-located config files, not in the components themselves:
-- `app/what/config/projects.ts` — project list
-- `app/how/config/categories.ts` — tech stack categories
-- `app/experiences/config/timeline.ts` — career timeline
-- `app/videos/config/videos.ts` — video list
+- `app/[locale]/what/config/projects.ts` — project list
+- `app/[locale]/how/config/categories.ts` — tech stack categories
+- `app/[locale]/experiences/config/timeline.ts` — career timeline
+- `app/[locale]/videos/config/videos.ts` — video list
 
 To add or update content on those pages, edit the relevant config file.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence (currently playing game or Spotify track) in the sidebar. The Discord user ID is hardcoded in `Presence.tsx`.
 
-**3D scene** — `app/mdf-2025/` contains a Three.js/React Three Fiber scene celebrating a competition win. Uses `@react-three/fiber`, `@react-three/drei`, and `@react-three/postprocessing`.
+**3D scene** — `app/[locale]/mdf-2025/` contains a Three.js/React Three Fiber scene celebrating a competition win. Uses `@react-three/fiber`, `@react-three/drei`, and `@react-three/postprocessing`.
 
 **UI components** — Shadcn/ui components live in `components/ui/`. Custom typography primitives (`TypographyH2`, `TypographyH3`, `TypographyH4`, `TypographyP`, `Bold`, etc.) are in `components/typography/index.tsx`; prefer these over raw HTML tags for text. They take `children` and an optional `className`; adjust styling through `className` rather than adding props.
 
 **Types** — shared TypeScript types are in `types/` (`project.ts`, `presence.ts`).
 
-**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.mjs` (`cdn.discordapp.com`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 
