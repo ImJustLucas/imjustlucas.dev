@@ -32,6 +32,16 @@ export class ContentRepositoryError extends Data.TaggedError(
   readonly cause?: unknown;
 }> {}
 
+/**
+ * The YouTube channel's Videos could not be read (feed unreachable, not
+ * found, or not in the expected shape). Not a content error: the build must
+ * not fail on it.
+ */
+export class VideosUnavailable extends Data.TaggedError("VideosUnavailable")<{
+  readonly message: string;
+  readonly cause?: unknown;
+}> {}
+
 export type ContentIssue = {
   /** The content file the issue was found in. */
   readonly path: string;

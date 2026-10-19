@@ -29,12 +29,15 @@ The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its p
 
 - `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
 - `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only) and `repository-in-memory.ts` (tests).
-- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (e.g. `techCategories` with resolved Techs). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
-- `server.ts` — what pages call (`getTechCategories()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (e.g. `techCategories` with resolved Techs, `videos` most recent first with only the latest marked `isNew` while under 30 days old, read with Effect `Clock`). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts` and `catalog-videos.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `youtube-channel.ts` — the `YouTubeChannel` source, consumed only by the catalog: `layer` reads the channel's public Atom feed (no API key; any failure is `VideosUnavailable`), `layerTest` serves fixed Videos per channel. The channel identifier is `YOUTUBE_CHANNEL_ID` in `catalog.ts` until the Profile holds it.
+- `server.ts` — what pages call (`getTechCategories()`, `getVideos()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+
+Videos are never written by hand. The Videos page has `revalidate = 86400`: it is regenerated on every deploy and then once a day. `getVideos()` rejects when the feed fails at runtime, so Next keeps serving the previous page; during `next build` (`NEXT_PHASE`) it returns no Videos instead, so the page shows its empty state and the build does not fail.
 
 Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
 
-Content not migrated yet stays in co-located config files: `app/[locale]/what/config/projects.ts`, `app/[locale]/experiences/config/timeline.ts`, `app/[locale]/videos/config/videos.ts`.
+Content not migrated yet stays in co-located config files: `app/[locale]/what/config/projects.ts`, `app/[locale]/experiences/config/timeline.ts`.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
@@ -44,7 +47,7 @@ Content not migrated yet stays in co-located config files: `app/[locale]/what/co
 
 **Types** — shared TypeScript types are in `types/` (`project.ts`). Lanyard types come from `react-use-lanyard`.
 
-**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`, and `*.ytimg.com/vi/**` for Video thumbnails). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 

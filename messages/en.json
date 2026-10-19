@@ -74,5 +74,11 @@
         "answer": "Definitely coffee. Paris runs on it, after all!"
       }
     }
+  },
+  "Videos": {
+    "new": "New",
+    "watch": "Watch now!",
+    "empty": "This section is a bit empty for now. I plan to start making videos about software development, lifestyle, life in general and other topics I'm into. Keep an eye on this page 🤓",
+    "subscribe": "Psst, you can subscribe to my channel <link>here</link>"
   }
 }
