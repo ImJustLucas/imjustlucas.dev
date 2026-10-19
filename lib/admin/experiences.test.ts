@@ -327,7 +327,7 @@ describe("Admin actions on Experiences", () => {
 
 describe("the Experiences editor", () => {
   it.effect(
-    "opens on the Experiences as stored and the revision they were read at",
+    "opens on the Experiences in display order, each with its position",
     () =>
       Effect.gen(function* () {
         const { run } = yield* admin(owner);
@@ -335,7 +335,10 @@ describe("the Experiences editor", () => {
         expect(yield* run(openExperiencesEditor)).toEqual({
           kind: "owner",
           revision: "memory-0",
-          experiences: [favikon, predi],
+          experiences: [
+            { index: 1, experience: predi },
+            { index: 0, experience: favikon },
+          ],
         });
       }),
   );

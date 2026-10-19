@@ -7,6 +7,7 @@ import {
   ownerAccess,
 } from "@/lib/admin/owner-access";
 import { loadContent } from "@/lib/content/catalog";
+import { byStartMostRecentFirst, type Period } from "@/lib/content/period";
 import type {
   ContentChange,
   ContentRepository,
@@ -80,6 +81,18 @@ export const readUpload = (
         cause,
       }),
   });
+
+/**
+ * A list editor's entries in display order, the order of the public pages
+ * (by Period, most recent first), each with `index`, its position in the
+ * stored document, which the actions address it by.
+ */
+export const inPeriodOrder = <A extends { readonly period: Period }>(
+  entries: ReadonlyArray<A>,
+): ReadonlyArray<{ readonly index: number; readonly entry: A }> =>
+  entries
+    .map((entry, index) => ({ index, entry }))
+    .sort((a, b) => byStartMostRecentFirst(a.entry.period, b.entry.period));
 
 /** Every content document, in its JSON shape. */
 export type ContentDocuments = typeof Content.Encoded;

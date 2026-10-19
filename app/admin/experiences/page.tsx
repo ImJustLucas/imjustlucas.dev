@@ -56,7 +56,7 @@ const ContractTypeField: React.FC<{ defaultValue?: ContractType }> = ({
 type StoredExperience = Extract<
   Awaited<ReturnType<typeof getExperiencesEditor>>,
   { kind: "owner" }
->["experiences"][number];
+>["experiences"][number]["experience"];
 
 const ExperienceFields: React.FC<{ experience?: StoredExperience }> = ({
   experience,
@@ -111,7 +111,7 @@ export default async function ExperiencesEditorPage() {
           d&apos;après leur période.
         </TypographyMuted>
         <ul className="flex flex-col gap-3">
-          {experiences.map((experience, index) => (
+          {experiences.map(({ index, experience }) => (
             // Experiences are addressed by position: keyed by revision too,
             // so a deletion never leaves a form on another Experience.
             <li

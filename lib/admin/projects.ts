@@ -4,13 +4,13 @@ import type { AdminActionResult } from "@/lib/admin/action-result";
 import {
   AdminAccess,
   type ContentDocuments,
+  inPeriodOrder,
   readUpload,
   saveContent,
   type Upload,
 } from "@/lib/admin/admin-action";
 import { projectImage } from "@/lib/admin/project-image";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
-import { byStartMostRecentFirst } from "@/lib/content/period";
 import type { Revision } from "@/lib/content/repository";
 import type {
   Content,
@@ -167,11 +167,10 @@ export const openProjectsEditor: Effect.Effect<
     kind: "owner",
     revision,
     techs: content.techs,
-    projects: content.projects
-      .map((project, index) => ({ index, project }))
-      .sort((a, b) =>
-        byStartMostRecentFirst(a.project.period, b.project.period),
-      ),
+    projects: inPeriodOrder(content.projects).map(({ index, entry }) => ({
+      index,
+      project: entry,
+    })),
   } as const;
 }).pipe(
   Effect.catchTag("NotOwner", () =>

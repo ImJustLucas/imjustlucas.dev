@@ -1,7 +1,11 @@
 import { Effect } from "effect";
 
 import type { AdminActionResult } from "@/lib/admin/action-result";
-import { AdminAccess, saveContent } from "@/lib/admin/admin-action";
+import {
+  AdminAccess,
+  inPeriodOrder,
+  saveContent,
+} from "@/lib/admin/admin-action";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
 import type { Revision } from "@/lib/content/repository";
 import type {
@@ -101,14 +105,18 @@ const experienceGone = {
 } as const;
 
 /**
- * What the Experiences editor shows: the Experiences in their stored order
- * (the positions actions address) and the revision they were read at.
+ * What the Experiences editor shows: the Experiences and the revision they
+ * were read at.
  */
 export type ExperiencesEditor =
   | {
       readonly kind: "owner";
       readonly revision: Revision;
-      readonly experiences: ReadonlyArray<Experience>;
+      /** In display order; `index` is the Experience's stored position. */
+      readonly experiences: ReadonlyArray<{
+        readonly index: number;
+        readonly experience: Experience;
+      }>;
     }
   | { readonly kind: "not-owner" };
 
@@ -125,7 +133,10 @@ export const openExperiencesEditor: Effect.Effect<
   return {
     kind: "owner",
     revision,
-    experiences: content.experiences,
+    experiences: inPeriodOrder(content.experiences).map(({ index, entry }) => ({
+      index,
+      experience: entry,
+    })),
   } as const;
 }).pipe(
   Effect.catchTag("NotOwner", () =>
