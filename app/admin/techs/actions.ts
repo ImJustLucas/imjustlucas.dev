@@ -1,27 +1,23 @@
 "use server";
 
-import { refresh } from "next/cache";
+import {
+  field,
+  type FormState,
+  index,
+  localized,
+  publish,
+  techIds,
+} from "@/app/admin/action-form";
+import {
+  createTech,
+  createTechCategory,
+  deleteTech,
+  deleteTechCategory,
+  updateTech,
+  updateTechCategory,
+} from "@/lib/admin/techs";
 
-import type { AdminActionResult } from "@/lib/admin/action-result";
-import { saveTechs } from "@/lib/admin/server";
-
-/**
- * The Techs editor's Server Actions: each reads its form, then runs the
- * matching Admin action, which checks the Owner itself (Server Actions are
- * public endpoints) and commits through his GitHub token.
- */
-
-type FormState = AdminActionResult | undefined;
-
-const field = (form: FormData, name: string): string => {
-  const value = form.get(name);
-  return typeof value === "string" ? value.trim() : "";
-};
-
-const localized = (form: FormData, name: string) => ({
-  en: field(form, `${name}.en`),
-  fr: field(form, `${name}.fr`),
-});
+/** The Techs editor's Server Actions (see `app/admin/action-form.ts`). */
 
 const techFields = (form: FormData) => ({
   revision: field(form, "revision"),
@@ -34,56 +30,38 @@ const techCategoryFields = (form: FormData) => ({
   revision: field(form, "revision"),
   name: localized(form, "name"),
   description: localized(form, "description"),
-  techs: form
-    .getAll("techs")
-    .filter((id): id is string => typeof id === "string"),
+  techs: techIds(form),
 });
 
-const index = (form: FormData) => Number.parseInt(field(form, "index"), 10);
-
-/** After a save, the editor re-reads `main` so it carries the new revision. */
-const published = (result: AdminActionResult) => {
-  if (result.kind === "saved") refresh();
-  return result;
-};
-
 export async function createTechAction(_: FormState, form: FormData) {
-  return published(await saveTechs.createTech(techFields(form)));
+  return publish(createTech, techFields(form));
 }
 
 export async function updateTechAction(_: FormState, form: FormData) {
-  return published(await saveTechs.updateTech(techFields(form)));
+  return publish(updateTech, techFields(form));
 }
 
 export async function deleteTechAction(_: FormState, form: FormData) {
-  return published(
-    await saveTechs.deleteTech({
-      revision: field(form, "revision"),
-      id: field(form, "id"),
-    }),
-  );
+  return publish(deleteTech, {
+    revision: field(form, "revision"),
+    id: field(form, "id"),
+  });
 }
 
 export async function createTechCategoryAction(_: FormState, form: FormData) {
-  return published(
-    await saveTechs.createTechCategory(techCategoryFields(form)),
-  );
+  return publish(createTechCategory, techCategoryFields(form));
 }
 
 export async function updateTechCategoryAction(_: FormState, form: FormData) {
-  return published(
-    await saveTechs.updateTechCategory({
-      ...techCategoryFields(form),
-      index: index(form),
-    }),
-  );
+  return publish(updateTechCategory, {
+    ...techCategoryFields(form),
+    index: index(form),
+  });
 }
 
 export async function deleteTechCategoryAction(_: FormState, form: FormData) {
-  return published(
-    await saveTechs.deleteTechCategory({
-      revision: field(form, "revision"),
-      index: index(form),
-    }),
-  );
+  return publish(deleteTechCategory, {
+    revision: field(form, "revision"),
+    index: index(form),
+  });
 }
