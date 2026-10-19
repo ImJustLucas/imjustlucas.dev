@@ -1,12 +1,9 @@
 import { Download } from "lucide-react";
 
-import {
-  Bold,
-  TypographyH2,
-  TypographyH4,
-  TypographyP,
-} from "@/components/typography";
+import { PageHeader, routeMetadata } from "@/components/page-header";
+import { Bold, TypographyH4, TypographyP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/config/routes";
 
 import {
   Accordion,
@@ -16,10 +13,12 @@ import {
 } from "@radix-ui/react-accordion";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 
+export const generateMetadata = routeMetadata(ROUTES.me);
+
 export default function Home() {
   return (
     <div className="md:w-2/3 w-full">
-      <TypographyH2 border={false}>Who am i?</TypographyH2>
+      <PageHeader route={ROUTES.me} />
       <TypographyP>
         Yoooo, I&apos;m <Bold>Lucas</Bold>! <br />A french software developer
         based in the heart of Paris, France, with a focus on crafting
