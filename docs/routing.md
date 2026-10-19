@@ -1,0 +1,21 @@
+# Routing, Locales and interface strings
+
+Read before adding or moving a page, a link, a redirect or any visible text on a public page.
+
+## Routing
+
+every public page lives under `app/[locale]/` (Locales `en`, default, and `fr`, defined in `i18n/routing.ts`) and is statically generated for both. `app/[locale]/layout.tsx` is a root layout (there is no `app/layout.tsx`, as `next/root-params` needs the Locale segment to be the root), so the Admin path can add its own root layout beside it; shared fonts are in `app/fonts/index.ts`. `proxy.ts` (next-intl middleware) sends the root address to the Locale of the browser language, falling back to English (no Locale cookie: `localeCookie: false` in `i18n/routing.ts`, so one visit to the other Locale never sticks); it skips `/admin`, `/api`, Next internals and files. Legacy unprefixed Route URLs redirect permanently (308) to English through `redirects()` in `next.config.ts`. A path under a Locale that is no Route (e.g. `/fr/xyz`) is rewritten by `proxy.ts`, with a 404 status, to that Locale's statically generated 404 page `app/[locale]/page-not-found` (in the Locale, inside the normal layout; `app/[locale]/not-found.tsx` shows the same for any `notFound()`). It is a rewrite rather than a catch-all calling `notFound()` because Next 16 renders a dynamic `notFound()` only in the browser, serving an empty `<html id="__next_error__">` shell. URLs outside Locale routing (files, unknown Admin paths) render `app/global-not-found.tsx`. Internal links use `Link`/`usePathname` from `@/i18n/navigation` (Locale-aware), never `next/link` with a bare path.
+
+## Routes
+
+The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its path, the key of its texts under `Routes` in the message dictionaries (`label`, `title`, `description`) and whether it is in the menu. The sidebar menu is generated from it (real links; the active-Route rule is `lib/routes/is-active-route.ts`, applied to the Locale-stripped path). Every page renders `<PageHeader route={ROUTES.x} />` and exports `generateMetadata = routeMetadata(ROUTES.x)` from `components/page-header`, which also declares the page's alternate-Locale URLs. The legacy redirects are derived from `ROUTES` too. Adding a page is one entry in `ROUTES` plus its texts in every dictionary.
+
+`config/routes.test.ts` fails when a page under `app/[locale]/` has no Route (`proxy.ts` would serve it as a 404) or a Route has no page.
+
+## Interface strings
+
+one message dictionary per Locale in `messages/` (`en.json` is the reference; `global.d.ts` types keys from it, and `messages/messages.test.ts` checks every dictionary has the same keys). Server components use `getTranslations` (from `next-intl/server`), client components `useTranslations`; the Locale comes from the root param (`i18n/request.ts`), so pages need no `setRequestLocale`. Every visible string of a public page (buttons, alt texts, empty states, the contact and MDF 2025 texts, diploma names) is in the dictionaries, so no page mixes languages. Proper nouns (Project titles, Tech names, company and school names) and Video titles stay untranslated.
+
+## Layout
+
+`app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar content is mounted once and only restyled between the desktop column and the mobile overlay, so there is a single Lanyard connection and a single set of menu sounds; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
