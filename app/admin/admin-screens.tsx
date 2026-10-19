@@ -1,7 +1,7 @@
 import { Github } from "lucide-react";
 
 import { signOut } from "@/app/admin/actions";
-import { TypographyH2, TypographyP } from "@/components/typography";
+import { Bold, TypographyH2, TypographyP } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import type { OwnerAccess } from "@/lib/admin/owner-access";
 
@@ -22,7 +22,7 @@ export const SignInScreen: React.FC<{
     {access.kind === "refused" ? (
       <>
         <TypographyP>
-          Le compte GitHub <strong>@{access.login}</strong> n&apos;a pas accès à
+          Le compte GitHub <Bold>@{access.login}</Bold> n&apos;a pas accès à
           l&apos;Admin.
         </TypographyP>
         <SignOutButton />

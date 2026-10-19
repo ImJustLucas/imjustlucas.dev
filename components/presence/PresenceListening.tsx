@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import { TypographyMuted } from "../typography";
+import { Bold, TypographyMuted } from "../typography";
 import type { Presence } from "./select-presence";
 
 type PresenceListeningProps = {
@@ -42,7 +42,7 @@ export const PresenceListening = ({ presence }: PresenceListeningProps) => {
             </div>
           </div>
           <div className="space-y-1">
-            <h5 className="font-medium text-primary">{song}</h5>
+            <Bold className="block font-medium text-primary">{song}</Bold>
             <TypographyMuted>{t("listeningBy", { artist })}</TypographyMuted>
           </div>
         </div>

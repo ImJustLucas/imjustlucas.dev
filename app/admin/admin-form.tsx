@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 
+import { TypographyMuted } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import type { AdminActionResult } from "@/lib/admin/action-result";
 import { cn } from "@/lib/utils";
@@ -132,9 +133,11 @@ export const AdminForm: React.FC<{
             {pending ? "Publication…" : submitLabel}
           </Button>
           {!pending && result && result.kind !== "saved" && (
-            <p role="alert" className="text-sm text-destructive">
-              {refusal(result)}
-            </p>
+            <div role="alert">
+              <TypographyMuted className="text-destructive">
+                {refusal(result)}
+              </TypographyMuted>
+            </div>
           )}
         </div>
       </form>
@@ -164,7 +167,9 @@ export const useFieldError = (name: string) =>
 
 export const FieldError: React.FC<{ name: string }> = ({ name }) => {
   const error = useFieldError(name);
-  return error ? <p className="text-sm text-destructive">{error}</p> : null;
+  return error ? (
+    <TypographyMuted className="text-destructive">{error}</TypographyMuted>
+  ) : null;
 };
 
 export const AdminField: React.FC<{

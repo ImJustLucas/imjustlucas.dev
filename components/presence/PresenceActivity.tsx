@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import { TypographyMuted } from "../typography";
+import { Bold, TypographyMuted } from "../typography";
 import type { Presence } from "./select-presence";
 
 type PresenceActivityProps = {
@@ -40,7 +40,7 @@ export const PresenceActivity = ({ presence }: PresenceActivityProps) => {
             </div>
           )}
           <div className="space-y-1">
-            <h5 className="font-medium text-primary">{name}</h5>
+            <Bold className="block font-medium text-primary">{name}</Bold>
             {details && <TypographyMuted>{details}</TypographyMuted>}
             {state && <TypographyMuted>{state}</TypographyMuted>}
           </div>
