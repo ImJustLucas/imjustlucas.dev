@@ -57,6 +57,43 @@ export default defineConfig([
     },
   },
   {
+    // ADR-0002: Effect runs on the server only; pages and components get
+    // plain data from `lib/content/server.ts` or `lib/admin/server.ts`.
+    files: ["app/**", "components/**"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["effect", "effect/*", "@effect/*"],
+              message:
+                "React code never imports Effect (ADR-0002): call lib/content/server.ts or lib/admin/server.ts instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // Text goes through the typography primitives, which accept a className.
+    files: ["app/**/*.tsx", "components/**/*.tsx"],
+    ignores: ["components/typography/**", "components/ui/**"],
+    rules: {
+      "react/forbid-elements": [
+        "error",
+        {
+          forbid: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "strong"].map(
+            (element) => ({
+              element,
+              message: "use a primitive from @/components/typography",
+            }),
+          ),
+        },
+      ],
+    },
+  },
+  {
     files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
     plugins: {
       "testing-library": testingLibrary,

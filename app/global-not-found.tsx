@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 import { geistMono, geistSans } from "@/app/fonts";
+import { TypographyH1, TypographyP } from "@/components/typography";
 
 export const metadata: Metadata = {
   title: "404 · ImJustLucas",
@@ -21,19 +22,19 @@ export default function GlobalNotFound() {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <main className="flex h-dvh flex-col items-center justify-center gap-4 p-4 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight">404</h1>
-          <p>
+          <TypographyH1 className="text-3xl font-semibold">404</TypographyH1>
+          <TypographyP className="leading-normal [&:not(:first-child)]:mt-0">
             <span lang="en">Page not found.</span>{" "}
             <span lang="fr">Page introuvable.</span>
-          </p>
-          <p className="flex gap-4">
+          </TypographyP>
+          <TypographyP className="flex gap-4 leading-normal [&:not(:first-child)]:mt-0">
             <a href="/en" hrefLang="en" className="underline">
               Home
             </a>
             <a href="/fr" hrefLang="fr" lang="fr" className="underline">
               Accueil
             </a>
-          </p>
+          </TypographyP>
         </main>
       </body>
     </html>

@@ -43,12 +43,12 @@ export const AdminNoticeProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <NoticeContext.Provider value={setNotice}>
       {notice && (
-        <p
+        <div
           role="status"
-          className="sticky top-0 z-10 mx-auto mb-6 max-w-4xl rounded-md border border-green-600/40 bg-background px-4 py-3 text-sm text-green-600"
+          className="sticky top-0 z-10 mx-auto mb-6 max-w-4xl rounded-md border border-green-600/40 bg-background px-4 py-3"
         >
-          {notice}
-        </p>
+          <TypographyMuted className="text-green-600">{notice}</TypographyMuted>
+        </div>
       )}
       {children}
     </NoticeContext.Provider>
