@@ -1,11 +1,18 @@
 import { Effect, Layer, Ref } from "effect";
 
-import { ContentConflict, ContentNotFound } from "./errors";
+import {
+  ContentConflict,
+  ContentNotFound,
+  ContentRepositoryError,
+} from "./errors";
 import { type ContentCommit, ContentRepository } from "./repository";
+
+type Files = ReadonlyMap<string, string | Uint8Array>;
 
 type State = {
   readonly head: number;
-  readonly files: ReadonlyMap<string, string | Uint8Array>;
+  /** The files at every revision so far: `history[n]` is `memory-n`. */
+  readonly history: ReadonlyArray<Files>;
   readonly commits: ReadonlyArray<ContentCommit>;
 };
 
@@ -13,8 +20,9 @@ const revisionOf = (head: number) => `memory-${head}`;
 
 /**
  * In-memory content repository, for tests. Starts at revision `memory-0`
- * with the given files; each commit moves it to the next revision. Besides
- * the `ContentRepository` interface it lists the commits applied so far.
+ * with the given files; each commit moves it to the next revision, and every
+ * earlier revision stays readable. Besides the `ContentRepository` interface
+ * it lists the commits applied so far.
  */
 export const makeInMemoryRepository = (
   files: Readonly<Record<string, string | Uint8Array>>,
@@ -22,16 +30,25 @@ export const makeInMemoryRepository = (
   Effect.gen(function* () {
     const state = yield* Ref.make<State>({
       head: 0,
-      files: new Map(Object.entries(files)),
+      history: [new Map(Object.entries(files))],
       commits: [],
     });
 
     const repository: ContentRepository["Service"] = {
       head: Effect.map(Ref.get(state), (s) => revisionOf(s.head)),
 
-      read: (path: string) =>
+      read: (path, revision) =>
         Effect.flatMap(Ref.get(state), (s) => {
-          const file = s.files.get(path);
+          const at = s.history.findIndex(
+            (_, n) => revisionOf(n) === (revision ?? revisionOf(s.head)),
+          );
+          if (at < 0)
+            return Effect.fail(
+              new ContentRepositoryError({
+                message: `Unknown revision: ${revision}`,
+              }),
+            );
+          const file = s.history[at].get(path);
           if (file === undefined)
             return Effect.fail(new ContentNotFound({ path }));
           return Effect.succeed(
@@ -52,7 +69,7 @@ export const makeInMemoryRepository = (
                   ),
                   s,
                 ];
-              const next = new Map(s.files);
+              const next = new Map(s.history[s.head]);
               for (const change of commit.changes) {
                 if (change.content === null) next.delete(change.path);
                 else next.set(change.path, change.content);
@@ -61,7 +78,7 @@ export const makeInMemoryRepository = (
                 Effect.succeed(revisionOf(s.head + 1)),
                 {
                   head: s.head + 1,
-                  files: next,
+                  history: [...s.history, next],
                   commits: [...s.commits, commit],
                 },
               ];

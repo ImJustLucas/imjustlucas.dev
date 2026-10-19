@@ -76,9 +76,12 @@ const fakeGitHub = (files: Record<string, string>) => {
         object: { sha: state.main, type: "commit" },
       });
 
-    if ((match = route.match(/^GET \/contents\/(.+)\?ref=main$/))) {
+    if ((match = route.match(/^GET \/contents\/(.+)\?ref=(.+)$/))) {
       const path = match[1].split("/").map(decodeURIComponent).join("/");
-      const blob = trees.get(commits.get(state.main)!.tree)!.get(path);
+      const ref = decodeURIComponent(match[2]);
+      const commit = commits.get(ref === "main" ? state.main : ref);
+      if (!commit) return json(404, { message: "No commit found for the ref" });
+      const blob = trees.get(commit.tree)!.get(path);
       if (headers.accept !== "application/vnd.github.raw+json")
         return json(415, { message: "Expected the raw media type" });
       if (blob === undefined) return json(404, { message: "Not Found" });
@@ -199,6 +202,29 @@ describe("GitHub ContentRepository", () => {
         "x-github-api-version": "2022-11-28",
       });
       expect(github.state.requests[0].headers["user-agent"]).toBeTruthy();
+    }).pipe(Effect.provide(repositoryOver(github)));
+  });
+
+  it.effect("reads a file as it was at a given revision", () => {
+    const github = fakeGitHub({ "content/techs.json": "[1]" });
+    return Effect.gen(function* () {
+      const repository = yield* ContentRepository;
+      const revision = yield* repository.head;
+      yield* repository.commit({
+        revision,
+        message: "Admin save",
+        changes: [{ path: "content/techs.json", content: "[2]" }],
+      });
+
+      expect(yield* repository.read("content/techs.json", revision)).toBe(
+        "[1]",
+      );
+      expect(yield* repository.read("content/techs.json")).toBe("[2]");
+      expect(
+        github.state.requests.some((r) =>
+          r.url.endsWith(`/contents/content/techs.json?ref=${revision}`),
+        ),
+      ).toBe(true);
     }).pipe(Effect.provide(repositoryOver(github)));
   });
 

@@ -36,9 +36,14 @@ export class ContentRepository extends Context.Service<
   {
     /** The revision the repository is currently at. */
     readonly head: Effect.Effect<Revision, ContentRepositoryError>;
-    /** The text of the file at `path`, at the current revision. */
+    /**
+     * The text of the file at `path`, at `revision` (by default the current
+     * one). Admin saves read at the revision their editor was opened at, so
+     * a read that lags behind `main` can never be what a save is built on.
+     */
     readonly read: (
       path: string,
+      revision?: Revision,
     ) => Effect.Effect<string, ContentNotFound | ContentRepositoryError>;
     /**
      * Applies the changes as one commit and returns the new revision. Fails

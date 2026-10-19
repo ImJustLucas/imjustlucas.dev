@@ -5,7 +5,11 @@ import {
   ContentNotFound,
   ContentRepositoryError,
 } from "./errors";
-import { type ContentChange, ContentRepository } from "./repository";
+import {
+  type ContentChange,
+  ContentRepository,
+  type Revision,
+} from "./repository";
 
 export type GitHubRepositoryOptions = {
   readonly owner: string;
@@ -108,11 +112,11 @@ export const makeGitHubRepository = (
     (ref) => ref.object.sha,
   );
 
-  const read = (path: string) =>
+  const read = (path: string, revision?: Revision) =>
     Effect.flatMap(
       request(
         "GET",
-        `/contents/${encodePath(path)}?ref=${encodeURIComponent(options.branch)}`,
+        `/contents/${encodePath(path)}?ref=${encodeURIComponent(revision ?? options.branch)}`,
         undefined,
         "application/vnd.github.raw+json",
       ),

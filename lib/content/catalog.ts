@@ -12,7 +12,7 @@ import {
 import { orOnColdBuild } from "./external-source";
 import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
 import { byStartMostRecentFirst, type Period } from "./period";
-import { ContentRepository } from "./repository";
+import { ContentRepository, type Revision } from "./repository";
 import {
   Content,
   DOCUMENT_PATHS,
@@ -273,11 +273,13 @@ type Kind = keyof typeof DOCUMENT_PATHS;
 const KINDS = Object.keys(DOCUMENT_PATHS) as ReadonlyArray<Kind>;
 
 /**
- * Reads every content document and decodes them as one `Content`. The Admin
- * reads through it too, so it edits exactly what the catalog validates.
+ * Reads every content document, at `revision` (by default the current one),
+ * and decodes them as one `Content`. The Admin reads through it too, so it
+ * edits exactly what the catalog validates.
  */
 export const loadContent = (
   repository: ContentRepository["Service"],
+  revision?: Revision,
 ): Effect.Effect<Content, CatalogError> =>
   Effect.gen(function* () {
     const documents: Partial<Record<Kind, unknown>> = {};
@@ -285,7 +287,7 @@ export const loadContent = (
 
     for (const kind of KINDS) {
       const path = DOCUMENT_PATHS[kind];
-      const text = yield* repository.read(path);
+      const text = yield* repository.read(path, revision);
       try {
         documents[kind] = JSON.parse(text);
       } catch (error) {

@@ -282,6 +282,30 @@ describe("Admin actions on Experiences", () => {
     }),
   );
 
+  it.effect(
+    "a save is built on the content of the revision it is based on",
+    () =>
+      Effect.gen(function* () {
+        const { run, commits } = yield* admin(owner);
+        // Opened at memory-0; then Predi.GG is deleted from elsewhere.
+        yield* run(deleteExperience({ revision: "memory-0", index: 1 }));
+
+        const result = yield* run(
+          updateExperience({
+            revision: "memory-0",
+            index: 1,
+            ...predi,
+            link: "https://www.predi.gg",
+          }),
+        );
+
+        // Read at memory-0, Predi.GG still exists: the save is a conflict to
+        // reload, not a refusal judged on content the editor never showed.
+        expect(result).toEqual({ kind: "conflict" });
+        expect(yield* commits).toHaveLength(1);
+      }),
+  );
+
   it.effect("anyone but the Owner is refused, and nothing is committed", () =>
     Effect.gen(function* () {
       for (const identity of [

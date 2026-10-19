@@ -85,9 +85,11 @@ export type ContentEdit =
     };
 
 /**
- * Runs an Admin action: `edit` turns the content read at the current head
- * into the content to publish; the save is based on `revision`, the one the
- * Owner's form was opened at, so it is a conflict if `main` moved since.
+ * Runs an Admin action: `edit` turns the content read at `revision`, the one
+ * the Owner's form was opened at, into the content to publish. The save is
+ * based on that same revision, so it is a conflict if `main` moved since,
+ * and it never rebuilds documents from content newer (or staler) than what
+ * the editor showed.
  */
 export const saveContent = (
   revision: Revision,
@@ -95,7 +97,7 @@ export const saveContent = (
 ): Effect.Effect<AdminActionResult, never, AdminAccess> =>
   Effect.gen(function* () {
     const repository = yield* (yield* AdminAccess).repository;
-    const content = yield* loadContent(repository);
+    const content = yield* loadContent(repository, revision);
 
     const outcome = edit(content);
     if (outcome.kind === "refused") return outcome;

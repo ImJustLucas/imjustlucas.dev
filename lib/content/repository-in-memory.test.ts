@@ -33,6 +33,25 @@ describe("in-memory ContentRepository", () => {
     }).pipe(Effect.provide(seeded)),
   );
 
+  it.effect("reads a file as it was at a given revision", () =>
+    Effect.gen(function* () {
+      const repository = yield* ContentRepository;
+      const revision = yield* repository.head;
+      yield* repository.commit({
+        revision,
+        message: "Update Techs",
+        changes: [
+          { path: "content/techs.json", content: "[1]" },
+          { path: "public/old.png", content: null },
+        ],
+      });
+
+      expect(yield* repository.read("content/techs.json", revision)).toBe("[]");
+      expect(yield* repository.read("public/old.png", revision)).toBe("old");
+      expect(yield* repository.read("content/techs.json")).toBe("[1]");
+    }).pipe(Effect.provide(seeded)),
+  );
+
   it.effect("refuses a commit on a stale revision and changes nothing", () =>
     Effect.gen(function* () {
       const repository = yield* ContentRepository;
