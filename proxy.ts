@@ -4,8 +4,8 @@ import { routing } from "./i18n/routing";
 
 /**
  * Locale routing: the root address (and any unprefixed path not covered by a
- * legacy redirect) is sent to the Locale from the `NEXT_LOCALE` cookie, then the
- * browser language, falling back to English.
+ * legacy redirect) is sent to the Locale of the browser language, falling
+ * back to English. No Locale cookie is kept (`localeCookie: false`).
  */
 export default createMiddleware(routing);
 

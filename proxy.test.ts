@@ -5,9 +5,10 @@ import { describe, expect, it } from "vitest";
 
 import proxy, { config } from "./proxy";
 
-function visit(path: string, acceptLanguage?: string) {
+function visit(path: string, acceptLanguage?: string, cookie?: string) {
   const headers = new Headers();
   if (acceptLanguage) headers.set("accept-language", acceptLanguage);
+  if (cookie) headers.set("cookie", cookie);
   return proxy(new NextRequest(`https://imjustlucas.dev${path}`, { headers }));
 }
 
@@ -32,6 +33,11 @@ describe("root address", () => {
     expect(response.headers.get("location")).toBe("https://imjustlucas.dev/en");
   });
 
+  it("follows the browser language even after an English page was visited", async () => {
+    const response = await visit("/", "fr-FR,fr;q=0.9", "NEXT_LOCALE=en");
+    expect(response.headers.get("location")).toBe("https://imjustlucas.dev/fr");
+  });
+
   it("is a temporary redirect, as it depends on the browser", async () => {
     const response = await visit("/", "fr");
     expect(response.status).toBe(307);
@@ -42,6 +48,11 @@ describe("Locale-prefixed pages", () => {
   it("are served as they are", async () => {
     const response = await visit("/fr/what", "en");
     expect(response.headers.get("location")).toBeNull();
+  });
+
+  it("remember no Locale for later visits", async () => {
+    const response = await visit("/en/what", "fr");
+    expect(response.headers.get("set-cookie")).toBeNull();
   });
 });
 

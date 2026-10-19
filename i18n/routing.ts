@@ -8,6 +8,10 @@ export const routing = defineRouting({
   // Pages declare their alternate-Locale URLs in their metadata
   // (`routeMetadata`); no duplicate `Link` header from the proxy.
   alternateLinks: false,
+  // The root address follows the browser language only: remembering the
+  // last Locale visited would keep a French Visitor who opened one English
+  // link in English.
+  localeCookie: false,
 });
 
 export type Locale = (typeof routing.locales)[number];
