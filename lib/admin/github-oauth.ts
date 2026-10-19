@@ -4,11 +4,15 @@ import "server-only";
 
 const USER_AGENT = "imjustlucas.dev-admin";
 
-/** The real GitHub behind the sign-in's `GitHubOAuth` interface. */
+/**
+ * The real GitHub behind the sign-in's `GitHubOAuth` interface. Its errors
+ * carry GitHub's status and error code only, never GitHub's description.
+ */
 export function githubOAuth(app: {
   clientId: string;
   clientSecret: string;
-  redirectUri: string;
+  /** Needed by the code exchange only. */
+  redirectUri?: string;
 }): GitHubOAuth {
   return {
     async exchangeCode(code) {
@@ -33,11 +37,10 @@ export function githubOAuth(app: {
       const body = (await response.json()) as {
         access_token?: string;
         error?: string;
-        error_description?: string;
       };
       if (!response.ok || !body.access_token) {
         throw new Error(
-          `GitHub refused the sign-in code: ${body.error_description ?? body.error ?? response.status}`,
+          `GitHub refused the sign-in code: ${response.status} ${body.error ?? ""}`.trim(),
         );
       }
       return body.access_token;
@@ -60,6 +63,27 @@ export function githubOAuth(app: {
       }
       const user = (await response.json()) as { id: number; login: string };
       return { id: user.id, login: user.login };
+    },
+
+    async revokeToken(accessToken) {
+      const response = await fetch(
+        `https://api.github.com/applications/${app.clientId}/token`,
+        {
+          method: "DELETE",
+          cache: "no-store",
+          headers: {
+            accept: "application/vnd.github+json",
+            authorization: `Basic ${Buffer.from(`${app.clientId}:${app.clientSecret}`).toString("base64")}`,
+            "content-type": "application/json",
+            "user-agent": USER_AGENT,
+            "x-github-api-version": "2022-11-28",
+          },
+          body: JSON.stringify({ access_token: accessToken }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error(`GitHub did not revoke the token: ${response.status}`);
+      }
     },
   };
 }

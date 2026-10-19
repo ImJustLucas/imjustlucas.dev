@@ -23,12 +23,13 @@ import "server-only";
  * Route Handlers and Server Actions.
  */
 
-const SEVEN_DAYS = 60 * 60 * 24 * 7;
+/** Short, as the session holds a token able to commit to the repository. */
+const TWELVE_HOURS = 60 * 60 * 12;
 
 const sessionOptions = (): SessionOptions => ({
   cookieName: "admin_session",
   password: sessionSecret(),
-  ttl: SEVEN_DAYS,
+  ttl: TWELVE_HOURS,
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

@@ -4,6 +4,7 @@ import {
   completeSignIn,
   type GitHubOAuth,
   signInUrl,
+  signOut,
 } from "@/lib/admin/github-sign-in";
 
 const OWNER_GITHUB_ID = "1234567";
@@ -22,6 +23,7 @@ const fakeGitHub = (user: { id: number; login: string }) => {
       }
       return user;
     },
+    revokeToken: async () => {},
   };
   return { github, exchangedCodes };
 };
@@ -115,4 +117,84 @@ describe("completeSignIn", () => {
       expect(exchangedCodes).toEqual([]);
     },
   );
+});
+
+describe("completeSignIn when GitHub fails", () => {
+  it.each([
+    ["the code exchange", "exchangeCode"],
+    ["reading the account", "fetchUser"],
+  ] as const)("signs nobody in when %s fails", async (_case, call) => {
+    const { github } = fakeGitHub(owner);
+    github[call] = async () => {
+      throw new Error("bad_verification_code: The code passed is incorrect");
+    };
+
+    const result = await completeSignIn(
+      { code: "abc", state: "s1", expectedState: "s1" },
+      { github, ownerGithubId: OWNER_GITHUB_ID },
+    );
+
+    expect(result).toEqual({ kind: "failed" });
+  });
+});
+
+describe("signOut", () => {
+  /** The session and GitHub as sign-out sees them, recording what it did. */
+  const signedIn = (
+    identity: Parameters<typeof signOut>[0]["identity"],
+    revoke: (token: string) => Promise<void> = async () => {},
+  ) => {
+    const done: string[] = [];
+    return {
+      done,
+      deps: {
+        identity,
+        revokeToken: async (token: string) => {
+          done.push(`revoke ${token}`);
+          await revoke(token);
+        },
+        endSession: async () => {
+          done.push("end session");
+        },
+      },
+    };
+  };
+
+  it("revokes the Owner's GitHub token, then ends the session", async () => {
+    const { done, deps } = signedIn({
+      githubId: 1234567,
+      login: "ImJustLucas",
+      accessToken: "gho_owner",
+    });
+
+    await signOut(deps);
+
+    expect(done).toEqual(["revoke gho_owner", "end session"]);
+  });
+
+  it("still ends the session when GitHub refuses the revocation", async () => {
+    const { done, deps } = signedIn(
+      { githubId: 1234567, login: "ImJustLucas", accessToken: "gho_owner" },
+      async () => {
+        throw new Error("GitHub is down");
+      },
+    );
+
+    await signOut(deps);
+
+    expect(done).toEqual(["revoke gho_owner", "end session"]);
+  });
+
+  it("revokes nothing for an account whose token was never kept", async () => {
+    for (const identity of [
+      { githubId: 7654321, login: "someone" },
+      undefined,
+    ]) {
+      const { done, deps } = signedIn(identity);
+
+      await signOut(deps);
+
+      expect(done).toEqual(["end session"]);
+    }
+  });
 });
