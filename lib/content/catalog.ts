@@ -64,8 +64,11 @@ export class ContentCatalog extends Context.Service<
 type Kind = keyof typeof DOCUMENT_PATHS;
 const KINDS = Object.keys(DOCUMENT_PATHS) as ReadonlyArray<Kind>;
 
-/** Reads every content document and decodes them as one `Content`. */
-const loadContent = (
+/**
+ * Reads every content document and decodes them as one `Content`. The Admin
+ * reads through it too, so it edits exactly what the catalog validates.
+ */
+export const loadContent = (
   repository: ContentRepository["Service"],
 ): Effect.Effect<Content, CatalogError> =>
   Effect.gen(function* () {
