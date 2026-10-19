@@ -1,10 +1,8 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
 
-import { ExternalLink, Github, Star } from "lucide-react";
+import { ExternalLink, FolderCode, Github, Star } from "lucide-react";
 
+import { TechBadge } from "@/components/tech/TechBadge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,25 +13,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { Project } from "@/types/project";
+import { formatPeriod } from "@/lib/content/format-period";
+import type { ResolvedProject } from "@/lib/content/types";
 
-import { LinkButton } from "../ui/link-button";
-
-type ProjectType = {
-  project: Project;
+type ProjectCardProps = {
+  project: ResolvedProject;
 };
 
-export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
+// English until the Projects page is translated (#16).
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl max-w-sm h-[500px] flex flex-col">
-      <div className="relative h-48 w-full shrink-0 overflow-hidden">
-        <Image
-          src={project.image || "/placeholder.svg?height=200&width=400"}
-          alt="Project Image"
-          fill
-          style={{ objectFit: "cover", objectPosition: "top" }}
-          className="transition-transform duration-300"
-        />
+      <div className="relative h-48 w-full shrink-0 overflow-hidden bg-muted">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="384px"
+            className="object-cover object-top transition-transform duration-300"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-muted-foreground">
+            <FolderCode aria-hidden className="h-12 w-12" />
+          </div>
+        )}
       </div>
 
       <CardHeader className="flex-none relative z-10">
@@ -41,7 +45,7 @@ export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
           {project.title}
         </CardTitle>
         <CardDescription>
-          <span className="text-sm">{project.date}</span>
+          <span className="text-sm">{formatPeriod(project.period, "en")}</span>
           {project.wip && (
             <Badge className="ml-2 text-xs bg-yellow-400 text-black hover:bg-yellow-400 ">
               WIP
@@ -51,43 +55,52 @@ export const ProjectCard: React.FC<ProjectType> = ({ project }) => {
       </CardHeader>
 
       <CardContent className="flex-grow overflow-auto relative z-10">
-        <p className="mb-4 line-clamp-3">{project.description}</p>
+        <p className="mb-4 line-clamp-3">{project.description.en}</p>
         <div className="flex flex-wrap gap-2">
-          {project.techs.map((tech, index) => (
-            <Badge
-              key={index}
-              className={`text-sm py-1 px-2 transition-all duration-300 ${tech.color} group-hover:shadow-lg group-hover:scale-105`}
-            >
-              {tech.name}
-            </Badge>
+          {project.techs.map((tech) => (
+            <TechBadge key={tech.id} tech={tech} />
           ))}
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-between flex-none bg-card/80 backdrop-blur-sm relative z-[5]">
-        {project.openSource && (
-          <LinkButton
-            href={project.links.github || "https://github.com/imjustlucas"}
+        {project.repository && (
+          <Button
+            asChild
             variant="outline"
             size="sm"
             className="group-hover:border-primary/50 transition-colors"
           >
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-            {project.stars && (
-              <>
-                <span className="ml-1">{project.stars}</span>
-                <Star className="ml-2 h-4 w-4" />
-              </>
-            )}
-          </LinkButton>
+            <a
+              href={project.repository}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github />
+              GitHub
+              {project.stars !== undefined && (
+                <>
+                  <span className="ml-1">{project.stars}</span>
+                  <Star aria-hidden />
+                </>
+              )}
+            </a>
+          </Button>
         )}
-        {project.links.external && (
+        {project.externalLink && (
           <Button
-            className="ml-auto group-hover:bg-primary/90 transition-colors"
+            asChild
             size="sm"
+            className="ml-auto group-hover:bg-primary/90 transition-colors"
           >
-            <ExternalLink className="h-4 w-4" />
+            <a
+              href={project.externalLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${project.title}`}
+            >
+              <ExternalLink />
+            </a>
           </Button>
         )}
       </CardFooter>

@@ -19,5 +19,10 @@
   { "id": "claude", "name": "Claude", "color": "#f97316" },
   { "id": "claude-code", "name": "Claude Code", "color": "#ea580c" },
   { "id": "gemini", "name": "Gemini", "color": "#3b82f6" },
-  { "id": "cursor", "name": "Cursor", "color": "#7c3aed" }
+  { "id": "cursor", "name": "Cursor", "color": "#7c3aed" },
+  { "id": "nuxtjs", "name": "Nuxt.js", "color": "#4ade80" },
+  { "id": "strapi", "name": "Strapi", "color": "#9333ea" },
+  { "id": "styled-components", "name": "Styled Components", "color": "#ec4899" },
+  { "id": "bun", "name": "Bun", "color": "#e7e5e4" },
+  { "id": "elysiajs", "name": "Elysia.js", "color": "#38bdf8" }
 ]

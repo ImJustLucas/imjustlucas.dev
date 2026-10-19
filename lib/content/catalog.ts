@@ -6,6 +6,7 @@ import {
   type ContentNotFound,
   type ContentRepositoryError,
 } from "./errors";
+import { byStartMostRecentFirst, type Period } from "./period";
 import { ContentRepository } from "./repository";
 import {
   Content,
@@ -19,6 +20,21 @@ export type ResolvedTechCategory = {
   readonly name: LocalizedText;
   readonly description: LocalizedText;
   readonly techs: ReadonlyArray<Tech>;
+};
+
+/** A Project as pages render it: its Techs resolved, its links checked. */
+export type ResolvedProject = {
+  readonly title: string;
+  readonly description: LocalizedText;
+  readonly image?: string;
+  readonly wip: boolean;
+  readonly period: Period;
+  readonly techs: ReadonlyArray<Tech>;
+  readonly externalLink?: string;
+  /** Only for an open-source Project with a repository link. */
+  readonly repository?: string;
+  /** Only when there is at least one star. */
+  readonly stars?: number;
 };
 
 export type CatalogError =
@@ -37,6 +53,11 @@ export class ContentCatalog extends Context.Service<
       ReadonlyArray<ResolvedTechCategory>,
       CatalogError
     >;
+    /** Ordered by Period start, most recent first; ongoing first on ties. */
+    readonly projects: Effect.Effect<
+      ReadonlyArray<ResolvedProject>,
+      CatalogError
+    >;
   }
 >()("content/ContentCatalog") {
   /** Needs a `ContentRepository`. */
@@ -48,18 +69,45 @@ export class ContentCatalog extends Context.Service<
 
       return {
         techCategories: Effect.map(load, (content) => {
-          const techs = new Map(content.techs.map((tech) => [tech.id, tech]));
+          const resolve = techResolver(content);
           return content.techCategories.map((category) => ({
             name: category.name,
             description: category.description,
-            // Every id exists: `Content` rejects unknown Techs.
-            techs: category.techs.map((id) => techs.get(id)!),
+            techs: category.techs.map(resolve),
           }));
+        }),
+
+        projects: Effect.map(load, (content) => {
+          const resolve = techResolver(content);
+          return [...content.projects]
+            .sort((a, b) => byStartMostRecentFirst(a.period, b.period))
+            .map(
+              (project): ResolvedProject => ({
+                title: project.title,
+                description: project.description,
+                ...(project.image && { image: project.image }),
+                wip: project.wip,
+                period: project.period,
+                techs: project.techs.map(resolve),
+                ...(project.externalLink && {
+                  externalLink: project.externalLink,
+                }),
+                ...(project.openSource &&
+                  project.repository && { repository: project.repository }),
+                ...(project.stars && { stars: project.stars }),
+              }),
+            );
         }),
       };
     }),
   );
 }
+
+/** Every id exists: `Content` rejects unknown Techs. */
+const techResolver = (content: Content) => {
+  const techs = new Map(content.techs.map((tech) => [tech.id, tech]));
+  return (id: Tech["id"]) => techs.get(id)!;
+};
 
 type Kind = keyof typeof DOCUMENT_PATHS;
 const KINDS = Object.keys(DOCUMENT_PATHS) as ReadonlyArray<Kind>;

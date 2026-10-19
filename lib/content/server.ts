@@ -25,3 +25,5 @@ const fromCatalog = <A, E>(
 
 export const getTechCategories = () =>
   fromCatalog((catalog) => catalog.techCategories);
+
+export const getProjects = () => fromCatalog((catalog) => catalog.projects);

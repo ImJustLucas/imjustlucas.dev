@@ -1,0 +1,69 @@
+[
+  {
+    "title": "Predi.GG",
+    "description": {
+      "en": "Predi.GG - Predict, compete, and win. 🔮",
+      "fr": "Predi.GG - Pronostique, affronte les autres et gagne. 🔮"
+    },
+    "image": "/images/projects/predi.png",
+    "wip": true,
+    "period": { "start": "2025", "end": "ongoing" },
+    "techs": [],
+    "externalLink": "https://predi.gg",
+    "openSource": false
+  },
+  {
+    "title": "Qotum",
+    "description": {
+      "en": "Qotum - The smartest way to respond to your ratings with AI.",
+      "fr": "Qotum - La façon la plus intelligente de répondre à vos avis grâce à l'IA."
+    },
+    "image": "/images/projects/qotum.png",
+    "wip": true,
+    "period": { "start": "2024", "end": "ongoing" },
+    "techs": ["nextjs", "nestjs"],
+    "openSource": false
+  },
+  {
+    "title": "Tricks",
+    "description": {
+      "en": "Creation of a social network intended for extreme sports on web and mobile platforms 🤙",
+      "fr": "Création d'un réseau social dédié aux sports extrêmes, sur le web et sur mobile 🤙"
+    },
+    "image": "/images/projects/tricks.png",
+    "wip": false,
+    "period": { "start": "2021", "end": "2023" },
+    "techs": ["nuxtjs", "strapi"],
+    "externalLink": "https://tonytrancard.fr/projects_side/thetricksnetwork",
+    "openSource": false
+  },
+  {
+    "title": "Next 13 Boilerplate",
+    "description": {
+      "en": "💙 Magnificent Next.js 13 boilerplate with Pages router, TypeScript, ...",
+      "fr": "💙 Un magnifique boilerplate Next.js 13 avec le Pages Router, TypeScript, ..."
+    },
+    "image": "/images/projects/next-13-boilerplate.png",
+    "wip": false,
+    "period": { "start": "2023-11", "end": "2023-11" },
+    "techs": ["react", "nextjs", "styled-components"],
+    "externalLink": "https://next-13-boilerplate.imjustlucas.dev/",
+    "repository": "https://github.com/ImJustLucas/Next-13-Boilerplate",
+    "openSource": true,
+    "stars": 16
+  },
+  {
+    "title": "Bun Elysia Boilerplate",
+    "description": {
+      "en": "🩶 Gorgeous Bun-Elysia boilerplate with TypeScript",
+      "fr": "🩶 Un superbe boilerplate Bun-Elysia avec TypeScript"
+    },
+    "image": "/images/projects/bun-elysia-boilerplate.png",
+    "wip": false,
+    "period": { "start": "2024-05", "end": "2024-05" },
+    "techs": ["bun", "elysiajs", "typescript"],
+    "repository": "https://github.com/ImJustLucas/bun-elysia-boilerplate",
+    "openSource": true,
+    "stars": 33
+  }
+]
