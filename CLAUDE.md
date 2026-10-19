@@ -8,10 +8,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pnpm dev        # Start dev server (Turbopack is the default bundler)
 pnpm build      # Production build
 pnpm lint       # ESLint CLI with flat config in eslint.config.mjs (runs in CI on every push)
-pnpm test       # Vitest (`*.test.ts`, config in vitest.config.ts)
+pnpm test       # Vitest, runs every *.test.ts once (runs in CI on every push)
 ```
 
-The pre-commit hook exists but its commands are commented out.
+Tests use Vitest (`vitest.config.ts`, Node environment, `@/` alias resolved from `tsconfig.json`, `server-only` aliased to a no-op). They sit next to the module they cover as `*.test.ts` and exercise plain functions, or Effect services through `@effect/vitest` (`it.effect`), through their public interface; React components are not tested. The pre-commit hook exists but its commands are commented out.
 
 ## Architecture
 
@@ -23,25 +23,28 @@ The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its p
 
 **Interface strings** — one message dictionary per Locale in `messages/` (`en.json` is the reference; `global.d.ts` types keys from it, and `messages/messages.test.ts` checks every dictionary has the same keys). Server components use `getTranslations` (from `next-intl/server`), client components `useTranslations`; the Locale comes from the root param (`i18n/request.ts`), so pages need no `setRequestLocale`. Proper nouns (Project titles, Tech names, company names) stay untranslated.
 
-**Layout** — `app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar handles both desktop and mobile (slide-over) layouts; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
+**Layout** — `app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar content is mounted once and only restyled between the desktop column and the mobile overlay, so there is a single Lanyard connection and a single set of menu sounds; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
 
-**Content config** — page-specific data is kept in co-located config files, not in the components themselves:
-- `app/[locale]/what/config/projects.ts` — project list
-- `app/[locale]/how/config/categories.ts` — tech stack categories
-- `app/[locale]/experiences/config/timeline.ts` — career timeline
-- `app/[locale]/videos/config/videos.ts` — video list
+**Content** — Techs and Tech categories live as JSON documents in `content/` (`techs.json`, `tech-categories.json`); edit them by hand or, later, through the Admin. Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
 
-To add or update content on those pages, edit the relevant config file.
+- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
+- `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only) and `repository-in-memory.ts` (tests).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (e.g. `techCategories` with resolved Techs). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `server.ts` — what pages call (`getTechCategories()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
 
-**Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence (currently playing game or Spotify track) in the sidebar. The Discord user ID is hardcoded in `Presence.tsx`.
+Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
+
+Content not migrated yet stays in co-located config files: `app/[locale]/what/config/projects.ts`, `app/[locale]/experiences/config/timeline.ts`, `app/[locale]/videos/config/videos.ts`.
+
+**Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 
 **3D scene** — `app/[locale]/mdf-2025/` contains a Three.js/React Three Fiber scene celebrating a competition win. Uses `@react-three/fiber`, `@react-three/drei`, and `@react-three/postprocessing`.
 
 **UI components** — Shadcn/ui components live in `components/ui/`. Custom typography primitives (`TypographyH2`, `TypographyH3`, `TypographyH4`, `TypographyP`, `Bold`, etc.) are in `components/typography/index.tsx`; prefer these over raw HTML tags for text. They take `children` and an optional `className`; adjust styling through `className` rather than adding props.
 
-**Types** — shared TypeScript types are in `types/` (`project.ts`, `presence.ts`).
+**Types** — shared TypeScript types are in `types/` (`project.ts`). Lanyard types come from `react-use-lanyard`.
 
-**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
+**Images** — remote image hosts are allowed through `images.remotePatterns` in `next.config.ts` (`cdn.discordapp.com`, `media.discordapp.net`, `i.scdn.co`). Add new hosts there if needed; `images.domains` is deprecated.
 
 ## Code conventions
 
