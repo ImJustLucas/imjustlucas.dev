@@ -5,10 +5,8 @@ import { getIronSession, type SessionOptions } from "iron-session";
 import { ownerGithubId, sessionSecret } from "@/lib/admin/config";
 import {
   type AdminIdentitySource,
-  type Owner,
   type OwnerAccess,
   ownerAccess,
-  requireOwner,
   type SignedInIdentity,
 } from "@/lib/admin/owner-access";
 
@@ -52,10 +50,6 @@ export const sessionIdentities: AdminIdentitySource = {
 
 export const currentOwnerAccess = (): Promise<OwnerAccess> =>
   ownerAccess(sessionIdentities, ownerGithubId());
-
-/** For Admin actions: the signed-in Owner, or `NotOwnerError`. */
-export const requireOwnerSession = (): Promise<Owner> =>
-  requireOwner(sessionIdentities, ownerGithubId());
 
 export async function saveSession(identity: SignedInIdentity): Promise<void> {
   const current = await session();
