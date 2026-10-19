@@ -15,6 +15,8 @@ const text = (en: string, fr: string) => ({ en, fr });
 const catalogWith = (documents: {
   techs?: unknown;
   techCategories?: unknown;
+  projects?: unknown;
+  experiences?: unknown;
 }) =>
   ContentCatalog.layer.pipe(
     Layer.provide(
@@ -23,6 +25,8 @@ const catalogWith = (documents: {
         "content/tech-categories.json": JSON.stringify(
           documents.techCategories ?? [],
         ),
+        "content/projects.json": JSON.stringify(documents.projects ?? []),
+        "content/experiences.json": JSON.stringify(documents.experiences ?? []),
       }),
     ),
     Layer.provide(YouTubeChannel.layerTest({})),
@@ -167,10 +171,435 @@ describe("ContentCatalog.techCategories", () => {
             layerInMemory({
               "content/techs.json": "[{",
               "content/tech-categories.json": "[]",
+              "content/projects.json": "[]",
+              "content/experiences.json": "[]",
             }),
           ),
           Layer.provide(YouTubeChannel.layerTest({})),
         ),
+      ),
+    ),
+  );
+});
+
+const project = (title: string, period: unknown, rest: object = {}) => ({
+  title,
+  description: text(`${title} in English`, `${title} en français`),
+  wip: false,
+  period,
+  techs: [],
+  openSource: false,
+  ...rest,
+});
+
+const projectTitles = Effect.gen(function* () {
+  const projects = yield* (yield* ContentCatalog).projects;
+  return projects.map((p) => p.title);
+});
+
+describe("ContentCatalog.projects", () => {
+  it.effect("orders Projects by Period start, most recent first", () =>
+    Effect.gen(function* () {
+      expect(yield* projectTitles).toEqual([
+        "Predi.GG",
+        "Bun Elysia Boilerplate",
+        "Next 13 Boilerplate",
+        "Tricks",
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project("Tricks", { start: "2021", end: "2023" }),
+            project("Next 13 Boilerplate", {
+              start: "2023-11",
+              end: "2023-11",
+            }),
+            project("Predi.GG", { start: "2025", end: "ongoing" }),
+            project("Bun Elysia Boilerplate", {
+              start: "2024-05",
+              end: "2024-05",
+            }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("puts the ongoing Project first on equal starts", () =>
+    Effect.gen(function* () {
+      expect(yield* projectTitles).toEqual(["Qotum", "Side project", "Tricks"]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project("Tricks", { start: "2021", end: "2023" }),
+            project("Side project", { start: "2024", end: "2024" }),
+            project("Qotum", { start: "2024", end: "ongoing" }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("counts a year-precision start as January of that year", () =>
+    Effect.gen(function* () {
+      expect(yield* projectTitles).toEqual([
+        "May 2024",
+        "January 2024, ongoing",
+        "2024",
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project("2024", { start: "2024", end: "2024" }),
+            project("May 2024", { start: "2024-05", end: "2024-05" }),
+            project("January 2024, ongoing", {
+              start: "2024-01",
+              end: "ongoing",
+            }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("resolves each Tech identifier and keeps the Period", () =>
+    Effect.gen(function* () {
+      const [qotum] = yield* (yield* ContentCatalog).projects;
+
+      expect(qotum).toEqual({
+        title: "Qotum",
+        description: text("Qotum in English", "Qotum en français"),
+        image: "/images/projects/qotum.png",
+        wip: true,
+        period: { start: "2024", end: "ongoing" },
+        techs: [react, typescript],
+        externalLink: "https://qotum.com",
+      });
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          techs: [typescript, react],
+          projects: [
+            project(
+              "Qotum",
+              { start: "2024", end: "ongoing" },
+              {
+                image: "/images/projects/qotum.png",
+                wip: true,
+                techs: ["react", "typescript"],
+                externalLink: "https://qotum.com",
+              },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("links the repository of open-source Projects only", () =>
+    Effect.gen(function* () {
+      const projects = yield* (yield* ContentCatalog).projects;
+
+      expect(projects.map((p) => [p.title, p.repository])).toEqual([
+        ["Open", "https://github.com/ImJustLucas/open"],
+        ["Closed", undefined],
+        ["Open, no repository", undefined],
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project(
+              "Open",
+              { start: "2024", end: "2024" },
+              {
+                openSource: true,
+                repository: "https://github.com/ImJustLucas/open",
+              },
+            ),
+            project(
+              "Closed",
+              { start: "2023", end: "2023" },
+              {
+                openSource: false,
+                repository: "https://github.com/ImJustLucas/closed",
+              },
+            ),
+            project(
+              "Open, no repository",
+              { start: "2022", end: "2022" },
+              { openSource: true },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("omits a zero star count", () =>
+    Effect.gen(function* () {
+      const projects = yield* (yield* ContentCatalog).projects;
+
+      expect(projects.map((p) => [p.title, p.stars])).toEqual([
+        ["Starred", 16],
+        ["Unstarred", undefined],
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project(
+              "Starred",
+              { start: "2024", end: "2024" },
+              {
+                openSource: true,
+                repository: "https://github.com/ImJustLucas/starred",
+                stars: 16,
+              },
+            ),
+            project(
+              "Unstarred",
+              { start: "2023", end: "2023" },
+              {
+                openSource: true,
+                repository: "https://github.com/ImJustLucas/unstarred",
+                stars: 0,
+              },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a Period that ends before it starts", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+      expect(error._tag).toBe("ContentInvalid");
+      expect(error.message).toContain(
+        "content/projects.json at [0].period.end: End must not precede start",
+      );
+      expect(error.message).toContain(
+        "content/projects.json at [1].period.end: End must not precede start",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project("Backwards", { start: "2024", end: "2023" }),
+            project("Backwards by a month", {
+              start: "2024-05",
+              end: "2024-04",
+            }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("accepts an end at a coarser precision within the start year", () =>
+    Effect.gen(function* () {
+      expect(yield* projectTitles).toEqual(["Within 2024"]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [project("Within 2024", { start: "2024-05", end: "2024" })],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a Period point that is not a year or a year-month", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+      expect(error.message).toContain(
+        "content/projects.json at [0].period.start: Expected a year (YYYY) or a year-month (YYYY-MM)",
+      );
+      expect(error.message).toContain(
+        "content/projects.json at [1].period.end: Expected a year (YYYY), a year-month (YYYY-MM) or ongoing",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          projects: [
+            project("Month 13", { start: "2024-13", end: "ongoing" }),
+            project("Now", { start: "2024", end: "now" }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on an unknown Tech identifier, naming file and place", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+      expect(error._tag).toBe("ContentInvalid");
+      expect(error.message).toContain(
+        "content/projects.json at [0].techs[1]: Unknown Tech identifier: vue",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          techs: [react],
+          projects: [
+            project(
+              "Tricks",
+              { start: "2021", end: "2023" },
+              { techs: ["react", "vue"] },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+});
+
+const experience = (company: string, period: unknown, rest: object = {}) => ({
+  company,
+  role: text("Fullstack Developer", "Développeur Fullstack"),
+  contractType: "work-study",
+  link: `https://${company.toLowerCase().replace(/\W/g, "")}.com`,
+  description: text(`${company} in English`, `${company} en français`),
+  period,
+  ...rest,
+});
+
+const experienceCompanies = Effect.gen(function* () {
+  const experiences = yield* (yield* ContentCatalog).experiences;
+  return experiences.map((e) => e.company);
+});
+
+describe("ContentCatalog.experiences", () => {
+  it.effect(
+    "lists an ongoing Experience started later before one started earlier",
+    () =>
+      Effect.gen(function* () {
+        expect(yield* experienceCompanies).toEqual([
+          "Bam Karaoke",
+          "Predi.GG",
+          "Favikon",
+          "The Tricks Network",
+          "TNYTR",
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            experiences: [
+              experience("Predi.GG", { start: "2025-09", end: "ongoing" }),
+              experience("Bam Karaoke", { start: "2026-01", end: "ongoing" }),
+              experience("Favikon", { start: "2023", end: "2025" }),
+              experience("The Tricks Network", { start: "2021", end: "2023" }),
+              experience("TNYTR", { start: "2021", end: "2021" }),
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect("puts the ongoing Experience first on equal starts", () =>
+    Effect.gen(function* () {
+      expect(yield* experienceCompanies).toEqual([
+        "Still there",
+        "Left the same year",
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [
+            experience("Left the same year", {
+              start: "2024-03",
+              end: "2024-09",
+            }),
+            experience("Still there", { start: "2024-03", end: "ongoing" }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect(
+    "returns company, role, contract type, link, texts and Period",
+    () =>
+      Effect.gen(function* () {
+        const experiences = yield* (yield* ContentCatalog).experiences;
+
+        expect(experiences).toEqual([
+          {
+            company: "Favikon",
+            role: text("Fullstack Developer", "Développeur Fullstack"),
+            contractType: "work-study",
+            link: "https://favikon.com",
+            description: text("A SaaS", "Un SaaS"),
+            period: { start: "2023", end: "2025" },
+          },
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            experiences: [
+              {
+                company: "Favikon",
+                role: text("Fullstack Developer", "Développeur Fullstack"),
+                contractType: "work-study",
+                link: "https://favikon.com",
+                description: text("A SaaS", "Un SaaS"),
+                period: { start: "2023", end: "2025" },
+              },
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect("fails on a missing translation or an unknown contract type", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).experiences);
+
+      expect(error._tag).toBe("ContentInvalid");
+      expect(error.message).toContain(
+        "content/experiences.json at [0].role.fr: Missing translation",
+      );
+      expect(error.message).toContain(
+        "content/experiences.json at [1].contractType",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [
+            experience(
+              "Favikon",
+              { start: "2023", end: "2025" },
+              { role: { en: "Fullstack Developer" } },
+            ),
+            experience(
+              "TNYTR",
+              { start: "2021", end: "2021" },
+              { contractType: "freelance" },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a Period that ends before it starts", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).experiences);
+
+      expect(error.message).toContain(
+        "content/experiences.json at [0].period.end: End must not precede start",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [experience("Favikon", { start: "2025", end: "2023" })],
+        }),
       ),
     ),
   );

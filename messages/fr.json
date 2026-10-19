@@ -75,6 +75,14 @@
       }
     }
   },
+  "Experiences": {
+    "contractTypes": {
+      "entrepreneurship": "Entrepreneuriat",
+      "permanent": "CDI",
+      "work-study": "Alternance",
+      "internship": "Stage"
+    }
+  },
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",

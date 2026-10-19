@@ -36,6 +36,11 @@ const isBuilding = () => process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD;
 export const getTechCategories = () =>
   fromCatalog((catalog) => catalog.techCategories);
 
+export const getProjects = () => fromCatalog((catalog) => catalog.projects);
+
+export const getExperiences = () =>
+  fromCatalog((catalog) => catalog.experiences);
+
 /**
  * The channel's latest Videos, most recent first. If the channel cannot be
  * read during a build there is no previous page to keep, so the page gets no

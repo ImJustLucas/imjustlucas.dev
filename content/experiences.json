@@ -1,0 +1,57 @@
+[
+  {
+    "company": "Predi.GG",
+    "role": { "en": "Co-Founder", "fr": "Cofondateur" },
+    "contractType": "entrepreneurship",
+    "link": "https://predi.gg",
+    "description": {
+      "en": "Co-founded Predi.GG 🔮",
+      "fr": "Cofondation de Predi.GG 🔮"
+    },
+    "period": { "start": "2025-09", "end": "ongoing" }
+  },
+  {
+    "company": "Bam Karaoke",
+    "role": { "en": "Fullstack Developer", "fr": "Développeur Fullstack" },
+    "contractType": "permanent",
+    "link": "https://bamkaraoke.com",
+    "description": {
+      "en": "Fullstack development for Bam Karaoke 🎤",
+      "fr": "Développement fullstack pour Bam Karaoke 🎤"
+    },
+    "period": { "start": "2026-01", "end": "ongoing" }
+  },
+  {
+    "company": "Favikon",
+    "role": { "en": "Fullstack Developer", "fr": "Développeur Fullstack" },
+    "contractType": "work-study",
+    "link": "https://favikon.com",
+    "description": {
+      "en": "Creation of an innovative SaaS, to optimize influencer marketing strategies 💜",
+      "fr": "Création d'un SaaS innovant pour optimiser les stratégies de marketing d'influence 💜"
+    },
+    "period": { "start": "2023", "end": "2025" }
+  },
+  {
+    "company": "The Tricks Network",
+    "role": { "en": "Fullstack Developer", "fr": "Développeur Fullstack" },
+    "contractType": "work-study",
+    "link": "https://thetricksnetwork.com",
+    "description": {
+      "en": "Creation of a social network intended for extreme sports on web and mobile platforms 🤙",
+      "fr": "Création d'un réseau social dédié aux sports extrêmes, sur le web et sur mobile 🤙"
+    },
+    "period": { "start": "2021", "end": "2023" }
+  },
+  {
+    "company": "TNYTR",
+    "role": { "en": "Web Developer", "fr": "Développeur Web" },
+    "contractType": "internship",
+    "link": "https://tony.tnytr.me/",
+    "description": {
+      "en": "First professional experience, creation of a website for a cascadevent",
+      "fr": "Première expérience professionnelle : création d'un site web pour un événement de cascade"
+    },
+    "period": { "start": "2021", "end": "2021" }
+  }
+]

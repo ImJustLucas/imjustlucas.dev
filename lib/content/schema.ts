@@ -1,5 +1,7 @@
 import { Schema } from "effect";
 
+import { Period } from "./period";
+
 /** A translation: a non-empty string, reported as missing otherwise. */
 const Translation = Schema.String.check(
   Schema.isNonEmpty({ message: "Missing translation" }),
@@ -42,6 +44,64 @@ export const TechCategory = Schema.Struct({
 });
 export type TechCategory = typeof TechCategory.Type;
 
+/** An absolute `http(s)` URL. */
+export const Url = Schema.String.check(
+  Schema.isPattern(/^https?:\/\/\S+$/, { message: "Expected an http(s) URL" }),
+);
+
+/** A public GitHub repository, as `https://github.com/<owner>/<name>`. */
+export const GitHubRepository = Schema.String.check(
+  Schema.isPattern(/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/, {
+    message: "Expected https://github.com/<owner>/<repository>",
+  }),
+);
+
+/** A file of the public assets folder, by its URL path, e.g. `/images/a.png`. */
+export const AssetPath = Schema.String.check(
+  Schema.isPattern(/^\/\S+$/, {
+    message: "Expected a path under public/, starting with /",
+  }),
+);
+
+export const Project = Schema.Struct({
+  /** Not translated: a proper noun. */
+  title: Schema.NonEmptyString,
+  description: LocalizedText,
+  image: Schema.optionalKey(AssetPath),
+  /** Work in progress. */
+  wip: Schema.Boolean,
+  period: Period,
+  techs: Schema.Array(TechId),
+  /** The Project's site. */
+  externalLink: Schema.optionalKey(Url),
+  repository: Schema.optionalKey(GitHubRepository),
+  openSource: Schema.Boolean,
+  /** Stored by hand until star counts come from GitHub (#10). */
+  stars: Schema.optionalKey(Schema.Number),
+});
+export type Project = typeof Project.Type;
+
+/** How an Experience was held; its label lives in the message dictionaries. */
+export const ContractType = Schema.Literals([
+  "entrepreneurship",
+  "permanent",
+  "work-study",
+  "internship",
+]);
+export type ContractType = typeof ContractType.Type;
+
+export const Experience = Schema.Struct({
+  /** Not translated: a proper noun. */
+  company: Schema.NonEmptyString,
+  role: LocalizedText,
+  contractType: ContractType,
+  /** The company's site. */
+  link: Url,
+  description: LocalizedText,
+  period: Period,
+});
+export type Experience = typeof Experience.Type;
+
 /**
  * Every content document, keyed by kind, with the rules that span documents:
  * a Tech is defined once, and every referenced Tech exists.
@@ -49,6 +109,8 @@ export type TechCategory = typeof TechCategory.Type;
 export const Content = Schema.Struct({
   techs: Schema.Array(Tech),
   techCategories: Schema.Array(TechCategory),
+  projects: Schema.Array(Project),
+  experiences: Schema.Array(Experience),
 }).check(
   Schema.makeFilter((content) => {
     const seen = new Set<string>();
@@ -64,19 +126,27 @@ export const Content = Schema.Struct({
         },
       ];
     });
-    const unknown = content.techCategories.flatMap((category, i) =>
-      category.techs.flatMap((id, j) =>
-        seen.has(id)
-          ? []
-          : [
-              {
-                path: ["techCategories", i, "techs", j],
-                issue: `Unknown Tech identifier: ${id}`,
-              },
-            ],
-      ),
-    );
-    return [...duplicates, ...unknown];
+    const unknownIn = (
+      kind: "techCategories" | "projects",
+      documents: ReadonlyArray<{ readonly techs: ReadonlyArray<string> }>,
+    ) =>
+      documents.flatMap((document, i) =>
+        document.techs.flatMap((id, j) =>
+          seen.has(id)
+            ? []
+            : [
+                {
+                  path: [kind, i, "techs", j],
+                  issue: `Unknown Tech identifier: ${id}`,
+                },
+              ],
+        ),
+      );
+    return [
+      ...duplicates,
+      ...unknownIn("techCategories", content.techCategories),
+      ...unknownIn("projects", content.projects),
+    ];
   }),
 );
 export type Content = typeof Content.Type;
@@ -85,4 +155,6 @@ export type Content = typeof Content.Type;
 export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   techs: "content/techs.json",
   techCategories: "content/tech-categories.json",
+  projects: "content/projects.json",
+  experiences: "content/experiences.json",
 };
