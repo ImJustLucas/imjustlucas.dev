@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
   experimental: {
     // 404 page for URLs outside Locale routing (`app/global-not-found.tsx`).
     globalNotFound: true,
+    // Admin uploads (a Project image, at most 4 MB) travel in a Server
+    // Action's body, 1 MB by default. Next only sets this for every Server
+    // Action at once; 4.5 MB is Vercel's request body cap anyway.
+    serverActions: { bodySizeLimit: "4.5mb" },
   },
   images: {
     remotePatterns: [
