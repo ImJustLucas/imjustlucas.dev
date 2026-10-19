@@ -176,6 +176,27 @@ const FRENCH: ReadonlyArray<
     /^Tech identifier defined more than once: (.*)$/,
     (m) => `Un Tech utilise déjà cet identifiant : ${m[1]}`,
   ],
+  [
+    /^Expected an http\(s\) URL$/,
+    () => "Lien attendu, commençant par http:// ou https://",
+  ],
+  [
+    /^Expected a year \(YYYY\) or a year-month \(YYYY-MM\)$/,
+    () => "Année (AAAA) ou mois (AAAA-MM) attendu",
+  ],
+  [
+    /^Expected a year \(YYYY\), a year-month \(YYYY-MM\) or ongoing$/,
+    () => "Année (AAAA), mois (AAAA-MM) ou « en cours » attendu",
+  ],
+  [
+    /^End must not precede start$/,
+    () => "La fin ne peut pas précéder le début",
+  ],
+  // The ContractType literals, listed by the schema.
+  [
+    /^Expected "entrepreneurship"( \| "[\w-]+")*$/,
+    () => "Type de contrat inconnu",
+  ],
 ];
 
 const inFrench = (message: string) => {
