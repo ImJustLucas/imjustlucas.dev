@@ -68,10 +68,13 @@ export type ContentEdit =
       /** Every document after the edit. */
       readonly documents: ContentDocuments;
       /**
-       * The entry the action's input became (document and index): issues found
-       * inside it are reported as field errors of the input.
+       * The entry the action's input became (document and index, or the whole
+       * document, e.g. the Profile): issues found inside it are reported as
+       * field errors of the input.
        */
-      readonly entry?: readonly [keyof ContentDocuments, number];
+      readonly entry?:
+        | readonly [keyof ContentDocuments, number]
+        | readonly [keyof ContentDocuments];
       /** Files committed with the documents, e.g. an uploaded image. */
       readonly assets?: ReadonlyArray<ContentChange>;
       /**
@@ -159,7 +162,7 @@ const formatter = SchemaIssue.makeFormatterStandardSchemaV1();
  */
 const rejection = (
   error: Schema.SchemaError,
-  entry: readonly [string, number] | undefined,
+  entry: readonly [string, number] | readonly [string] | undefined,
 ): AdminActionResult => {
   const fieldErrors: Record<string, string> = {};
   const elsewhere: Array<string> = [];
@@ -168,8 +171,8 @@ const rejection = (
       typeof segment === "object" ? segment.key : segment,
     );
     const message = inFrench(issue.message);
-    if (entry && path[0] === entry[0] && path[1] === entry[1]) {
-      const field = path.slice(2).map(String).join(".");
+    if (entry?.every((segment, i) => path[i] === segment)) {
+      const field = path.slice(entry.length).map(String).join(".");
       fieldErrors[field] ??= message;
     } else {
       elsewhere.push(message);
@@ -225,6 +228,16 @@ const FRENCH: ReadonlyArray<
     /^Expected https:\/\/github\.com\/<owner>\/<repository>$/,
     () => "Lien attendu au format https://github.com/<compte>/<dépôt>",
   ],
+  [
+    /^Expected a YouTube channel identifier \(UC…\)$/,
+    () => "Identifiant de chaîne YouTube attendu (commençant par UC)",
+  ],
+  [
+    /^Expected a Discord account identifier$/,
+    () => "Identifiant de compte Discord attendu (17 à 20 chiffres)",
+  ],
+  // The Profile's YouTube link must be its channel's URL.
+  [/^Expected (https:\/\/\S+)$/, (m) => `Lien attendu : ${m[1]}`],
 ];
 
 const inFrench = (message: string) => {

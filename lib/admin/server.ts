@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { AdminAccess } from "@/lib/admin/admin-action";
 import { CONTENT_REPOSITORY, ownerGithubId } from "@/lib/admin/config";
 import * as experiences from "@/lib/admin/experiences";
+import * as profile from "@/lib/admin/profile";
 import * as projects from "@/lib/admin/projects";
 import { sessionIdentities } from "@/lib/admin/session";
 import * as techs from "@/lib/admin/techs";
@@ -74,4 +75,14 @@ export const saveProjects = {
     run(projects.updateProject(input)),
   deleteProject: (input: InputOf<typeof projects.deleteProject>) =>
     run(projects.deleteProject(input)),
+};
+
+/** Reads the Profile editor's content from `main`, with its revision. */
+export const getProfileEditor = () => run(profile.openProfileEditor);
+
+export const saveProfile = {
+  updateProfile: (input: InputOf<typeof profile.updateProfile>) =>
+    run(profile.updateProfile(input)),
+  uploadResume: (input: InputOf<typeof profile.uploadResume>) =>
+    run(profile.uploadResume(input)),
 };
