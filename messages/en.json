@@ -131,5 +131,10 @@
     "winner": "Proud winner of the MasterDevFrance 2025 competition - a national recognition for technical excellence and innovation in software development.",
     "loading": "Loading...",
     "loadingScene": "Loading scene: {progress}%"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "message": "This page does not exist, or no longer does.",
+    "home": "Back to the home page"
   }
 }

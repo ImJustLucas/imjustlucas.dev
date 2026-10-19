@@ -131,5 +131,10 @@
     "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",
     "loading": "Chargement...",
     "loadingScene": "Chargement de la scène : {progress} %"
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "message": "Cette page n'existe pas, ou plus.",
+    "home": "Retour à l'accueil"
   }
 }

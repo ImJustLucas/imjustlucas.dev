@@ -56,6 +56,33 @@ describe("Locale-prefixed pages", () => {
   });
 });
 
+describe("unknown pages under a Locale", () => {
+  const rewrite = (response: Response) =>
+    response.headers.get("x-middleware-rewrite");
+
+  it.each([
+    ["/fr/xyz", "/fr/page-not-found"],
+    ["/en/xyz", "/en/page-not-found"],
+    ["/en/what/predi-gg", "/en/page-not-found"],
+    ["/fr/page-not-found", "/fr/page-not-found"],
+  ])("%s is served as its Locale's 404 page", async (path, page) => {
+    const response = await visit(path, "en");
+    expect(response.status).toBe(404);
+    expect(rewrite(response)).toBe(`https://imjustlucas.dev${page}`);
+  });
+
+  it.each(["/en", "/fr/what", "/en/mdf-2025"])(
+    "%s, a Route, is served as it is",
+    async (path) => {
+      const response = await visit(path, "en");
+      expect(response.status).toBe(200);
+      expect(rewrite(response)).not.toBe(
+        "https://imjustlucas.dev/en/page-not-found",
+      );
+    },
+  );
+});
+
 describe("Locale routing scope", () => {
   const isLocaleRouted = (url: string) =>
     unstable_doesMiddlewareMatch({ config, url });
