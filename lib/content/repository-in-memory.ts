@@ -38,23 +38,31 @@ export const makeInMemoryRepository = (
       head: Effect.map(Ref.get(state), (s) => revisionOf(s.head)),
 
       read: (path, revision) =>
-        Effect.flatMap(Ref.get(state), (s) => {
-          const at = s.history.findIndex(
-            (_, n) => revisionOf(n) === (revision ?? revisionOf(s.head)),
-          );
-          if (at < 0)
-            return Effect.fail(
-              new ContentRepositoryError({
-                message: `Unknown revision: ${revision}`,
-              }),
+        Effect.flatMap(
+          Ref.get(state),
+          (
+            s,
+          ): Effect.Effect<
+            string,
+            ContentNotFound | ContentRepositoryError
+          > => {
+            const at = s.history.findIndex(
+              (_, n) => revisionOf(n) === (revision ?? revisionOf(s.head)),
             );
-          const file = s.history[at].get(path);
-          if (file === undefined)
-            return Effect.fail(new ContentNotFound({ path }));
-          return Effect.succeed(
-            typeof file === "string" ? file : new TextDecoder().decode(file),
-          );
-        }),
+            if (at < 0)
+              return Effect.fail(
+                new ContentRepositoryError({
+                  message: `Unknown revision: ${revision}`,
+                }),
+              );
+            const file = s.history[at].get(path);
+            if (file === undefined)
+              return Effect.fail(new ContentNotFound({ path }));
+            return Effect.succeed(
+              typeof file === "string" ? file : new TextDecoder().decode(file),
+            );
+          },
+        ),
 
       commit: (commit) =>
         Effect.flatten(
