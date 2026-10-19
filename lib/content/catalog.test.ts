@@ -4,6 +4,7 @@ import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
 import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
+import { YouTubeChannel } from "./youtube-channel";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -18,6 +19,7 @@ const catalogWith = (
     techs?: unknown;
     techCategories?: unknown;
     projects?: unknown;
+    experiences?: unknown;
   },
   sources: {
     /** Star count per repository link; GitHub fails for any other. */
@@ -26,17 +28,17 @@ const catalogWith = (
 ) =>
   ContentCatalog.layer.pipe(
     Layer.provide(
-      Layer.merge(
-        layerInMemory({
-          "content/techs.json": JSON.stringify(documents.techs ?? []),
-          "content/tech-categories.json": JSON.stringify(
-            documents.techCategories ?? [],
-          ),
-          "content/projects.json": JSON.stringify(documents.projects ?? []),
-        }),
-        GitHubStars.layerTest(sources.stars ?? {}),
-      ),
+      layerInMemory({
+        "content/techs.json": JSON.stringify(documents.techs ?? []),
+        "content/tech-categories.json": JSON.stringify(
+          documents.techCategories ?? [],
+        ),
+        "content/projects.json": JSON.stringify(documents.projects ?? []),
+        "content/experiences.json": JSON.stringify(documents.experiences ?? []),
+      }),
     ),
+    Layer.provide(GitHubStars.layerTest(sources.stars ?? {})),
+    Layer.provide(YouTubeChannel.layerTest({})),
   );
 
 describe("ContentCatalog.techCategories", () => {
@@ -175,15 +177,15 @@ describe("ContentCatalog.techCategories", () => {
       Effect.provide(
         ContentCatalog.layer.pipe(
           Layer.provide(
-            Layer.merge(
-              layerInMemory({
-                "content/techs.json": "[{",
-                "content/tech-categories.json": "[]",
-                "content/projects.json": "[]",
-              }),
-              GitHubStars.layerTest({}),
-            ),
+            layerInMemory({
+              "content/techs.json": "[{",
+              "content/tech-categories.json": "[]",
+              "content/projects.json": "[]",
+              "content/experiences.json": "[]",
+            }),
           ),
+          Layer.provide(GitHubStars.layerTest({})),
+          Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),
     ),
@@ -553,6 +555,151 @@ describe("ContentCatalog.projects", () => {
               { techs: ["react", "vue"] },
             ),
           ],
+        }),
+      ),
+    ),
+  );
+});
+
+const experience = (company: string, period: unknown, rest: object = {}) => ({
+  company,
+  role: text("Fullstack Developer", "Développeur Fullstack"),
+  contractType: "work-study",
+  link: `https://${company.toLowerCase().replace(/\W/g, "")}.com`,
+  description: text(`${company} in English`, `${company} en français`),
+  period,
+  ...rest,
+});
+
+const experienceCompanies = Effect.gen(function* () {
+  const experiences = yield* (yield* ContentCatalog).experiences;
+  return experiences.map((e) => e.company);
+});
+
+describe("ContentCatalog.experiences", () => {
+  it.effect(
+    "lists an ongoing Experience started later before one started earlier",
+    () =>
+      Effect.gen(function* () {
+        expect(yield* experienceCompanies).toEqual([
+          "Bam Karaoke",
+          "Predi.GG",
+          "Favikon",
+          "The Tricks Network",
+          "TNYTR",
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            experiences: [
+              experience("Predi.GG", { start: "2025-09", end: "ongoing" }),
+              experience("Bam Karaoke", { start: "2026-01", end: "ongoing" }),
+              experience("Favikon", { start: "2023", end: "2025" }),
+              experience("The Tricks Network", { start: "2021", end: "2023" }),
+              experience("TNYTR", { start: "2021", end: "2021" }),
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect("puts the ongoing Experience first on equal starts", () =>
+    Effect.gen(function* () {
+      expect(yield* experienceCompanies).toEqual([
+        "Still there",
+        "Left the same year",
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [
+            experience("Left the same year", {
+              start: "2024-03",
+              end: "2024-09",
+            }),
+            experience("Still there", { start: "2024-03", end: "ongoing" }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect(
+    "returns company, role, contract type, link, texts and Period",
+    () =>
+      Effect.gen(function* () {
+        const experiences = yield* (yield* ContentCatalog).experiences;
+
+        expect(experiences).toEqual([
+          {
+            company: "Favikon",
+            role: text("Fullstack Developer", "Développeur Fullstack"),
+            contractType: "work-study",
+            link: "https://favikon.com",
+            description: text("A SaaS", "Un SaaS"),
+            period: { start: "2023", end: "2025" },
+          },
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            experiences: [
+              {
+                company: "Favikon",
+                role: text("Fullstack Developer", "Développeur Fullstack"),
+                contractType: "work-study",
+                link: "https://favikon.com",
+                description: text("A SaaS", "Un SaaS"),
+                period: { start: "2023", end: "2025" },
+              },
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect("fails on a missing translation or an unknown contract type", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).experiences);
+
+      expect(error._tag).toBe("ContentInvalid");
+      expect(error.message).toContain(
+        "content/experiences.json at [0].role.fr: Missing translation",
+      );
+      expect(error.message).toContain(
+        "content/experiences.json at [1].contractType",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [
+            experience(
+              "Favikon",
+              { start: "2023", end: "2025" },
+              { role: { en: "Fullstack Developer" } },
+            ),
+            experience(
+              "TNYTR",
+              { start: "2021", end: "2021" },
+              { contractType: "freelance" },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a Period that ends before it starts", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).experiences);
+
+      expect(error.message).toContain(
+        "content/experiences.json at [0].period.end: End must not precede start",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [experience("Favikon", { start: "2025", end: "2023" })],
         }),
       ),
     ),

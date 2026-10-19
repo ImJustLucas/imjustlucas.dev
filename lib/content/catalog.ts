@@ -1,10 +1,11 @@
-import { Context, Effect, Layer, Schema, SchemaIssue } from "effect";
+import { Clock, Context, Effect, Layer, Schema, SchemaIssue } from "effect";
 
 import {
   ContentInvalid,
   type ContentIssue,
   type ContentNotFound,
   type ContentRepositoryError,
+  type VideosUnavailable,
 } from "./errors";
 import { orOnColdBuild } from "./external-source";
 import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
@@ -13,9 +14,22 @@ import { ContentRepository } from "./repository";
 import {
   Content,
   DOCUMENT_PATHS,
+  type Experience,
   type LocalizedText,
   type Tech,
 } from "./schema";
+import { type ChannelVideo, YouTubeChannel } from "./youtube-channel";
+
+/** The YouTube channel the Videos come from. Moves to the Profile (#13). */
+export const YOUTUBE_CHANNEL_ID = "UCLw4N_gccAY1Y4K4S20IPog";
+
+/** A Video as pages render it. */
+export type Video = ChannelVideo & {
+  /** Only the most recent Video, while less than 30 days old. */
+  readonly isNew: boolean;
+};
+
+const NEW_VIDEO_AGE = 30 * 24 * 60 * 60 * 1000;
 
 /** A Tech category as pages render it: its Techs resolved, in order. */
 export type ResolvedTechCategory = {
@@ -39,11 +53,13 @@ export type ResolvedProject = {
   readonly stars?: number;
 };
 
+/** An Experience as pages render it. */
+export type ResolvedExperience = Experience;
+
 export type CatalogError =
   | ContentInvalid
   | ContentNotFound
-  | ContentRepositoryError
-  | GitHubStarsUnavailable;
+  | ContentRepositoryError;
 
 /**
  * The only way pages obtain content. Reads the content documents, validates
@@ -59,16 +75,28 @@ export class ContentCatalog extends Context.Service<
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly projects: Effect.Effect<
       ReadonlyArray<ResolvedProject>,
+      CatalogError | GitHubStarsUnavailable
+    >;
+    /** Ordered by Period start, most recent first; ongoing first on ties. */
+    readonly experiences: Effect.Effect<
+      ReadonlyArray<ResolvedExperience>,
       CatalogError
     >;
+    /** The channel's latest Videos, most recent first. */
+    readonly videos: Effect.Effect<ReadonlyArray<Video>, VideosUnavailable>;
   }
 >()("content/ContentCatalog") {
-  /** Needs a `ContentRepository` and `GitHubStars`. */
+  /**
+   * Needs a `ContentRepository` and the external sources `GitHubStars` and
+   * `YouTubeChannel`. A failing source fails the catalog, except on a cold
+   * build (see `PageGeneration`).
+   */
   static readonly layer = Layer.effect(
     ContentCatalog,
     Effect.gen(function* () {
       const repository = yield* ContentRepository;
       const stars = yield* GitHubStars;
+      const channel = yield* YouTubeChannel;
       const load = loadContent(repository);
 
       return {
@@ -105,6 +133,8 @@ export class ContentCatalog extends Context.Service<
                 ...(repository && { repository }),
               };
               if (!repository) return Effect.succeed(resolved);
+              // No star count shown for a repository GitHub fails to give
+              // on a cold build.
               return Effect.map(
                 stars.count(repository).pipe(orOnColdBuild(0)),
                 (count): ResolvedProject =>
@@ -113,6 +143,29 @@ export class ContentCatalog extends Context.Service<
             },
             { concurrency: "unbounded" },
           );
+        }),
+
+        experiences: Effect.map(load, (content) =>
+          [...content.experiences].sort((a, b) =>
+            byStartMostRecentFirst(a.period, b.period),
+          ),
+        ),
+
+        videos: Effect.gen(function* () {
+          // No Videos (the page's empty state) on a cold build.
+          const videos = yield* channel
+            .latestVideos(YOUTUBE_CHANNEL_ID)
+            .pipe(orOnColdBuild([]));
+          const now = yield* Clock.currentTimeMillis;
+          return [...videos]
+            .sort(
+              (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt),
+            )
+            .map((video, i) => ({
+              ...video,
+              isNew:
+                i === 0 && now - Date.parse(video.publishedAt) < NEW_VIDEO_AGE,
+            }));
         }),
       };
     }),

@@ -1,14 +1,16 @@
 import { Context, Effect } from "effect";
 
 /**
- * When a page is being generated, which decides what a failing external
+ * How a page is being generated, which decides what a failing external
  * source (GitHub stars, YouTube Videos) does to the content catalog:
  *
- * - `"cold-build"`: no earlier page exists (`next build`, or `next dev`). The
- *   catalog falls back (stars omitted, no Videos) so the build never fails.
- * - `"revalidation"`: a page generated earlier is being refreshed. The
- *   catalog fails, so Next keeps serving the previous page and retries on a
- *   later request.
+ * - `"cold-build"`: `next build`, with no earlier page to keep. The catalog
+ *   falls back (stars omitted, no Videos) so the build never fails.
+ * - `"revalidation"` (the default): anything else, e.g. a page generated
+ *   earlier being refreshed at runtime. The catalog fails, so Next keeps
+ *   serving the previous page and retries on a later request.
+ *
+ * `lib/content/server.ts` sets it from `NEXT_PHASE`.
  */
 export type PageGeneration = "cold-build" | "revalidation";
 
@@ -16,20 +18,6 @@ export const PageGeneration = Context.Reference<PageGeneration>(
   "content/PageGeneration",
   { defaultValue: () => "revalidation" },
 );
-
-/**
- * The page generation of the running Next process: `next build` sets
- * `NEXT_PHASE`, the production server (`next start`, Vercel Functions) runs
- * with `NODE_ENV=production`, and anything else (`next dev`) has no earlier
- * page to keep.
- */
-export const pageGenerationOf = (env: {
-  readonly NEXT_PHASE?: string;
-  readonly NODE_ENV?: string;
-}): PageGeneration =>
-  env.NEXT_PHASE !== "phase-production-build" && env.NODE_ENV === "production"
-    ? "revalidation"
-    : "cold-build";
 
 /**
  * The body of `url`, fetched fresh on every page generation. A non-2xx status
@@ -72,8 +60,7 @@ export const orOnColdBuild =
       return yield* Effect.catch(source, (error) =>
         Effect.as(
           Effect.logWarning(
-            "External source failed on a cold build, falling back",
-            error,
+            `${error instanceof Error ? error.message : String(error)}; building without it`,
           ),
           fallback,
         ),
