@@ -27,3 +27,6 @@ export const getTechCategories = () =>
   fromCatalog((catalog) => catalog.techCategories);
 
 export const getProjects = () => fromCatalog((catalog) => catalog.projects);
+
+export const getExperiences = () =>
+  fromCatalog((catalog) => catalog.experiences);

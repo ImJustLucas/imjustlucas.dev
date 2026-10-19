@@ -74,5 +74,13 @@
         "answer": "Café, sans hésiter. Paris carbure au café, après tout !"
       }
     }
+  },
+  "Experiences": {
+    "contractTypes": {
+      "entrepreneurship": "Entrepreneuriat",
+      "permanent": "CDI",
+      "work-study": "Alternance",
+      "internship": "Stage"
+    }
   }
 }

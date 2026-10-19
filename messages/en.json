@@ -74,5 +74,13 @@
         "answer": "Definitely coffee. Paris runs on it, after all!"
       }
     }
+  },
+  "Experiences": {
+    "contractTypes": {
+      "entrepreneurship": "Entrepreneurship",
+      "permanent": "Permanent contract",
+      "work-study": "Work-study contract",
+      "internship": "Internship"
+    }
   }
 }

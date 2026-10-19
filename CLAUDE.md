@@ -25,18 +25,20 @@ The one list of Routes is `ROUTES` in `config/routes.ts`: each Route holds its p
 
 **Layout** — `app/[locale]/layout.tsx` sets `<html lang>`, wraps everything in `NextIntlClientProvider`, `ThemeProvider` (dark default) and `MobileMenuProvider`, then delegates to `app/[locale]/ClientLayout.tsx`. `ClientLayout` renders the `Sidebar` on the left and a scrollable content panel on the right. The sidebar content is mounted once and only restyled between the desktop column and the mobile overlay, so there is a single Lanyard connection and a single set of menu sounds; mobile open state is managed through `contexts/menu-mobile.context.tsx`.
 
-**Content** — Techs, Tech categories and Projects live as JSON documents in `content/` (`techs.json`, `tech-categories.json`, `projects.json`); edit them by hand or, later, through the Admin. Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
+**Content** — Techs, Tech categories, Projects and Experiences live as JSON documents in `content/` (`techs.json`, `tech-categories.json`, `projects.json`, `experiences.json`); edit them by hand or, later, through the Admin. Pages obtain content only through the content catalog in `lib/content/` (Effect v4, server only, see ADR-0002):
 
-- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category, Project) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
+- `schema.ts` — Effect Schemas for every document (Localized text with non-empty `en` and `fr`, Tech, Tech category, Project, Experience) and `Content`, which adds the cross-document rules (a Tech is defined once, every referenced Tech exists). `DOCUMENT_PATHS` maps each kind to its file.
 - `period.ts` — the `Period` schema (start `YYYY` or `YYYY-MM`; end the same or `"ongoing"`; end not before start) and the ordering by start, most recent first, ongoing first on equal starts (a year counts as its January). Shared by every kind that has a Period.
 - `format-period.ts` — `formatPeriod(period, locale)`, the plain Period formatting function (month names per Locale, "Today" / "Aujourd'hui"); no Effect import, so components may use it. Tested in `format-period.test.ts`.
 - `repository.ts` — the `ContentRepository` port (`head`, `read`, `commit` with optimistic revision); adapters `repository-local-filesystem.ts` (build time, read-only) and `repository-in-memory.ts` (tests).
-- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (`techCategories` with resolved Techs; `projects` ordered by Period, with resolved Techs, a `repository` only for open-source Projects and no zero star count). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
-- `server.ts` — what pages call (`getTechCategories()`, `getProjects()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
+- `catalog.ts` — the `ContentCatalog` service: decodes and validates all documents, then returns ready-to-render data (`techCategories` with resolved Techs; `projects` ordered by Period, with resolved Techs, a `repository` only for open-source Projects and no zero star count; `experiences` ordered by Period). Invalid content fails with `ContentInvalid`, naming file and location, which fails the build. Tested in `catalog.test.ts`; `content.test.ts` checks that `content/` itself is valid.
+- `server.ts` — what pages call (`getTechCategories()`, `getProjects()`, `getExperiences()`): plain async functions over a `ManagedRuntime`, so React code never imports Effect. `types.ts` re-exports the content types for components (type-only).
 
 Localized text is returned with both Locales; pages pick `en` until Locales exist. A Tech is rendered only by `components/tech/TechBadge.tsx` (its `#rrggbb` colour, text colour from `lib/text-color-on.ts`).
 
-Content not migrated yet stays in co-located config files: `app/[locale]/experiences/config/timeline.ts`, `app/[locale]/videos/config/videos.ts`.
+An Experience's contract type is an identifier (`entrepreneurship`, `permanent`, `work-study`, `internship`); its label is an interface string under `Experiences.contractTypes` in the message dictionaries.
+
+Content not migrated yet stays in a co-located config file: `app/[locale]/videos/config/videos.ts`.
 
 **Presence** — `components/presence/` uses the `react-use-lanyard` library to display real-time Discord presence in the sidebar. `select-presence.ts` is the plain selection rule (tested in `select-presence.test.ts`): it maps the live Lanyard status to playing (a game, which wins), listening (a Spotify track) or nothing, and builds the artwork URLs. The card is derived from the live status on every render, with no stored state. The Discord user ID is hardcoded in `Presence.tsx`.
 

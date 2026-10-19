@@ -11,6 +11,7 @@ import { ContentRepository } from "./repository";
 import {
   Content,
   DOCUMENT_PATHS,
+  type Experience,
   type LocalizedText,
   type Tech,
 } from "./schema";
@@ -37,6 +38,9 @@ export type ResolvedProject = {
   readonly stars?: number;
 };
 
+/** An Experience as pages render it. */
+export type ResolvedExperience = Experience;
+
 export type CatalogError =
   | ContentInvalid
   | ContentNotFound
@@ -56,6 +60,11 @@ export class ContentCatalog extends Context.Service<
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly projects: Effect.Effect<
       ReadonlyArray<ResolvedProject>,
+      CatalogError
+    >;
+    /** Ordered by Period start, most recent first; ongoing first on ties. */
+    readonly experiences: Effect.Effect<
+      ReadonlyArray<ResolvedExperience>,
       CatalogError
     >;
   }
@@ -98,6 +107,12 @@ export class ContentCatalog extends Context.Service<
               }),
             );
         }),
+
+        experiences: Effect.map(load, (content) =>
+          [...content.experiences].sort((a, b) =>
+            byStartMostRecentFirst(a.period, b.period),
+          ),
+        ),
       };
     }),
   );

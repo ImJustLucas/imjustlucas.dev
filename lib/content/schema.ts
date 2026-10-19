@@ -81,6 +81,27 @@ export const Project = Schema.Struct({
 });
 export type Project = typeof Project.Type;
 
+/** How an Experience was held; its label lives in the message dictionaries. */
+export const ContractType = Schema.Literals([
+  "entrepreneurship",
+  "permanent",
+  "work-study",
+  "internship",
+]);
+export type ContractType = typeof ContractType.Type;
+
+export const Experience = Schema.Struct({
+  /** Not translated: a proper noun. */
+  company: Schema.NonEmptyString,
+  role: LocalizedText,
+  contractType: ContractType,
+  /** The company's site. */
+  link: Url,
+  description: LocalizedText,
+  period: Period,
+});
+export type Experience = typeof Experience.Type;
+
 /**
  * Every content document, keyed by kind, with the rules that span documents:
  * a Tech is defined once, and every referenced Tech exists.
@@ -89,6 +110,7 @@ export const Content = Schema.Struct({
   techs: Schema.Array(Tech),
   techCategories: Schema.Array(TechCategory),
   projects: Schema.Array(Project),
+  experiences: Schema.Array(Experience),
 }).check(
   Schema.makeFilter((content) => {
     const seen = new Set<string>();
@@ -134,4 +156,5 @@ export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   techs: "content/techs.json",
   techCategories: "content/tech-categories.json",
   projects: "content/projects.json",
+  experiences: "content/experiences.json",
 };
