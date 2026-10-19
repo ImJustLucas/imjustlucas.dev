@@ -1,6 +1,8 @@
 import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
+import { PageGeneration } from "./external-source";
+import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
 import { YouTubeChannel } from "./youtube-channel";
 
@@ -12,12 +14,18 @@ const docker = { id: "docker", name: "Docker", color: "#3b82f6" };
 
 const text = (en: string, fr: string) => ({ en, fr });
 
-const catalogWith = (documents: {
-  techs?: unknown;
-  techCategories?: unknown;
-  projects?: unknown;
-  experiences?: unknown;
-}) =>
+const catalogWith = (
+  documents: {
+    techs?: unknown;
+    techCategories?: unknown;
+    projects?: unknown;
+    experiences?: unknown;
+  },
+  sources: {
+    /** Star count per repository link; GitHub fails for any other. */
+    stars?: Readonly<Record<string, number>>;
+  } = {},
+) =>
   ContentCatalog.layer.pipe(
     Layer.provide(
       layerInMemory({
@@ -29,6 +37,7 @@ const catalogWith = (documents: {
         "content/experiences.json": JSON.stringify(documents.experiences ?? []),
       }),
     ),
+    Layer.provide(GitHubStars.layerTest(sources.stars ?? {})),
     Layer.provide(YouTubeChannel.layerTest({})),
   );
 
@@ -175,6 +184,7 @@ describe("ContentCatalog.techCategories", () => {
               "content/experiences.json": "[]",
             }),
           ),
+          Layer.provide(GitHubStars.layerTest({})),
           Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),
@@ -191,6 +201,12 @@ const project = (title: string, period: unknown, rest: object = {}) => ({
   openSource: false,
   ...rest,
 });
+
+const NEXT_13 = "https://github.com/ImJustLucas/Next-13-Boilerplate";
+const BUN_ELYSIA = "https://github.com/ImJustLucas/bun-elysia-boilerplate";
+
+const openSource = (title: string, year: string, repository: string) =>
+  project(title, { start: year, end: year }, { openSource: true, repository });
 
 const projectTitles = Effect.gen(function* () {
   const projects = yield* (yield* ContentCatalog).projects;
@@ -310,28 +326,81 @@ describe("ContentCatalog.projects", () => {
       ]);
     }).pipe(
       Effect.provide(
+        catalogWith(
+          {
+            projects: [
+              project(
+                "Open",
+                { start: "2024", end: "2024" },
+                {
+                  openSource: true,
+                  repository: "https://github.com/ImJustLucas/open",
+                },
+              ),
+              project(
+                "Closed",
+                { start: "2023", end: "2023" },
+                {
+                  openSource: false,
+                  repository: "https://github.com/ImJustLucas/closed",
+                },
+              ),
+              project(
+                "Open, no repository",
+                { start: "2022", end: "2022" },
+                { openSource: true },
+              ),
+            ],
+          },
+          { stars: { "https://github.com/ImJustLucas/open": 3 } },
+        ),
+      ),
+    ),
+  );
+
+  it.effect(
+    "merges the star count of an open-source Project's repository",
+    () =>
+      Effect.gen(function* () {
+        const projects = yield* (yield* ContentCatalog).projects;
+
+        expect(projects.map((p) => [p.title, p.stars])).toEqual([
+          ["Bun Elysia Boilerplate", 33],
+          ["Next 13 Boilerplate", 16],
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith(
+            {
+              projects: [
+                openSource("Next 13 Boilerplate", "2023", NEXT_13),
+                openSource("Bun Elysia Boilerplate", "2024", BUN_ELYSIA),
+              ],
+            },
+            { stars: { [NEXT_13]: 16, [BUN_ELYSIA]: 33 } },
+          ),
+        ),
+      ),
+  );
+
+  it.effect("shows no star count for a Project without repository", () =>
+    Effect.gen(function* () {
+      const projects = yield* (yield* ContentCatalog).projects;
+
+      expect(projects.map((p) => [p.title, p.stars])).toEqual([
+        ["No repository", undefined],
+        ["Closed source", undefined],
+      ]);
+    }).pipe(
+      Effect.provide(
+        // GitHub knows no repository: asking it would fail the catalog.
         catalogWith({
           projects: [
+            project("No repository", { start: "2024", end: "2024" }),
             project(
-              "Open",
-              { start: "2024", end: "2024" },
-              {
-                openSource: true,
-                repository: "https://github.com/ImJustLucas/open",
-              },
-            ),
-            project(
-              "Closed",
+              "Closed source",
               { start: "2023", end: "2023" },
-              {
-                openSource: false,
-                repository: "https://github.com/ImJustLucas/closed",
-              },
-            ),
-            project(
-              "Open, no repository",
-              { start: "2022", end: "2022" },
-              { openSource: true },
+              { openSource: false, repository: NEXT_13 },
             ),
           ],
         }),
@@ -339,38 +408,70 @@ describe("ContentCatalog.projects", () => {
     ),
   );
 
-  it.effect("omits a zero star count", () =>
+  it.effect("shows no star count for a repository with zero stars", () =>
     Effect.gen(function* () {
       const projects = yield* (yield* ContentCatalog).projects;
 
-      expect(projects.map((p) => [p.title, p.stars])).toEqual([
-        ["Starred", 16],
-        ["Unstarred", undefined],
+      expect(projects.map((p) => [p.title, p.repository, p.stars])).toEqual([
+        ["Bun Elysia Boilerplate", BUN_ELYSIA, undefined],
       ]);
     }).pipe(
       Effect.provide(
-        catalogWith({
-          projects: [
-            project(
-              "Starred",
-              { start: "2024", end: "2024" },
-              {
-                openSource: true,
-                repository: "https://github.com/ImJustLucas/starred",
-                stars: 16,
-              },
-            ),
-            project(
-              "Unstarred",
-              { start: "2023", end: "2023" },
-              {
-                openSource: true,
-                repository: "https://github.com/ImJustLucas/unstarred",
-                stars: 0,
-              },
-            ),
-          ],
-        }),
+        catalogWith(
+          {
+            projects: [
+              openSource("Bun Elysia Boilerplate", "2024", BUN_ELYSIA),
+            ],
+          },
+          { stars: { [BUN_ELYSIA]: 0 } },
+        ),
+      ),
+    ),
+  );
+
+  it.effect(
+    "fails during revalidation when GitHub fails, so the previous page is kept",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+        expect(error._tag).toBe("GitHubStarsUnavailable");
+      }).pipe(
+        Effect.provideService(PageGeneration, "revalidation"),
+        Effect.provide(
+          catalogWith(
+            {
+              projects: [
+                openSource("Next 13 Boilerplate", "2023", NEXT_13),
+                openSource("Bun Elysia Boilerplate", "2024", BUN_ELYSIA),
+              ],
+            },
+            { stars: { [NEXT_13]: 16 } },
+          ),
+        ),
+      ),
+  );
+
+  it.effect("omits the stars GitHub fails to give on a cold build", () =>
+    Effect.gen(function* () {
+      const projects = yield* (yield* ContentCatalog).projects;
+
+      expect(projects.map((p) => [p.title, p.repository, p.stars])).toEqual([
+        ["Bun Elysia Boilerplate", BUN_ELYSIA, undefined],
+        ["Next 13 Boilerplate", NEXT_13, 16],
+      ]);
+    }).pipe(
+      Effect.provideService(PageGeneration, "cold-build"),
+      Effect.provide(
+        catalogWith(
+          {
+            projects: [
+              openSource("Next 13 Boilerplate", "2023", NEXT_13),
+              openSource("Bun Elysia Boilerplate", "2024", BUN_ELYSIA),
+            ],
+          },
+          { stars: { [NEXT_13]: 16 } },
+        ),
       ),
     ),
   );

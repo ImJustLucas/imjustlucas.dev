@@ -2,6 +2,7 @@ import { Context, Effect, Layer, Schedule, Schema } from "effect";
 import { XMLParser } from "fast-xml-parser";
 
 import { VideosUnavailable } from "./errors";
+import { fetchExternalText } from "./external-source";
 
 /** A Video as the channel publishes it. */
 export type ChannelVideo = {
@@ -16,18 +17,6 @@ export type ChannelVideo = {
   /** The Video's own YouTube page. */
   readonly url: string;
 };
-
-/** A response body, failing on any non-2xx status. */
-const fetchText = (url: string) =>
-  Effect.tryPromise({
-    // Next's fetch: the page's `revalidate` governs caching.
-    try: async (signal) => {
-      const response = await fetch(url, { signal });
-      if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
-      return response.text();
-    },
-    catch: (cause) => cause,
-  });
 
 const parser = new XMLParser({
   // `link@href` and `media:thumbnail@url` are attributes.
@@ -86,7 +75,7 @@ export class YouTubeChannel extends Context.Service<
    */
   static readonly layer = Layer.succeed(YouTubeChannel, {
     latestVideos: (channelId) =>
-      fetchText(
+      fetchExternalText(
         `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`,
       ).pipe(
         Effect.timeout("5 seconds"),

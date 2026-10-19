@@ -7,6 +7,8 @@ import { ROUTES } from "@/config/routes";
 import { getVideos } from "@/lib/content/server";
 
 /** Videos are read from the channel at build time, then once a day. */
+// Static, as the uncached feed fetch would otherwise make it dynamic.
+export const dynamic = "force-static";
 export const revalidate = 86400;
 
 export const generateMetadata = routeMetadata(ROUTES.videos);

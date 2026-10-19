@@ -1,6 +1,8 @@
 import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
+import { PageGeneration } from "./external-source";
+import { GitHubStars } from "./github-stars";
 import { layerLocalFilesystem } from "./repository-local-filesystem";
 import { YouTubeChannel } from "./youtube-channel";
 
@@ -20,9 +22,12 @@ describe("the content folder", () => {
       expect(projects.length).toBeGreaterThan(0);
       expect(experiences.length).toBeGreaterThan(0);
     }).pipe(
+      // Offline: no star count is known, as on a cold build without GitHub.
+      Effect.provideService(PageGeneration, "cold-build"),
       Effect.provide(
         ContentCatalog.layer.pipe(
           Layer.provide(layerLocalFilesystem(repositoryRoot)),
+          Layer.provide(GitHubStars.layerTest({})),
           Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),

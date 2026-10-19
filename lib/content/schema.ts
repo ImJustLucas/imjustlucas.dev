@@ -74,10 +74,9 @@ export const Project = Schema.Struct({
   techs: Schema.Array(TechId),
   /** The Project's site. */
   externalLink: Schema.optionalKey(Url),
+  /** Its star count is read from GitHub, never stored. */
   repository: Schema.optionalKey(GitHubRepository),
   openSource: Schema.Boolean,
-  /** Stored by hand until star counts come from GitHub (#10). */
-  stars: Schema.optionalKey(Schema.Number),
 });
 export type Project = typeof Project.Type;
 

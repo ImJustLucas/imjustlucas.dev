@@ -49,8 +49,7 @@
     "techs": ["react", "nextjs", "styled-components"],
     "externalLink": "https://next-13-boilerplate.imjustlucas.dev/",
     "repository": "https://github.com/ImJustLucas/Next-13-Boilerplate",
-    "openSource": true,
-    "stars": 16
+    "openSource": true
   },
   {
     "title": "Bun Elysia Boilerplate",
@@ -63,7 +62,6 @@
     "period": { "start": "2024-05", "end": "2024-05" },
     "techs": ["bun", "elysiajs", "typescript"],
     "repository": "https://github.com/ImJustLucas/bun-elysia-boilerplate",
-    "openSource": true,
-    "stars": 33
+    "openSource": true
   }
 ]

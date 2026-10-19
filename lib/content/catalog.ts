@@ -7,6 +7,8 @@ import {
   type ContentRepositoryError,
   type VideosUnavailable,
 } from "./errors";
+import { orOnColdBuild } from "./external-source";
+import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
 import { byStartMostRecentFirst, type Period } from "./period";
 import { ContentRepository } from "./repository";
 import {
@@ -47,7 +49,7 @@ export type ResolvedProject = {
   readonly externalLink?: string;
   /** Only for an open-source Project with a repository link. */
   readonly repository?: string;
-  /** Only when there is at least one star. */
+  /** The repository's GitHub star count, only when there is at least one. */
   readonly stars?: number;
 };
 
@@ -73,7 +75,7 @@ export class ContentCatalog extends Context.Service<
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly projects: Effect.Effect<
       ReadonlyArray<ResolvedProject>,
-      CatalogError
+      CatalogError | GitHubStarsUnavailable
     >;
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly experiences: Effect.Effect<
@@ -84,11 +86,16 @@ export class ContentCatalog extends Context.Service<
     readonly videos: Effect.Effect<ReadonlyArray<Video>, VideosUnavailable>;
   }
 >()("content/ContentCatalog") {
-  /** Needs a `ContentRepository` and the `YouTubeChannel` source. */
+  /**
+   * Needs a `ContentRepository` and the external sources `GitHubStars` and
+   * `YouTubeChannel`. A failing source fails the catalog, except on a cold
+   * build (see `PageGeneration`).
+   */
   static readonly layer = Layer.effect(
     ContentCatalog,
     Effect.gen(function* () {
       const repository = yield* ContentRepository;
+      const stars = yield* GitHubStars;
       const channel = yield* YouTubeChannel;
       const load = loadContent(repository);
 
@@ -102,12 +109,18 @@ export class ContentCatalog extends Context.Service<
           }));
         }),
 
-        projects: Effect.map(load, (content) => {
+        projects: Effect.flatMap(load, (content) => {
           const resolve = techResolver(content);
-          return [...content.projects]
-            .sort((a, b) => byStartMostRecentFirst(a.period, b.period))
-            .map(
-              (project): ResolvedProject => ({
+          const projects = [...content.projects].sort((a, b) =>
+            byStartMostRecentFirst(a.period, b.period),
+          );
+          return Effect.forEach(
+            projects,
+            (project) => {
+              const repository = project.openSource
+                ? project.repository
+                : undefined;
+              const resolved: ResolvedProject = {
                 title: project.title,
                 description: project.description,
                 ...(project.image && { image: project.image }),
@@ -117,11 +130,19 @@ export class ContentCatalog extends Context.Service<
                 ...(project.externalLink && {
                   externalLink: project.externalLink,
                 }),
-                ...(project.openSource &&
-                  project.repository && { repository: project.repository }),
-                ...(project.stars && { stars: project.stars }),
-              }),
-            );
+                ...(repository && { repository }),
+              };
+              if (!repository) return Effect.succeed(resolved);
+              // No star count shown for a repository GitHub fails to give
+              // on a cold build.
+              return Effect.map(
+                stars.count(repository).pipe(orOnColdBuild(0)),
+                (count): ResolvedProject =>
+                  count > 0 ? { ...resolved, stars: count } : resolved,
+              );
+            },
+            { concurrency: "unbounded" },
+          );
         }),
 
         experiences: Effect.map(load, (content) =>
@@ -131,7 +152,10 @@ export class ContentCatalog extends Context.Service<
         ),
 
         videos: Effect.gen(function* () {
-          const videos = yield* channel.latestVideos(YOUTUBE_CHANNEL_ID);
+          // No Videos (the page's empty state) on a cold build.
+          const videos = yield* channel
+            .latestVideos(YOUTUBE_CHANNEL_ID)
+            .pipe(orOnColdBuild([]));
           const now = yield* Clock.currentTimeMillis;
           return [...videos]
             .sort(

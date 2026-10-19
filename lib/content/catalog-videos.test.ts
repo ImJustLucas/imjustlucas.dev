@@ -2,6 +2,8 @@ import { Effect, Layer } from "effect";
 import { TestClock } from "effect/testing";
 
 import { ContentCatalog, YOUTUBE_CHANNEL_ID } from "./catalog";
+import { PageGeneration } from "./external-source";
+import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
 import { type ChannelVideo, YouTubeChannel } from "./youtube-channel";
 
@@ -21,6 +23,7 @@ const catalogWithChannel = (
 ) =>
   ContentCatalog.layer.pipe(
     Layer.provide(layerInMemory({})),
+    Layer.provide(GitHubStars.layerTest({})),
     Layer.provide(YouTubeChannel.layerTest(channels)),
   );
 
@@ -102,13 +105,25 @@ describe("ContentCatalog.videos", () => {
   });
 
   it.effect(
-    "fails with VideosUnavailable when the channel cannot be read",
+    "fails with VideosUnavailable during revalidation when the channel cannot be read",
     () =>
       Effect.gen(function* () {
         const error = yield* Effect.flip((yield* ContentCatalog).videos);
 
         expect(error._tag).toBe("VideosUnavailable");
-      }).pipe(Effect.provide(catalogWithChannel({}))),
+      }).pipe(
+        Effect.provideService(PageGeneration, "revalidation"),
+        Effect.provide(catalogWithChannel({})),
+      ),
+  );
+
+  it.effect("returns no Videos on a cold build when the channel fails", () =>
+    Effect.gen(function* () {
+      expect(yield* (yield* ContentCatalog).videos).toEqual([]);
+    }).pipe(
+      Effect.provideService(PageGeneration, "cold-build"),
+      Effect.provide(catalogWithChannel({})),
+    ),
   );
 
   it.effect("marks no Video new when the channel has none", () =>
