@@ -26,6 +26,14 @@ export default async function AdminHome() {
             Techs et Tech categories
           </Link>
         </li>
+        <li>
+          <Link
+            href="/admin/experiences"
+            className="underline underline-offset-4"
+          >
+            Experiences
+          </Link>
+        </li>
       </ul>
     </div>
   );

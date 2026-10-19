@@ -2,6 +2,7 @@ import { Effect } from "effect";
 
 import { AdminAccess } from "@/lib/admin/admin-action";
 import { CONTENT_REPOSITORY, ownerGithubId } from "@/lib/admin/config";
+import * as experiences from "@/lib/admin/experiences";
 import { sessionIdentities } from "@/lib/admin/session";
 import * as techs from "@/lib/admin/techs";
 import { makeGitHubRepository } from "@/lib/content/repository-github";
@@ -47,4 +48,17 @@ export const saveTechs = {
     run(techs.updateTechCategory(input)),
   deleteTechCategory: (input: InputOf<typeof techs.deleteTechCategory>) =>
     run(techs.deleteTechCategory(input)),
+};
+
+/** Reads the Experiences editor's content from `main`, with its revision. */
+export const getExperiencesEditor = () =>
+  run(experiences.openExperiencesEditor);
+
+export const saveExperiences = {
+  createExperience: (input: InputOf<typeof experiences.createExperience>) =>
+    run(experiences.createExperience(input)),
+  updateExperience: (input: InputOf<typeof experiences.updateExperience>) =>
+    run(experiences.updateExperience(input)),
+  deleteExperience: (input: InputOf<typeof experiences.deleteExperience>) =>
+    run(experiences.deleteExperience(input)),
 };
