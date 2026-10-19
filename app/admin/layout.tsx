@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
+import { AdminNoticeProvider } from "@/app/admin/admin-form";
 import { SignInScreen } from "@/app/admin/admin-screens";
 import { geistMono, geistSans } from "@/app/fonts";
 import { currentOwnerAccess } from "@/lib/admin/session";
@@ -34,7 +35,7 @@ export default async function AdminLayout({
         >
           <main className="min-h-dvh bg-background p-6">
             {access.kind === "owner" ? (
-              children
+              <AdminNoticeProvider>{children}</AdminNoticeProvider>
             ) : (
               <SignInScreen access={access} />
             )}
