@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import { TypographyH3 } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import { cn } from "@/lib/utils";
 
 import MenuContainer from "./menu/MenuContainer";
 import { SidebarFooter } from "./SidebarFooter";
@@ -14,7 +15,15 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
-      <div className="hidden md:flex p-2 h-full w-80 flex-col">
+      {/* Mounted once: shown inline on desktop, as an overlay on mobile */}
+      <div
+        className={cn(
+          "md:static md:z-auto md:flex md:h-full md:w-80 md:flex-col md:p-2 md:bg-transparent md:backdrop-blur-none",
+          isOpen
+            ? "fixed inset-0 z-40 flex flex-col p-4 bg-background/80 backdrop-blur-sm"
+            : "hidden",
+        )}
+      >
         <SideBarContent />
       </div>
 
@@ -27,15 +36,6 @@ export const Sidebar: React.FC = () => {
       >
         {isOpen ? <X /> : <Menu />}
       </Button>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40">
-          <div className="p-4 h-full w-full flex flex-col">
-            <SideBarContent />
-          </div>
-        </div>
-      )}
     </>
   );
 };

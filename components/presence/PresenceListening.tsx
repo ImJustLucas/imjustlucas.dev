@@ -1,30 +1,35 @@
-import React from "react";
-import { Spotify } from "react-use-lanyard";
+"use client";
+
 import Image from "next/image";
 
 import { Card, CardContent } from "@/components/ui/card";
 
 import { TypographyMuted } from "../typography";
+import type { Presence } from "./select-presence";
 
 type PresenceListeningProps = {
-  spotify: Spotify | undefined;
+  presence: Extract<Presence, { kind: "listening" }>;
 };
 
-export const PresenceListening = ({ spotify }: PresenceListeningProps) => {
-  if (!spotify) return null;
+export const PresenceListening = ({ presence }: PresenceListeningProps) => {
+  const { song, artist, artwork } = presence;
 
   return (
     <Card className="w-full cursor-pointer">
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
-          <div className="relative h-12 w-12">
-            <Image
-              src={spotify.album_art_url}
-              alt={spotify.song}
-              width={48}
-              height={48}
-              className="rounded-md"
-            />
+          <div className="relative h-12 w-12 shrink-0">
+            {artwork ? (
+              <Image
+                src={artwork.url}
+                alt={artwork.alt}
+                width={48}
+                height={48}
+                className="rounded-md"
+              />
+            ) : (
+              <div className="h-12 w-12 rounded-md bg-muted" />
+            )}
             <div className="absolute -bottom-1 -right-1 h-5 w-5 overflow-hidden rounded-full border-2 border-background bg-black">
               <Image
                 src="/images/spotify-logo.png"
@@ -35,8 +40,8 @@ export const PresenceListening = ({ spotify }: PresenceListeningProps) => {
             </div>
           </div>
           <div className="space-y-1">
-            <h5 className="font-medium text-primary">{spotify.song}</h5>
-            <TypographyMuted>by {spotify.artist}</TypographyMuted>
+            <h5 className="font-medium text-primary">{song}</h5>
+            <TypographyMuted>by {artist}</TypographyMuted>
           </div>
         </div>
       </CardContent>

@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       new URL("https://cdn.discordapp.com/**"),
+      new URL("https://media.discordapp.net/**"),
       new URL("https://i.scdn.co/**"),
     ],
   },
