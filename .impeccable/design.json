@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T08:34:09.064Z",
+  "title": "Design System: ImJustLucas",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "hsl(240 10% 3.9%)",
+        "oklch": "oklch(14.1% 0.0044 285.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0044 285.8)",
+          "oklch(26.4% 0.0044 285.8)",
+          "oklch(37.9% 0.0044 285.8)",
+          "oklch(49.3% 0.0044 285.8)",
+          "oklch(60.7% 0.0044 285.8)",
+          "oklch(72.1% 0.0044 285.8)",
+          "oklch(83.6% 0.0044 285.8)",
+          "oklch(95.0% 0.0044 285.8)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "hsl(240 5.9% 10%)",
+        "oklch": "oklch(21.0% 0.0059 285.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0059 285.9)",
+          "oklch(26.4% 0.0059 285.9)",
+          "oklch(37.9% 0.0059 285.9)",
+          "oklch(49.3% 0.0059 285.9)",
+          "oklch(60.7% 0.0059 285.9)",
+          "oklch(72.1% 0.0059 285.9)",
+          "oklch(83.6% 0.0059 285.9)",
+          "oklch(95.0% 0.0059 285.9)"
+        ]
+      },
+      "smoke": {
+        "role": "neutral",
+        "displayName": "Smoke",
+        "canonical": "hsl(240 3.7% 15.9%)",
+        "oklch": "oklch(27.4% 0.0055 286.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0055 286.0)",
+          "oklch(26.4% 0.0055 286.0)",
+          "oklch(37.9% 0.0055 286.0)",
+          "oklch(49.3% 0.0055 286.0)",
+          "oklch(60.7% 0.0055 286.0)",
+          "oklch(72.1% 0.0055 286.0)",
+          "oklch(83.6% 0.0055 286.0)",
+          "oklch(95.0% 0.0055 286.0)"
+        ]
+      },
+      "pewter": {
+        "role": "neutral",
+        "displayName": "Pewter",
+        "canonical": "hsl(240 5% 64.9%)",
+        "oklch": "oklch(71.2% 0.0129 286.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0129 286.1)",
+          "oklch(26.4% 0.0129 286.1)",
+          "oklch(37.9% 0.0129 286.1)",
+          "oklch(49.3% 0.0129 286.1)",
+          "oklch(60.7% 0.0129 286.1)",
+          "oklch(72.1% 0.0129 286.1)",
+          "oklch(83.6% 0.0129 286.1)",
+          "oklch(95.0% 0.0129 286.1)"
+        ]
+      },
+      "silver": {
+        "role": "neutral",
+        "displayName": "Silver",
+        "canonical": "hsl(240 4.9% 83.9%)",
+        "oklch": "oklch(87.1% 0.0055 286.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0055 286.3)",
+          "oklch(26.4% 0.0055 286.3)",
+          "oklch(37.9% 0.0055 286.3)",
+          "oklch(49.3% 0.0055 286.3)",
+          "oklch(60.7% 0.0055 286.3)",
+          "oklch(72.1% 0.0055 286.3)",
+          "oklch(83.6% 0.0055 286.3)",
+          "oklch(95.0% 0.0055 286.3)"
+        ]
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Steel",
+        "canonical": "hsl(240 3.8% 46.1%)",
+        "oklch": "oklch(55.2% 0.0137 285.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0137 285.9)",
+          "oklch(26.4% 0.0137 285.9)",
+          "oklch(37.9% 0.0137 285.9)",
+          "oklch(49.3% 0.0137 285.9)",
+          "oklch(60.7% 0.0137 285.9)",
+          "oklch(72.1% 0.0137 285.9)",
+          "oklch(83.6% 0.0137 285.9)",
+          "oklch(95.0% 0.0137 285.9)"
+        ]
+      },
+      "haze": {
+        "role": "neutral",
+        "displayName": "Haze",
+        "canonical": "hsl(240 5.9% 90%)",
+        "oklch": "oklch(92.0% 0.0040 286.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0040 286.3)",
+          "oklch(26.4% 0.0040 286.3)",
+          "oklch(37.9% 0.0040 286.3)",
+          "oklch(49.3% 0.0040 286.3)",
+          "oklch(60.7% 0.0040 286.3)",
+          "oklch(72.1% 0.0040 286.3)",
+          "oklch(83.6% 0.0040 286.3)",
+          "oklch(95.0% 0.0040 286.3)"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "canonical": "hsl(240 4.8% 95.9%)",
+        "oklch": "oklch(96.8% 0.0013 286.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0013 286.4)",
+          "oklch(26.4% 0.0013 286.4)",
+          "oklch(37.9% 0.0013 286.4)",
+          "oklch(49.3% 0.0013 286.4)",
+          "oklch(60.7% 0.0013 286.4)",
+          "oklch(72.1% 0.0013 286.4)",
+          "oklch(83.6% 0.0013 286.4)",
+          "oklch(95.0% 0.0013 286.4)"
+        ]
+      },
+      "chalk": {
+        "role": "primary",
+        "displayName": "Chalk",
+        "canonical": "hsl(0 0% 98%)",
+        "oklch": "oklch(98.5% 0.0000 0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 0)",
+          "oklch(26.4% 0.0000 0)",
+          "oklch(37.9% 0.0000 0)",
+          "oklch(49.3% 0.0000 0)",
+          "oklch(60.7% 0.0000 0)",
+          "oklch(72.1% 0.0000 0)",
+          "oklch(83.6% 0.0000 0)",
+          "oklch(95.0% 0.0000 0)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "hsl(0 0% 100%)",
+        "oklch": "oklch(100.0% 0.0000 0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 0)",
+          "oklch(26.4% 0.0000 0)",
+          "oklch(37.9% 0.0000 0)",
+          "oklch(49.3% 0.0000 0)",
+          "oklch(60.7% 0.0000 0)",
+          "oklch(72.1% 0.0000 0)",
+          "oklch(83.6% 0.0000 0)",
+          "oklch(95.0% 0.0000 0)"
+        ]
+      },
+      "ember": {
+        "role": "error",
+        "displayName": "Ember",
+        "canonical": "hsl(0 84.2% 60.2%)",
+        "oklch": "oklch(63.7% 0.2078 25.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.2078 25.3)",
+          "oklch(26.4% 0.2078 25.3)",
+          "oklch(37.9% 0.2078 25.3)",
+          "oklch(49.3% 0.2078 25.3)",
+          "oklch(60.7% 0.2078 25.3)",
+          "oklch(72.1% 0.2078 25.3)",
+          "oklch(83.6% 0.2078 25.3)",
+          "oklch(95.0% 0.2078 25.3)"
+        ]
+      },
+      "ember-deep": {
+        "role": "error",
+        "displayName": "Ember Deep",
+        "canonical": "hsl(0 62.8% 30.6%)",
+        "oklch": "oklch(39.6% 0.1331 25.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1331 25.7)",
+          "oklch(26.4% 0.1331 25.7)",
+          "oklch(37.9% 0.1331 25.7)",
+          "oklch(49.3% 0.1331 25.7)",
+          "oklch(60.7% 0.1331 25.7)",
+          "oklch(72.1% 0.1331 25.7)",
+          "oklch(83.6% 0.1331 25.7)",
+          "oklch(95.0% 0.1331 25.7)"
+        ]
+      },
+      "wip-yellow": {
+        "role": "tertiary",
+        "displayName": "WIP Yellow",
+        "canonical": "#facc15",
+        "oklch": "oklch(86.1% 0.1731 91.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1731 91.9)",
+          "oklch(26.4% 0.1731 91.9)",
+          "oklch(37.9% 0.1731 91.9)",
+          "oklch(49.3% 0.1731 91.9)",
+          "oklch(60.7% 0.1731 91.9)",
+          "oklch(72.1% 0.1731 91.9)",
+          "oklch(83.6% 0.1731 91.9)",
+          "oklch(95.0% 0.1731 91.9)"
+        ]
+      },
+      "saved-green": {
+        "role": "success",
+        "displayName": "Saved Green",
+        "canonical": "#16a34a",
+        "oklch": "oklch(62.7% 0.1699 149.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1699 149.2)",
+          "oklch(26.4% 0.1699 149.2)",
+          "oklch(37.9% 0.1699 149.2)",
+          "oklch(49.3% 0.1699 149.2)",
+          "oklch(60.7% 0.1699 149.2)",
+          "oklch(72.1% 0.1699 149.2)",
+          "oklch(83.6% 0.1699 149.2)",
+          "oklch(95.0% 0.1699 149.2)"
+        ]
+      }
+    },
+    "themes": {
+      "note": "Source of truth is the HSL channel variables in styles/globals.css (:root light, .dark dark; dark is the default theme).",
+      "dark": {
+        "background": "ink",
+        "panel": "graphite",
+        "card": "ink",
+        "foreground": "chalk",
+        "primary": "chalk",
+        "primary-foreground": "graphite",
+        "muted": "smoke",
+        "border": "smoke",
+        "muted-foreground": "pewter",
+        "ring": "silver",
+        "destructive": "ember-deep"
+      },
+      "light": {
+        "background": "paper",
+        "panel": "chalk",
+        "card": "paper",
+        "foreground": "ink",
+        "primary": "graphite",
+        "primary-foreground": "chalk",
+        "muted": "mist",
+        "border": "haze",
+        "muted-foreground": "steel",
+        "ring": "graphite",
+        "destructive": "ember"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page title at the top of every page (PageHeader)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sidebar wordmark, section titles, Project card titles."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Sub-sections on reading pages, Experience company and role."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs; 24px between consecutive paragraphs."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, menu items, small and muted text, Tech badges."
+      },
+      "badge": {
+        "displayName": "Badge",
+        "purpose": "WIP and New badges."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Loaded for code-flavoured details; Geist Mono."
+      },
+      "wiring": "Self-hosted variable Geist and Geist Mono (app/fonts) as --font-geist-sans / --font-geist-mono on each root layout body, mapped to Tailwind font-sans / font-mono, applied to body in styles/globals.css."
+    },
+    "shadows": [
+      {
+        "name": "resting",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Every card and the default button."
+      },
+      {
+        "name": "subtle",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Outline and secondary buttons."
+      },
+      {
+        "name": "lifted",
+        "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "purpose": "Project card on hover."
+      }
+    ],
+    "motion": [
+      {
+        "name": "colors",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default colour transitions on buttons and badges."
+      },
+      {
+        "name": "menu",
+        "value": "200ms ease-in-out",
+        "purpose": "Menu item hover, focus and active dot; press scales to 0.95 and plays /sounds/click.mp3."
+      },
+      {
+        "name": "card-lift",
+        "value": "300ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Project card shadow lift on hover."
+      },
+      {
+        "name": "accordion",
+        "value": "200ms ease-out",
+        "purpose": "FAQ open and close height animation."
+      },
+      {
+        "name": "theme-switch",
+        "value": "none",
+        "purpose": "Theme changes apply instantly (disableTransitionOnChange)."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px",
+        "purpose": "Sidebar becomes a 320px column; below it, a full-screen overlay behind a menu button."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Inverted-ink action, e.g. Download my resume or Watch now!",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/></svg>Download my resume</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: calc(var(--radius, 0.5rem) - 2px); background: hsl(var(--primary, 0 0% 98%)); color: hsl(var(--primary-foreground, 240 5.9% 10%)); font-size: 14px; font-weight: 500; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); cursor: pointer; transition: background-color 150ms; } .ds-btn-primary:hover { background: hsl(var(--primary, 0 0% 98%) / 0.9); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Small hairline button in card footers, e.g. GitHub with its star count.",
+      "html": "<button class=\"ds-btn-outline\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>GitHub <span>42</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg></button>",
+      "css": ".ds-btn-outline { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border: 1px solid hsl(var(--input, 240 3.7% 15.9%)); border-radius: calc(var(--radius, 0.5rem) - 2px); background: hsl(var(--background, 240 10% 3.9%)); color: hsl(var(--foreground, 0 0% 98%)); font-size: 12px; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn-outline:hover { background: hsl(var(--accent, 240 3.7% 15.9%)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+    },
+    {
+      "name": "Ghost Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Social, Locale and theme switches in the sidebar footer.",
+      "html": "<button class=\"ds-btn-ghost-icon\" aria-label=\"GitHub\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\"/><rect width=\"4\" height=\"12\" x=\"2\" y=\"9\"/><circle cx=\"4\" cy=\"4\" r=\"2\"/></svg></button>",
+      "css": ".ds-btn-ghost-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: none; border-radius: calc(var(--radius, 0.5rem) - 2px); background: transparent; color: hsl(var(--foreground, 0 0% 98%)); cursor: pointer; transition: background-color 150ms; } .ds-btn-ghost-icon:hover { background: hsl(var(--accent, 240 3.7% 15.9%)); } .ds-btn-ghost-icon:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+    },
+    {
+      "name": "Sidebar Menu",
+      "kind": "nav",
+      "refersTo": "menu-item",
+      "description": "Full-width ghost links, lowercase labels, active dot, press-scale and click sound.",
+      "html": "<nav class=\"ds-menu\"><a class=\"ds-menu-item\" href=\"#\">me</a><a class=\"ds-menu-item ds-menu-item--active\" href=\"#\" aria-current=\"page\"><span>what i've done</span><span class=\"ds-menu-dot\"></span></a><a class=\"ds-menu-item\" href=\"#\">how i do it</a><a class=\"ds-menu-item\" href=\"#\">my experiences</a></nav>",
+      "css": ".ds-menu { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 8px; width: 288px; } .ds-menu-item { display: flex; align-items: center; justify-content: space-between; height: 36px; padding: 8px 16px; border-radius: calc(var(--radius, 0.5rem) - 2px); color: hsl(var(--foreground, 0 0% 98%)); font-size: 14px; text-decoration: none; transition: all 200ms ease-in-out; } .ds-menu-item:hover { background: hsl(var(--primary, 0 0% 98%) / 0.1); color: hsl(var(--primary, 0 0% 98%)); } .ds-menu-item:focus-visible { outline: none; background: hsl(var(--primary, 0 0% 98%) / 0.2); } .ds-menu-item:active { transform: scale(0.95); } .ds-menu-item--active { background: hsl(var(--primary, 0 0% 98%) / 0.1); font-weight: 500; } .ds-menu-dot { width: 8px; height: 8px; border-radius: 9999px; background: hsl(var(--primary, 0 0% 98%)); }"
+    },
+    {
+      "name": "Tech Badge",
+      "kind": "chip",
+      "refersTo": "tech-badge",
+      "description": "A Tech in its own colour, text black or white by luminance.",
+      "html": "<div class=\"ds-tech-row\"><span class=\"ds-tech-badge\" style=\"background:#000000;color:#ffffff\">Next.js</span><span class=\"ds-tech-badge\" style=\"background:#e0234e;color:#ffffff\">NestJS</span><span class=\"ds-tech-badge\" style=\"background:#00dc82;color:#000000\">Nuxt</span></div><span class=\"ds-wip-badge\">WIP</span>",
+      "css": ".ds-tech-row { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; flex-wrap: wrap; gap: 8px; margin-right: 12px; } .ds-tech-badge { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: calc(var(--radius, 0.5rem) - 2px); font-size: 14px; font-weight: 600; } .ds-wip-badge { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; padding: 2px 10px; border-radius: calc(var(--radius, 0.5rem) - 2px); background: #facc15; color: #000; font-size: 12px; font-weight: 600; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Fixed 384x500 card: image band, title, Period and WIP, description, Techs, blurred footer.",
+      "html": "<article class=\"ds-project-card\"><div class=\"ds-project-image\"></div><div class=\"ds-project-head\"><h3>Predi.GG</h3><p>2025 - Today <span class=\"ds-wip-badge\">WIP</span></p></div><div class=\"ds-project-body\"><p>Predi.GG - Predict, compete, and win. 🔮</p></div><div class=\"ds-project-foot\"><button class=\"ds-project-open\" aria-label=\"Open Predi.GG\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 3h6v6\"/><path d=\"M10 14 21 3\"/><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/></svg></button></div></article>",
+      "css": ".ds-project-card { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; width: 320px; height: 420px; overflow: hidden; border: 1px solid hsl(var(--border, 240 3.7% 15.9%)); border-radius: 12px; background: hsl(var(--card, 240 10% 3.9%)); color: hsl(var(--card-foreground, 0 0% 98%)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); transition: all 300ms; } .ds-project-card:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); } .ds-project-image { height: 160px; flex-shrink: 0; background: linear-gradient(160deg, #27272a, #3f3f46); } .ds-project-head { padding: 24px 24px 6px; } .ds-project-head h3 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.025em; } .ds-project-head p { margin: 6px 0 0; font-size: 14px; color: hsl(var(--muted-foreground, 240 5% 64.9%)); } .ds-wip-badge { display: inline-flex; margin-left: 8px; padding: 2px 10px; border-radius: 6px; background: #facc15; color: #000; font-size: 12px; font-weight: 600; } .ds-project-body { flex: 1; padding: 0 24px; font-size: 16px; } .ds-project-foot { display: flex; justify-content: flex-end; padding: 0 24px 24px; backdrop-filter: blur(4px); } .ds-project-open { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 12px; border: none; border-radius: 6px; background: hsl(var(--primary, 0 0% 98%)); color: hsl(var(--primary-foreground, 240 5.9% 10%)); cursor: pointer; } .ds-project-open:hover { background: hsl(var(--primary, 0 0% 98%) / 0.9); } .ds-project-open:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+    },
+    {
+      "name": "Presence Card",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Live Discord presence: artwork with a Spotify mark, song in primary, artist muted.",
+      "html": "<div class=\"ds-presence\"><div class=\"ds-presence-art\"><span class=\"ds-presence-mark\"></span></div><div><strong>Enemy (with JID)</strong><p>by Imagine Dragons; JID</p></div></div>",
+      "css": ".ds-presence { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; align-items: center; gap: 16px; width: 288px; padding: 16px; border: 1px solid hsl(var(--border, 240 3.7% 15.9%)); border-radius: 12px; background: hsl(var(--card, 240 10% 3.9%)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); cursor: pointer; } .ds-presence-art { position: relative; width: 48px; height: 48px; flex-shrink: 0; border-radius: 6px; background: linear-gradient(135deg, #7c3aed, #db2777); } .ds-presence-mark { position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 9999px; border: 2px solid hsl(var(--background, 240 10% 3.9%)); background: #1ed760; } .ds-presence strong { display: block; font-size: 14px; font-weight: 500; color: hsl(var(--primary, 0 0% 98%)); } .ds-presence p { margin: 4px 0 0; font-size: 14px; color: hsl(var(--muted-foreground, 240 5% 64.9%)); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Dev's Desk",
+    "overview": "The site is a tidy personal workspace. The sidebar is the shelf: the `> ImJustLucas` wordmark, the menu, the live presence card, the social links and the theme and Locale switches. The inset content panel is the desk, set a few pixels in from the window edge, and the things Lucas has made are laid out on it as cards. The furniture is deliberately plain zinc (shadcn's \"new-york\" style on the zinc base colour) so that what sits on the desk gets the attention.\n\nColour belongs to the content, never to the chrome: Tech badges in each Tech's own colour, Project screenshots, Video thumbnails, Spotify artwork, the yellow WIP tag. The interface itself is near-monochrome in both themes, dark by default. Personality comes through in the copy (casual, lowercase menu labels, emojis) and through small tactile touches: soft corners, gentle hover lifts, a click sound and a press-scale on the menu, a chibi avatar resting in the bottom-right corner.\n\nDensity is relaxed and single-column on reading pages (the home page holds two-thirds of the panel's width), and becomes a wrapping grid of fixed-size cards on the Projects and Videos pages.",
+    "keyCharacteristics": [
+      "Two-zone shell: a 320px sidebar beside a rounded, inset content panel.",
+      "Near-monochrome zinc chrome in both themes; colour comes only from content.",
+      "Terminal-flavoured identity: the `> ` prompt before the wordmark.",
+      "Soft and tactile: rounded cards, gentle shadows, hover lifts, menu click sound.",
+      "Dark theme by default, light and system available."
+    ],
+    "rules": [
+      {
+        "name": "The Content Brings the Colour Rule",
+        "body": "Chrome stays zinc. A new hue enters a page only as content: a Tech's own `#rrggbb`, an image, a thumbnail, artwork. If you're reaching for a brand colour for a button or a heading, stop.",
+        "section": "colors"
+      },
+      {
+        "name": "The Inverted Ink Rule",
+        "body": "\"Primary\" means maximum contrast against the current theme, not a brand hue. Never hard-code a primary colour per theme; use the token so the inversion keeps working.",
+        "section": "colors"
+      },
+      {
+        "name": "The Readable Badge Rule",
+        "body": "A Tech badge's text colour is computed from its background's WCAG luminance (black above 0.5, white below), never chosen by hand.",
+        "section": "colors"
+      },
+      {
+        "name": "The Typography Primitives Rule",
+        "body": "Text goes through the primitives in `components/typography` (`TypographyH2/H3/H4`, `TypographyP`, `TypographySmall`, `TypographyMuted`, `Bold`), restyled through `className` only. A raw `<h2>` with its own sizes is a drift.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lift on Touch Rule",
+        "body": "Surfaces rest nearly flat; they lift only when the visitor points at them. No large shadow is ever static.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Blur Means Elsewhere Rule",
+        "body": "Backdrop blur is reserved for \"you're looking at something on top\": the mobile menu overlay, the content panel behind it, and the footer bar over a Project card's scrolling text.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the chrome in the zinc tokens and let content (Tech colours, images, artwork) supply every hue.",
+      "Do render text through the typography primitives and Techs only through `TechBadge`.",
+      "Do build on the shared radius: 6px for controls, 12px for cards, 8px for the panel.",
+      "Do keep shadows small at rest and let hover lift them, over 200 to 300ms.",
+      "Do design every new surface for both themes, dark first."
+    ],
+    "donts": [
+      "Don't introduce a brand accent colour for buttons, links or headings; primary is the inverted ink.",
+      "Don't hand-pick a Tech badge's text colour; it is computed from luminance.",
+      "Don't add static large shadows or decorative borders.",
+      "Don't add a second scroll container to the shell; the content panel is the only one.",
+      "Don't treat the MasterDevFrance 2025 page's blue-to-purple gradient frame as part of the system; it is that celebration page's one-off."
+    ]
+  }
+}
