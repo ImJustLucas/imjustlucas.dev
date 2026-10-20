@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 "use client";
 
@@ -9,7 +8,13 @@ import {
   shaderMaterial,
   Stars,
 } from "@react-three/drei";
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
+import {
+  Canvas,
+  extend,
+  type ThreeEvent,
+  useFrame,
+  useThree,
+} from "@react-three/fiber";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import { useTranslations } from "next-intl";
 
@@ -211,7 +216,7 @@ const CustomCoin = ({
   });
 
   return (
-    <mesh ref={meshRef} position={position} scale={scale} castShadow>
+    <mesh ref={meshRef} position={position} scale={scale}>
       <cylinderGeometry args={[0.5, 0.5, 0.1, 32]} />
 
       {/*@ts-expect-error unknown property */}
@@ -238,7 +243,7 @@ const Coins = ({
   const nextId = useRef(0);
 
   useEffect(() => {
-    const initialCoins = Array.from({ length: count }).map((_, i) => {
+    const initialCoins = Array.from({ length: count }, () => {
       return {
         position: [
           (Math.random() - 0.5) * viewport.width * 2,
@@ -272,7 +277,7 @@ const Coins = ({
 };
 
 const Scene = ({ still }: { still: boolean }) => {
-  const { camera, viewport, mouse } = useThree();
+  const { camera, viewport, pointer } = useThree();
   const { play } = useSounds();
   const [userCoins, setUserCoins] = useState<
     {
@@ -288,34 +293,37 @@ const Scene = ({ still }: { still: boolean }) => {
     camera.position.set(0, 0, 8);
   }, [camera]);
 
-  // Mutating the R3F camera in an event handler is the intended pattern.
-  // eslint-disable-next-line react-hooks/immutability
-  const handleClick = useCallback(() => {
-    if (still) return;
-    const cameraPosition = camera.position.clone();
-    // eslint-disable-next-line react-hooks/immutability
-    camera.far = 4;
+  const handleClick = useCallback(
+    (event: ThreeEvent<MouseEvent>) => {
+      if (still) return;
+      // A drag to orbit the camera, not a throw.
+      if (event.delta > 4) return;
+      const cameraPosition = camera.position.clone();
 
-    const mouseX = (mouse.x * viewport.width) / 2;
-    const mouseY = (mouse.y * viewport.height) / 2;
+      const mouseX = (pointer.x * viewport.width) / 2;
+      const mouseY = (pointer.y * viewport.height) / 2;
 
-    const targetVector = new THREE.Vector3(mouseX, mouseY, 0);
+      const targetVector = new THREE.Vector3(mouseX, mouseY, 0);
 
-    const direction = new THREE.Vector3()
-      .subVectors(targetVector, cameraPosition)
-      .normalize();
+      const direction = new THREE.Vector3()
+        .subVectors(targetVector, cameraPosition)
+        .normalize();
+      // Just in front of the camera, never inside its near plane.
+      const spawn = cameraPosition.addScaledVector(direction, 1.5);
 
-    setUserCoins((prevCoins) => [
-      ...prevCoins,
-      {
-        position: [cameraPosition.x, cameraPosition.y, cameraPosition.z],
-        scale: Math.random() * 0.3 + 0.2,
-        id: nextId.current++,
-        velocity: [direction.x * 0.2, direction.y * 0.2, direction.z * 0.2],
-      },
-    ]);
-    play("throw");
-  }, [camera, mouse, viewport, still, play]);
+      setUserCoins((prevCoins) => [
+        ...prevCoins,
+        {
+          position: [spawn.x, spawn.y, spawn.z],
+          scale: Math.random() * 0.3 + 0.2,
+          id: nextId.current++,
+          velocity: [direction.x * 0.2, direction.y * 0.2, direction.z * 0.2],
+        },
+      ]);
+      play("throw");
+    },
+    [camera, pointer, viewport, still, play],
+  );
 
   // Only a coin the visitor threw makes a sound when it lands.
   const handleImpact = useCallback(
@@ -330,7 +338,7 @@ const Scene = ({ still }: { still: boolean }) => {
   return (
     <>
       <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.7} castShadow />
+      <directionalLight position={[5, 5, 5]} intensity={0.7} />
 
       <spotLight
         position={[0, 8, 3]}
@@ -338,9 +346,6 @@ const Scene = ({ still }: { still: boolean }) => {
         penumbra={0.5}
         intensity={2}
         color="#ffffff"
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
       />
 
       <Environment preset="sunset" />
@@ -414,7 +419,7 @@ export default function MasterDevScene() {
   return (
     <>
       <SceneLoader />
-      <Canvas shadows frameloop={still ? "demand" : "always"}>
+      <Canvas frameloop={still ? "demand" : "always"}>
         <Scene still={still} />
       </Canvas>
       <Button
