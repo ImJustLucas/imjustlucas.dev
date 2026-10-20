@@ -5,6 +5,22 @@ type TypographyProps = {
   className?: string;
 };
 
+export const TypographyH1: React.FC<TypographyProps> = ({
+  children,
+  className,
+}) => {
+  return (
+    <h1
+      className={cn(
+        "scroll-m-20 text-4xl font-extrabold tracking-tight",
+        className,
+      )}
+    >
+      {children}
+    </h1>
+  );
+};
+
 export const TypographyH2: React.FC<TypographyProps> = ({
   children,
   className,

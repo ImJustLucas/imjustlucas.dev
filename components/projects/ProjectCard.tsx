@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ExternalLink, FolderCode, Github, Star } from "lucide-react";
 
 import { TechBadge } from "@/components/tech/TechBadge";
+import { TypographyP } from "@/components/typography";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,7 +61,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </CardHeader>
 
       <CardContent className="flex-grow overflow-auto relative z-10">
-        <p className="mb-4 line-clamp-3">{project.description}</p>
+        <TypographyP className="mb-4 line-clamp-3 leading-normal">
+          {project.description}
+        </TypographyP>
         <div className="flex flex-wrap gap-2">
           {project.techs.map((tech) => (
             <TechBadge key={tech.id} tech={tech} />

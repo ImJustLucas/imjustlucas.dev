@@ -3,6 +3,7 @@ import { useFormatter, useTranslations } from "next-intl";
 
 import { Clock } from "lucide-react";
 
+import { TypographyH3 } from "@/components/typography";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -29,7 +30,9 @@ export function VideoCard({ video }: { video: Video }) {
         )}
       </CardContent>
       <CardFooter className="flex flex-col items-start p-4 gap-2">
-        <h3 className="text-lg font-semibold line-clamp-2">{video.title}</h3>
+        <TypographyH3 className="mt-0 text-lg tracking-normal line-clamp-2">
+          {video.title}
+        </TypographyH3>
         <div className="flex items-center mt-2 text-sm text-muted-foreground">
           <Clock className="mr-1 h-4 w-4" />
           <time dateTime={video.publishedAt}>

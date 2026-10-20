@@ -8,6 +8,7 @@ import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 
 import { geistMono, geistSans } from "@/app/fonts";
+import { TypographyH1 } from "@/components/typography";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
 import { getProfile } from "@/lib/content/server";
@@ -62,7 +63,9 @@ export default async function LocaleLayout({
           >
             <Analytics />
             <SpeedInsights />
-            <h1 className="absolute top-96 opacity-0">ImJustLucas</h1>
+            <TypographyH1 className="absolute top-96 opacity-0">
+              ImJustLucas
+            </TypographyH1>
             <div className="fixed bottom-5 right-5 z-10 hover:cursor-pointer">
               <Image
                 src="/images/chibi-avatar-64x64.png"
