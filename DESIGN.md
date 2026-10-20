@@ -261,7 +261,7 @@ Density is relaxed: big slots with generous gaps, one focal object per row. The 
 
 **Key Characteristics:**
 - Two-zone client inside a 12px frame: a 320px sidebar beside a rounded profile panel, both on the palette's ground, the panel the only part that scrolls.
-- Four palettes, each with a dark and a light mode, all through the same role tokens: "electric" (the default; navy night in dark, off-white daytime in light), "plum" (the plum and tangerine client), "khaki" (olive and chocolate) and "sakura" (burgundy night and cherry blossom). Dark is the default mode.
+- Five palettes, each with a dark and a light mode, all through the same role tokens: "electric" (the default; navy night in dark, off-white daytime in light), "plum" (the plum and tangerine client), "khaki" (olive and chocolate), "sakura" (burgundy night and cherry blossom) and "surf" (deep sea and sand, sea foam by day). Dark is the default mode.
 - One action colour for the Play button, the active tab, the sound switch when on and selection; its ink colour draws focus.
 - Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.
 - Chunky pressable controls on a solid ledge; raised slots and cards with soft 16px corners and a moulded-tray highlight.
@@ -270,7 +270,7 @@ Density is relaxed: big slots with generous gaps, one focal object per row. The 
 
 ## Colors
 
-A committed world in four palettes: the shell is the colour, with one action colour and a four-step rarity ramp that labels content. Every colour a component uses is a role token (frame, ground, raised, seam, ledge, ink, ink-muted, action, action-ledge, action-ink, on-action, on-bright, and the `-ink` variant of each rarity and status colour) that changes with the palette and the mode. The shadcn roles (background, card, primary, border, ring, destructive…) are mapped onto them, so every page and the Admin inherit the world without restyling. The palette is the `data-palette` attribute on `<html>` (absent for electric, `plum` for plum); the mode is next-themes' `dark` class.
+A committed world in five palettes: the shell is the colour, with one action colour and a four-step rarity ramp that labels content. Every colour a component uses is a role token (frame, ground, raised, seam, ledge, ink, ink-muted, action, action-ledge, action-ink, on-action, on-bright, and the `-ink` variant of each rarity and status colour) that changes with the palette and the mode. The shadcn roles (background, card, primary, border, ring, destructive…) are mapped onto them, so every page and the Admin inherit the world without restyling. The palette is the `data-palette` attribute on `<html>` (absent for electric, `plum` for plum); the mode is next-themes' `dark` class.
 
 ### Roles across palettes
 
@@ -290,8 +290,8 @@ A committed world in four palettes: the shell is the colour, with one action col
 | on-bright | Navy | Navy | Night | Night |
 | link-line | Electric | Electric Deep | Haze | Tangerine Deep |
 
-### More palettes (khaki, sakura)
-Two more palettes on the same roles, chosen by Lucas on 2026-10-20 and selected the same way (`data-palette="khaki"`, `data-palette="sakura"`). Their values live only in `styles/globals.css`; every text pair below is 4.5:1 or more.
+### More palettes (khaki, sakura, surf)
+Two more palettes on the same roles, chosen by Lucas on 2026-10-20 and selected the same way (`data-palette="khaki"`, `"sakura"`, `"surf"`). Their values live only in `styles/globals.css`; every text pair below is 4.5:1 or more.
 
 | Role | Khaki dark | Khaki light | Sakura dark | Sakura light |
 |---|---|---|---|---|
@@ -304,6 +304,18 @@ Two more palettes on the same roles, chosen by Lucas on 2026-10-20 and selected 
 | action-ledge | #6b4429 chocolate | #4a3222 dark chocolate | #c8325a cherry | #8a1f3c |
 | action-ink, link-line | #d6b37e caramel | #4f5c2c | #ff8fae | #b0284e |
 | on-action / on-bright | #262a1c / #1a140f | #f7f3e8 / #2b2618 | #241519 / #241519 | #ffffff / #2d1b22 |
+
+| Role | Surf dark | Surf light ("Écume") |
+|---|---|---|
+| frame | #04161a | #dcebea |
+| ground | #082a30 deep sea | #f1f7f6 sea foam |
+| raised | #0f3a42 | #ffffff |
+| seam | #1e5a63 | #cfe3e1 |
+| ink / ink-muted | #f3ecdf / #a9cfd0 | #0b2b35 / #4a6268 |
+| action | #e9d8b4 sand | #5fd0bd sea glass |
+| action-ledge | #1fa3a3 turquoise | #1f8f84 |
+| action-ink, link-line | #4fd1cf | #16766d |
+| on-action / on-bright | #082a30 / #04161a | #06303a / #0b2b35 |
 
 Adding a palette is two blocks of these roles in `styles/globals.css` (light, then `.dark`), its name in `PALETTES` and its swatch in `PALETTE_SWATCH` (`lib/palette.ts`), and its name under `ThemeSwitch` in both dictionaries.
 

@@ -1,12 +1,18 @@
 /**
- * The visitor's palette: "electric" (the default), "plum", "khaki" or
- * "sakura", stored per visitor in `localStorage` and set as `data-palette`
- * on <html> (absent for the default). Independent of the light/dark mode,
- * which next-themes keeps. A palette is its two blocks of role tokens in
+ * The visitor's palette: "electric" (the default), "plum", "khaki",
+ * "sakura" or "surf", stored per visitor in `localStorage` and set as
+ * `data-palette` on <html> (absent for the default). Independent of the
+ * light/dark mode, which next-themes keeps. A palette is its two blocks of role tokens in
  * `styles/globals.css`, its swatch and its name in the message dictionaries.
  */
 
-export const PALETTES = ["electric", "plum", "khaki", "sakura"] as const;
+export const PALETTES = [
+  "electric",
+  "plum",
+  "khaki",
+  "sakura",
+  "surf",
+] as const;
 export type Palette = (typeof PALETTES)[number];
 
 /** Each palette's signature colour, for its swatch in the theme menu. */
@@ -15,6 +21,7 @@ export const PALETTE_SWATCH: { readonly [P in Palette]: string } = {
   plum: "#ff8a3d",
   khaki: "#5e6b3a",
   sakura: "#ffb3c7",
+  surf: "#5fd0bd",
 };
 
 export const DEFAULT_PALETTE: Palette = "electric";

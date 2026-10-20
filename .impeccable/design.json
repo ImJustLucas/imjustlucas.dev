@@ -974,7 +974,7 @@
     "palettes": {
       "default": "electric",
       "defaultMode": "dark",
-      "selection": "data-palette on <html> (absent for electric; \"plum\", \"khaki\" or \"sakura\" otherwise); mode by next-themes' dark class",
+      "selection": "data-palette on <html> (absent for electric; \"plum\", \"khaki\", \"sakura\" or \"surf\" otherwise); mode by next-themes' dark class",
       "storage": "localStorage imjustlucas.palette, applied before the first paint by PALETTE_SCRIPT (lib/palette.ts) in the <head> of both root layouts; the Admin follows it",
       "roles": [
         "frame",
@@ -1111,7 +1111,37 @@
         "on-bright": "#2d1b22",
         "link-line": "#b0284e"
       },
-      "note": "electric and plum roles name frontmatter colours; khaki and sakura carry their hex values directly (they have no frontmatter tokens)."
+      "note": "electric and plum roles name frontmatter colours; khaki, sakura and surf carry their hex values directly (they have no frontmatter tokens).",
+      "surf-dark": {
+        "frame": "#04161a",
+        "ground": "#082a30",
+        "raised": "#0f3a42",
+        "seam": "#1e5a63",
+        "ledge": "#04161a",
+        "ink": "#f3ecdf",
+        "ink-muted": "#a9cfd0",
+        "action": "#e9d8b4",
+        "action-ledge": "#1fa3a3",
+        "action-ink": "#4fd1cf",
+        "on-action": "#082a30",
+        "on-bright": "#04161a",
+        "link-line": "#4fd1cf"
+      },
+      "surf-light": {
+        "frame": "#dcebea",
+        "ground": "#f1f7f6",
+        "raised": "#ffffff",
+        "seam": "#cfe3e1",
+        "ledge": "#cfe3e1",
+        "ink": "#0b2b35",
+        "ink-muted": "#4a6268",
+        "action": "#5fd0bd",
+        "action-ledge": "#1f8f84",
+        "action-ink": "#16766d",
+        "on-action": "#06303a",
+        "on-bright": "#0b2b35",
+        "link-line": "#16766d"
+      }
     }
   },
   "components": [
