@@ -67,10 +67,21 @@ export const TypographyTitle: React.FC<HeadingProps> = ({
 
 /** Data: periods, dates, star counts, elapsed time; tabular figures. */
 export const TypographyData: React.FC<
-  TypographyProps & { as?: "span" | "p" | "time"; dateTime?: string }
-> = ({ as: Tag = "span", children, className, dateTime }) => (
+  TypographyProps & {
+    as?: "span" | "p" | "time";
+    dateTime?: string;
+    "aria-hidden"?: boolean;
+  }
+> = ({
+  as: Tag = "span",
+  children,
+  className,
+  dateTime,
+  "aria-hidden": ariaHidden,
+}) => (
   <Tag
     dateTime={dateTime}
+    aria-hidden={ariaHidden}
     className={cn("font-mono text-data tabular-nums", className)}
   >
     {children}

@@ -131,19 +131,34 @@ function Playing({
       <Artwork artwork={presence.artwork} badge={presence.badge} />
       <span className="min-w-0 flex-1">
         <Line className="text-label text-ink">{presence.name}</Line>
-        {detail && <Line className="text-data text-ink-muted">{detail}</Line>}
-        <span className="flex items-center gap-1.5 text-ink-muted">
+        <span className="flex min-w-0 items-center gap-1.5 text-ink-muted">
           <span
             aria-hidden
-            className="size-2 rounded-full bg-online motion-safe:animate-breathe"
+            className="size-2 shrink-0 rounded-full bg-online motion-safe:animate-breathe"
           />
-          <TypographyData>
-            {startedAt && now !== null
-              ? t("playingFor", { elapsed: formatElapsed(now - startedAt) })
-              : t("playing")}
-          </TypographyData>
+          {startedAt && now !== null ? (
+            <>
+              <TypographyData className="shrink-0" aria-hidden>
+                {formatElapsed(now - startedAt)}
+              </TypographyData>
+              <span className="sr-only">
+                {t("playingFor", { elapsed: formatElapsed(now - startedAt) })}
+              </span>
+            </>
+          ) : (
+            <TypographyData className="shrink-0">{t("playing")}</TypographyData>
+          )}
+          {detail && <Line className="text-data">{detail}</Line>}
         </span>
       </span>
+      {/* Lucas at his game, in his day or night outfit by Paris time */}
+      <ChibiSprite
+        pose="lol"
+        alt=""
+        sizes="56px"
+        followParisNight
+        className="-my-2 size-14 shrink-0"
+      />
     </>
   );
 }
@@ -166,11 +181,21 @@ function Listening({
       />
       <span className="min-w-0 flex-1">
         <Line className="text-label text-ink">{presence.song}</Line>
-        <Line className="text-data text-ink-muted">
-          {t("listeningBy", { artist: presence.artist })}
-        </Line>
+        <span className="flex min-w-0 items-center gap-1.5 text-ink-muted">
+          <Equalizer />
+          <Line className="text-data">
+            {t("listeningBy", { artist: presence.artist })}
+          </Line>
+        </span>
       </span>
-      <Equalizer />
+      {/* The music pose plays its two drawn frames while Lucas listens */}
+      <ChibiSprite
+        pose="music"
+        alt=""
+        sizes="56px"
+        playing
+        className="-my-2 size-14 shrink-0"
+      />
     </>
   );
 }
@@ -178,11 +203,11 @@ function Listening({
 /** Three bars while Lucas listens; still under reduced motion. */
 function Equalizer() {
   return (
-    <span aria-hidden className="flex h-5 shrink-0 items-end gap-[3px]">
+    <span aria-hidden className="flex h-3 shrink-0 items-end gap-[2px]">
       {[0, 0.25, 0.5].map((delay) => (
         <span
           key={delay}
-          className="h-full w-[3px] origin-bottom scale-y-50 rounded-full bg-online motion-safe:animate-equalizer"
+          className="h-full w-[2px] origin-bottom scale-y-50 rounded-full bg-online motion-safe:animate-equalizer"
           style={{ animationDelay: `${delay}s` }}
         />
       ))}
