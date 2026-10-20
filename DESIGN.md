@@ -161,7 +161,7 @@ A cool, barely blue-tinted zinc scale that inverts between themes, plus three fu
 
 **The Inverted Ink Rule.** "Primary" means maximum contrast against the current theme, not a brand hue. Never hard-code a primary colour per theme; use the token so the inversion keeps working.
 
-**The Readable Badge Rule.** A Tech badge's text colour is computed from its background's WCAG luminance (black above 0.5, white below), never chosen by hand.
+**The Readable Badge Rule.** A Tech badge's text colour is computed, never chosen by hand: black or white, whichever has the higher WCAG contrast ratio against the background (`lib/text-color-on.ts`). The switch falls at a luminance of about 0.18, so mid-tones such as blue-500 or red-500 take black text, and any background reaches at least 4.58:1.
 
 ## Typography
 
@@ -268,7 +268,7 @@ The Admin reuses the same primitives on a plain full-page background (24px paddi
 
 ### Don't:
 - **Don't** introduce a brand accent colour for buttons, links or headings; primary is the inverted ink.
-- **Don't** hand-pick a Tech badge's text colour; it is computed from luminance.
+- **Don't** hand-pick a Tech badge's text colour; it is computed for contrast.
 - **Don't** add static large shadows or decorative borders.
 - **Don't** add a second scroll container to the shell; the content panel is the only one.
 - **Don't** treat the MasterDevFrance 2025 page's blue-to-purple gradient frame as part of the system; it is that celebration page's one-off.
