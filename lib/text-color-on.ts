@@ -9,6 +9,17 @@ const luminance = (color: string) =>
   0.7152 * channel(color.slice(3, 5)) +
   0.0722 * channel(color.slice(5, 7));
 
-/** Text colour for a label on a `#rrggbb` background: black on light ones. */
+/** WCAG contrast ratio between two `#rrggbb` colours, from 1 to 21. */
+export const contrastRatio = (a: string, b: string) => {
+  const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (light + 0.05) / (dark + 0.05);
+};
+
+/**
+ * Text colour for a label on a `#rrggbb` background: whichever of black or
+ * white contrasts more with it, which is always at least 4.58:1.
+ */
 export const textColorOn = (background: string): "#000000" | "#ffffff" =>
-  luminance(background) > 0.5 ? "#000000" : "#ffffff";
+  contrastRatio(background, "#000000") >= contrastRatio(background, "#ffffff")
+    ? "#000000"
+    : "#ffffff";
