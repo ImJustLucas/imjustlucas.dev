@@ -68,3 +68,7 @@ The back of his right hand, shown large and close to the viewer, carries three s
 Lucas has three tattoos on the back of his right hand: three dots in a line on the index finger, a smiley on the middle finger, and two outlined four-point sparkles near the thumb. They are optional, a later variant of a pose already approved without them, and only where the hand is drawn large enough to carry them: the coffee, LoL and music poses, never the full-body banner. A first try on the banner (2026-10-20) looked pasted on: lines thinner and greyer than the outline, flat on a mitten-shaped hand, and invisible at the size the banner is shown on the site.
 
 The outlined four-point sparkle of the tattoo is also the site's sparkle motif (DESIGN.md, Shapes).
+
+## Coffee pose (2026-10-20)
+
+Approved by Lucas on the first try (`.impeccable/mocks/chibi/coffee.png`), with the commissioned art and the approved banner attached. The orientation came out right because the prompt named the sides of the image, the closed-eye smile keeps him recognisable, and the tangerine scarf and plum mug sit in the site's palette. One small flaw if it is ever redone: the scarf hangs behind his back like a cape.
