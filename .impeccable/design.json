@@ -1,459 +1,780 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T08:34:09.064Z",
+  "generatedAt": "2026-10-20T09:15:59.239599Z",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
-      "ink": {
+      "night": {
         "role": "neutral",
-        "displayName": "Ink",
-        "canonical": "hsl(240 10% 3.9%)",
-        "oklch": "oklch(14.1% 0.0044 285.8)",
+        "displayName": "Night",
+        "canonical": "#1c0f2b",
+        "oklch": "oklch(20.3% 0.0556 303.2)",
         "tonalRamp": [
-          "oklch(15.0% 0.0044 285.8)",
-          "oklch(26.4% 0.0044 285.8)",
-          "oklch(37.9% 0.0044 285.8)",
-          "oklch(49.3% 0.0044 285.8)",
-          "oklch(60.7% 0.0044 285.8)",
-          "oklch(72.1% 0.0044 285.8)",
-          "oklch(83.6% 0.0044 285.8)",
-          "oklch(95.0% 0.0044 285.8)"
+          "oklch(15.0% 0.0556 303.2)",
+          "oklch(26.4% 0.0556 303.2)",
+          "oklch(37.9% 0.0556 303.2)",
+          "oklch(49.3% 0.0556 303.2)",
+          "oklch(60.7% 0.0556 303.2)",
+          "oklch(72.1% 0.0556 303.2)",
+          "oklch(83.6% 0.0556 303.2)",
+          "oklch(95.0% 0.0556 303.2)"
         ]
       },
-      "graphite": {
+      "plum": {
         "role": "neutral",
-        "displayName": "Graphite",
-        "canonical": "hsl(240 5.9% 10%)",
-        "oklch": "oklch(21.0% 0.0059 285.9)",
+        "displayName": "Plum",
+        "canonical": "#2a1540",
+        "oklch": "oklch(25.0% 0.0797 303.7)",
         "tonalRamp": [
-          "oklch(15.0% 0.0059 285.9)",
-          "oklch(26.4% 0.0059 285.9)",
-          "oklch(37.9% 0.0059 285.9)",
-          "oklch(49.3% 0.0059 285.9)",
-          "oklch(60.7% 0.0059 285.9)",
-          "oklch(72.1% 0.0059 285.9)",
-          "oklch(83.6% 0.0059 285.9)",
-          "oklch(95.0% 0.0059 285.9)"
+          "oklch(15.0% 0.0797 303.7)",
+          "oklch(26.4% 0.0797 303.7)",
+          "oklch(37.9% 0.0797 303.7)",
+          "oklch(49.3% 0.0797 303.7)",
+          "oklch(60.7% 0.0797 303.7)",
+          "oklch(72.1% 0.0797 303.7)",
+          "oklch(83.6% 0.0797 303.7)",
+          "oklch(95.0% 0.0797 303.7)"
         ]
       },
-      "smoke": {
+      "velvet": {
         "role": "neutral",
-        "displayName": "Smoke",
-        "canonical": "hsl(240 3.7% 15.9%)",
-        "oklch": "oklch(27.4% 0.0055 286.0)",
+        "displayName": "Velvet",
+        "canonical": "#3b2159",
+        "oklch": "oklch(31.2% 0.0980 302.5)",
         "tonalRamp": [
-          "oklch(15.0% 0.0055 286.0)",
-          "oklch(26.4% 0.0055 286.0)",
-          "oklch(37.9% 0.0055 286.0)",
-          "oklch(49.3% 0.0055 286.0)",
-          "oklch(60.7% 0.0055 286.0)",
-          "oklch(72.1% 0.0055 286.0)",
-          "oklch(83.6% 0.0055 286.0)",
-          "oklch(95.0% 0.0055 286.0)"
+          "oklch(15.0% 0.0980 302.5)",
+          "oklch(26.4% 0.0980 302.5)",
+          "oklch(37.9% 0.0980 302.5)",
+          "oklch(49.3% 0.0980 302.5)",
+          "oklch(60.7% 0.0980 302.5)",
+          "oklch(72.1% 0.0980 302.5)",
+          "oklch(83.6% 0.0980 302.5)",
+          "oklch(95.0% 0.0980 302.5)"
         ]
       },
-      "pewter": {
+      "seam": {
         "role": "neutral",
-        "displayName": "Pewter",
-        "canonical": "hsl(240 5% 64.9%)",
-        "oklch": "oklch(71.2% 0.0129 286.1)",
+        "displayName": "Seam",
+        "canonical": "#5a3a80",
+        "oklch": "oklch(42.0% 0.1156 302.8)",
         "tonalRamp": [
-          "oklch(15.0% 0.0129 286.1)",
-          "oklch(26.4% 0.0129 286.1)",
-          "oklch(37.9% 0.0129 286.1)",
-          "oklch(49.3% 0.0129 286.1)",
-          "oklch(60.7% 0.0129 286.1)",
-          "oklch(72.1% 0.0129 286.1)",
-          "oklch(83.6% 0.0129 286.1)",
-          "oklch(95.0% 0.0129 286.1)"
+          "oklch(15.0% 0.1156 302.8)",
+          "oklch(26.4% 0.1156 302.8)",
+          "oklch(37.9% 0.1156 302.8)",
+          "oklch(49.3% 0.1156 302.8)",
+          "oklch(60.7% 0.1156 302.8)",
+          "oklch(72.1% 0.1156 302.8)",
+          "oklch(83.6% 0.1156 302.8)",
+          "oklch(95.0% 0.1156 302.8)"
         ]
       },
-      "silver": {
+      "cream": {
         "role": "neutral",
-        "displayName": "Silver",
-        "canonical": "hsl(240 4.9% 83.9%)",
-        "oklch": "oklch(87.1% 0.0055 286.3)",
+        "displayName": "Cream",
+        "canonical": "#fff1e6",
+        "oklch": "oklch(96.6% 0.0211 60.8)",
         "tonalRamp": [
-          "oklch(15.0% 0.0055 286.3)",
-          "oklch(26.4% 0.0055 286.3)",
-          "oklch(37.9% 0.0055 286.3)",
-          "oklch(49.3% 0.0055 286.3)",
-          "oklch(60.7% 0.0055 286.3)",
-          "oklch(72.1% 0.0055 286.3)",
-          "oklch(83.6% 0.0055 286.3)",
-          "oklch(95.0% 0.0055 286.3)"
-        ]
-      },
-      "steel": {
-        "role": "neutral",
-        "displayName": "Steel",
-        "canonical": "hsl(240 3.8% 46.1%)",
-        "oklch": "oklch(55.2% 0.0137 285.9)",
-        "tonalRamp": [
-          "oklch(15.0% 0.0137 285.9)",
-          "oklch(26.4% 0.0137 285.9)",
-          "oklch(37.9% 0.0137 285.9)",
-          "oklch(49.3% 0.0137 285.9)",
-          "oklch(60.7% 0.0137 285.9)",
-          "oklch(72.1% 0.0137 285.9)",
-          "oklch(83.6% 0.0137 285.9)",
-          "oklch(95.0% 0.0137 285.9)"
+          "oklch(15.0% 0.0211 60.8)",
+          "oklch(26.4% 0.0211 60.8)",
+          "oklch(37.9% 0.0211 60.8)",
+          "oklch(49.3% 0.0211 60.8)",
+          "oklch(60.7% 0.0211 60.8)",
+          "oklch(72.1% 0.0211 60.8)",
+          "oklch(83.6% 0.0211 60.8)",
+          "oklch(95.0% 0.0211 60.8)"
         ]
       },
       "haze": {
         "role": "neutral",
         "displayName": "Haze",
-        "canonical": "hsl(240 5.9% 90%)",
-        "oklch": "oklch(92.0% 0.0040 286.3)",
+        "canonical": "#c9b6e4",
+        "oklch": "oklch(80.7% 0.0670 303.7)",
         "tonalRamp": [
-          "oklch(15.0% 0.0040 286.3)",
-          "oklch(26.4% 0.0040 286.3)",
-          "oklch(37.9% 0.0040 286.3)",
-          "oklch(49.3% 0.0040 286.3)",
-          "oklch(60.7% 0.0040 286.3)",
-          "oklch(72.1% 0.0040 286.3)",
-          "oklch(83.6% 0.0040 286.3)",
-          "oklch(95.0% 0.0040 286.3)"
+          "oklch(15.0% 0.0670 303.7)",
+          "oklch(26.4% 0.0670 303.7)",
+          "oklch(37.9% 0.0670 303.7)",
+          "oklch(49.3% 0.0670 303.7)",
+          "oklch(60.7% 0.0670 303.7)",
+          "oklch(72.1% 0.0670 303.7)",
+          "oklch(83.6% 0.0670 303.7)",
+          "oklch(95.0% 0.0670 303.7)"
         ]
       },
-      "mist": {
+      "lilac-frame": {
         "role": "neutral",
-        "displayName": "Mist",
-        "canonical": "hsl(240 4.8% 95.9%)",
-        "oklch": "oklch(96.8% 0.0013 286.4)",
+        "displayName": "Lilac Frame",
+        "canonical": "#e9ddfa",
+        "oklch": "oklch(91.6% 0.0410 304.3)",
         "tonalRamp": [
-          "oklch(15.0% 0.0013 286.4)",
-          "oklch(26.4% 0.0013 286.4)",
-          "oklch(37.9% 0.0013 286.4)",
-          "oklch(49.3% 0.0013 286.4)",
-          "oklch(60.7% 0.0013 286.4)",
-          "oklch(72.1% 0.0013 286.4)",
-          "oklch(83.6% 0.0013 286.4)",
-          "oklch(95.0% 0.0013 286.4)"
+          "oklch(15.0% 0.0410 304.3)",
+          "oklch(26.4% 0.0410 304.3)",
+          "oklch(37.9% 0.0410 304.3)",
+          "oklch(49.3% 0.0410 304.3)",
+          "oklch(60.7% 0.0410 304.3)",
+          "oklch(72.1% 0.0410 304.3)",
+          "oklch(83.6% 0.0410 304.3)",
+          "oklch(95.0% 0.0410 304.3)"
         ]
       },
-      "chalk": {
+      "lilac-wash": {
+        "role": "neutral",
+        "displayName": "Lilac Wash",
+        "canonical": "#f6f0ff",
+        "oklch": "oklch(96.4% 0.0209 304.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0209 304.0)",
+          "oklch(26.4% 0.0209 304.0)",
+          "oklch(37.9% 0.0209 304.0)",
+          "oklch(49.3% 0.0209 304.0)",
+          "oklch(60.7% 0.0209 304.0)",
+          "oklch(72.1% 0.0209 304.0)",
+          "oklch(83.6% 0.0209 304.0)",
+          "oklch(95.0% 0.0209 304.0)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Sheet",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.0000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 89.9)",
+          "oklch(26.4% 0.0000 89.9)",
+          "oklch(37.9% 0.0000 89.9)",
+          "oklch(49.3% 0.0000 89.9)",
+          "oklch(60.7% 0.0000 89.9)",
+          "oklch(72.1% 0.0000 89.9)",
+          "oklch(83.6% 0.0000 89.9)",
+          "oklch(95.0% 0.0000 89.9)"
+        ]
+      },
+      "seam-light": {
+        "role": "neutral",
+        "displayName": "Seam Light",
+        "canonical": "#d6c3f0",
+        "oklch": "oklch(84.7% 0.0649 304.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0649 304.2)",
+          "oklch(26.4% 0.0649 304.2)",
+          "oklch(37.9% 0.0649 304.2)",
+          "oklch(49.3% 0.0649 304.2)",
+          "oklch(60.7% 0.0649 304.2)",
+          "oklch(72.1% 0.0649 304.2)",
+          "oklch(83.6% 0.0649 304.2)",
+          "oklch(95.0% 0.0649 304.2)"
+        ]
+      },
+      "dusk": {
+        "role": "neutral",
+        "displayName": "Dusk",
+        "canonical": "#5b4a73",
+        "oklch": "oklch(44.4% 0.0687 302.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0687 302.7)",
+          "oklch(26.4% 0.0687 302.7)",
+          "oklch(37.9% 0.0687 302.7)",
+          "oklch(49.3% 0.0687 302.7)",
+          "oklch(60.7% 0.0687 302.7)",
+          "oklch(72.1% 0.0687 302.7)",
+          "oklch(83.6% 0.0687 302.7)",
+          "oklch(95.0% 0.0687 302.7)"
+        ]
+      },
+      "tangerine": {
         "role": "primary",
-        "displayName": "Chalk",
-        "canonical": "hsl(0 0% 98%)",
-        "oklch": "oklch(98.5% 0.0000 0)",
+        "displayName": "Tangerine",
+        "canonical": "#ff8a3d",
+        "oklch": "oklch(75.0% 0.1668 50.5)",
         "tonalRamp": [
-          "oklch(15.0% 0.0000 0)",
-          "oklch(26.4% 0.0000 0)",
-          "oklch(37.9% 0.0000 0)",
-          "oklch(49.3% 0.0000 0)",
-          "oklch(60.7% 0.0000 0)",
-          "oklch(72.1% 0.0000 0)",
-          "oklch(83.6% 0.0000 0)",
-          "oklch(95.0% 0.0000 0)"
+          "oklch(15.0% 0.1668 50.5)",
+          "oklch(26.4% 0.1668 50.5)",
+          "oklch(37.9% 0.1668 50.5)",
+          "oklch(49.3% 0.1668 50.5)",
+          "oklch(60.7% 0.1668 50.5)",
+          "oklch(72.1% 0.1668 50.5)",
+          "oklch(83.6% 0.1668 50.5)",
+          "oklch(95.0% 0.1668 50.5)"
         ]
       },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Paper",
-        "canonical": "hsl(0 0% 100%)",
-        "oklch": "oklch(100.0% 0.0000 0)",
+      "tangerine-ledge": {
+        "role": "primary",
+        "displayName": "Tangerine Ledge",
+        "canonical": "#c25a12",
+        "oklch": "oklch(58.7% 0.1527 48.2)",
         "tonalRamp": [
-          "oklch(15.0% 0.0000 0)",
-          "oklch(26.4% 0.0000 0)",
-          "oklch(37.9% 0.0000 0)",
-          "oklch(49.3% 0.0000 0)",
-          "oklch(60.7% 0.0000 0)",
-          "oklch(72.1% 0.0000 0)",
-          "oklch(83.6% 0.0000 0)",
-          "oklch(95.0% 0.0000 0)"
+          "oklch(15.0% 0.1527 48.2)",
+          "oklch(26.4% 0.1527 48.2)",
+          "oklch(37.9% 0.1527 48.2)",
+          "oklch(49.3% 0.1527 48.2)",
+          "oklch(60.7% 0.1527 48.2)",
+          "oklch(72.1% 0.1527 48.2)",
+          "oklch(83.6% 0.1527 48.2)",
+          "oklch(95.0% 0.1527 48.2)"
         ]
       },
-      "ember": {
-        "role": "error",
-        "displayName": "Ember",
-        "canonical": "hsl(0 84.2% 60.2%)",
-        "oklch": "oklch(63.7% 0.2078 25.3)",
+      "tangerine-deep": {
+        "role": "primary",
+        "displayName": "Tangerine Deep",
+        "canonical": "#b8470c",
+        "oklch": "oklch(54.4% 0.1587 42.0)",
         "tonalRamp": [
-          "oklch(15.0% 0.2078 25.3)",
-          "oklch(26.4% 0.2078 25.3)",
-          "oklch(37.9% 0.2078 25.3)",
-          "oklch(49.3% 0.2078 25.3)",
-          "oklch(60.7% 0.2078 25.3)",
-          "oklch(72.1% 0.2078 25.3)",
-          "oklch(83.6% 0.2078 25.3)",
-          "oklch(95.0% 0.2078 25.3)"
+          "oklch(15.0% 0.1587 42.0)",
+          "oklch(26.4% 0.1587 42.0)",
+          "oklch(37.9% 0.1587 42.0)",
+          "oklch(49.3% 0.1587 42.0)",
+          "oklch(60.7% 0.1587 42.0)",
+          "oklch(72.1% 0.1587 42.0)",
+          "oklch(83.6% 0.1587 42.0)",
+          "oklch(95.0% 0.1587 42.0)"
         ]
       },
-      "ember-deep": {
-        "role": "error",
-        "displayName": "Ember Deep",
-        "canonical": "hsl(0 62.8% 30.6%)",
-        "oklch": "oklch(39.6% 0.1331 25.7)",
+      "common": {
+        "role": "secondary",
+        "displayName": "Common",
+        "canonical": "#b9a9cc",
+        "oklch": "oklch(76.0% 0.0523 305.9)",
         "tonalRamp": [
-          "oklch(15.0% 0.1331 25.7)",
-          "oklch(26.4% 0.1331 25.7)",
-          "oklch(37.9% 0.1331 25.7)",
-          "oklch(49.3% 0.1331 25.7)",
-          "oklch(60.7% 0.1331 25.7)",
-          "oklch(72.1% 0.1331 25.7)",
-          "oklch(83.6% 0.1331 25.7)",
-          "oklch(95.0% 0.1331 25.7)"
+          "oklch(15.0% 0.0523 305.9)",
+          "oklch(26.4% 0.0523 305.9)",
+          "oklch(37.9% 0.0523 305.9)",
+          "oklch(49.3% 0.0523 305.9)",
+          "oklch(60.7% 0.0523 305.9)",
+          "oklch(72.1% 0.0523 305.9)",
+          "oklch(83.6% 0.0523 305.9)",
+          "oklch(95.0% 0.0523 305.9)"
         ]
       },
-      "wip-yellow": {
-        "role": "tertiary",
-        "displayName": "WIP Yellow",
-        "canonical": "#facc15",
-        "oklch": "oklch(86.1% 0.1731 91.9)",
+      "common-deep": {
+        "role": "secondary",
+        "displayName": "Common Deep",
+        "canonical": "#6b5a80",
+        "oklch": "oklch(49.9% 0.0625 304.7)",
         "tonalRamp": [
-          "oklch(15.0% 0.1731 91.9)",
-          "oklch(26.4% 0.1731 91.9)",
-          "oklch(37.9% 0.1731 91.9)",
-          "oklch(49.3% 0.1731 91.9)",
-          "oklch(60.7% 0.1731 91.9)",
-          "oklch(72.1% 0.1731 91.9)",
-          "oklch(83.6% 0.1731 91.9)",
-          "oklch(95.0% 0.1731 91.9)"
+          "oklch(15.0% 0.0625 304.7)",
+          "oklch(26.4% 0.0625 304.7)",
+          "oklch(37.9% 0.0625 304.7)",
+          "oklch(49.3% 0.0625 304.7)",
+          "oklch(60.7% 0.0625 304.7)",
+          "oklch(72.1% 0.0625 304.7)",
+          "oklch(83.6% 0.0625 304.7)",
+          "oklch(95.0% 0.0625 304.7)"
         ]
       },
-      "saved-green": {
+      "rare": {
+        "role": "secondary",
+        "displayName": "Rare",
+        "canonical": "#46c2ff",
+        "oklch": "oklch(77.1% 0.1380 234.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1380 234.3)",
+          "oklch(26.4% 0.1380 234.3)",
+          "oklch(37.9% 0.1380 234.3)",
+          "oklch(49.3% 0.1380 234.3)",
+          "oklch(60.7% 0.1380 234.3)",
+          "oklch(72.1% 0.1380 234.3)",
+          "oklch(83.6% 0.1380 234.3)",
+          "oklch(95.0% 0.1380 234.3)"
+        ]
+      },
+      "rare-deep": {
+        "role": "secondary",
+        "displayName": "Rare Deep",
+        "canonical": "#0b6fa8",
+        "oklch": "oklch(52.0% 0.1209 242.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1209 242.5)",
+          "oklch(26.4% 0.1209 242.5)",
+          "oklch(37.9% 0.1209 242.5)",
+          "oklch(49.3% 0.1209 242.5)",
+          "oklch(60.7% 0.1209 242.5)",
+          "oklch(72.1% 0.1209 242.5)",
+          "oklch(83.6% 0.1209 242.5)",
+          "oklch(95.0% 0.1209 242.5)"
+        ]
+      },
+      "epic": {
+        "role": "secondary",
+        "displayName": "Epic",
+        "canonical": "#b47cff",
+        "oklch": "oklch(69.9% 0.1897 301.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1897 301.4)",
+          "oklch(26.4% 0.1897 301.4)",
+          "oklch(37.9% 0.1897 301.4)",
+          "oklch(49.3% 0.1897 301.4)",
+          "oklch(60.7% 0.1897 301.4)",
+          "oklch(72.1% 0.1897 301.4)",
+          "oklch(83.6% 0.1897 301.4)",
+          "oklch(95.0% 0.1897 301.4)"
+        ]
+      },
+      "epic-deep": {
+        "role": "secondary",
+        "displayName": "Epic Deep",
+        "canonical": "#7a3fd1",
+        "oklch": "oklch(52.2% 0.2113 296.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.2113 296.9)",
+          "oklch(26.4% 0.2113 296.9)",
+          "oklch(37.9% 0.2113 296.9)",
+          "oklch(49.3% 0.2113 296.9)",
+          "oklch(60.7% 0.2113 296.9)",
+          "oklch(72.1% 0.2113 296.9)",
+          "oklch(83.6% 0.2113 296.9)",
+          "oklch(95.0% 0.2113 296.9)"
+        ]
+      },
+      "legendary": {
+        "role": "secondary",
+        "displayName": "Legendary",
+        "canonical": "#ffd84d",
+        "oklch": "oklch(89.2% 0.1569 93.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1569 93.0)",
+          "oklch(26.4% 0.1569 93.0)",
+          "oklch(37.9% 0.1569 93.0)",
+          "oklch(49.3% 0.1569 93.0)",
+          "oklch(60.7% 0.1569 93.0)",
+          "oklch(72.1% 0.1569 93.0)",
+          "oklch(83.6% 0.1569 93.0)",
+          "oklch(95.0% 0.1569 93.0)"
+        ]
+      },
+      "legendary-deep": {
+        "role": "secondary",
+        "displayName": "Legendary Deep",
+        "canonical": "#8a6200",
+        "oklch": "oklch(52.4% 0.1084 80.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1084 80.6)",
+          "oklch(26.4% 0.1084 80.6)",
+          "oklch(37.9% 0.1084 80.6)",
+          "oklch(49.3% 0.1084 80.6)",
+          "oklch(60.7% 0.1084 80.6)",
+          "oklch(72.1% 0.1084 80.6)",
+          "oklch(83.6% 0.1084 80.6)",
+          "oklch(95.0% 0.1084 80.6)"
+        ]
+      },
+      "online": {
         "role": "success",
-        "displayName": "Saved Green",
-        "canonical": "#16a34a",
-        "oklch": "oklch(62.7% 0.1699 149.2)",
+        "displayName": "Online",
+        "canonical": "#5fe08a",
+        "oklch": "oklch(81.3% 0.1670 151.8)",
         "tonalRamp": [
-          "oklch(15.0% 0.1699 149.2)",
-          "oklch(26.4% 0.1699 149.2)",
-          "oklch(37.9% 0.1699 149.2)",
-          "oklch(49.3% 0.1699 149.2)",
-          "oklch(60.7% 0.1699 149.2)",
-          "oklch(72.1% 0.1699 149.2)",
-          "oklch(83.6% 0.1699 149.2)",
-          "oklch(95.0% 0.1699 149.2)"
+          "oklch(15.0% 0.1670 151.8)",
+          "oklch(26.4% 0.1670 151.8)",
+          "oklch(37.9% 0.1670 151.8)",
+          "oklch(49.3% 0.1670 151.8)",
+          "oklch(60.7% 0.1670 151.8)",
+          "oklch(72.1% 0.1670 151.8)",
+          "oklch(83.6% 0.1670 151.8)",
+          "oklch(95.0% 0.1670 151.8)"
+        ]
+      },
+      "online-deep": {
+        "role": "success",
+        "displayName": "Online Deep",
+        "canonical": "#1d7a45",
+        "oklch": "oklch(51.3% 0.1188 153.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1188 153.3)",
+          "oklch(26.4% 0.1188 153.3)",
+          "oklch(37.9% 0.1188 153.3)",
+          "oklch(49.3% 0.1188 153.3)",
+          "oklch(60.7% 0.1188 153.3)",
+          "oklch(72.1% 0.1188 153.3)",
+          "oklch(83.6% 0.1188 153.3)",
+          "oklch(95.0% 0.1188 153.3)"
+        ]
+      },
+      "away": {
+        "role": "warning",
+        "displayName": "Away",
+        "canonical": "#ffb02e",
+        "oklch": "oklch(81.4% 0.1604 73.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1604 73.8)",
+          "oklch(26.4% 0.1604 73.8)",
+          "oklch(37.9% 0.1604 73.8)",
+          "oklch(49.3% 0.1604 73.8)",
+          "oklch(60.7% 0.1604 73.8)",
+          "oklch(72.1% 0.1604 73.8)",
+          "oklch(83.6% 0.1604 73.8)",
+          "oklch(95.0% 0.1604 73.8)"
+        ]
+      },
+      "busy": {
+        "role": "error",
+        "displayName": "Busy",
+        "canonical": "#ff5d73",
+        "oklch": "oklch(69.6% 0.1964 15.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1964 15.9)",
+          "oklch(26.4% 0.1964 15.9)",
+          "oklch(37.9% 0.1964 15.9)",
+          "oklch(49.3% 0.1964 15.9)",
+          "oklch(60.7% 0.1964 15.9)",
+          "oklch(72.1% 0.1964 15.9)",
+          "oklch(83.6% 0.1964 15.9)",
+          "oklch(95.0% 0.1964 15.9)"
+        ]
+      },
+      "busy-deep": {
+        "role": "error",
+        "displayName": "Busy Deep",
+        "canonical": "#c0233d",
+        "oklch": "oklch(52.7% 0.1900 18.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.1900 18.7)",
+          "oklch(26.4% 0.1900 18.7)",
+          "oklch(37.9% 0.1900 18.7)",
+          "oklch(49.3% 0.1900 18.7)",
+          "oklch(60.7% 0.1900 18.7)",
+          "oklch(72.1% 0.1900 18.7)",
+          "oklch(83.6% 0.1900 18.7)",
+          "oklch(95.0% 0.1900 18.7)"
         ]
       }
     },
     "themes": {
-      "note": "Source of truth is the HSL channel variables in styles/globals.css (:root light, .dark dark; dark is the default theme).",
+      "note": "Seed values chosen before implementation (seed 14c08ff6). Dark is the default theme.",
       "dark": {
-        "background": "ink",
-        "panel": "graphite",
-        "card": "ink",
-        "foreground": "chalk",
-        "primary": "chalk",
-        "primary-foreground": "graphite",
-        "muted": "smoke",
-        "border": "smoke",
-        "muted-foreground": "pewter",
-        "ring": "silver",
-        "destructive": "ember-deep"
+        "frame": "night",
+        "background": "plum",
+        "card": "velvet",
+        "border": "seam",
+        "foreground": "cream",
+        "muted-foreground": "haze",
+        "primary": "tangerine",
+        "primary-foreground": "night",
+        "ring": "tangerine",
+        "destructive": "busy",
+        "success": "online"
       },
       "light": {
-        "background": "paper",
-        "panel": "chalk",
-        "card": "paper",
-        "foreground": "ink",
-        "primary": "graphite",
-        "primary-foreground": "chalk",
-        "muted": "mist",
-        "border": "haze",
-        "muted-foreground": "steel",
-        "ring": "graphite",
-        "destructive": "ember"
+        "frame": "lilac-frame",
+        "background": "lilac-wash",
+        "card": "sheet",
+        "border": "seam-light",
+        "foreground": "plum",
+        "muted-foreground": "dusk",
+        "primary": "tangerine",
+        "primary-foreground": "night",
+        "primary-text": "tangerine-deep",
+        "ring": "tangerine-deep",
+        "destructive": "busy-deep",
+        "success": "online-deep"
       }
     },
     "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The greeting on the profile banner; one per page at most."
+      },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page title at the top of every page (PageHeader)."
+        "purpose": "Page titles, one visible h1 per page."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Sidebar wordmark, section titles, Project card titles."
+        "purpose": "Section titles, item and achievement names, the sidebar player name (1.375rem)."
       },
-      "subtitle": {
-        "displayName": "Subtitle",
-        "purpose": "Sub-sections on reading pages, Experience company and role."
+      "button-play": {
+        "displayName": "Button Play",
+        "purpose": "The Play button label only."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Paragraphs; 24px between consecutive paragraphs."
+        "purpose": "Paragraphs, capped at 65ch."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Buttons, menu items, small and muted text, Tech badges."
+        "purpose": "Tabs, buttons, presence lines, chips at rest."
       },
-      "badge": {
-        "displayName": "Badge",
-        "purpose": "WIP and New badges."
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Rarity, live and new tags; Tech chips."
       },
-      "mono": {
-        "displayName": "Mono",
-        "purpose": "Loaded for code-flavoured details; Geist Mono."
+      "data": {
+        "displayName": "Data",
+        "purpose": "Periods, dates, star counts, elapsed time; tabular numbers."
       },
-      "wiring": "Self-hosted variable Geist and Geist Mono (app/fonts) as --font-geist-sans / --font-geist-mono on each root layout body, mapped to Tailwind font-sans / font-mono, applied to body in styles/globals.css."
+      "wiring": "Unbounded (variable, next/font/google, latin-ext) as --font-display beside --font-geist-sans and --font-geist-mono, set on body or below."
     },
     "shadows": [
       {
-        "name": "resting",
-        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-        "purpose": "Every card and the default button."
+        "name": "ledge",
+        "value": "0 4px 0 var(--ledge)",
+        "purpose": "Every pressable control at rest; --ledge is the control's darker shade (tangerine-ledge or night). Pressed: translateY(4px) and 0 ledge."
       },
       {
-        "name": "subtle",
-        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        "purpose": "Outline and secondary buttons."
+        "name": "ledge-raised",
+        "value": "0 6px 0 var(--ledge)",
+        "purpose": "Hover on pressable controls, with translateY(-2px)."
       },
       {
-        "name": "lifted",
-        "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-        "purpose": "Project card on hover."
+        "name": "tray",
+        "value": "inset 0 1px 0 rgb(255 241 230 / 0.08)",
+        "purpose": "Top highlight inside slots, cards and the player card (dark)."
+      },
+      {
+        "name": "float",
+        "value": "0 24px 48px -12px rgb(12 4 22 / 0.6)",
+        "purpose": "Tooltips, the theme menu, the mobile client sheet."
       }
     ],
     "motion": [
       {
-        "name": "colors",
-        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
-        "purpose": "Default colour transitions on buttons and badges."
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Hovers, entrances, state changes."
       },
       {
-        "name": "menu",
-        "value": "200ms ease-in-out",
-        "purpose": "Menu item hover, focus and active dot; press scales to 0.95 and plays /sounds/click.mp3."
+        "name": "ease-pop",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Press release, tag entrances, chibi hop."
       },
       {
-        "name": "card-lift",
-        "value": "300ms cubic-bezier(0.4, 0, 0.2, 1)",
-        "purpose": "Project card shadow lift on hover."
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Sliding tab indicator, accordion chevron."
       },
       {
-        "name": "accordion",
-        "value": "200ms ease-out",
-        "purpose": "FAQ open and close height animation."
+        "name": "ease-drawer",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Mobile client sheet."
       },
       {
-        "name": "theme-switch",
-        "value": "none",
-        "purpose": "Theme changes apply instantly (disableTransitionOnChange)."
+        "name": "press",
+        "value": "80ms down / 160ms release",
+        "purpose": "Ledge controls."
+      },
+      {
+        "name": "hover",
+        "value": "150ms",
+        "purpose": "Colour and lift on hover."
+      },
+      {
+        "name": "tab-slide",
+        "value": "240ms",
+        "purpose": "Active tab fill sliding between tabs."
+      },
+      {
+        "name": "page",
+        "value": "220ms",
+        "purpose": "Page change: fade and 6px rise via View Transitions."
+      },
+      {
+        "name": "sheet",
+        "value": "260ms in / 180ms out",
+        "purpose": "Mobile client sheet."
+      },
+      {
+        "name": "unlock",
+        "value": "900ms",
+        "purpose": "Legendary foil sheen, once per session and on click."
       }
     ],
+    "sound": {
+      "instrument": "Soft plucked kalimba tine, synthesized with Web Audio (no download).",
+      "key": "D major pentatonic (D E F# A B), two octaves",
+      "masterGainMax": 0.25,
+      "default": "on; off when prefers-reduced-motion: reduce; stored per visitor in localStorage; governs the MDF 2025 scene too",
+      "cues": [
+        {
+          "name": "tick",
+          "notes": "B5 (very quiet)",
+          "trigger": "hover on tabs and item cards, fine pointers only, max one per 60ms"
+        },
+        {
+          "name": "tab",
+          "notes": "me D4, what i've done E4, how i do it F#4, my experiences A4, yt videos B4, contact D5",
+          "trigger": "selecting a menu tab"
+        },
+        {
+          "name": "confirm",
+          "notes": "D4+A4, then D5",
+          "trigger": "Play button and other primary actions"
+        },
+        {
+          "name": "toggle-on",
+          "notes": "A4 to D5",
+          "trigger": "theme, Locale, accordion open, sound switch on"
+        },
+        {
+          "name": "toggle-off",
+          "notes": "D5 to A4",
+          "trigger": "accordion close, theme back; silent for the sound switch itself"
+        },
+        {
+          "name": "unlock",
+          "notes": "D4 F#4 A4 D5 arpeggio, then coin.mp3",
+          "trigger": "clicking the legendary achievement"
+        },
+        {
+          "name": "boop",
+          "notes": "random degree with a short upward bend",
+          "trigger": "clicking the chibi"
+        },
+        {
+          "name": "miss",
+          "notes": "A3 to F#3",
+          "trigger": "404 button, Admin errors"
+        }
+      ],
+      "never": [
+        "before the first user interaction",
+        "on automatic events (presence, page load, scroll)",
+        "on hover for touch devices",
+        "where the visitor cannot silence it"
+      ]
+    },
     "breakpoints": [
       {
         "name": "md",
         "value": "768px",
-        "purpose": "Sidebar becomes a 320px column; below it, a full-screen overlay behind a menu button."
+        "purpose": "Sidebar becomes the 320px client column; below it, a 56px top bar and a full-screen client sheet."
       }
     ]
   },
   "components": [
     {
-      "name": "Primary Button",
+      "name": "Play Button",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Inverted-ink action, e.g. Download my resume or Watch now!",
-      "html": "<button class=\"ds-btn-primary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/></svg>Download my resume</button>",
-      "css": ".ds-btn-primary { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 8px 16px; border: none; border-radius: calc(var(--radius, 0.5rem) - 2px); background: hsl(var(--primary, 0 0% 98%)); color: hsl(var(--primary-foreground, 240 5.9% 10%)); font-size: 14px; font-weight: 500; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); cursor: pointer; transition: background-color 150ms; } .ds-btn-primary:hover { background: hsl(var(--primary, 0 0% 98%) / 0.9); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+      "refersTo": "button-play",
+      "description": "The one primary action per screen, e.g. Download my resume on the home page.",
+      "html": "<button class=\"ds-btn-play\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v12\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M5 21h14\"/></svg>Download my resume</button>",
+      "css": ".ds-btn-play { display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 24px; border:0; border-radius:10px; background:#ff8a3d; color:#1c0f2b; font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:1.0625rem; cursor:pointer; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
     },
     {
-      "name": "Outline Button",
+      "name": "Ledge Button",
       "kind": "button",
-      "refersTo": "button-outline",
-      "description": "Small hairline button in card footers, e.g. GitHub with its star count.",
-      "html": "<button class=\"ds-btn-outline\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>GitHub <span>42</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg></button>",
-      "css": ".ds-btn-outline { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border: 1px solid hsl(var(--input, 240 3.7% 15.9%)); border-radius: calc(var(--radius, 0.5rem) - 2px); background: hsl(var(--background, 240 10% 3.9%)); color: hsl(var(--foreground, 0 0% 98%)); font-size: 12px; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn-outline:hover { background: hsl(var(--accent, 240 3.7% 15.9%)); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+      "refersTo": "button-ledge",
+      "description": "Secondary pressable action on Velvet, e.g. LinkedIn or a GitHub link with its stars.",
+      "html": "<button class=\"ds-btn-ledge\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"m12 2 3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z\"/></svg><span>GitHub</span><span class=\"ds-data\">37</span></button>",
+      "css": ".ds-btn-ledge { display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 16px; border:0; border-radius:10px; background:#3b2159; color:#fff1e6; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:500; font-size:0.875rem; cursor:pointer; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-btn-ledge .ds-data { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; color:#ffd84d; } .ds-btn-ledge:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-ledge:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; transition-duration:80ms; } .ds-btn-ledge:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
     },
     {
-      "name": "Ghost Icon Button",
+      "name": "Sound Switch",
       "kind": "button",
-      "refersTo": "button-icon",
-      "description": "Social, Locale and theme switches in the sidebar footer.",
-      "html": "<button class=\"ds-btn-ghost-icon\" aria-label=\"GitHub\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\"/><rect width=\"4\" height=\"12\" x=\"2\" y=\"9\"/><circle cx=\"4\" cy=\"4\" r=\"2\"/></svg></button>",
-      "css": ".ds-btn-ghost-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: none; border-radius: calc(var(--radius, 0.5rem) - 2px); background: transparent; color: hsl(var(--foreground, 0 0% 98%)); cursor: pointer; transition: background-color 150ms; } .ds-btn-ghost-icon:hover { background: hsl(var(--accent, 240 3.7% 15.9%)); } .ds-btn-ghost-icon:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+      "refersTo": "sound-toggle-on",
+      "description": "The global sound switch, always visible: Tangerine when on, Velvet when off.",
+      "html": "<button class=\"ds-sound\" aria-pressed=\"true\" aria-label=\"Sound on\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H2v6h4l5 4V5z\"/><path d=\"M15.5 8.5a5 5 0 0 1 0 7\"/><path d=\"M19 5a10 10 0 0 1 0 14\"/></svg></button>",
+      "css": ".ds-sound { width:44px; height:44px; display:inline-grid; place-items:center; border:0; border-radius:10px; background:#ff8a3d; color:#1c0f2b; cursor:pointer; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-sound[aria-pressed='false'] { background:#3b2159; color:#c9b6e4; box-shadow:0 4px 0 #1c0f2b; } .ds-sound:hover { transform:translateY(-2px); } .ds-sound:active { transform:translateY(4px); box-shadow:none; transition-duration:80ms; } .ds-sound:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
     },
     {
-      "name": "Sidebar Menu",
+      "name": "Client Tabs",
       "kind": "nav",
-      "refersTo": "menu-item",
-      "description": "Full-width ghost links, lowercase labels, active dot, press-scale and click sound.",
-      "html": "<nav class=\"ds-menu\"><a class=\"ds-menu-item\" href=\"#\">me</a><a class=\"ds-menu-item ds-menu-item--active\" href=\"#\" aria-current=\"page\"><span>what i've done</span><span class=\"ds-menu-dot\"></span></a><a class=\"ds-menu-item\" href=\"#\">how i do it</a><a class=\"ds-menu-item\" href=\"#\">my experiences</a></nav>",
-      "css": ".ds-menu { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 8px; width: 288px; } .ds-menu-item { display: flex; align-items: center; justify-content: space-between; height: 36px; padding: 8px 16px; border-radius: calc(var(--radius, 0.5rem) - 2px); color: hsl(var(--foreground, 0 0% 98%)); font-size: 14px; text-decoration: none; transition: all 200ms ease-in-out; } .ds-menu-item:hover { background: hsl(var(--primary, 0 0% 98%) / 0.1); color: hsl(var(--primary, 0 0% 98%)); } .ds-menu-item:focus-visible { outline: none; background: hsl(var(--primary, 0 0% 98%) / 0.2); } .ds-menu-item:active { transform: scale(0.95); } .ds-menu-item--active { background: hsl(var(--primary, 0 0% 98%) / 0.1); font-weight: 500; } .ds-menu-dot { width: 8px; height: 8px; border-radius: 9999px; background: hsl(var(--primary, 0 0% 98%)); }"
+      "refersTo": "tab-active",
+      "description": "The sidebar menu as client tabs: lowercase labels, sliding Tangerine fill on the active tab.",
+      "html": "<nav class=\"ds-tabs\"><a href=\"#\" aria-current=\"page\">me</a><a href=\"#\">what i've done</a><a href=\"#\">how i do it</a><a href=\"#\">my experiences</a><a href=\"#\">yt videos</a><a href=\"#\">contact</a></nav>",
+      "css": ".ds-tabs { display:flex; flex-direction:column; gap:6px; width:280px; padding:12px; background:#2a1540; border-radius:16px; } .ds-tabs a { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#fff1e6; text-decoration:none; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:500; font-size:0.875rem; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1), color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tabs a:hover { background:#5a3a80; } .ds-tabs a[aria-current='page'] { background:#ff8a3d; color:#1c0f2b; box-shadow:0 3px 0 #c25a12; } .ds-tabs a:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
     },
     {
-      "name": "Tech Badge",
-      "kind": "chip",
-      "refersTo": "tech-badge",
-      "description": "A Tech in its own colour, text black or white by luminance.",
-      "html": "<div class=\"ds-tech-row\"><span class=\"ds-tech-badge\" style=\"background:#000000;color:#ffffff\">Next.js</span><span class=\"ds-tech-badge\" style=\"background:#e0234e;color:#ffffff\">NestJS</span><span class=\"ds-tech-badge\" style=\"background:#00dc82;color:#000000\">Nuxt</span></div><span class=\"ds-wip-badge\">WIP</span>",
-      "css": ".ds-tech-row { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; flex-wrap: wrap; gap: 8px; margin-right: 12px; } .ds-tech-badge { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: calc(var(--radius, 0.5rem) - 2px); font-size: 14px; font-weight: 600; } .ds-wip-badge { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: inline-flex; padding: 2px 10px; border-radius: calc(var(--radius, 0.5rem) - 2px); background: #facc15; color: #000; font-size: 12px; font-weight: 600; }"
-    },
-    {
-      "name": "Project Card",
+      "name": "Player Card",
       "kind": "card",
-      "refersTo": "card",
-      "description": "Fixed 384x500 card: image band, title, Period and WIP, description, Techs, blurred footer.",
-      "html": "<article class=\"ds-project-card\"><div class=\"ds-project-image\"></div><div class=\"ds-project-head\"><h3>Predi.GG</h3><p>2025 - Today <span class=\"ds-wip-badge\">WIP</span></p></div><div class=\"ds-project-body\"><p>Predi.GG - Predict, compete, and win. 🔮</p></div><div class=\"ds-project-foot\"><button class=\"ds-project-open\" aria-label=\"Open Predi.GG\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 3h6v6\"/><path d=\"M10 14 21 3\"/><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/></svg></button></div></article>",
-      "css": ".ds-project-card { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; width: 320px; height: 420px; overflow: hidden; border: 1px solid hsl(var(--border, 240 3.7% 15.9%)); border-radius: 12px; background: hsl(var(--card, 240 10% 3.9%)); color: hsl(var(--card-foreground, 0 0% 98%)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); transition: all 300ms; } .ds-project-card:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); } .ds-project-image { height: 160px; flex-shrink: 0; background: linear-gradient(160deg, #27272a, #3f3f46); } .ds-project-head { padding: 24px 24px 6px; } .ds-project-head h3 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.025em; } .ds-project-head p { margin: 6px 0 0; font-size: 14px; color: hsl(var(--muted-foreground, 240 5% 64.9%)); } .ds-wip-badge { display: inline-flex; margin-left: 8px; padding: 2px 10px; border-radius: 6px; background: #facc15; color: #000; font-size: 12px; font-weight: 600; } .ds-project-body { flex: 1; padding: 0 24px; font-size: 16px; } .ds-project-foot { display: flex; justify-content: flex-end; padding: 0 24px 24px; backdrop-filter: blur(4px); } .ds-project-open { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 12px; border: none; border-radius: 6px; background: hsl(var(--primary, 0 0% 98%)); color: hsl(var(--primary-foreground, 240 5.9% 10%)); cursor: pointer; } .ds-project-open:hover { background: hsl(var(--primary, 0 0% 98%) / 0.9); } .ds-project-open:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(var(--ring, 240 4.9% 83.9%)); }"
+      "refersTo": "player-card",
+      "description": "Top of the sidebar: chibi head in a real Discord status ring, name, role line.",
+      "html": "<div class=\"ds-player\"><span class=\"ds-ring\"><span class=\"ds-head\">IJL</span></span><div><p class=\"ds-name\">ImJustLucas</p><p class=\"ds-sub\">Fullstack dev · Paris</p></div></div>",
+      "css": ".ds-player { display:flex; align-items:center; gap:14px; padding:16px; width:280px; background:#3b2159; color:#fff1e6; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-ring { display:grid; place-items:center; width:64px; height:64px; border-radius:9999px; border:3px solid #5fe08a; background:#2a1540; } .ds-head { font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:0.875rem; color:#ffd84d; } .ds-name { margin:0; font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:600; font-size:1.375rem; } .ds-sub { margin:2px 0 0; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; color:#c9b6e4; }"
     },
     {
       "name": "Presence Card",
       "kind": "custom",
-      "refersTo": "card",
-      "description": "Live Discord presence: artwork with a Spotify mark, song in primary, artist muted.",
-      "html": "<div class=\"ds-presence\"><div class=\"ds-presence-art\"><span class=\"ds-presence-mark\"></span></div><div><strong>Enemy (with JID)</strong><p>by Imagine Dragons; JID</p></div></div>",
-      "css": ".ds-presence { font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; display: flex; align-items: center; gap: 16px; width: 288px; padding: 16px; border: 1px solid hsl(var(--border, 240 3.7% 15.9%)); border-radius: 12px; background: hsl(var(--card, 240 10% 3.9%)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); cursor: pointer; } .ds-presence-art { position: relative; width: 48px; height: 48px; flex-shrink: 0; border-radius: 6px; background: linear-gradient(135deg, #7c3aed, #db2777); } .ds-presence-mark { position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 9999px; border: 2px solid hsl(var(--background, 240 10% 3.9%)); background: #1ed760; } .ds-presence strong { display: block; font-size: 14px; font-weight: 500; color: hsl(var(--primary, 0 0% 98%)); } .ds-presence p { margin: 4px 0 0; font-size: 14px; color: hsl(var(--muted-foreground, 240 5% 64.9%)); }"
+      "refersTo": "presence-card",
+      "description": "Friends panel: always shows a state (playing, listening, online, offline); here, listening with equaliser bars.",
+      "html": "<div class=\"ds-presence\"><span class=\"ds-art\"></span><div class=\"ds-lines\"><p class=\"ds-live\">listening</p><p class=\"ds-title\">Song title</p><p class=\"ds-artist\">Artist</p></div><span class=\"ds-eq\"><i></i><i></i><i></i></span></div>",
+      "css": ".ds-presence { display:flex; align-items:center; gap:12px; padding:12px; width:280px; background:#3b2159; color:#fff1e6; border-radius:16px; } .ds-art { width:48px; height:48px; border-radius:10px; background:linear-gradient(135deg,#46c2ff,#b47cff); flex:none; } .ds-lines p { margin:0; } .ds-live { display:inline-block; padding:1px 8px; border-radius:9999px; background:#5fe08a; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-title { font:500 0.875rem/1.25rem 'Geist', ui-sans-serif, system-ui, sans-serif; color:#ff8a3d; margin-top:4px !important; } .ds-artist { font:400 0.8125rem/1.2rem 'Geist', ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; } .ds-eq { margin-left:auto; display:flex; align-items:flex-end; gap:3px; height:16px; } .ds-eq i { width:3px; background:#5fe08a; border-radius:2px; transform-origin:bottom; animation:ds-eq 1s linear infinite; height:16px; } .ds-eq i:nth-child(2) { animation-duration:.8s; } .ds-eq i:nth-child(3) { animation-duration:1.2s; } @keyframes ds-eq { 0%,100% { transform:scaleY(.3); } 50% { transform:scaleY(1); } } @media (prefers-reduced-motion: reduce) { .ds-eq i { animation:none; transform:scaleY(.6); } }"
+    },
+    {
+      "name": "Item Card",
+      "kind": "card",
+      "refersTo": "item-card",
+      "description": "A Project in the inventory: rarity frame and band, tag, title, one line, Tech loadout.",
+      "html": "<article class=\"ds-item\" data-rarity=\"epic\"><span class=\"ds-tag\">epic</span><div class=\"ds-img\"></div><h3>Predi.GG</h3><p>Esports prediction app I co-founded and run.</p><div class=\"ds-chips\"><span style=\"background:#3b82f6;color:#1c0f2b\">TypeScript</span><span style=\"background:#2dd4bf;color:#1c0f2b\">Tailwind CSS</span></div></article>",
+      "css": ".ds-item { position:relative; width:300px; padding:20px; background:#3b2159; color:#fff1e6; border:2px solid #b47cff; border-top-width:6px; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); transition:transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-item:hover { transform:translateY(-2px); } .ds-tag { position:absolute; top:12px; right:12px; padding:2px 8px; border-radius:9999px; background:#b47cff; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; letter-spacing:.02em; } .ds-img { height:120px; border-radius:10px; background:#2a1540; margin-bottom:14px; } .ds-item h3 { margin:0 0 4px; font:600 1.125rem/1.3 'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-item p { margin:0 0 12px; font:400 0.9375rem/1.5 'Geist', ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; } .ds-chips { display:flex; flex-wrap:wrap; gap:6px; } .ds-chips span { padding:4px 10px; border-radius:9999px; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; }"
+    },
+    {
+      "name": "Achievement Slot",
+      "kind": "card",
+      "refersTo": "achievement-slot",
+      "description": "A real achievement; legendary slots carry the foil sheen on hover. MDF 2025 links to its page.",
+      "html": "<a class=\"ds-ach\" href=\"#\"><span class=\"ds-ach-art\">🏆</span><span class=\"ds-ach-tag\">legendary</span><span class=\"ds-ach-name\">MasterDevFrance</span><span class=\"ds-ach-year\">2025</span></a>",
+      "css": ".ds-ach { position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:center; gap:6px; width:180px; padding:20px 16px; background:#3b2159; color:#fff1e6; text-decoration:none; border:2px solid #ffd84d; border-radius:16px; box-shadow:0 4px 0 #1c0f2b; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-ach::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg, transparent 35%, rgb(255 241 230 / 0.35) 50%, transparent 65%); transform:translateX(-120%); } .ds-ach:hover { transform:translateY(-2px); } .ds-ach:hover::after { transform:translateX(120%); transition:transform 900ms cubic-bezier(0.23,1,0.32,1); } .ds-ach-art { font-size:2.5rem; } .ds-ach-tag { padding:2px 8px; border-radius:9999px; background:#ffd84d; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-ach-name { font:600 1rem/1.3 'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; text-align:center; } .ds-ach-year { font:500 0.8125rem/1.25rem 'Geist Mono', ui-monospace, monospace; color:#c9b6e4; } .ds-ach:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; } @media (prefers-reduced-motion: reduce) { .ds-ach::after { display:none; } .ds-ach:hover { transform:none; } }"
     }
   ],
   "narrative": {
-    "northStar": "The Dev's Desk",
-    "overview": "The site is a tidy personal workspace. The sidebar is the shelf: the `> ImJustLucas` wordmark, the menu, the live presence card, the social links and the theme and Locale switches. The inset content panel is the desk, set a few pixels in from the window edge, and the things Lucas has made are laid out on it as cards. The furniture is deliberately plain zinc (shadcn's \"new-york\" style on the zinc base colour) so that what sits on the desk gets the attention.\n\nColour belongs to the content, never to the chrome: Tech badges in each Tech's own colour, Project screenshots, Video thumbnails, Spotify artwork, the yellow WIP tag. The interface itself is near-monochrome in both themes, dark by default. Personality comes through in the copy (casual, lowercase menu labels, emojis) and through small tactile touches: soft corners, gentle hover lifts, a click sound and a press-scale on the menu, a chibi avatar resting in the bottom-right corner.\n\nDensity is relaxed and single-column on reading pages (the home page holds two-thirds of the panel's width), and becomes a wrapping grid of fixed-size cards on the Projects and Videos pages.",
+    "northStar": "The Player Profile",
+    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi and its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, and the settings row with the sound switch. The content panel is the profile screen: a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of Projects framed by rarity, and a match history of Experiences. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means \"this is the thing to press\". Everything clickable answers with a short note from one instrument, so moving around the site sounds like a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays exactly as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels); the world makes room for it instead of dressing it up. Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
     "keyCharacteristics": [
-      "Two-zone shell: a 320px sidebar beside a rounded, inset content panel.",
-      "Near-monochrome zinc chrome in both themes; colour comes only from content.",
-      "Terminal-flavoured identity: the `> ` prompt before the wordmark.",
-      "Soft and tactile: rounded cards, gentle shadows, hover lifts, menu click sound.",
-      "Dark theme by default, light and system available."
+      "Two-zone client: a 320px sidebar (player card, tabs, live friends panel, settings) beside a rounded plum profile panel.",
+      "Plum owns the whole shell in the default dark theme; a lilac \"daytime lobby\" theme is the alternative.",
+      "One accent, tangerine, for the primary action, the active tab, focus and selection.",
+      "Rarity colours (common, rare, epic, legendary) carry meaning on content, never decoration.",
+      "Chunky, pressable controls with a visible ledge; slots and cards with soft 16px corners.",
+      "A one-instrument sound kit in D major pentatonic, on by default, with a global mute that is always visible.",
+      "The chibi is the mascot: poses, reactions, empty states."
     ],
     "rules": [
       {
-        "name": "The Content Brings the Colour Rule",
-        "body": "Chrome stays zinc. A new hue enters a page only as content: a Tech's own `#rrggbb`, an image, a thumbnail, artwork. If you're reaching for a brand colour for a button or a heading, stop.",
+        "name": "The Plum Owns the Shell Rule",
+        "body": "In the dark theme the frame, sidebar and panel are Night, Plum and Velvet. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.",
         "section": "colors"
       },
       {
-        "name": "The Inverted Ink Rule",
-        "body": "\"Primary\" means maximum contrast against the current theme, not a brand hue. Never hard-code a primary colour per theme; use the token so the inversion keeps working.",
+        "name": "The One Tangerine Rule",
+        "body": "Tangerine marks the single most important action or state in view: the Play button, the active tab, the sound switch when on, focus. A second tangerine button on the same screen means one of them is wrong.",
         "section": "colors"
       },
       {
-        "name": "The Readable Badge Rule",
-        "body": "A Tech badge's text colour is computed from its background's WCAG luminance (black above 0.5, white below), never chosen by hand.",
+        "name": "The Rarity Is Data Rule",
+        "body": "A rarity colour appears only on an item whose rarity field says so, as its frame, top band and tag. Never use the rarity hues for headings, backgrounds or decoration.",
         "section": "colors"
       },
       {
-        "name": "The Typography Primitives Rule",
-        "body": "Text goes through the primitives in `components/typography` (`TypographyH2/H3/H4`, `TypographyP`, `TypographySmall`, `TypographyMuted`, `Bold`), restyled through `className` only. A raw `<h2>` with its own sizes is a drift.",
+        "name": "The Computed Ink Rule",
+        "body": "Text on any coloured fill (rarity, status, a Tech's own colour) is whichever of Night or Cream gives the higher contrast ratio, computed, never chosen by hand. A Tech chip that fails 4.5:1 with both is drawn as an outline in the Tech colour instead.",
+        "section": "colors"
+      },
+      {
+        "name": "The Copy Keeps Its Case Rule",
+        "body": "Type is set in the case the copy is written in. Unbounded is never forced to uppercase: the lowercase menu labels and the casual voice are binding, and shouting caps would turn the cosy client into an esports HUD.",
         "section": "typography"
       },
       {
-        "name": "The Lift on Touch Rule",
-        "body": "Surfaces rest nearly flat; they lift only when the visitor points at them. No large shadow is ever static.",
+        "name": "The Typography Primitives Rule",
+        "body": "Text still goes through `components/typography`, which gains the display, headline and data roles; a raw heading with its own sizes is drift.",
+        "section": "typography"
+      },
+      {
+        "name": "The Real Button Rule",
+        "body": "Anything pressable has a ledge and sinks when pressed; anything with a ledge is pressable. Static cards never get one.",
         "section": "elevation"
       },
       {
-        "name": "The Blur Means Elsewhere Rule",
-        "body": "Backdrop blur is reserved for \"you're looking at something on top\": the mobile menu overlay, the content panel behind it, and the footer bar over a Project card's scrolling text.",
+        "name": "The Float Means On Top Rule",
+        "body": "Blurred shadows and backdrop blur belong only to layers above the client (tooltips, menus, the mobile sheet).",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do keep the chrome in the zinc tokens and let content (Tech colours, images, artwork) supply every hue.",
-      "Do render text through the typography primitives and Techs only through `TechBadge`.",
-      "Do build on the shared radius: 6px for controls, 12px for cards, 8px for the panel.",
-      "Do keep shadows small at rest and let hover lift them, over 200 to 300ms.",
-      "Do design every new surface for both themes, dark first."
+      "Do let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one.",
+      "Do keep Tangerine (#ff8a3d) to one primary action per screen plus the active tab, the sound switch and focus.",
+      "Do derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and label live data with its state.",
+      "Do compute the ink on every coloured fill and use the deep variants for coloured text in light.",
+      "Do give every pressable control a ledge, a 44px target and a note from the kit.",
+      "Do keep the sound switch visible on every page and honour reduced motion for both motion and sound.",
+      "Do write every new string in both Locales and keep the lowercase, casual voice."
     ],
     "donts": [
-      "Don't introduce a brand accent colour for buttons, links or headings; primary is the inverted ink.",
-      "Don't hand-pick a Tech badge's text colour; it is computed from luminance.",
-      "Don't add static large shadows or decorative borders.",
-      "Don't add a second scroll container to the shell; the content panel is the only one.",
-      "Don't treat the MasterDevFrance 2025 page's blue-to-purple gradient frame as part of the system; it is that celebration page's one-off."
+      "Don't invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.",
+      "Don't use rarity colours for decoration, headings or backgrounds.",
+      "Don't drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.",
+      "Don't go back to neutral zinc surfaces with colour only from content.",
+      "Don't play sound automatically, on hover for touch devices, or anywhere the visitor cannot silence it.",
+      "Don't put blur or soft shadows on anything that does not float above the client.",
+      "Don't make the presence card disappear; it always shows a state."
     ]
   }
 }

@@ -1,274 +1,385 @@
 ---
 name: ImJustLucas
-description: Lucas's personal site, a quiet zinc desk where the work and the live presence bring the colour.
+description: Lucas's personal site as his player profile, a cosy game client in plum and tangerine where his work, wins and live presence are the stats.
 colors:
-  ink: "hsl(240 10% 3.9%)"
-  graphite: "hsl(240 5.9% 10%)"
-  smoke: "hsl(240 3.7% 15.9%)"
-  pewter: "hsl(240 5% 64.9%)"
-  silver: "hsl(240 4.9% 83.9%)"
-  steel: "hsl(240 3.8% 46.1%)"
-  haze: "hsl(240 5.9% 90%)"
-  mist: "hsl(240 4.8% 95.9%)"
-  chalk: "hsl(0 0% 98%)"
-  paper: "hsl(0 0% 100%)"
-  ember: "hsl(0 84.2% 60.2%)"
-  ember-deep: "hsl(0 62.8% 30.6%)"
-  wip-yellow: "#facc15"
-  saved-green: "#16a34a"
+  night: "#1c0f2b"
+  plum: "#2a1540"
+  velvet: "#3b2159"
+  seam: "#5a3a80"
+  cream: "#fff1e6"
+  haze: "#c9b6e4"
+  lilac-frame: "#e9ddfa"
+  lilac-wash: "#f6f0ff"
+  sheet: "#ffffff"
+  seam-light: "#d6c3f0"
+  dusk: "#5b4a73"
+  tangerine: "#ff8a3d"
+  tangerine-ledge: "#c25a12"
+  tangerine-deep: "#b8470c"
+  common: "#b9a9cc"
+  common-deep: "#6b5a80"
+  rare: "#46c2ff"
+  rare-deep: "#0b6fa8"
+  epic: "#b47cff"
+  epic-deep: "#7a3fd1"
+  legendary: "#ffd84d"
+  legendary-deep: "#8a6200"
+  online: "#5fe08a"
+  online-deep: "#1d7a45"
+  away: "#ffb02e"
+  busy: "#ff5d73"
+  busy-deep: "#c0233d"
 typography:
+  display:
+    fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
   headline:
-    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.875rem"
-    fontWeight: 600
-    lineHeight: "2.25rem"
-    letterSpacing: "-0.025em"
+    fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: "-0.015em"
   title:
-    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.5rem"
+    fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.125rem"
     fontWeight: 600
-    lineHeight: "2rem"
-    letterSpacing: "-0.025em"
-  subtitle:
-    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.25rem"
-    fontWeight: 600
-    lineHeight: "1.75rem"
-    letterSpacing: "-0.025em"
+    lineHeight: 1.3
+  button-play:
+    fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 700
+    lineHeight: 1
   body:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: "1.75rem"
+    lineHeight: 1.65
   label:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 500
     lineHeight: "1.25rem"
-  badge:
+  tag:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.75rem"
     fontWeight: 600
     lineHeight: "1rem"
-  mono:
+    letterSpacing: "0.02em"
+  data:
     fontFamily: "Geist Mono, ui-monospace, SFMono-Regular, monospace"
-    fontSize: "0.875rem"
-    fontWeight: 400
+    fontSize: "0.8125rem"
+    fontWeight: 500
+    lineHeight: "1.25rem"
 rounded:
-  sm: "4px"
-  md: "6px"
-  lg: "8px"
-  xl: "12px"
+  sm: "6px"
+  md: "10px"
+  lg: "16px"
+  xl: "24px"
   full: "9999px"
 spacing:
-  shell: "12px"
-  panel: "16px"
-  card: "24px"
-  section: "32px"
+  frame: "12px"
+  slot-gap: "12px"
+  card: "20px"
+  panel: "28px"
+  section: "48px"
+  touch: "44px"
   sidebar: "320px"
 components:
-  button-primary:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.graphite}"
+  button-play:
+    backgroundColor: "{colors.tangerine}"
+    textColor: "{colors.night}"
+    typography: "{typography.button-play}"
+    rounded: "{rounded.md}"
+    padding: "0 24px"
+    height: "52px"
+  button-ledge:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
     typography: "{typography.label}"
     rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  button-outline:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.chalk}"
-    typography: "{typography.label}"
-    rounded: "{rounded.md}"
-    padding: "0 12px"
-    height: "32px"
-  button-ghost-hover:
-    backgroundColor: "{colors.smoke}"
-    textColor: "{colors.chalk}"
+    padding: "0 16px"
+    height: "44px"
   button-icon:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
     rounded: "{rounded.md}"
-    size: "36px"
-  card:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.chalk}"
-    rounded: "{rounded.xl}"
-    padding: "24px"
-  content-panel:
-    backgroundColor: "{colors.graphite}"
-    rounded: "{rounded.lg}"
-    padding: "16px 16px 32px"
-  menu-item:
-    textColor: "{colors.chalk}"
+    size: "44px"
+  sound-toggle-on:
+    backgroundColor: "{colors.tangerine}"
+    textColor: "{colors.night}"
+    rounded: "{rounded.md}"
+    size: "44px"
+  tab:
+    textColor: "{colors.cream}"
     typography: "{typography.label}"
     rounded: "{rounded.md}"
-    padding: "8px 16px"
-    height: "36px"
-  badge-wip:
-    backgroundColor: "{colors.wip-yellow}"
-    textColor: "{colors.ink}"
-    typography: "{typography.badge}"
+    padding: "0 14px"
+    height: "44px"
+  tab-active:
+    backgroundColor: "{colors.tangerine}"
+    textColor: "{colors.night}"
+    typography: "{typography.label}"
     rounded: "{rounded.md}"
-    padding: "2px 10px"
-  tech-badge:
-    rounded: "{rounded.md}"
-    padding: "4px 8px"
+    padding: "0 14px"
+    height: "44px"
+  content-panel:
+    backgroundColor: "{colors.plum}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.panel}"
+  player-card:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "16px"
+  item-card:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.card}"
+  achievement-slot:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "16px"
+  presence-card:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "12px"
+  rarity-tag:
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+  tech-chip:
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    padding: "4px 10px"
 ---
+
+<!-- SEED: chosen with Lucas on 2026-10-20 in the Impeccable world workshop (seed 14c08ff6), before implementation. Values below are decided and contrast-checked, but no page uses them yet; re-run /impeccable document once the home page and shell are built so this file describes the shipped world. -->
 
 # Design System: ImJustLucas
 
 ## Overview
 
-**Creative North Star: "The Dev's Desk"**
+**Creative North Star: "The Player Profile"**
 
-The site is a tidy personal workspace. The sidebar is the shelf: the `> ImJustLucas` wordmark, the menu, the live presence card, the social links and the theme and Locale switches. The inset content panel is the desk, set a few pixels in from the window edge, and the things Lucas has made are laid out on it as cards. The furniture is deliberately plain zinc (shadcn's "new-york" style on the zinc base colour) so that what sits on the desk gets the attention.
+The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi and its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, and the settings row with the sound switch. The content panel is the profile screen: a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of Projects framed by rarity, and a match history of Experiences. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
 
-Colour belongs to the content, never to the chrome: Tech badges in each Tech's own colour, Project screenshots, Video thumbnails, Spotify artwork, the yellow WIP tag. The interface itself is near-monochrome in both themes, dark by default. Personality comes through in the copy (casual, lowercase menu labels, emojis) and through small tactile touches: soft corners, gentle hover lifts, a click sound and a press-scale on the menu, a chibi avatar resting in the bottom-right corner.
+It is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means "this is the thing to press". Everything clickable answers with a short note from one instrument, so moving around the site sounds like a little melody, and one visible switch silences it all.
 
-Density is relaxed and single-column on reading pages (the home page holds two-thirds of the panel's width), and becomes a wrapping grid of fixed-size cards on the Projects and Videos pages.
+Density is relaxed: big slots with generous gaps, one focal object per row. The voice stays exactly as PRODUCT.md binds it (first person, "Yoooo", emojis, lowercase menu labels); the world makes room for it instead of dressing it up. Anti-references: the previous "Dev's Desk" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).
 
 **Key Characteristics:**
-- Two-zone shell: a 320px sidebar beside a rounded, inset content panel.
-- Near-monochrome zinc chrome in both themes; colour comes only from content.
-- Terminal-flavoured identity: the `> ` prompt before the wordmark.
-- Soft and tactile: rounded cards, gentle shadows, hover lifts, menu click sound.
-- Dark theme by default, light and system available.
+- Two-zone client: a 320px sidebar (player card, tabs, live friends panel, settings) beside a rounded plum profile panel.
+- Plum owns the whole shell in the default dark theme; a lilac "daytime lobby" theme is the alternative.
+- One accent, tangerine, for the primary action, the active tab, focus and selection.
+- Rarity colours (common, rare, epic, legendary) carry meaning on content, never decoration.
+- Chunky, pressable controls with a visible ledge; slots and cards with soft 16px corners.
+- A one-instrument sound kit in D major pentatonic, on by default, with a global mute that is always visible.
+- The chibi is the mascot: poses, reactions, empty states.
 
 ## Colors
 
-A cool, barely blue-tinted zinc scale that inverts between themes, plus three functional accents that never decorate.
+A committed plum world: the shell is the colour, with cream type, one tangerine accent and a four-step rarity ramp that labels content.
 
 ### Primary
-- **Chalk / Graphite, the inverted ink**: the "primary" role is not a hue, it is the strongest contrast available. In the dark theme it is Chalk (`chalk`) on Graphite text; in the light theme it is Graphite (`graphite`) with Chalk text. Used for the default button (Download my resume, Watch now!), the active menu dot, the Experience timeline dots, Video "New" badges and the song title in the presence card.
+- **Tangerine** (#ff8a3d): the accent. Fills the Play button (Download my resume), the active tab, the sound switch when on, selection and keyboard focus rings in the dark theme. Text on it is always Night (7.8:1). It stays under a tenth of any screen; its rarity is what makes "press here" obvious.
+- **Tangerine Ledge** (#c25a12): the solid edge under tangerine controls (the button's bottom face), never text.
+- **Tangerine Deep** (#b8470c): tangerine's role as text, link underline and focus ring in the light theme (4.8:1 on Lilac Wash).
 
-### Neutral
-- **Ink** (`ink`): the dark theme's page background (the window frame around the panel) and card surface; the light theme's text colour.
-- **Graphite** (`graphite`): the dark theme's content panel, one step lighter than Ink, so the desk reads as raised from the frame.
-- **Smoke** (`smoke`): dark theme borders, dividers, ghost-button hover and muted fills.
-- **Pewter** (`pewter`): dark theme secondary text (card descriptions, Periods, the presence artist line).
-- **Silver** (`silver`): dark theme focus ring.
-- **Paper** (`paper`): the light theme's page background and card surface.
-- **Chalk** (`chalk`): the dark theme's text and the light theme's content panel.
-- **Mist** (`mist`): light theme muted fills and ghost-button hover.
-- **Haze** (`haze`): light theme borders and input strokes.
-- **Steel** (`steel`): light theme secondary text.
+### Rarity (functional)
+Rarity says what kind of thing an item is, set per item in the Admin. It is never a quality score and never invented.
+- **Legendary** (#ffd84d / deep #8a6200): wins and awards. Today only MasterDevFrance 2025.
+- **Epic** (#b47cff / deep #7a3fd1): products Lucas founded or co-founded and runs in production (Predi.GG).
+- **Rare** (#46c2ff / deep #0b6fa8): shipped products and real client or employer work (Qotum, Tricks, Bam Karaoke).
+- **Common** (#b9a9cc / deep #6b5a80): side projects, boilerplates, experiments.
 
-### Functional accents
-- **WIP Yellow** (`wip-yellow`): only the WIP badge on a Project card, always with Ink text.
-- **Ember** (`ember`, light) / **Ember Deep** (`ember-deep`, dark): destructive buttons and field errors, in the Admin only.
-- **Saved Green** (`saved-green`): the Admin's "Publié" notice, as text and a 40% border.
+### Status (functional)
+Discord's own presence vocabulary, used only for the player card ring and the friends panel.
+- **Online** (#5fe08a / deep #1d7a45), **Away** (#ffb02e), **Busy** (#ff5d73 / deep #c0233d), offline uses **Common**.
+- **Busy** and **Busy Deep** double as the error colour in the Admin (dark and light).
+
+### Neutral (dark theme, "LAN night", the default)
+- **Night** (#1c0f2b): the window frame around the panel, carrying a faint sparkle pattern; also the text colour on every bright fill.
+- **Plum** (#2a1540): the shell ground, sidebar and content panel.
+- **Velvet** (#3b2159): raised surfaces: player card, slots, item cards, ledge buttons, presence card.
+- **Seam** (#5a3a80): slot borders, dividers, the inactive tab hover fill.
+- **Cream** (#fff1e6): primary text (14.8:1 on Plum, 12.3:1 on Velvet).
+- **Haze** (#c9b6e4): secondary text, periods, artist lines (7.3:1 on Velvet).
+
+### Neutral (light theme, "daytime lobby")
+- **Lilac Frame** (#e9ddfa): the window frame. No text sits directly on it.
+- **Lilac Wash** (#f6f0ff): the shell ground.
+- **Sheet** (#ffffff): raised surfaces.
+- **Seam Light** (#d6c3f0): borders and dividers.
+- **Plum** (#2a1540): primary text (14.7:1 on Lilac Wash). **Dusk** (#5b4a73): secondary text (7.1:1).
+- In light, bright rarity and status colours stay as fills and 2px frames with Night text; whenever they become text or a thin line on a light surface, use their deep variant (all 4.8:1 or more on Lilac Wash and Sheet).
 
 ### Named Rules
-**The Content Brings the Colour Rule.** Chrome stays zinc. A new hue enters a page only as content: a Tech's own `#rrggbb`, an image, a thumbnail, artwork. If you're reaching for a brand colour for a button or a heading, stop.
+**The Plum Owns the Shell Rule.** In the dark theme the frame, sidebar and panel are Night, Plum and Velvet. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.
 
-**The Inverted Ink Rule.** "Primary" means maximum contrast against the current theme, not a brand hue. Never hard-code a primary colour per theme; use the token so the inversion keeps working.
+**The One Tangerine Rule.** Tangerine marks the single most important action or state in view: the Play button, the active tab, the sound switch when on, focus. A second tangerine button on the same screen means one of them is wrong.
 
-**The Readable Badge Rule.** A Tech badge's text colour is computed from its background's WCAG luminance (black above 0.5, white below), never chosen by hand.
+**The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its frame, top band and tag. Never use the rarity hues for headings, backgrounds or decoration.
+
+**The Computed Ink Rule.** Text on any coloured fill (rarity, status, a Tech's own colour) is whichever of Night or Cream gives the higher contrast ratio, computed, never chosen by hand. A Tech chip that fails 4.5:1 with both is drawn as an outline in the Tech colour instead.
 
 ## Typography
 
-**Body Font:** Geist (with ui-sans-serif, system-ui, sans-serif)
-**Mono Font:** Geist Mono (with ui-monospace, SFMono-Regular)
+**Display Font:** Unbounded (with Geist, ui-sans-serif, system-ui)
+**Body Font:** Geist (with ui-sans-serif, system-ui)
+**Data Font:** Geist Mono (with ui-monospace, SFMono-Regular)
 
-**Character:** One neutral grotesque carries everything, weighted rather than sized into hierarchy, with tight tracking on headings. Geist Mono is loaded for code-flavoured details and pairs with the terminal prompt in the wordmark.
+**Character:** Unbounded is the game title: wide, round-shouldered and heavy, friendly at 700 and never aggressive. Geist does the reading and the controls, so menus and paragraphs stay plain and fast. Geist Mono, with tabular figures, sets the stats: dates, periods, star counts, elapsed time.
 
-**Wiring.** Both faces are self-hosted variable fonts (`app/fonts`, weights 100 to 900) exposed as `--font-geist-sans` and `--font-geist-mono` on every root layout's `<body>`, mapped to Tailwind's `font-sans` and `font-mono`, and applied to `body` in `styles/globals.css`. Set the font on `body` or below, never on `html`, where the variables don't exist.
+**Wiring.** Unbounded is a variable Google font (weights 200 to 900, Latin Extended for French) loaded through `next/font/google` and exposed as `--font-display` beside the existing `--font-geist-sans` and `--font-geist-mono`; set on `body` or below, never on `html`.
 
 ### Hierarchy
-- **Headline** (600, 1.875rem / 30px, line-height 2.25rem, tracking -0.025em): the page title at the top of every page (`PageHeader`, e.g. "Who am i?", "What i've done ?").
-- **Title** (600, 1.5rem / 24px, tracking -0.025em): the sidebar wordmark, section titles such as "Diplomas", Project card titles (bold, one line).
-- **Subtitle** (600, 1.25rem / 20px, tracking -0.025em): sub-sections on reading pages ("Creative Mindset", "FAQ") and each Experience's company and role.
-- **Body** (400, 1rem / 16px, line-height 1.75rem): paragraphs; consecutive paragraphs are spaced 24px apart. Reading pages cap the column at two-thirds of the panel, the FAQ at 42rem.
-- **Label** (500, 0.875rem / 14px): buttons, menu items, small text, muted descriptions, Tech badges.
-- **Badge** (600, 0.75rem / 12px): WIP and "New" badges.
+- **Display** (Unbounded 700, clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem), line-height 1.05, -0.02em): the greeting on the profile banner ("Yoooo, I'm Lucas!"). One per page at most.
+- **Headline** (Unbounded 700, 1.75rem, line-height 1.15, -0.015em): page titles, one visible `h1` per page.
+- **Title** (Unbounded 600, 1.125rem, line-height 1.3): section titles (achievements, inventory, match history), item and achievement names, the player name in the sidebar (at 1.375rem).
+- **Button Play** (Unbounded 700, 1.0625rem): the label of the Play button only.
+- **Body** (Geist 400, 1rem, line-height 1.65): paragraphs, capped at 65ch.
+- **Label** (Geist 500, 0.875rem): tabs, buttons, presence lines, chip text at rest.
+- **Tag** (Geist 600, 0.75rem, +0.02em): rarity tags, "live" and "new" tags, Tech chips.
+- **Data** (Geist Mono 500, 0.8125rem, tabular numbers): periods, dates, star counts, elapsed time.
 
 ### Named Rules
-**The Typography Primitives Rule.** Text goes through the primitives in `components/typography` (`TypographyH2/H3/H4`, `TypographyP`, `TypographySmall`, `TypographyMuted`, `Bold`), restyled through `className` only. A raw `<h2>` with its own sizes is a drift.
+**The Copy Keeps Its Case Rule.** Type is set in the case the copy is written in. Unbounded is never forced to uppercase: the lowercase menu labels and the casual voice are binding, and shouting caps would turn the cosy client into an esports HUD.
+
+**The Typography Primitives Rule.** Text still goes through `components/typography`, which gains the display, headline and data roles; a raw heading with its own sizes is drift.
 
 ## Layout
 
-The shell fills the viewport (`100dvh`, no page scroll) with 12px padding and a 12px gap between its two zones. Only the content panel scrolls.
+The client fills the viewport (`100dvh`, no page scroll) inside a 12px Night frame; only the content panel scrolls.
 
-- **Sidebar** (320px wide from 768px up): wordmark, then the menu 32px below, then the footer pushed to the bottom (presence card, a bordered row of icon buttons, the "Made with 💖" line).
-- **Content panel**: fills the rest, 8px corners, 16px padding with 32px at the bottom, a one-step-lighter surface than the frame.
-- **Reading pages** (home, contact): a single column at two-thirds of the panel width on desktop, full width on mobile. Blocks are separated by 32px.
-- **Card pages** (Projects, Videos): cards of at most 384px wrap in a row with 16px gaps. Project cards are a fixed 500px tall with a 192px image band, so rows stay aligned.
-- **Mobile** (below 768px): the sidebar is hidden behind a ghost menu button fixed top-right. Opened, it covers the screen as an 80% background overlay with a small backdrop blur, and the content panel behind it blurs too. The same sidebar is restyled, not remounted.
-- A 32px chibi avatar sits fixed 20px from the bottom-right corner on every page.
+- **Sidebar** (320px from 768px up), top to bottom: the player card, the tabs 24px below, the friends panel, then the settings row (sound, Locale, theme) and the social row pushed to the bottom.
+- **Content panel**: the rest of the width, 24px corners, 28px padding (16px on mobile), Plum ground.
+- **Profile pages** are built from slots on a 12-column grid with 12px gaps and 48px between sections. Full-width rows alternate with rows of 2 or 3 slots so the scroll has a rhythm: a dense inventory row earns a quiet text row after it.
+- **Reading text** (bio, FAQ) holds a 65ch column inside its slot, never the full panel width.
+- **Mobile** (below 768px): a 56px top bar (chibi head, name, sound switch, menu button, all 44px targets) replaces the sidebar. The menu opens as a full-screen client sheet holding the same sidebar, mounted once and restyled (`docs/routing.md`). Slot rows collapse to one column; the achievement showcase becomes a horizontal snap row.
+- The fixed corner chibi of the previous site is retired; the mascot lives in the player card, the banner and empty states, where it covers nothing.
 
 ## Elevation & Depth
 
-Depth comes mostly from tonal layering: Ink frame, Graphite panel, Ink cards on the panel in the dark theme (Paper, Chalk, Paper in light). Shadows are small and ambient on top of that, and grow only as a response to hover.
+Depth is tonal first (Night, then Plum, then Velvet; Lilac Frame, Lilac Wash, Sheet in light) and tactile second: controls have a solid ledge underneath, as if they were real buttons on a console, and slots have a faint top highlight like a moulded tray. Soft blurred shadows exist only for things that float.
 
 ### Shadow Vocabulary
-- **Resting** (`box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`): every card and the default button.
-- **Subtle** (`box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)`): outline and secondary buttons.
-- **Lifted** (`box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)`): a Project card on hover, over 300ms.
+- **Ledge** (`box-shadow: 0 4px 0 var(--ledge)`, where the ledge is the control's own darker shade, Tangerine Ledge for tangerine controls, Night for Velvet ones): every pressable control at rest. Pressing moves the control down 4px and the ledge to 0.
+- **Ledge Raised** (`box-shadow: 0 6px 0 var(--ledge)` with `translateY(-2px)`): hover on pressable controls and on item cards that link somewhere.
+- **Tray** (`box-shadow: inset 0 1px 0 rgb(255 241 230 / 0.08)`): the top highlight inside slots, cards and the player card in the dark theme.
+- **Float** (`box-shadow: 0 24px 48px -12px rgb(12 4 22 / 0.6)`): tooltips, the theme menu, the mobile client sheet.
 
 ### Named Rules
-**The Lift on Touch Rule.** Surfaces rest nearly flat; they lift only when the visitor points at them. No large shadow is ever static.
+**The Real Button Rule.** Anything pressable has a ledge and sinks when pressed; anything with a ledge is pressable. Static cards never get one.
 
-**The Blur Means Elsewhere Rule.** Backdrop blur is reserved for "you're looking at something on top": the mobile menu overlay, the content panel behind it, and the footer bar over a Project card's scrolling text.
+**The Float Means On Top Rule.** Blurred shadows and backdrop blur belong only to layers above the client (tooltips, menus, the mobile sheet).
 
 ## Shapes
 
-Soft, consistent corners built from one radius variable (`--radius`, 8px): 8px for the content panel, 6px for buttons, badges, menu items and artwork, 12px for cards, and full circles for the active-menu dot, timeline dots and the Spotify mark. Borders are 1px hairlines in the theme's border tone; there are no thick strokes or outlined decorations. Images are cropped into their shapes (`object-cover`, Project screenshots anchored to the top).
+Fat, friendly corners from one scale: 24px for the panel, 16px for slots, cards and the player card, 10px for buttons, tabs and artwork, full circles for avatars, status rings and chips. Borders are 2px, never hairlines: Seam on resting slots, the rarity colour on items (with a 4px top band in the same colour), Tangerine for focus (2px ring with a 2px offset). No angular chamfers, notched corners or clip-path frames.
+
+Materials:
+- **Sparkle backdrop**: a tiled SVG of small four-point sparkles on the Night frame only, at 6% opacity (4% in light on Lilac Frame). Never behind text.
+- **Legendary foil**: legendary items get a slow foil sheen (a moving light band across a pale gold gradient) only while hovered or during their unlock moment; at rest they are flat Legendary.
+- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied to real life (headset, skateboard, karaoke mic, controller, trophy). Art is produced once and versioned in `public/images/chibi/`.
+
+## Motion and Sound
+
+Motion and sound are one grammar: a control moves the way a button moves and plays one note when it does. Nothing moves or sounds on its own except the live presence, which may move but never sounds.
+
+### Motion tokens
+- **Ease Out** (`cubic-bezier(0.23, 1, 0.32, 1)`): every hover, entrance and state change.
+- **Ease Pop** (`cubic-bezier(0.34, 1.56, 0.64, 1)`): small overshoots on press release, tag and badge entrances, the chibi hop.
+- **Ease In Out** (`cubic-bezier(0.77, 0, 0.175, 1)`): the sliding tab indicator and the accordion chevron.
+- **Ease Drawer** (`cubic-bezier(0.32, 0.72, 0, 1)`): the mobile client sheet.
+- **Durations:** press down 80ms, release 160ms; hover 150ms; tab indicator 240ms; page change 220ms (fade and a 6px rise, through View Transitions where supported); mobile sheet 260ms in, 180ms out; unlock moment 900ms.
+
+### Signature moves
+- **The press:** pressable controls sink 4px onto their ledge and pop back with Ease Pop.
+- **The tab slide:** the tangerine active-tab fill slides between tabs instead of jumping.
+- **The unlock:** the legendary achievement plays its foil sheen once per session when it first scrolls into view; clicking it replays the sheen with the unlock sound.
+- **Live presence:** three equaliser bars while Lucas listens, a breathing green dot while he plays; a new song or game crossfades in over 200ms.
+- **The chibi:** blinks now and then; on click it hops, swaps to a random pose and plays a boop.
+
+### Sound kit
+One instrument (a soft plucked kalimba tine) in one key (D major pentatonic: D, E, F#, A, B, over two octaves), synthesized with Web Audio so it costs no download. Recorded samples are allowed later only if they keep the same instrument and key.
+- **Tick** (B5, very quiet): hover on tabs and item cards, fine pointers only, at most one every 60ms.
+- **Tab**: each menu item plays its own degree in menu order (me D4, what i've done E4, how i do it F#4, my experiences A4, yt videos B4, contact D5), so walking down the menu plays a scale.
+- **Confirm** (D4 and A4 together, then D5): the Play button and other primary actions.
+- **Toggle on / off** (A4 to D5 / D5 to A4): theme, Locale, accordion, the sound switch itself (only the "on" direction is audible).
+- **Unlock** (arpeggio D4 F#4 A4 D5, then the existing `coin.mp3`): clicking the legendary achievement.
+- **Boop** (a random degree with a short upward bend): clicking the chibi.
+- **Miss** (A3 to F#3): the 404 page's button and Admin errors.
+
+### Sound switch
+A speaker button, always visible: first in the sidebar settings row and in the mobile top bar, 44px, Tangerine when sound is on, Velvet with a struck speaker when off, with a localized label ("sound on" / "son activé") for assistive tech and as a tooltip. Sound is on by default and off by default when the visitor's system asks for reduced motion. The choice is stored per visitor in `localStorage` and also governs the MDF 2025 scene. No sound ever plays before the visitor's first interaction, on automatic events (presence updates, page loads, scroll), or above a master gain of 0.25.
+
+### Reduced motion
+Under `prefers-reduced-motion: reduce`: no translation, scale or rotation (presses and tabs change colour only), fades of 150ms or less, ambient loops (equaliser, breathing dot, sparkles, foil) shown static, and sound off unless the visitor turns it on.
 
 ## Components
 
+Every control is rebuilt in the client's vocabulary; a stock shadcn look inside the client is a lapse. shadcn and Radix stay as the behaviour layer.
+
 ### Buttons
-Familiar shadcn buttons, softened by the shared radius.
-- **Shape:** gently rounded (6px), 36px tall, 14px medium label, icons at 16px with an 8px gap.
-- **Primary:** inverted ink with the resting shadow; hover drops to 90% opacity.
-- **Outline:** hairline border on the page background with the subtle shadow, 32px small size for card footers (the GitHub button with its star count).
-- **Ghost:** no fill at rest; hover fills with Smoke (dark) or Mist (light). Used for the social, Locale and theme icon buttons (36px square) and the mobile menu toggle.
-- **Focus:** a 1px ring in the theme's ring colour on keyboard focus.
+- **Shape:** 10px corners, 2px focus ring in Tangerine (Tangerine Deep in light) with a 2px offset.
+- **Play** (primary): Tangerine fill, Night label in Unbounded 700, 52px tall, 24px side padding, Tangerine Ledge underneath; one per screen (the Play button is "Download my resume" on the home page).
+- **Ledge** (secondary): Velvet fill, Cream label, Night ledge, 44px tall; Sheet fill, Plum label and Seam Light ledge in light.
+- **Icon:** 44px square ledge buttons for settings and socials, with `sr-only` labels.
+- **States:** hover raises 2px with a 6px ledge; press sinks onto the ledge; disabled drops the ledge and goes to 50% opacity.
 
-### Cards / Containers
-- **Corner Style:** 12px.
-- **Background:** the theme's card surface (Ink or Paper), so cards sit darker or whiter than the panel.
-- **Shadow Strategy:** Resting, lifting to Lifted on hover for Project cards (see Elevation).
-- **Border:** 1px hairline.
-- **Internal Padding:** 24px (header, content and footer), 16px in compact cards (presence, Video footer).
+### Tabs (the menu)
+- **Style:** full-width 44px rows in Geist 500, lowercase labels from the message dictionaries, an icon slot on the left.
+- **Hover:** Seam fill and the tick sound. **Active:** the sliding Tangerine fill, Night text, `aria-current="page"`. **Focus-visible:** the Tangerine ring.
+- **Mobile:** the same tabs inside the full-screen client sheet; choosing one plays its note and closes the sheet.
 
-### Badges
-- **Tech badge:** the Tech's own colour as background, computed black or white text, 14px semibold, 4px by 8px padding. The one rendering of a Tech anywhere.
-- **WIP badge:** WIP Yellow with Ink text, 12px semibold, beside a Project's Period.
-- **New badge:** inverted ink, pinned 8px from the top-right corner of a Video thumbnail.
+### Player card (signature)
+Velvet slot at the top of the sidebar: the chibi head (64px) in a 3px status ring coloured by Lucas's real Discord status, the name "ImJustLucas" in Unbounded, and one Haze line with his role and city from the dictionaries. No level, rank or XP numbers.
 
-### Navigation
-The sidebar menu is the signature control.
-- **Style:** full-width ghost buttons, 8px apart, left-aligned lowercase labels from the message dictionaries.
-- **Hover / focus:** the label takes the primary colour on a 10% primary fill (20% on focus), over 200ms.
-- **Active:** the same 10% fill, medium weight, and an 8px primary dot on the right.
-- **Press:** scales to 95% and plays `/sounds/click.mp3`.
-- **Mobile:** the same menu inside the full-screen overlay; choosing a Route closes it.
+### Friends panel / presence (signature)
+Always rendered, titled with a live tag. **Playing:** game art 48px, game name, elapsed time in Data, breathing dot. **Listening:** album art 48px with the Spotify mark, title and artist, equaliser bars. **Online with no activity, away, busy:** the chibi head with the status and a playful line. **Offline or unreachable:** "offline" in Common with a chibi sleeping pose. **Connecting:** a skeleton of the same size, so the sidebar never jumps. Presence never plays a sound.
 
-### Presence card (signature)
-A compact card in the sidebar footer, shown only while Lucas is playing or listening. Artwork at 48px with 6px corners, a 20px circular badge (the Spotify mark) overlapping its bottom-right corner with a 2px background-coloured ring, then the title in the primary colour and a muted second line. When nothing is live, it is not rendered at all.
+### Item card (Projects)
+Velvet card, 16px corners, 2px frame and 4px top band in the item's rarity colour, rarity tag top-right. Image band (10px corners, top-anchored crop), title in Unbounded 600, one line saying what it is and Lucas's role, the Tech loadout as chips, and a footer with the GitHub ledge button and its live star count in Data. Heights follow content; rows align by grid, not by fixed height.
 
-### Project card (signature)
-A fixed 384 by 500px card: a 192px image band (or a muted panel with a folder icon when there is no image), the title on one line, the Period with an optional WIP badge, a three-line description, the Tech badges, and a blurred footer bar holding the GitHub button (with its live star count) and an external-link icon button.
+### Achievement slot (signature)
+Square-ish slot with the achievement art centred, its name in Title, the year in Data and the rarity tag; legendary slots carry the foil material and link to their page (MDF 2025 links to `/mdf-2025`).
 
-### Experience timeline
-Inside one card: a 12px primary dot per Experience joined by a 2px border-coloured line, beside the Period, "company - role", the contract type and a muted description.
+### Chips
+- **Tech chip:** the Tech's own colour as fill with computed ink (see The Computed Ink Rule), full radius, Tag type.
+- **Rarity tag:** rarity fill, Night text, full radius. **Live / New tags:** Online or Tangerine fill, Night text.
 
-### FAQ accordion
-Hairline-divided rows; the trigger is the question, the answer reveals in muted text with a 200ms ease-out height animation.
+### Match history (Experiences timeline)
+One continuous vertical track from the first internship to today: each Experience is a row with its period in Data, company and role, contract type and description; ongoing rows sit at the top with a "live" tag and an Online dot, and the track is solid Seam behind finished rows and Tangerine behind ongoing ones.
 
-### Admin forms
-The Admin reuses the same primitives on a plain full-page background (24px padding, no sidebar): labelled fields, destructive buttons and Ember error text, and a sticky Saved Green notice capped at 56rem.
+### Accordion (FAQ)
+Velvet rows with 16px corners and 12px gaps instead of hairline dividers; a chevron that rotates over 200ms with Ease In Out and the toggle sounds.
+
+### Admin
+The Admin keeps its forms and works on the same tokens in a calmer register: Lilac Wash or Plum page, Sheet or Velvet fields with 2px Seam borders, Busy for errors, Online Deep or Online for the saved notice. No sounds in the Admin except Miss on an error.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep the chrome in the zinc tokens and let content (Tech colours, images, artwork) supply every hue.
-- **Do** render text through the typography primitives and Techs only through `TechBadge`.
-- **Do** build on the shared radius: 6px for controls, 12px for cards, 8px for the panel.
-- **Do** keep shadows small at rest and let hover lift them, over 200 to 300ms.
-- **Do** design every new surface for both themes, dark first.
+- **Do** let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one.
+- **Do** keep Tangerine (#ff8a3d) to one primary action per screen plus the active tab, the sound switch and focus.
+- **Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and label live data with its state.
+- **Do** compute the ink on every coloured fill and use the deep variants for coloured text in light.
+- **Do** give every pressable control a ledge, a 44px target and a note from the kit.
+- **Do** keep the sound switch visible on every page and honour reduced motion for both motion and sound.
+- **Do** write every new string in both Locales and keep the lowercase, casual voice.
 
 ### Don't:
-- **Don't** introduce a brand accent colour for buttons, links or headings; primary is the inverted ink.
-- **Don't** hand-pick a Tech badge's text colour; it is computed from luminance.
-- **Don't** add static large shadows or decorative borders.
-- **Don't** add a second scroll container to the shell; the content panel is the only one.
-- **Don't** treat the MasterDevFrance 2025 page's blue-to-purple gradient frame as part of the system; it is that celebration page's one-off.
+- **Don't** invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.
+- **Don't** use rarity colours for decoration, headings or backgrounds.
+- **Don't** drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.
+- **Don't** go back to neutral zinc surfaces with colour only from content.
+- **Don't** play sound automatically, on hover for touch devices, or anywhere the visitor cannot silence it.
+- **Don't** put blur or soft shadows on anything that does not float above the client.
+- **Don't** make the presence card disappear; it always shows a state.
