@@ -41,7 +41,6 @@ function Hobby({ hobby }: { hobby: HobbyInLocale }) {
         alt=""
         sizes="96px"
         playing={hovered}
-        followParisNight
         className="size-20 sm:size-24"
       />
       <span className="text-label text-ink">{hobby.label}</span>
