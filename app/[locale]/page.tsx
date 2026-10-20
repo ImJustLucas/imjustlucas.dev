@@ -313,7 +313,7 @@ function SeeInventory({ label }: { label: string }) {
     <SoundOnPress>
       <Link
         href={ROUTES.what.path}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-md text-label text-action-ink underline decoration-2 underline-offset-4 transition-colors duration-hover ease-out dark:text-ink dark:decoration-electric dark:hover:text-action-ink [[data-palette=plum].dark_&]:decoration-ink-muted"
+        className="inline-flex min-h-11 items-center gap-1.5 rounded-md text-label text-action-ink underline decoration-link-line decoration-2 underline-offset-4 transition-colors duration-hover ease-out dark:text-ink dark:hover:text-action-ink"
       >
         {label}
         <ArrowRight aria-hidden className="size-4" />

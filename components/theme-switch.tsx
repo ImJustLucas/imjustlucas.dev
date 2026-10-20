@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PALETTES } from "@/lib/palette";
+import { PALETTE_SWATCH, PALETTES } from "@/lib/palette";
 
 const MODES = ["dark", "light", "system"] as const;
 
@@ -83,11 +83,8 @@ export function ModeToggle() {
             <span className="flex items-center gap-2.5">
               <span
                 aria-hidden
-                className={
-                  value === "electric"
-                    ? "size-3.5 rounded-full bg-electric"
-                    : "size-3.5 rounded-full bg-tangerine"
-                }
+                className="size-3.5 rounded-full"
+                style={{ backgroundColor: PALETTE_SWATCH[value] }}
               />
               {t(value)}
             </span>

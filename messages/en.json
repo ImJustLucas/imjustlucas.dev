@@ -52,7 +52,9 @@
     "mode": "mode",
     "palette": "palette",
     "electric": "electric blue",
-    "plum": "plum"
+    "plum": "plum",
+    "khaki": "khaki",
+    "sakura": "sakura"
   },
   "LocaleSwitcher": {
     "switch": "Français"

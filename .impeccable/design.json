@@ -974,7 +974,7 @@
     "palettes": {
       "default": "electric",
       "defaultMode": "dark",
-      "selection": "data-palette on <html> (absent for electric, \"plum\" for plum); mode by next-themes' dark class",
+      "selection": "data-palette on <html> (absent for electric; \"plum\", \"khaki\" or \"sakura\" otherwise); mode by next-themes' dark class",
       "storage": "localStorage imjustlucas.palette, applied before the first paint by PALETTE_SCRIPT (lib/palette.ts) in the <head> of both root layouts; the Admin follows it",
       "roles": [
         "frame",
@@ -988,7 +988,8 @@
         "action-ledge",
         "action-ink",
         "on-action",
-        "on-bright"
+        "on-bright",
+        "link-line"
       ],
       "electric-dark": {
         "frame": "navy-frame",
@@ -1002,7 +1003,8 @@
         "action-ledge": "electric",
         "action-ink": "electric-glow",
         "on-action": "navy",
-        "on-bright": "navy"
+        "on-bright": "navy",
+        "link-line": "electric"
       },
       "electric-light": {
         "frame": "linen-frame",
@@ -1016,7 +1018,8 @@
         "action-ledge": "electric-ledge",
         "action-ink": "electric-deep",
         "on-action": "off-white",
-        "on-bright": "navy"
+        "on-bright": "navy",
+        "link-line": "electric-deep"
       },
       "plum-dark": {
         "frame": "night",
@@ -1030,7 +1033,8 @@
         "action-ledge": "tangerine-ledge",
         "action-ink": "tangerine",
         "on-action": "night",
-        "on-bright": "night"
+        "on-bright": "night",
+        "link-line": "haze"
       },
       "plum-light": {
         "frame": "lilac-frame",
@@ -1044,8 +1048,70 @@
         "action-ledge": "tangerine-ledge",
         "action-ink": "tangerine-deep",
         "on-action": "night",
-        "on-bright": "night"
-      }
+        "on-bright": "night",
+        "link-line": "tangerine-deep"
+      },
+      "khaki-dark": {
+        "frame": "#1a140f",
+        "ground": "#262a1c",
+        "raised": "#333826",
+        "seam": "#4b5236",
+        "ledge": "#1a140f",
+        "ink": "#f1ead8",
+        "ink-muted": "#c4bfa3",
+        "action": "#e3d9b8",
+        "action-ledge": "#6b4429",
+        "action-ink": "#d6b37e",
+        "on-action": "#262a1c",
+        "on-bright": "#1a140f",
+        "link-line": "#d6b37e"
+      },
+      "khaki-light": {
+        "frame": "#ddd5c0",
+        "ground": "#ece6d6",
+        "raised": "#f7f3e8",
+        "seam": "#d3cab2",
+        "ledge": "#d3cab2",
+        "ink": "#2b2618",
+        "ink-muted": "#5f5a45",
+        "action": "#5e6b3a",
+        "action-ledge": "#4a3222",
+        "action-ink": "#4f5c2c",
+        "on-action": "#f7f3e8",
+        "on-bright": "#2b2618",
+        "link-line": "#4f5c2c"
+      },
+      "sakura-dark": {
+        "frame": "#170d11",
+        "ground": "#241519",
+        "raised": "#331d24",
+        "seam": "#4f2e39",
+        "ledge": "#170d11",
+        "ink": "#fbeef1",
+        "ink-muted": "#d9b3bf",
+        "action": "#ffb3c7",
+        "action-ledge": "#c8325a",
+        "action-ink": "#ff8fae",
+        "on-action": "#241519",
+        "on-bright": "#241519",
+        "link-line": "#ff8fae"
+      },
+      "sakura-light": {
+        "frame": "#efdde1",
+        "ground": "#f8ecee",
+        "raised": "#fffafb",
+        "seam": "#ebd2d8",
+        "ledge": "#ebd2d8",
+        "ink": "#2d1b22",
+        "ink-muted": "#6b4c56",
+        "action": "#c8325a",
+        "action-ledge": "#8a1f3c",
+        "action-ink": "#b0284e",
+        "on-action": "#ffffff",
+        "on-bright": "#2d1b22",
+        "link-line": "#b0284e"
+      },
+      "note": "electric and plum roles name frontmatter colours; khaki and sakura carry their hex values directly (they have no frontmatter tokens)."
     }
   },
   "components": [

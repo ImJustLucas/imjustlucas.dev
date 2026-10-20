@@ -4,7 +4,9 @@ import {
   DEFAULT_PALETTE,
   PALETTE_SCRIPT,
   PALETTE_STORAGE_KEY,
+  PALETTE_SWATCH,
   paletteAttribute,
+  PALETTES,
   parsePalette,
 } from "./palette";
 
@@ -54,5 +56,19 @@ describe("the palette", () => {
         throw new DOMException("The operation is insecure.", "SecurityError");
       }),
     ).toBeUndefined();
+  });
+});
+
+describe("the palettes", () => {
+  it("each have a swatch colour", () => {
+    for (const palette of PALETTES) {
+      expect(PALETTE_SWATCH[palette]).toMatch(/^#[0-9a-f]{6}$/);
+    }
+  });
+
+  it("can each be applied before the first paint", () => {
+    for (const palette of PALETTES.filter((p) => p !== DEFAULT_PALETTE)) {
+      expect(runScript(() => palette)).toBe(palette);
+    }
   });
 });
