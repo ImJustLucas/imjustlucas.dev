@@ -15,7 +15,7 @@ The ImJustLucas chibi was commissioned from an artist. New poses are generated w
 ```
 Using the attached image as the exact character and style reference, draw the same character as a full-body chibi, about two and a half heads tall: big head, short body, small rounded hands and feet.
 
-Keep everything that makes him recognisable identical to the reference: curly honey-blond hair with cream highlights and the small curl on top, big teal-blue eyes with a white cloud-shaped highlight, light peach skin with pink ear shading and the two small white highlight dots on the cheek, a big happy open-mouth smile.
+Keep everything that makes him recognisable identical to the reference: curly honey-blond hair with cream highlights and the small curl on top, big teal-blue eyes with a white cloud-shaped highlight, light peach skin with pink ear shading and the two small white highlight dots on the cheek, a big happy open-mouth smile. Whenever the back of his right hand is visible, it carries his three small tattoos drawn as thin dark maroon line art: three tiny dots in a vertical line on the index finger, a small smiley face on the middle finger, and two outlined four-point sparkle stars on the back of the hand near the thumb, the lower one slightly bigger.
 
 Keep the art style identical too: hand-drawn dark maroon outline (#6b1d1d) with visibly varying line weight, thicker on the outer silhouette; strictly flat cel shading with two tones per colour, no soft gradients and no airbrush, on the clothes as much as on the skin.
 
@@ -55,3 +55,7 @@ Face, hair, eyes, colours and outline colour match the reference closely, and th
 ## Second test (2026-10-20, banner pose in a Breton-stripe longsleeve)
 
 Approved by Lucas after a horizontal flip (`.impeccable/mocks/chibi/banner-wave-flipped.png`): about two and a half heads tall, flatter shading, livelier line, and the face reads as the commissioned character. The prompt asked for "his right hand", so the model mirrored him; the pose line now names sides of the image instead.
+
+## Tattoos (2026-10-20)
+
+Lucas has three tattoos on the back of his right hand: three dots in a line on the index finger, a smiley on the middle finger, and two outlined four-point sparkles near the thumb. They are part of the character and now sit in the base prompt. The sparkles echo the yellow sparkle of the commissioned art and the sparkle backdrop of the site.
