@@ -15,7 +15,7 @@ The ImJustLucas chibi was commissioned from an artist. New poses are generated w
 ```
 Using the attached image as the exact character and style reference, draw the same character as a full-body chibi, about two and a half heads tall: big head, short body, small rounded hands and feet.
 
-Keep everything that makes him recognisable identical to the reference: curly honey-blond hair with cream highlights and the small curl on top, big teal-blue eyes with a white cloud-shaped highlight, light peach skin with pink ear shading and the two small white highlight dots on the cheek, a big happy open-mouth smile. Whenever the back of his right hand is shown large and close to the viewer, it carries his three small tattoos, drawn with the same dark maroon outline as the rest of the drawing and following the shape of the hand: three tiny dots in a vertical line on the index finger, a small smiley face on the middle finger, and two outlined four-point sparkle stars on the back of the hand near the thumb, the lower one slightly bigger.
+Keep everything that makes him recognisable identical to the reference: curly honey-blond hair with cream highlights and the small curl on top, big teal-blue eyes with a white cloud-shaped highlight, light peach skin with pink ear shading and the two small white highlight dots on the cheek, a big happy open-mouth smile.
 
 Keep the art style identical too: hand-drawn dark maroon outline (#6b1d1d) with visibly varying line weight, thicker on the outer silhouette; strictly flat cel shading with two tones per colour, no soft gradients and no airbrush, on the clothes as much as on the skin.
 
@@ -44,7 +44,7 @@ Hobbies:
 - **Skate**: `Riding a skateboard mid-push, arms out for balance. Violet hoodie, grey beanie, loose dark jeans, white skate shoes.`
 - **Playing LoL**: `Sitting cross-legged with a gaming controller, focused and grinning, over-ear headset on his head. Black hoodie with a tangerine drawstring, grey joggers.`
 - **Coding**: `Sitting with a laptop on his lap, typing, a small happy smile. Grey overshirt open over a plum t-shirt, dark jeans.`
-- **Coffee**: `Holding a steaming mug with both hands close to the viewer, the back of his right hand clearly visible with its tattoos, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
+- **Coffee**: `Holding a steaming mug with both hands close to the viewer, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
 - **Series**: `Sitting wrapped in a violet blanket with a bowl of popcorn, looking at something off-screen with wide amused eyes. Grey hoodie under the blanket.`
 - **Music**: `Eyes closed, head tilted, nodding to the beat, over-ear headphones on his head and one hand holding them. Sky blue t-shirt, dark jeans.`
 
@@ -58,6 +58,13 @@ Approved by Lucas after a horizontal flip (`.impeccable/mocks/chibi/banner-wave-
 
 ## Tattoos (2026-10-20)
 
-Lucas has three tattoos on the back of his right hand: three dots in a line on the index finger, a smiley on the middle finger, and two outlined four-point sparkles near the thumb. They are part of the character, but only where the hand is drawn large enough to carry them: the coffee, LoL and music poses, never the full-body banner. A first try on the banner (2026-10-20) looked pasted on: lines thinner and greyer than the outline, flat on a mitten-shaped hand, and invisible at the size the banner is shown on the site.
+Optional add-on line, appended to a pose prompt only when wanted:
+
+```
+The back of his right hand, shown large and close to the viewer, carries three small tattoos drawn with the same dark maroon outline as the rest of the drawing and following the shape of the hand: three tiny dots in a vertical line on the index finger, a small smiley face on the middle finger, and two outlined four-point sparkle stars on the back of the hand near the thumb, the lower one slightly bigger.
+```
+
+
+Lucas has three tattoos on the back of his right hand: three dots in a line on the index finger, a smiley on the middle finger, and two outlined four-point sparkles near the thumb. They are optional, a later variant of a pose already approved without them, and only where the hand is drawn large enough to carry them: the coffee, LoL and music poses, never the full-body banner. A first try on the banner (2026-10-20) looked pasted on: lines thinner and greyer than the outline, flat on a mitten-shaped hand, and invisible at the size the banner is shown on the site.
 
 The outlined four-point sparkle of the tattoo is also the site's sparkle motif (DESIGN.md, Shapes).
