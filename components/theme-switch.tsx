@@ -85,8 +85,8 @@ export function ModeToggle() {
                 aria-hidden
                 className={
                   value === "electric"
-                    ? "size-3.5 rounded-full border-2 border-electric bg-off-white"
-                    : "size-3.5 rounded-full border-2 border-tangerine bg-night"
+                    ? "size-3.5 rounded-full bg-electric"
+                    : "size-3.5 rounded-full bg-tangerine"
                 }
               />
               {t(value)}
