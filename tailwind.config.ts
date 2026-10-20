@@ -176,6 +176,15 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.55" },
         },
+        // The career path: the track draws down, each stop pops onto it
+        "track-draw": {
+          from: { transform: "scaleY(0)" },
+          to: { transform: "scaleY(1)" },
+        },
+        "stop-pop": {
+          from: { opacity: "0", transform: "scale(0.5)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s var(--ease-out)",
@@ -186,6 +195,8 @@ const config: Config = {
         breathe: "breathe 2.4s var(--ease-in-out) infinite",
         foil: "foil var(--dur-unlock) var(--ease-out) both",
         skeleton: "skeleton 1.6s var(--ease-in-out) infinite",
+        "track-draw": "track-draw 160ms var(--ease-in-out) both",
+        "stop-pop": "stop-pop 320ms var(--ease-pop) both",
       },
     },
   },

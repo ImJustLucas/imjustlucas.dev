@@ -11,6 +11,7 @@ import { routeMetadata } from "@/components/page-header";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import {
+  SECONDARY_LINK,
   TypographyData,
   TypographyDisplay,
   TypographyMuted,
@@ -313,7 +314,10 @@ function SeeInventory({ label }: { label: string }) {
     <SoundOnPress>
       <Link
         href={ROUTES.what.path}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-md text-label text-action-ink underline decoration-link-line decoration-2 underline-offset-4 transition-colors duration-hover ease-out dark:text-ink dark:hover:text-action-ink"
+        className={cn(
+          "inline-flex min-h-11 items-center gap-1.5 text-label",
+          SECONDARY_LINK,
+        )}
       >
         {label}
         <ArrowRight aria-hidden className="size-4" />

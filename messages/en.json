@@ -113,14 +113,26 @@
       "year": "Year",
       "master": "Master's degree • Digital Engineering Manager",
       "bachelor": "Bachelor's degree • Web Designer and Developer",
-      "baccalaureate": "French Baccalaureate, Science track"
-    }
+      "baccalaureate": "French Baccalaureate, Science track",
+      "levels": {
+        "master": "Master",
+        "bachelor": "Bachelor",
+        "baccalaureate": "Bac"
+      },
+      "flip": "Flip the {diploma} medal"
+    },
+    "intro": "Where I've played so far, and the diplomas I earned along the way 🎓",
+    "chibiAlt": "Lucas savouring a steaming mug of coffee"
   },
   "Videos": {
     "new": "New",
     "watch": "Watch now!",
     "empty": "This section is a bit empty for now. I plan to start making videos about software development, lifestyle, life in general and other topics I'm into. Keep an eye on this page 🤓",
-    "subscribe": "Psst, you can subscribe to my channel <link>here</link>"
+    "subscribe": "Psst, you can subscribe to my channel <link>here</link>",
+    "intro": "Fresh from my YouTube channel 🎬",
+    "chibiAlt": "Lucas laughing at a series under a blanket, popcorn in his lap",
+    "emptyAlt": "Lucas lounging in a tangerine beanbag",
+    "watchTitle": "Watch “{title}” on YouTube"
   },
   "Sidebar": {
     "openMenu": "Open menu",
@@ -161,7 +173,9 @@
     "noImage": "No screenshot yet"
   },
   "How": {
-    "intro": "I leverage cutting-edge technologies to build robust and scalable applications. Here's an overview of my technical expertise:"
+    "intro": "My loadout: everything I build with, sorted by what it's for 🛠️",
+    "chibiAlt": "Lucas coding on a laptop, sitting cross-legged",
+    "items": "{count, plural, one {# item} other {# items}}"
   },
   "Contact": {
     "intro": "If you want to contact me, you can do so via my <linkedin>LinkedIn</linkedin> DMs, I will respond as quickly as possible."
