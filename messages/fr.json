@@ -110,14 +110,26 @@
       "year": "Année",
       "master": "Master • Manager de l'Ingénierie numérique",
       "bachelor": "Bachelor • Concepteur développeur web",
-      "baccalaureate": "Baccalauréat Scientifique"
-    }
+      "baccalaureate": "Baccalauréat Scientifique",
+      "levels": {
+        "master": "Master",
+        "bachelor": "Bachelor",
+        "baccalaureate": "Bac"
+      },
+      "flip": "Retourner la médaille {diploma}"
+    },
+    "intro": "Là où j'ai joué jusqu'ici, et les diplômes gagnés en chemin 🎓",
+    "chibiAlt": "Lucas qui savoure un mug de café fumant"
   },
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",
     "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Gardez un œil sur cette page 🤓",
-    "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>"
+    "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>",
+    "intro": "Tout droit sortis de ma chaîne YouTube 🎬",
+    "chibiAlt": "Lucas qui rit devant une série sous un plaid, du pop-corn sur les genoux",
+    "emptyAlt": "Lucas affalé dans un pouf mandarine",
+    "watchTitle": "Regarder « {title} » sur YouTube"
   },
   "Sidebar": {
     "openMenu": "Ouvrir le menu",
@@ -158,7 +170,9 @@
     "noImage": "Pas encore de capture"
   },
   "How": {
-    "intro": "Je m'appuie sur des technologies de pointe pour créer des applications solides et évolutives. Voici un aperçu de mes compétences techniques :"
+    "intro": "Mon loadout : tout ce avec quoi je construis, rangé par usage 🛠️",
+    "chibiAlt": "Lucas qui code sur un portable, assis en tailleur",
+    "items": "{count, plural, one {# objet} other {# objets}}"
   },
   "Contact": {
     "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible.",

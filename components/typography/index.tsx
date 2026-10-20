@@ -161,6 +161,13 @@ export const TypographyMuted: React.FC<TypographyProps> = ({
   className,
 }) => <p className={cn("text-label text-ink-muted", className)}>{children}</p>;
 
+/**
+ * A secondary link: the action ink, underlined, in light; in the dark modes
+ * the ink with an Electric underline (Haze in plum), the action ink on hover.
+ */
+export const SECONDARY_LINK =
+  "rounded-md text-action-ink underline decoration-2 underline-offset-4 transition-colors duration-hover ease-out dark:text-ink dark:decoration-electric dark:hover:text-action-ink [[data-palette=plum].dark_&]:decoration-ink-muted";
+
 export const Bold: React.FC<TypographyProps> = ({ children, className }) => {
   return <span className={cn("font-semibold", className)}>{children}</span>;
 };
