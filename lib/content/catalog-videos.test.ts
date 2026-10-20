@@ -27,6 +27,8 @@ const contentWithChannel = (youtubeChannelId: string) =>
     "content/tech-categories.json": "[]",
     "content/projects.json": "[]",
     "content/experiences.json": "[]",
+    "content/achievements.json": "[]",
+    "content/hobbies.json": "[]",
     "content/profile.json": JSON.stringify({
       ...testProfile,
       youtubeChannelId,

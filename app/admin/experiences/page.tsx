@@ -3,8 +3,8 @@ import Link from "next/link";
 import {
   AdminField,
   AdminForm,
-  FieldError,
   LocalizedField,
+  SelectField,
 } from "@/app/admin/admin-form";
 import {
   ContentUnavailableScreen,
@@ -32,31 +32,6 @@ const CONTRACT_TYPES = Object.entries(fr.Experiences.contractTypes) as Array<
   [ContractType, string]
 >;
 
-const ContractTypeField: React.FC<{ defaultValue?: ContractType }> = ({
-  defaultValue,
-}) => (
-  <label className="flex flex-col gap-1 text-sm">
-    <span className="font-medium">Type de contrat</span>
-    <select
-      name="contractType"
-      defaultValue={defaultValue ?? ""}
-      className="rounded-md border border-input bg-background px-3 py-2"
-    >
-      {!defaultValue && (
-        <option value="" disabled>
-          Choisir…
-        </option>
-      )}
-      {CONTRACT_TYPES.map(([value, label]) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
-    <FieldError name="contractType" />
-  </label>
-);
-
 type StoredExperience = Extract<
   Awaited<ReturnType<typeof getExperiencesEditor>>,
   { kind: "owner" }
@@ -81,7 +56,20 @@ const ExperienceFields: React.FC<{ experience?: StoredExperience }> = ({
       />
     </div>
     <LocalizedField name="role" label="Poste" defaultValue={experience?.role} />
-    <ContractTypeField defaultValue={experience?.contractType} />
+    <div className="grid gap-3 sm:grid-cols-2">
+      <SelectField
+        name="contractType"
+        label="Type de contrat"
+        options={CONTRACT_TYPES}
+        defaultValue={experience?.contractType}
+      />
+      <AdminField
+        name="emoji"
+        label="Emoji, avant l'entreprise sur l'accueil (facultatif)"
+        defaultValue={experience?.emoji}
+        placeholder="💜"
+      />
+    </div>
     <LocalizedField
       name="description"
       label="Description"

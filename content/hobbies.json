@@ -1,0 +1,12 @@
+[
+  { "label": { "en": "surf", "fr": "surf" }, "pose": "surf" },
+  { "label": { "en": "skate", "fr": "skate" }, "pose": "skate" },
+  { "label": { "en": "playing LoL", "fr": "jouer à LoL" }, "pose": "lol" },
+  { "label": { "en": "coding", "fr": "coder" }, "pose": "coding" },
+  { "label": { "en": "a good coffee", "fr": "un bon café" }, "pose": "coffee" },
+  {
+    "label": { "en": "a series night", "fr": "une soirée série" },
+    "pose": "series"
+  },
+  { "label": { "en": "music on", "fr": "de la musique" }, "pose": "music" }
+]

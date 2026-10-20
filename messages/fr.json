@@ -46,9 +46,13 @@
   },
   "ThemeSwitch": {
     "toggle": "Changer de thème",
-    "light": "Clair",
-    "dark": "Sombre",
-    "system": "Système"
+    "light": "clair",
+    "dark": "sombre",
+    "system": "système",
+    "mode": "mode",
+    "palette": "palette",
+    "electric": "bleu électrique",
+    "plum": "prune"
   },
   "LocaleSwitcher": {
     "switch": "English"
@@ -58,7 +62,7 @@
     "creativeMindsetTitle": "Esprit créatif",
     "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
     "downloadResume": "Télécharger mon CV",
-    "resumeLastUpdated": "Dernière mise à jour : {date, date, long}",
+    "resumeLastUpdated": "mis à jour le {date, date, medium}",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -73,7 +77,23 @@
         "question": "Café ou thé ?",
         "answer": "Café, sans hésiter. Paris carbure au café, après tout !"
       }
-    }
+    },
+    "greeting": "Yoooo, moi c'est Lucas !",
+    "role": "fullstack dev, cofondateur de Predi.GG",
+    "currentTeam": "équipe actuelle",
+    "chilling": "en mode chilling tu connais",
+    "chillingAlt": "Lucas affalé dans un pouf mandarine",
+    "bannerAlt": "Lucas qui fait coucou, le casque autour du cou",
+    "boop": "faire boop à Lucas",
+    "achievementsTitle": "succès",
+    "trophyAlt": "Lucas qui brandit un trophée doré",
+    "inventoryTitle": "inventaire",
+    "seeInventory": "voir tout l'inventaire",
+    "aboutTitle": "à propos de moi",
+    "hobbiesTitle": "ce que je fais quand je ne ship pas",
+    "goodbye": "c'est tout pour l'instant, merci d'être passé !",
+    "goodbyeAlt": "Lucas qui fait au revoir dans sa doudoune à fleurs",
+    "sayHi": "viens dire salut"
   },
   "Experiences": {
     "contractTypes": {
@@ -101,15 +121,41 @@
   },
   "Sidebar": {
     "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu"
+    "closeMenu": "Fermer le menu",
+    "menu": "menu",
+    "client": "profil du joueur",
+    "settings": "réglages",
+    "socials": "réseaux",
+    "playerLine": "dev fullstack · paris"
   },
   "Presence": {
     "listeningBy": "par {artist}",
-    "spotifyLogo": "Logo Spotify"
+    "spotifyLogo": "Logo Spotify",
+    "title": "amis",
+    "live": "en live",
+    "playing": "en jeu",
+    "playingFor": "en jeu depuis {elapsed}",
+    "sleepingAlt": "Lucas endormi sur un coussin prune",
+    "status": {
+      "online": "en ligne",
+      "idle": "absent",
+      "dnd": "occupé",
+      "offline": "hors ligne",
+      "connecting": "connexion…"
+    },
+    "line": {
+      "online": "sûrement en train de shipper un truc",
+      "idle": "je reviens, pause café ☕",
+      "dnd": "dans ma bulle, ne pas déranger",
+      "offline": "zzz… je reviens vite"
+    }
   },
   "Projects": {
     "wip": "En cours",
-    "open": "Ouvrir {title}"
+    "open": "Ouvrir {title}",
+    "github": "GitHub",
+    "stars": "{count, plural, one {# étoile} other {# étoiles}} sur GitHub",
+    "noImage": "Pas encore de capture"
   },
   "How": {
     "intro": "Je m'appuie sur des technologies de pointe pour créer des applications solides et évolutives. Voici un aperçu de mes compétences techniques :"
@@ -136,5 +182,17 @@
     "title": "Page introuvable",
     "message": "Cette page n'existe pas, ou plus.",
     "home": "Retour à l'accueil"
+  },
+  "Sound": {
+    "label": "son",
+    "on": "son activé",
+    "off": "son coupé",
+    "offReducedMotion": "son coupé (mouvement réduit)"
+  },
+  "Rarity": {
+    "common": "commun",
+    "rare": "rare",
+    "epic": "épique",
+    "legendary": "légendaire"
   }
 }

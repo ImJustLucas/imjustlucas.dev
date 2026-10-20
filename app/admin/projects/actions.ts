@@ -35,6 +35,8 @@ const projectFields = (form: FormData) => {
     externalLink: field(form, "externalLink"),
     repository: field(form, "repository"),
     openSource: form.get("openSource") !== null,
+    rarity: field(form, "rarity"),
+    featured: field(form, "featured"),
     ...(image && { image }),
   };
 };

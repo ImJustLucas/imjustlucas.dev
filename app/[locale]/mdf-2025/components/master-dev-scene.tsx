@@ -14,6 +14,8 @@ import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 
 import * as THREE from "three";
 
+import { useSounds } from "@/components/sound/SoundProvider";
+
 import { Certificate } from "./certificate";
 import SceneLoader from "./scene-loader";
 
@@ -56,13 +58,18 @@ const GoldenShaderMaterial = shaderMaterial(
 
 extend({ GoldenShaderMaterial });
 
+/** Follows the site's sound switch (set by `MasterDevScene`). */
+const sound = { enabled: false };
+
 const playCoinSound = () => {
+  if (!sound.enabled) return;
   const audio = new Audio("/sounds/coin.mp3");
   audio.volume = 0.3;
   audio.play().catch((e) => console.error("Audio play failed:", e));
 };
 
 const playImpactSound = () => {
+  if (!sound.enabled) return;
   const audio = new Audio("/sounds/impact.mp3");
   audio.volume = 0.4;
   audio.play().catch((e) => console.error("Audio play failed:", e));
@@ -372,6 +379,10 @@ const Scene = () => {
 };
 
 export default function MasterDevScene() {
+  const { state } = useSounds();
+  useEffect(() => {
+    sound.enabled = state.enabled;
+  }, [state.enabled]);
   useEffect(() => {
     const preloadAudio = (url: string) => {
       const audio = new Audio(url);

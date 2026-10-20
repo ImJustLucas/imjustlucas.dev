@@ -62,9 +62,28 @@ export const getTechCategories = (locale: Locale) =>
 export const getProjects = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).projects);
 
+/**
+ * The Projects the home page features (at most 3, by their place, then by
+ * Period), their descriptions in the Locale, with live star counts like
+ * `getProjects`, so the page revalidates the same way.
+ */
+export const getFeaturedProjects = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).featuredProjects);
+
 /** Experiences, their roles and descriptions in the Locale. */
 export const getExperiences = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).experiences);
+
+/**
+ * Achievements, their names and descriptions in the Locale, in the order the
+ * Owner gave them.
+ */
+export const getAchievements = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).achievements);
+
+/** Hobbies, their labels in the Locale, in the order the Owner gave them. */
+export const getHobbies = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).hobbies);
 
 /** Lucas's public identity: social links, channel, Discord account, Resumes. */
 export const getProfile = () => fromCatalog((catalog) => catalog.profile);

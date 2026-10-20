@@ -22,6 +22,8 @@ const catalogWith = (
     projects?: unknown;
     experiences?: unknown;
     profile?: unknown;
+    achievements?: unknown;
+    hobbies?: unknown;
   },
   sources: {
     /** Star count per repository link; GitHub fails for any other. */
@@ -37,6 +39,10 @@ const catalogWith = (
         ),
         "content/projects.json": JSON.stringify(documents.projects ?? []),
         "content/experiences.json": JSON.stringify(documents.experiences ?? []),
+        "content/achievements.json": JSON.stringify(
+          documents.achievements ?? [],
+        ),
+        "content/hobbies.json": JSON.stringify(documents.hobbies ?? []),
         "content/profile.json": JSON.stringify(
           documents.profile ?? testProfile,
         ),
@@ -187,6 +193,8 @@ describe("ContentCatalog.techCategories", () => {
               "content/tech-categories.json": "[]",
               "content/projects.json": "[]",
               "content/experiences.json": "[]",
+              "content/achievements.json": "[]",
+              "content/hobbies.json": "[]",
               "content/profile.json": JSON.stringify(testProfile),
             }),
           ),
@@ -205,6 +213,7 @@ const project = (title: string, period: unknown, rest: object = {}) => ({
   period,
   techs: [],
   openSource: false,
+  rarity: "common",
   ...rest,
 });
 
@@ -287,38 +296,44 @@ describe("ContentCatalog.projects", () => {
     ),
   );
 
-  it.effect("resolves each Tech identifier and keeps the Period", () =>
-    Effect.gen(function* () {
-      const [qotum] = yield* (yield* ContentCatalog).projects;
+  it.effect(
+    "resolves each Tech identifier and keeps the Period and Rarity",
+    () =>
+      Effect.gen(function* () {
+        const [qotum] = yield* (yield* ContentCatalog).projects;
 
-      expect(qotum).toEqual({
-        title: "Qotum",
-        description: text("Qotum in English", "Qotum en français"),
-        image: "/images/projects/qotum.png",
-        wip: true,
-        period: { start: "2024", end: "ongoing" },
-        techs: [react, typescript],
-        externalLink: "https://qotum.com",
-      });
-    }).pipe(
-      Effect.provide(
-        catalogWith({
-          techs: [typescript, react],
-          projects: [
-            project(
-              "Qotum",
-              { start: "2024", end: "ongoing" },
-              {
-                image: "/images/projects/qotum.png",
-                wip: true,
-                techs: ["react", "typescript"],
-                externalLink: "https://qotum.com",
-              },
-            ),
-          ],
-        }),
+        expect(qotum).toEqual({
+          title: "Qotum",
+          description: text("Qotum in English", "Qotum en français"),
+          image: "/images/projects/qotum.png",
+          wip: true,
+          period: { start: "2024", end: "ongoing" },
+          techs: [react, typescript],
+          externalLink: "https://qotum.com",
+          rarity: "rare",
+          featured: 2,
+        });
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            techs: [typescript, react],
+            projects: [
+              project(
+                "Qotum",
+                { start: "2024", end: "ongoing" },
+                {
+                  image: "/images/projects/qotum.png",
+                  wip: true,
+                  techs: ["react", "typescript"],
+                  externalLink: "https://qotum.com",
+                  rarity: "rare",
+                  featured: 2,
+                },
+              ),
+            ],
+          }),
+        ),
       ),
-    ),
   );
 
   it.effect(
@@ -576,6 +591,45 @@ describe("ContentCatalog.projects", () => {
       ),
     ),
   );
+
+  it.effect(
+    "fails on an unknown or missing Rarity and a place that is not a whole number from 1",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).projects);
+
+        expect(error._tag).toBe("ContentInvalid");
+        expect(error.message).toContain("content/projects.json at [0].rarity");
+        expect(error.message).toContain("content/projects.json at [1].rarity");
+        for (const at of [2, 3, 4])
+          expect(error.message).toContain(
+            `content/projects.json at [${at}].featured: Expected a whole number from 1`,
+          );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            projects: [
+              project(
+                "Mythic",
+                { start: "2024", end: "2024" },
+                { rarity: "mythic" },
+              ),
+              {
+                ...project("None", { start: "2024", end: "2024" }),
+                rarity: undefined,
+              },
+              ...[0, 1.5, -1].map((featured) =>
+                project(
+                  "Bad place",
+                  { start: "2024", end: "2024" },
+                  { featured },
+                ),
+              ),
+            ],
+          }),
+        ),
+      ),
+  );
 });
 
 const experience = (company: string, period: unknown, rest: object = {}) => ({
@@ -721,6 +775,45 @@ describe("ContentCatalog.experiences", () => {
       ),
     ),
   );
+
+  it.effect("keeps an Experience's emoji", () =>
+    Effect.gen(function* () {
+      const [favikon] = yield* (yield* ContentCatalog).experiences;
+
+      expect(favikon.emoji).toBe("💜");
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: [
+            experience(
+              "Favikon",
+              { start: "2023", end: "2025" },
+              { emoji: "💜" },
+            ),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on an empty emoji or one longer than 8 characters", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).experiences);
+
+      for (const at of [0, 1])
+        expect(error.message).toContain(
+          `content/experiences.json at [${at}].emoji: Expected an emoji (at most 8 characters)`,
+        );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          experiences: ["", "🔮🎤💜🤙🔥"].map((emoji) =>
+            experience("Favikon", { start: "2023", end: "2025" }, { emoji }),
+          ),
+        }),
+      ),
+    ),
+  );
 });
 
 const profileWith = (changes: object) => ({ ...testProfile, ...changes });
@@ -830,6 +923,121 @@ describe("ContentCatalog.profile", () => {
   );
 });
 
+const achievement = (rest: object = {}) => ({
+  name: text("MasterDevFrance 2025", "MasterDevFrance 2025"),
+  description: text("national winner", "vainqueur national"),
+  year: 2025,
+  rarity: "legendary",
+  link: "/mdf-2025",
+  art: "/images/chibi/trophy.webp",
+  ...rest,
+});
+
+describe("ContentCatalog.achievements", () => {
+  it.effect("returns the Achievements in stored order", () =>
+    Effect.gen(function* () {
+      const achievements = yield* (yield* ContentCatalog).achievements;
+
+      expect(achievements.map((a) => [a.year, a.link])).toEqual([
+        [2023, "https://hackathon.example"],
+        [2025, "/mdf-2025"],
+        [2024, "/"],
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          achievements: [
+            achievement({ year: 2023, link: "https://hackathon.example" }),
+            achievement(),
+            achievement({ year: 2024, link: "/" }),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect(
+    "fails on a year outside 2000 to 2100, an unknown Rarity or a link that is neither a page nor a URL",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).achievements);
+
+        expect(error._tag).toBe("ContentInvalid");
+        for (const at of [0, 1, 2])
+          expect(error.message).toContain(
+            `content/achievements.json at [${at}].year: Expected a year from 2000 to 2100`,
+          );
+        expect(error.message).toContain(
+          "content/achievements.json at [3].rarity",
+        );
+        for (const at of [4, 5, 6])
+          expect(error.message).toContain(
+            `content/achievements.json at [${at}].link: Expected a page of the site (/…) or an http(s) URL`,
+          );
+        expect(error.message).toContain(
+          "content/achievements.json at [7].name.fr: Missing translation",
+        );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            achievements: [
+              achievement({ year: 1999 }),
+              achievement({ year: 2101 }),
+              achievement({ year: 2025.5 }),
+              achievement({ rarity: "mythic" }),
+              achievement({ link: "mdf-2025" }),
+              achievement({ link: "/MDF 2025" }),
+              achievement({ link: "/mdf-2025/" }),
+              achievement({ name: { en: "MasterDevFrance 2025" } }),
+            ],
+          }),
+        ),
+      ),
+  );
+});
+
+describe("ContentCatalog.hobbies", () => {
+  it.effect("returns the Hobbies in stored order", () =>
+    Effect.gen(function* () {
+      const hobbies = yield* (yield* ContentCatalog).hobbies;
+
+      expect(hobbies).toEqual([
+        { label: text("music on", "de la musique"), pose: "music" },
+        { label: text("surf", "surf"), pose: "surf" },
+      ]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          hobbies: [
+            { label: text("music on", "de la musique"), pose: "music" },
+            { label: text("surf", "surf"), pose: "surf" },
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on an unknown pose or a missing translation", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).hobbies);
+
+      expect(error.message).toContain("content/hobbies.json at [0].pose");
+      expect(error.message).toContain(
+        "content/hobbies.json at [1].label.en: Missing translation",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          hobbies: [
+            { label: text("chess", "échecs"), pose: "chess" },
+            { label: text("", "surf"), pose: "surf" },
+          ],
+        }),
+      ),
+    ),
+  );
+});
+
 describe("asset paths", () => {
   const ongoing = { start: "2024", end: "ongoing" };
 
@@ -913,6 +1121,59 @@ describe("asset paths", () => {
                 fr: { asset: "/images/cv.png", lastUpdated: "2025-10-07" },
               },
             },
+          }),
+        ),
+      ),
+  );
+
+  it.effect(
+    "accept Achievement art where the Admin stores it, or a chibi pose",
+    () =>
+      Effect.gen(function* () {
+        const achievements = yield* (yield* ContentCatalog).achievements;
+
+        expect(achievements.map((a) => a.art)).toEqual([
+          "/images/achievements/hackathon-0a1b2c3d.avif",
+          "/images/achievements/mdf.jpg",
+          "/images/chibi/trophy.webp",
+          "/images/chibi/surf.png",
+        ]);
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            achievements: [
+              "/images/achievements/hackathon-0a1b2c3d.avif",
+              "/images/achievements/mdf.jpg",
+              "/images/chibi/trophy.webp",
+              "/images/chibi/surf.png",
+            ].map((art) => achievement({ art })),
+          }),
+        ),
+      ),
+  );
+
+  it.effect(
+    "refuse Achievement art outside its folders, traversing, or not an image of its folder",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).achievements);
+
+        expect(error._tag).toBe("ContentInvalid");
+        for (const at of [0, 1, 2, 3, 4, 5])
+          expect(error.message).toContain(
+            `content/achievements.json at [${at}].art: Expected an image (PNG, JPEG, WebP or AVIF) in /images/achievements/, or a WebP or PNG in /images/chibi/`,
+          );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            achievements: [
+              "/images/achievements/../../../package.json",
+              "/images/chibi/../projects/predi.png",
+              "/images/projects/predi.png",
+              "/images/chibi/trophy.avif",
+              "/images/achievements/nested/mdf.png",
+              "/images/achievements/logo.svg",
+            ].map((art) => achievement({ art })),
           }),
         ),
       ),

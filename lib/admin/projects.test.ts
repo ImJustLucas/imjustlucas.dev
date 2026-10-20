@@ -32,6 +32,7 @@ const portfolio = {
   techs: ["typescript"],
   openSource: true,
   repository: "https://github.com/ImJustLucas/imjustlucas.dev",
+  rarity: "common",
 };
 
 const PROJECTS = "content/projects.json";
@@ -50,6 +51,8 @@ const admin = (
       "content/tech-categories.json": "[]",
       [PROJECTS]: JSON.stringify(projects),
       "content/experiences.json": "[]",
+      "content/achievements.json": "[]",
+      "content/hobbies.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
@@ -82,6 +85,8 @@ const tricks = {
   externalLink: "https://tricks.example",
   repository: "",
   openSource: false,
+  rarity: "rare",
+  featured: "",
 };
 
 /** The first bytes of a PNG, a JPEG and a WebP file: enough to recognise them. */
@@ -130,6 +135,7 @@ describe("Admin actions on Projects", () => {
           techs: ["react", "typescript"],
           externalLink: "https://tricks.example",
           openSource: false,
+          rarity: "rare",
         },
       ]);
     }),
@@ -198,6 +204,55 @@ describe("Admin actions on Projects", () => {
     }),
   );
 
+  it.effect(
+    "an unknown Rarity or a place that is not a whole number from 1 gives field errors",
+    () =>
+      Effect.gen(function* () {
+        const { run, commits } = yield* admin(owner);
+
+        for (const featured of ["0", "1.5", "-2", "premier"]) {
+          const result = yield* run(
+            createProject({
+              revision: "memory-0",
+              ...tricks,
+              rarity: "mythic",
+              featured,
+            }),
+          );
+
+          expect(result).toEqual({
+            kind: "invalid",
+            fieldErrors: {
+              rarity: "Rareté inconnue",
+              featured: "Nombre entier attendu, à partir de 1",
+            },
+          });
+        }
+        expect(yield* commits).toEqual([]);
+      }),
+  );
+
+  it.effect("an empty place takes the Project off the home page", () =>
+    Effect.gen(function* () {
+      const { run, projects } = yield* admin(owner, [
+        { ...portfolio, featured: 2 },
+      ]);
+      expect((yield* projects)[0].featured).toBe(2);
+
+      yield* run(
+        updateProject({
+          revision: "memory-0",
+          index: 0,
+          ...tricks,
+          featured: "",
+        }),
+      );
+
+      const [saved] = yield* projects;
+      expect(saved).not.toHaveProperty("featured");
+    }),
+  );
+
   it.effect("a Tech that does not exist gives a field error", () =>
     Effect.gen(function* () {
       const { run, commits } = yield* admin(owner);
@@ -222,7 +277,12 @@ describe("Admin actions on Projects", () => {
     Effect.gen(function* () {
       const { run, commits, projects } = yield* admin(owner, [
         portfolio,
-        { ...tricks, repository: undefined, externalLink: undefined },
+        {
+          ...tricks,
+          repository: undefined,
+          externalLink: undefined,
+          featured: undefined,
+        },
       ]);
 
       const result = yield* run(
@@ -237,6 +297,8 @@ describe("Admin actions on Projects", () => {
           externalLink: "https://imjustlucas.dev",
           repository: "",
           openSource: false,
+          rarity: "epic",
+          featured: "1",
         }),
       );
 
@@ -254,6 +316,8 @@ describe("Admin actions on Projects", () => {
         techs: ["react", "typescript"],
         externalLink: "https://imjustlucas.dev",
         openSource: false,
+        rarity: "epic",
+        featured: 1,
       });
       expect(untouched.title).toBe("Tricks");
     }),

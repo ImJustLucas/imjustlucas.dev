@@ -8,7 +8,8 @@
       "en": "Co-founded Predi.GG 🔮",
       "fr": "Cofondation de Predi.GG 🔮"
     },
-    "period": { "start": "2025-09", "end": "ongoing" }
+    "period": { "start": "2025-09", "end": "ongoing" },
+    "emoji": "🔮"
   },
   {
     "company": "Bam Karaoke",
@@ -19,7 +20,8 @@
       "en": "Fullstack development for Bam Karaoke 🎤",
       "fr": "Développement fullstack pour Bam Karaoke 🎤"
     },
-    "period": { "start": "2026-01", "end": "ongoing" }
+    "period": { "start": "2026-01", "end": "ongoing" },
+    "emoji": "🎤"
   },
   {
     "company": "Favikon",
@@ -30,7 +32,8 @@
       "en": "Creation of an innovative SaaS, to optimize influencer marketing strategies 💜",
       "fr": "Création d'un SaaS innovant pour optimiser les stratégies de marketing d'influence 💜"
     },
-    "period": { "start": "2023", "end": "2025" }
+    "period": { "start": "2023", "end": "2025" },
+    "emoji": "💜"
   },
   {
     "company": "The Tricks Network",
@@ -41,7 +44,8 @@
       "en": "Creation of a social network intended for extreme sports on web and mobile platforms 🤙",
       "fr": "Création d'un réseau social dédié aux sports extrêmes, sur le web et sur mobile 🤙"
     },
-    "period": { "start": "2021", "end": "2023" }
+    "period": { "start": "2021", "end": "2023" },
+    "emoji": "🤙"
   },
   {
     "company": "TNYTR",

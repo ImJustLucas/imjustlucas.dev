@@ -1,0 +1,13 @@
+[
+  {
+    "name": { "en": "MasterDevFrance 2025", "fr": "MasterDevFrance 2025" },
+    "description": {
+      "en": "winner of the national competition for technical excellence in software development",
+      "fr": "vainqueur du concours national d'excellence technique en développement logiciel"
+    },
+    "year": 2025,
+    "rarity": "legendary",
+    "link": "/mdf-2025",
+    "art": "/images/chibi/trophy.webp"
+  }
+]

@@ -48,4 +48,17 @@ describe("the content folder", () => {
       }
     }).pipe(Effect.provide(catalog)),
   );
+
+  it.effect("has every Achievement's art in the public assets folder", () =>
+    Effect.gen(function* () {
+      const achievements = yield* (yield* ContentCatalog).achievements;
+
+      for (const achievement of achievements) {
+        expect(
+          existsSync(join(repositoryRoot, "public", achievement.art)),
+          achievement.art,
+        ).toBe(true);
+      }
+    }).pipe(Effect.provide(catalog)),
+  );
 });

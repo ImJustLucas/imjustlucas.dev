@@ -2,87 +2,287 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
+/*
+ * The Player Profile world (DESIGN.md). Colours are "r g b" channels so
+ * Tailwind can apply alpha (`bg-raised/50`). Role tokens (frame, ground,
+ * raised, seam, ink, action…) change with the palette and the mode:
+ * - "electric", the default: the dark mode is navy night with off-white
+ *   actions on electric-blue ledges, the light mode off-white with electric
+ *   blue actions;
+ * - "plum" (`data-palette="plum"` on <html>): the plum and tangerine client.
+ * The fixed palette (night, cream, tangerine, electric, rarity, status)
+ * never changes.
+ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Fixed palette */
+    --night: 28 15 43;
+    --cream: 255 241 230;
+    --tangerine: 255 138 61;
+    --tangerine-ledge: 194 90 18;
+    --electric: 47 107 255;
+    --off-white: 246 243 234;
+    --legendary: 255 216 77;
+    --epic: 180 124 255;
+    --rare: 70 194 255;
+    --common: 185 169 204;
+    --online: 95 224 138;
+    --away: 255 176 46;
+    --busy: 255 93 115;
+
+    /* Electric, light mode: off-white room, electric-blue actions */
+    --frame: 232 228 217;
+    --ground: var(--off-white);
+    --raised: 255 253 248;
+    --seam: 220 214 198;
+    --ink: 16 19 31;
+    --ink-muted: 84 90 110;
+    --ledge: 220 214 198;
+    --action: 26 79 232;
+    --action-ledge: 13 47 166;
+    --action-ink: 26 79 232;
+    --on-action: var(--off-white);
+    /* Text on bright fills (rarity and live tags, the Spotify disc) */
+    --on-bright: 10 15 46;
+    --legendary-ink: 138 98 0;
+    --epic-ink: 122 63 209;
+    --rare-ink: 11 111 168;
+    --common-ink: 107 90 128;
+    --online-ink: 29 122 69;
+    --busy-ink: 192 35 61;
+    --tray: inset 0 1px 0 rgb(255 255 255 / 0.9);
+    --float: 0 24px 48px -12px rgb(16 19 31 / 0.22);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%2310131f' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%2310131f' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+
+    /* shadcn roles, mapped onto the world so every page inherits it */
+    --background: var(--ground);
+    --foreground: var(--ink);
+    --card: var(--raised);
+    --card-foreground: var(--ink);
+    --popover: var(--raised);
+    --popover-foreground: var(--ink);
+    --primary: var(--action);
+    --primary-foreground: var(--on-action);
+    --secondary: var(--raised);
+    --secondary-foreground: var(--ink);
+    --muted: var(--raised);
+    --muted-foreground: var(--ink-muted);
+    --accent: var(--seam);
+    --accent-foreground: var(--ink);
+    --destructive: var(--busy-ink);
+    --destructive-foreground: var(--cream);
+    --border: var(--seam);
+    --input: var(--seam);
+    --ring: var(--action-ink);
+
+    /* Motion tokens */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --dur-press: 80ms;
+    --dur-release: 160ms;
+    --dur-hover: 150ms;
+    --dur-tab: 240ms;
+    --dur-page: 220ms;
+    --dur-sheet-in: 260ms;
+    --dur-sheet-out: 180ms;
+    --dur-unlock: 900ms;
+    /* Distances, zeroed under reduced motion */
+    --press-depth: 4px;
+    --raise: 2px;
+    --rise: 6px;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Electric, dark mode (the default): navy night, off-white actions on
+       electric-blue ledges */
+    --frame: 5 8 28;
+    --ground: 10 15 46;
+    --raised: 20 28 72;
+    --seam: 42 58 122;
+    --ink: var(--off-white);
+    --ink-muted: 170 182 230;
+    --ledge: 5 8 28;
+    --action: var(--off-white);
+    --action-ledge: var(--electric);
+    --action-ink: 111 151 255;
+    --on-action: 10 15 46;
+    --legendary-ink: var(--legendary);
+    --epic-ink: var(--epic);
+    --rare-ink: var(--rare);
+    --common-ink: var(--common);
+    --online-ink: var(--online);
+    --busy-ink: var(--busy);
+    --destructive-foreground: var(--on-bright);
+    --tray: inset 0 1px 0 rgb(246 243 234 / 0.07);
+    --float: 0 24px 48px -12px rgb(2 4 16 / 0.6);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23f6f3ea' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23f6f3ea' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    color-scheme: dark;
   }
-}
 
-@layer base {
+  /* Plum, light mode: the "daytime lobby" */
+  [data-palette="plum"] {
+    --frame: 233 221 250;
+    --ground: 246 240 255;
+    --raised: 255 255 255;
+    --seam: 214 195 240;
+    --ink: 42 21 64;
+    --ink-muted: 91 74 115;
+    --ledge: 214 195 240;
+    --action: var(--tangerine);
+    --action-ledge: var(--tangerine-ledge);
+    --action-ink: 184 71 12;
+    --on-action: var(--night);
+    --on-bright: var(--night);
+    --float: 0 24px 48px -12px rgb(42 21 64 / 0.28);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%232a1540' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%232a1540' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Plum, dark mode: "LAN night" */
+  [data-palette="plum"].dark {
+    --frame: var(--night);
+    --ground: 42 21 64;
+    --raised: 59 33 89;
+    --seam: 90 58 128;
+    --ink: var(--cream);
+    --ink-muted: 201 182 228;
+    --ledge: var(--night);
+    --action-ink: var(--tangerine);
+    --tray: inset 0 1px 0 rgb(255 241 230 / 0.08);
+    --float: 0 24px 48px -12px rgb(12 4 22 / 0.6);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23fff1e6' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23fff1e6' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --press-depth: 0px;
+      --raise: 0px;
+      --rise: 0px;
+    }
+    *,
+    ::before,
+    ::after {
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   * {
     @apply border-border;
   }
+
   body {
-    /* On <body>, where the root layouts set the Geist font variables */
-    @apply bg-background text-foreground font-sans;
+    /* On <body>, where the root layouts set the font variables */
+    @apply bg-frame text-ink font-sans;
+    caret-color: rgb(var(--action-ink));
+  }
+
+  ::selection {
+    background-color: rgb(var(--action));
+    color: rgb(var(--on-action));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--action-ink));
+    outline-offset: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--seam)) transparent;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
   }
 }
 
-body {
-  &::-webkit-scrollbar {
-    width: 4px;
+@layer components {
+  /*
+   * The Night frame: Lucas's sparkle tattoo, small and faint, running whole
+   * along the 12px gutters of the client (never clipped, never behind text).
+   */
+  .sparkle-frame {
+    background-color: rgb(var(--frame));
+    background-image:
+      var(--sparkle-v), var(--sparkle-v), var(--sparkle-h), var(--sparkle-h),
+      var(--sparkle-h);
+    background-position:
+      left 0 top 0,
+      right 0 top 0,
+      left 0 top 0,
+      left 0 bottom 0,
+      left 0 top 68px;
+    background-repeat: repeat-y, repeat-y, repeat-x, repeat-x, repeat-x;
   }
-  &::-webkit-scrollbar-track {
-    background: #f3f4f6;
+  @media (min-width: 768px) {
+    .sparkle-frame {
+      /* The gutter between the 320px sidebar and the panel */
+      background-image:
+        var(--sparkle-v), var(--sparkle-v), var(--sparkle-h), var(--sparkle-h),
+        var(--sparkle-v);
+      background-position:
+        left 0 top 0,
+        right 0 top 0,
+        left 0 top 0,
+        left 0 bottom 0,
+        left 332px top 0;
+      background-repeat: repeat-y, repeat-y, repeat-x, repeat-x, repeat-y;
+    }
   }
-  &::-webkit-scrollbar-thumb {
-    background-color: #6b7280;
+
+  /*
+   * The Real Button Rule: anything pressable sits on a ledge and sinks onto
+   * it when pressed. The ledge colour is `--ledge` (the frame's colour under
+   * raised controls in dark, Seam in light); `.ledge-action` swaps it for the
+   * action's ledge (electric blue under off-white, Tangerine Ledge in plum).
+   */
+  .ledge {
+    box-shadow: 0 4px 0 rgb(var(--ledge));
+    transition:
+      transform var(--dur-release) var(--ease-pop),
+      box-shadow var(--dur-release) var(--ease-pop),
+      background-color var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out),
+      filter var(--dur-hover) var(--ease-out);
+  }
+  .ledge-action {
+    --ledge: var(--action-ledge);
+  }
+  .ledge-legendary {
+    --ledge: 138 98 0;
+  }
+  @media (hover: hover) {
+    .ledge:hover {
+      transform: translateY(calc(var(--raise) * -1));
+      box-shadow: 0 calc(4px + var(--raise)) 0 rgb(var(--ledge));
+    }
+  }
+  .ledge:active {
+    transform: translateY(var(--press-depth));
+    box-shadow: 0 calc(4px - var(--press-depth)) 0 rgb(var(--ledge));
+    filter: brightness(0.94);
+    transition-duration: var(--dur-press);
+  }
+  .ledge:disabled,
+  .ledge[aria-disabled="true"] {
+    box-shadow: none;
+    transform: none;
+    opacity: 0.5;
+  }
+
+  /* Moulded-tray highlight inside slots and cards. */
+  .tray {
+    box-shadow: var(--tray);
+  }
+
+  /* Things that float above the client: menus, tooltips, the mobile sheet. */
+  .float {
+    box-shadow: var(--float);
   }
 }

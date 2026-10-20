@@ -1,92 +1,108 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
-import { Menu, X } from "lucide-react";
+import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
-import { TypographyH3 } from "@/components/typography";
-import { Button } from "@/components/ui/button";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { FriendsPanel } from "@/components/presence/FriendsPanel";
+import { SoundOnPress } from "@/components/sound/SoundOnPress";
+import { SoundSwitch } from "@/components/sound/SoundSwitch";
+import { ModeToggle } from "@/components/theme-switch";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
 import type { Profile } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
-import MenuContainer from "./menu/MenuContainer";
-import { SidebarFooter } from "./SidebarFooter";
+import { ClientTabs } from "./ClientTabs";
+import { PlayerCard } from "./PlayerCard";
 
 type SidebarProps = {
   profile: Profile;
 };
 
+/**
+ * The client chrome, mounted once: a 320px column from 768px up, the
+ * full-screen client sheet below it (opened from the mobile top bar), so
+ * there is a single Lanyard connection and a single set of tab sounds.
+ */
 export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
-  const { isOpen, toggleMenu, closeMenu } = useMobileMenu();
+  const { isOpen } = useMobileMenu();
   const t = useTranslations("Sidebar");
-  const toggleRef = useRef<HTMLButtonElement>(null);
-  const wasOpen = useRef(false);
-
-  // While the mobile menu is open, Escape closes it, and so does widening the
-  // window to the desktop layout, where the content panel must not stay inert.
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
-    };
-    const desktop = window.matchMedia("(min-width: 768px)");
-    const onDesktop = () => desktop.matches && closeMenu();
-    document.addEventListener("keydown", onKeyDown);
-    desktop.addEventListener("change", onDesktop);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      desktop.removeEventListener("change", onDesktop);
-    };
-  }, [isOpen, closeMenu]);
-
-  // Focus goes back to the toggle when the menu closes, whatever closed it.
-  useEffect(() => {
-    if (wasOpen.current && !isOpen) toggleRef.current?.focus();
-    wasOpen.current = isOpen;
-  }, [isOpen]);
 
   return (
-    <>
-      {/* Mobile Menu Button: first in the tab order, so Tab moves into the open menu */}
-      <Button
-        ref={toggleRef}
-        variant="ghost"
-        size="icon"
-        className="md:hidden fixed top-4 right-4 z-50"
-        onClick={() => toggleMenu()}
-        aria-expanded={isOpen}
-        aria-controls="sidebar"
-      >
-        {isOpen ? <X /> : <Menu />}
-        <span className="sr-only">
-          {isOpen ? t("closeMenu") : t("openMenu")}
-        </span>
-      </Button>
-
-      {/* Mounted once: shown inline on desktop, as an overlay on mobile */}
-      <div
-        id="sidebar"
-        className={cn(
-          "md:static md:z-auto md:flex md:h-full md:w-80 md:flex-col md:p-2 md:bg-transparent md:backdrop-blur-none",
-          isOpen
-            ? "fixed inset-0 z-40 flex flex-col p-4 bg-background/80 backdrop-blur-sm"
-            : "hidden",
-        )}
-      >
-        <SideBarContent profile={profile} />
+    <div
+      id="sidebar"
+      aria-label={t("client")}
+      role="region"
+      data-open={isOpen}
+      className={cn(
+        "flex flex-col gap-6 overflow-y-auto bg-ground p-4",
+        "md:static md:h-full md:w-sidebar md:shrink-0 md:rounded-xl",
+        // Mobile: the client sheet, sliding up with Ease Drawer
+        "max-md:float max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:top-[68px] max-md:z-40 max-md:rounded-t-xl max-md:pb-8",
+        isOpen
+          ? "max-md:visible max-md:translate-y-0 max-md:[transition:transform_var(--dur-sheet-in)_var(--ease-drawer),opacity_150ms_ease-out]"
+          : "max-md:invisible max-md:translate-y-full max-md:[transition:transform_var(--dur-sheet-out)_var(--ease-drawer),opacity_150ms_ease-out,visibility_0s_var(--dur-sheet-out)]",
+        // Reduced motion: the sheet fades instead of sliding
+        "motion-reduce:max-md:translate-y-0",
+        !isOpen && "motion-reduce:max-md:opacity-0",
+      )}
+    >
+      <div className="max-md:hidden">
+        <PlayerCard />
       </div>
-    </>
+      <ClientTabs />
+      <FriendsPanel />
+      <div className="mt-auto flex flex-col gap-4">
+        <SettingsRow />
+        <SocialRow profile={profile} />
+      </div>
+    </div>
   );
 };
 
-const SideBarContent: React.FC<SidebarProps> = ({ profile }) => {
+function SettingsRow() {
+  const t = useTranslations("Sidebar");
   return (
-    <>
-      <TypographyH3>&gt; ImJustLucas</TypographyH3>
-      <MenuContainer />
-      <SidebarFooter profile={profile} />
-    </>
+    <div
+      role="group"
+      aria-label={t("settings")}
+      className="flex items-center gap-2 pb-1"
+    >
+      {/* Below 768px the top bar's switch stays visible above the sheet */}
+      <SoundSwitch className="max-md:hidden" />
+      <LocaleSwitcher />
+      <ModeToggle />
+    </div>
   );
-};
+}
+
+function SocialRow({ profile }: SidebarProps) {
+  const t = useTranslations("Sidebar");
+  const socials = [
+    { icon: Linkedin, href: profile.links.linkedin, label: "LinkedIn" },
+    { icon: Github, href: profile.links.github, label: "GitHub" },
+    { icon: Youtube, href: profile.links.youtube, label: "YouTube" },
+    { icon: Instagram, href: profile.links.instagram, label: "Instagram" },
+  ];
+
+  return (
+    <ul aria-label={t("socials")} className="flex items-center gap-2 pb-1">
+      {socials.map((social) => (
+        <li key={social.href}>
+          <SoundOnPress>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ledge inline-flex size-11 items-center justify-center rounded-md bg-raised text-ink"
+            >
+              <social.icon aria-hidden className="size-5" />
+              <span className="sr-only">{social.label}</span>
+            </a>
+          </SoundOnPress>
+        </li>
+      ))}
+    </ul>
+  );
+}
