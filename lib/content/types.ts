@@ -7,8 +7,6 @@ export type {
   ProjectInLocale,
   ResolvedExperience,
   ResolvedProject,
-  ResolvedTechCategory,
-  TechCategoryInLocale,
   Video,
 } from "./catalog";
 export type { LoadoutEntry } from "./loadout";

@@ -4,7 +4,7 @@ import { FieldError } from "@/app/admin/admin-form";
 import type { Tech } from "@/lib/content/types";
 
 /**
- * Picks a Tech category's or a Project's Techs among the existing ones. The
+ * Picks a Project's Techs among the existing ones. The
  * Techs already picked come first, in their display order, which a save keeps.
  */
 export const TechPicker: React.FC<{

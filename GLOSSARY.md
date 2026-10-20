@@ -29,12 +29,12 @@ The span of time a Project or Experience covers: a start and an end, each precis
 _Avoid_: Date (for a span), duration
 
 **Tech**:
-A language, framework or tool, identified by its name and display colour, referenced by Projects and Tech categories.
+A language, framework or tool, identified by its name and display colour, referenced by Projects.
 _Avoid_: techBadge, technology, stack
 
-**Tech category**:
-A named group of Techs presented together on the "how" page.
-_Avoid_: Category (alone), stack
+**Loadout**:
+Every Tech the Projects use, each with how many Projects use it and the year the first of them started, derived from the Projects rather than written by hand; it filters the Projects page.
+_Avoid_: Stack, skills, Tech category
 
 **Video**:
 A video published on Lucas's YouTube channel, sourced from the channel itself rather than written by hand.
@@ -59,5 +59,5 @@ Lucas, the only person ever allowed into the Admin.
 _Avoid_: User, admin (for the person)
 
 **Admin**:
-The private space where the Owner edits Projects, Experiences, Techs, Tech categories, Achievements, Hobbies and the Profile.
+The private space where the Owner edits Projects, Experiences, Techs, Achievements, Hobbies and the Profile.
 _Avoid_: Back-office, dashboard

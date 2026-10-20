@@ -46,7 +46,6 @@ const admin = (
   Effect.gen(function* () {
     const memory = yield* makeInMemoryRepository({
       "content/techs.json": "[]",
-      "content/tech-categories.json": "[]",
       "content/projects.json": "[]",
       "content/experiences.json": "[]",
       [ACHIEVEMENTS]: JSON.stringify(achievements),

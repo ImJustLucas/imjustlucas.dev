@@ -40,7 +40,7 @@ Three claims, held equally, with none leading:
 
 ## Capabilities and Constraints
 
-- Content (Projects, Experiences, Techs, Tech categories, Profile) lives as JSON in `content/` and reaches pages only through the content catalog; the domain vocabulary is in `GLOSSARY.md`.
+- Content (Projects, Experiences, Techs, Achievements, Hobbies, Profile) lives as JSON in `content/` and reaches pages only through the content catalog; the domain vocabulary is in `GLOSSARY.md`.
 - **Locale parity**: every visible string of a public page exists in both Locales, and no page mixes languages. Proper nouns (Project titles, Tech names, company and school names) and Video titles stay untranslated.
 - Star counts and Videos are never written by hand; when the source is down, the page shows the previous version, or the empty state on a fresh build.
 - Live Discord presence through Lanyard: what Lucas is playing or listening to, derived on each render.

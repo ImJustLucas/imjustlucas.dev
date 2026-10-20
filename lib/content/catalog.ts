@@ -37,13 +37,6 @@ export type Video = ChannelVideo & {
 
 const NEW_VIDEO_AGE = 30 * 24 * 60 * 60 * 1000;
 
-/** A Tech category as pages render it: its Techs resolved, in order. */
-export type ResolvedTechCategory = {
-  readonly name: LocalizedText;
-  readonly description: LocalizedText;
-  readonly techs: ReadonlyArray<Tech>;
-};
-
 /** A Project as pages render it: its Techs resolved, its links checked. */
 export type ResolvedProject = {
   readonly title: string;
@@ -70,13 +63,6 @@ const FEATURED_PROJECTS = 3;
 
 /** An Experience as pages render it. */
 export type ResolvedExperience = Experience;
-
-/** A Tech category in one Locale: its name and description in that Locale. */
-export type TechCategoryInLocale = {
-  readonly name: string;
-  readonly description: string;
-  readonly techs: ReadonlyArray<Tech>;
-};
 
 /** A Project in one Locale: its description in that Locale. */
 export type ProjectInLocale = Omit<ResolvedProject, "description"> & {
@@ -115,10 +101,6 @@ export type HobbyInLocale = {
  * that Locale; proper nouns (titles, Tech names) as they are.
  */
 export type CatalogInLocale = {
-  readonly techCategories: Effect.Effect<
-    ReadonlyArray<TechCategoryInLocale>,
-    CatalogError
-  >;
   /** Ordered by Period start, most recent first; ongoing first on ties. */
   readonly projects: Effect.Effect<
     ReadonlyArray<ProjectInLocale>,
@@ -160,10 +142,6 @@ export type CatalogError =
 export class ContentCatalog extends Context.Service<
   ContentCatalog,
   {
-    readonly techCategories: Effect.Effect<
-      ReadonlyArray<ResolvedTechCategory>,
-      CatalogError
-    >;
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly projects: Effect.Effect<
       ReadonlyArray<ResolvedProject>,
@@ -204,17 +182,6 @@ export class ContentCatalog extends Context.Service<
       const stars = yield* GitHubStars;
       const channel = yield* YouTubeChannel;
       const load = loadContent(repository);
-
-      const techCategories = Effect.map(load, (content) => {
-        const resolve = techResolver(content);
-        return content.techCategories.map(
-          (category): ResolvedTechCategory => ({
-            name: category.name,
-            description: category.description,
-            techs: category.techs.map(resolve),
-          }),
-        );
-      });
 
       /**
        * Resolves the Projects `select` picks from those ordered by Period,
@@ -306,7 +273,6 @@ export class ContentCatalog extends Context.Service<
       const hobbies = Effect.map(load, (content) => content.hobbies);
 
       return {
-        techCategories,
         projects,
         experiences,
         videos,
@@ -319,13 +285,6 @@ export class ContentCatalog extends Context.Service<
             description: project.description[locale],
           });
           return {
-            techCategories: Effect.map(techCategories, (all) =>
-              all.map((category) => ({
-                ...category,
-                name: category.name[locale],
-                description: category.description[locale],
-              })),
-            ),
             projects: Effect.map(projects, (all) => all.map(projectInLocale)),
             featuredProjects: Effect.map(featuredProjects, (all) =>
               all.map(projectInLocale),
