@@ -17,7 +17,7 @@ export const PresenceListening = ({ presence }: PresenceListeningProps) => {
   const t = useTranslations("Presence");
 
   return (
-    <Card className="w-full cursor-pointer">
+    <Card className="w-full">
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
           <div className="relative h-12 w-12 shrink-0">
