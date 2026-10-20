@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T13:02:55+00:00",
+  "generatedAt": "2026-10-20T14:10:01+00:00",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
@@ -840,6 +840,11 @@
         "purpose": "Moulded-tray top highlight, both light modes."
       },
       {
+        "name": "well",
+        "value": "inset 0 2px 0 rgb(var(--ledge))",
+        "purpose": "The sunken item well inside a loadout bag; the tray's inverse, a ledge-coloured lip along its top edge. Never on anything pressable."
+      },
+      {
         "name": "float-electric-dark",
         "value": "0 24px 48px -12px rgb(2 4 16 / 0.6)",
         "purpose": "Mobile sheet and menus, electric dark."
@@ -930,6 +935,31 @@
         "name": "press-depth / raise / rise",
         "value": "4px / 2px / 6px",
         "purpose": "Distances, all zero under prefers-reduced-motion."
+      },
+      {
+        "name": "track-draw",
+        "value": "scaleY(0) to scaleY(1) from the top, 160ms, var(--ease-in-out), delay stop * 160ms + 120ms",
+        "purpose": "Each career track segment draws down to the next stop on arrival."
+      },
+      {
+        "name": "stop-pop",
+        "value": "opacity 0, scale(0.5) to 1, 320ms, var(--ease-pop), delay stop * 160ms",
+        "purpose": "Each career stop disc pops onto the track on arrival, 160ms after the one above."
+      },
+      {
+        "name": "medal-turn",
+        "value": "rotateY(180deg), 600ms, var(--ease-out), perspective 600px",
+        "purpose": "A medal turns to its back on slot hover (fine pointers) or press; faces swap without turning under reduced motion."
+      },
+      {
+        "name": "chip-ripple",
+        "value": "translateY(-2px), var(--dur-hover), var(--ease-out), delay item * 30ms",
+        "purpose": "Chips in a loadout bag's well rise one after the other on bag hover."
+      },
+      {
+        "name": "replay-hover",
+        "value": "thumbnail scale(1.03) over 300ms; play disc opacity 0 and translateY(8px) to rest over var(--dur-hover); both var(--ease-out)",
+        "purpose": "A replay tile's thumbnail zooms and its play disc rises on hover; the disc is always visible on touch."
       }
     ],
     "breakpoints": [
@@ -1136,6 +1166,46 @@
       "description": "The theme switch's menu: a mode section (dark, light, system) and a palette section (electric blue, plum) with solid swatches (Electric, Tangerine); lowercase labels, action-ink check on the current choice.",
       "html": "<div class=\"ds-menu\" role=\"menu\"><div class=\"ds-menu-label\">mode</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">dark<svg class=\"ds-check\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">light</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">system</div><div class=\"ds-menu-sep\"></div><div class=\"ds-menu-label\">palette</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\"><span class=\"ds-sw-row\"><span class=\"ds-sw ds-sw-electric\"></span>electric blue</span><svg class=\"ds-check\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\"><span class=\"ds-sw-row\"><span class=\"ds-sw ds-sw-plum\"></span>plum</span></div></div>",
       "css": ".ds-menu { width:192px; padding:6px; background:#141c48; border:2px solid #2a3a7a; border-radius:16px; box-shadow:0 24px 48px -12px rgb(2 4 16 / 0.6); font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#f6f3ea; } .ds-menu-label { padding:8px 12px 4px; color:#aab6e6; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; line-height:1rem; } .ds-menu-item { display:flex; align-items:center; justify-content:space-between; gap:12px; height:40px; padding:0 12px; border-radius:10px; font-size:0.875rem; font-weight:500; cursor:pointer; outline:none; } .ds-menu-item:hover, .ds-menu-item:focus-visible { background:#2a3a7a; } .ds-check { color:#6f97ff; } .ds-menu-sep { height:2px; margin:6px 4px; background:#2a3a7a; } .ds-sw-row { display:flex; align-items:center; gap:10px; } .ds-sw { width:14px; height:14px; box-sizing:border-box; border-radius:9999px; border:2px solid; } .ds-sw-electric { background:#f6f3ea; border-color:#2f6bff; } .ds-sw-plum { background:#1c0f2b; border-color:#ff8a3d; }"
+    },
+    {
+      "name": "Page Banner",
+      "kind": "card",
+      "refersTo": "page-banner",
+      "description": "Top of the experiences, how and videos pages: Headline, one muted line, a chibi pose on its ground stage disc, in a seam-bordered raised slot with the tray.",
+      "html": "<header class=\"ds-pb\"><h1 class=\"ds-pb-t\">My experiences</h1><p class=\"ds-pb-l\">Where I've played so far, and the diplomas I earned along the way</p><div class=\"ds-pb-c\"><span class=\"ds-pb-stage\"></span></div></header>",
+      "css": ".ds-pb { display:grid; grid-template-columns:1fr 160px; column-gap:32px; row-gap:12px; align-items:center; padding:20px 28px; background:#141c48; border:2px solid #2a3a7a; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-pb-t { margin:0; align-self:end; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.75rem; font-weight:700; line-height:1.15; letter-spacing:-0.015em; } .ds-pb-l { margin:0; grid-column:1; align-self:start; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:500; line-height:1.65; color:#aab6e6; } .ds-pb-c { position:relative; grid-column:2; grid-row:1 / span 2; aspect-ratio:1; } .ds-pb-stage { position:absolute; left:6%; right:6%; top:14%; bottom:4%; border-radius:9999px; background:#0a0f2e; }"
+    },
+    {
+      "name": "Career Stop",
+      "kind": "custom",
+      "refersTo": "career-stop",
+      "description": "A stop on the career path: a ground disc with a seam ring on the 4px track, Online ring, breathing dot and lit track while ongoing, beside its raised slot.",
+      "html": "<ol class=\"ds-cp\"><li class=\"ds-cs\"><span class=\"ds-track ds-lit\"></span><span class=\"ds-disc ds-on\">🔮<span class=\"ds-dot\"></span></span><article class=\"ds-cs-slot\"><div class=\"ds-cs-meta\"><span class=\"ds-data\">2024 - now</span><span class=\"ds-tag-on\">current team</span></div><h3 class=\"ds-cs-h\"><a href=\"#\" class=\"ds-slink\">Predi.GG</a></h3><div class=\"ds-cs-role\">Co-founder <span class=\"ds-tag-o\">Freelance</span></div></article></li><li class=\"ds-cs\"><span class=\"ds-disc\">🎤</span><article class=\"ds-cs-slot\"><div class=\"ds-cs-meta\"><span class=\"ds-data\">2022 - 2024</span></div><h3 class=\"ds-cs-h\"><a href=\"#\" class=\"ds-slink\">Bam Karaoke</a></h3></article></li></ol>",
+      "css": ".ds-cp { list-style:none; margin:0; padding:20px; background:#0a0f2e; display:flex; flex-direction:column; gap:16px; } .ds-cs { position:relative; display:grid; grid-template-columns:56px minmax(0,1fr); gap:20px; } .ds-track { position:absolute; left:26px; top:56px; bottom:-16px; width:4px; border-radius:9999px; background:#2a3a7a; } .ds-lit { background:#5fe08a; } .ds-disc { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; width:56px; height:56px; box-sizing:border-box; border-radius:9999px; border:2px solid #2a3a7a; background:#0a0f2e; font-size:1.5rem; } .ds-on { border-color:#5fe08a; } .ds-dot { position:absolute; right:-2px; top:-2px; width:14px; height:14px; box-sizing:border-box; border-radius:9999px; border:3px solid #0a0f2e; background:#5fe08a; } .ds-cs-slot { display:flex; flex-direction:column; gap:8px; padding:20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-cs-meta { display:flex; gap:8px; align-items:center; color:#aab6e6; } .ds-data { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.8125rem; font-weight:500; } .ds-tag-on { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; padding:2px 8px; border-radius:9999px; background:#5fe08a; color:#0a0f2e; } .ds-cs-h { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; line-height:1.25; } .ds-slink { color:#f6f3ea; text-decoration:underline 3px #2f6bff; text-underline-offset:6px; border-radius:6px; transition:color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-slink:hover { color:#6f97ff; } .ds-slink:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-cs-role { display:flex; gap:8px; align-items:center; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-weight:500; } .ds-tag-o { font-size:0.75rem; font-weight:600; letter-spacing:0.02em; padding:0 8px; border-radius:9999px; border:2px solid #2a3a7a; }"
+    },
+    {
+      "name": "Medal",
+      "kind": "button",
+      "refersTo": "medal",
+      "description": "A diploma as a coin on a ledge: level lettered on the ground face inside a dashed seam rim; turns to Lucas's head and the minted year on slot hover or press.",
+      "html": "<button class=\"ds-medal\" aria-pressed=\"false\"><span class=\"ds-medal-in\"><span class=\"ds-face\"><span class=\"ds-rim\"></span><span class=\"ds-lvl\">Master's</span></span><span class=\"ds-face ds-back\"><span class=\"ds-rim\"></span><span class=\"ds-head\"></span><span class=\"ds-yr\">2025</span></span></span></button>",
+      "css": ".ds-medal { position:relative; width:112px; height:112px; padding:0; border:0; border-radius:9999px; background:transparent; perspective:600px; cursor:pointer; box-shadow:0 4px 0 #05081c; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-medal:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-medal:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; transition-duration:80ms; } .ds-medal:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-medal-in { position:absolute; inset:0; transform-style:preserve-3d; transition:transform 600ms cubic-bezier(0.23,1,0.32,1); } .ds-medal:hover .ds-medal-in { transform:rotateY(180deg); } .ds-face { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-sizing:border-box; border-radius:9999px; border:2px solid #2a3a7a; background:#0a0f2e; backface-visibility:hidden; } .ds-back { transform:rotateY(180deg); } .ds-rim { position:absolute; inset:6px; border-radius:9999px; border:2px dashed #2a3a7a; } .ds-lvl { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.8125rem; font-weight:700; color:#f6f3ea; } .ds-head { width:48px; height:48px; border-radius:9999px; background:#141c48; } .ds-yr { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.6875rem; font-weight:600; color:#aab6e6; }"
+    },
+    {
+      "name": "Loadout Bag",
+      "kind": "card",
+      "refersTo": "loadout-bag",
+      "description": "A Tech category as a raised slot: name in Title Large, item count in Data, and a sunken ground well (10px corners, Well shadow) of large Tech chips that ripple on hover.",
+      "html": "<article class=\"ds-bag\"><div class=\"ds-bag-h\"><h2 class=\"ds-bag-t\">Frontend</h2><span class=\"ds-bag-n\">6 items</span></div><ul class=\"ds-well\"><li class=\"ds-tc\" style=\"background:#61dafb;color:#1c0f2b\">React</li><li class=\"ds-tc\" style=\"background:#ffffff;color:#1c0f2b\">Next.js</li><li class=\"ds-tc\" style=\"background:#38bdf8;color:#1c0f2b\">Tailwind</li></ul></article>",
+      "css": ".ds-bag { display:flex; flex-direction:column; gap:16px; padding:20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-bag-h { display:flex; justify-content:space-between; align-items:baseline; gap:12px; } .ds-bag-t { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; line-height:1.25; } .ds-bag-n { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.8125rem; font-weight:500; color:#aab6e6; } .ds-well { list-style:none; margin:0; display:flex; flex-wrap:wrap; gap:8px; padding:12px; background:#0a0f2e; border-radius:10px; box-shadow:inset 0 2px 0 #05081c; } .ds-tc { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; padding:4px 12px; border-radius:9999px; transition:transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tc:nth-child(2) { transition-delay:30ms; } .ds-tc:nth-child(3) { transition-delay:60ms; } .ds-bag:hover .ds-tc { transform:translateY(-2px); }"
+    },
+    {
+      "name": "Replay Tile",
+      "kind": "card",
+      "refersTo": "replay-tile",
+      "description": "A Video as a borderless raised slot: 16:9 thumbnail with a rising ground play disc on a ledge, two-line Title, Mono date with the new tag, outline Watch now button.",
+      "html": "<article class=\"ds-rp\"><a class=\"ds-thumb\" href=\"#\" tabindex=\"-1\" aria-hidden=\"true\"><span class=\"ds-pd\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><polygon points=\"7 4 20 12 7 20 7 4\"/></svg></span></a><h2 class=\"ds-rp-t\">I built my portfolio as a game client</h2><div class=\"ds-rp-m\"><time class=\"ds-data\">October 12, 2026</time><span class=\"ds-tag-on\">New</span></div><a class=\"ds-btn-o\" href=\"#\">Watch now!</a></article>",
+      "css": ".ds-rp { display:flex; flex-direction:column; gap:16px; max-width:360px; padding:16px 20px 20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-thumb { position:relative; display:flex; align-items:center; justify-content:center; aspect-ratio:16 / 9; border-radius:10px; overflow:hidden; background:rgb(42 58 122 / 0.4); } .ds-pd { display:flex; align-items:center; justify-content:center; width:56px; height:56px; box-sizing:border-box; border-radius:9999px; border:2px solid #2a3a7a; background:#0a0f2e; color:#f6f3ea; box-shadow:0 4px 0 #05081c; opacity:0; transform:translateY(8px); transition:opacity 150ms cubic-bezier(0.23,1,0.32,1), transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-rp:hover .ds-pd { opacity:1; transform:none; } .ds-rp-t { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; } .ds-rp-m { display:flex; gap:8px; align-items:center; margin-top:-8px; color:#aab6e6; } .ds-data { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.8125rem; font-weight:500; } .ds-tag-on { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; padding:2px 8px; border-radius:9999px; background:#5fe08a; color:#0a0f2e; } .ds-btn-o { align-self:flex-start; display:inline-flex; align-items:center; height:44px; padding:0 16px; box-sizing:border-box; border:2px solid #2a3a7a; border-radius:10px; background:#0a0f2e; color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; text-decoration:none; box-shadow:0 4px 0 #05081c; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-btn-o:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-btn-o:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; transition-duration:80ms; } .ds-btn-o:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     }
   ],
   "narrative": {
@@ -1148,7 +1218,8 @@
       "Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.",
       "Chunky pressable controls on a solid ledge; raised slots and cards with soft 16px corners and a moulded-tray highlight.",
       "A one-instrument kalimba kit in D major pentatonic, on by default, behind an always-visible switch.",
-      "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye."
+      "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye.",
+      "The other profile screens open on a page banner and keep the game's objects: the career path of stops on a track, diplomas as medals that turn like coins, the loadout's bags of Techs in sunken wells, and replay tiles."
     ],
     "rules": [
       {
