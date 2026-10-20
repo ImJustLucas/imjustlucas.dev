@@ -66,7 +66,7 @@ export default async function LocaleLayout({
             <TypographyH1 className="absolute top-96 opacity-0">
               ImJustLucas
             </TypographyH1>
-            <div className="fixed bottom-5 right-5 z-10 hover:cursor-pointer">
+            <div className="fixed bottom-5 right-5 z-10">
               <Image
                 src="/images/chibi-avatar-64x64.png"
                 alt={t("avatarAlt")}

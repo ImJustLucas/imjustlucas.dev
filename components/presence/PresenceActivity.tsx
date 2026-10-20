@@ -15,7 +15,7 @@ export const PresenceActivity = ({ presence }: PresenceActivityProps) => {
   const { name, details, state, artwork, badge } = presence;
 
   return (
-    <Card className="w-full cursor-pointer">
+    <Card className="w-full">
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
           {artwork && (
