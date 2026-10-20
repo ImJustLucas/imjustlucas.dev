@@ -52,7 +52,10 @@
     "mode": "mode",
     "palette": "palette",
     "electric": "bleu électrique",
-    "plum": "prune"
+    "plum": "prune",
+    "khaki": "kaki",
+    "sakura": "sakura",
+    "surf": "surf"
   },
   "LocaleSwitcher": {
     "switch": "English"
@@ -175,17 +178,7 @@
     "items": "{count, plural, one {# objet} other {# objets}}"
   },
   "Contact": {
-    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible.",
-    "inspirationTitle": "Inspiration",
-    "inspiration": "Le design n'est pas vraiment de moi : il s'inspire largement des sites de <phineas>phineas</phineas> et <antoinek>antoinek</antoinek>, big up à eux",
-    "vieTitle": "VIE",
-    "vie": "Si des recruteurs internationaux passent par ici, je recherche un VIE pour septembre 2025 ! N'hésitez pas à <linkedin>m'envoyer un message</linkedin>",
-    "destinationsTitle": "Destinations préférées :",
-    "destinations": {
-      "northAmerica": "Amérique du Nord",
-      "asia": "Asie (Japon, Corée du Sud)",
-      "oceania": "Océanie (Australie, Nouvelle-Zélande)"
-    }
+    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible."
   },
   "Mdf2025": {
     "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",

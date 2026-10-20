@@ -9,7 +9,10 @@
  * - "electric", the default: the dark mode is navy night with off-white
  *   actions on electric-blue ledges, the light mode off-white with electric
  *   blue actions;
- * - "plum" (`data-palette="plum"` on <html>): the plum and tangerine client.
+ * - "plum" (`data-palette="plum"` on <html>): the plum and tangerine client;
+ * - "khaki": olive and chocolate;
+ * - "sakura": burgundy night and cherry blossom;
+ * - "surf": deep sea and sand, sea foam by day.
  * The fixed palette (night, cream, tangerine, electric, rarity, status)
  * never changes.
  */
@@ -44,6 +47,8 @@
     --on-action: var(--off-white);
     /* Text on bright fills (rarity and live tags, the Spotify disc) */
     --on-bright: 10 15 46;
+    /* The underline of text links */
+    --link-line: var(--action-ink);
     --legendary-ink: 138 98 0;
     --epic-ink: 122 63 209;
     --rare-ink: 11 111 168;
@@ -116,6 +121,7 @@
     --online-ink: var(--online);
     --busy-ink: var(--busy);
     --destructive-foreground: var(--on-bright);
+    --link-line: var(--electric);
     --tray: inset 0 1px 0 rgb(246 243 234 / 0.07);
     --float: 0 24px 48px -12px rgb(2 4 16 / 0.6);
     --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23f6f3ea' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
@@ -150,12 +156,129 @@
     --seam: 90 58 128;
     --ink: var(--cream);
     --ink-muted: 201 182 228;
+    --link-line: var(--ink-muted);
     --ledge: var(--night);
     --action-ink: var(--tangerine);
     --tray: inset 0 1px 0 rgb(255 241 230 / 0.08);
     --float: 0 24px 48px -12px rgb(12 4 22 / 0.6);
     --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23fff1e6' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
     --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23fff1e6' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Khaki, light mode: linen, olive actions on a chocolate ledge */
+  [data-palette="khaki"] {
+    --frame: 221 213 192;
+    --ground: 236 230 214;
+    --raised: 247 243 232;
+    --seam: 211 202 178;
+    --ink: 43 38 24;
+    --ink-muted: 95 90 69;
+    --ledge: 211 202 178;
+    --action: 94 107 58;
+    --action-ledge: 74 50 34;
+    --action-ink: 79 92 44;
+    --on-action: 247 243 232;
+    --on-bright: 43 38 24;
+    --float: 0 24px 48px -12px rgb(43 38 24 / 0.22);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%232b2618' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%232b2618' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Khaki, dark mode: olive night, bone actions on a chocolate ledge */
+  [data-palette="khaki"].dark {
+    --frame: 26 20 15;
+    --ground: 38 42 28;
+    --raised: 51 56 38;
+    --seam: 75 82 54;
+    --ink: 241 234 216;
+    --ink-muted: 196 191 163;
+    --ledge: 26 20 15;
+    --action: 227 217 184;
+    --action-ledge: 107 68 41;
+    --action-ink: 214 179 126;
+    --on-action: 38 42 28;
+    --on-bright: 26 20 15;
+    --link-line: var(--action-ink);
+    --tray: inset 0 1px 0 rgb(241 234 216 / 0.07);
+    --float: 0 24px 48px -12px rgb(26 20 15 / 0.6);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23f1ead8' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23f1ead8' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Sakura, light mode: blossom pink, cherry actions */
+  [data-palette="sakura"] {
+    --frame: 239 221 225;
+    --ground: 248 236 238;
+    --raised: 255 250 251;
+    --seam: 235 210 216;
+    --ink: 45 27 34;
+    --ink-muted: 107 76 86;
+    --ledge: 235 210 216;
+    --action: 200 50 90;
+    --action-ledge: 138 31 60;
+    --action-ink: 176 40 78;
+    --on-action: 255 255 255;
+    --on-bright: 45 27 34;
+    --float: 0 24px 48px -12px rgb(45 27 34 / 0.22);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%232d1b22' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%232d1b22' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Sakura, dark mode: burgundy night, sakura actions on a cherry ledge */
+  [data-palette="sakura"].dark {
+    --frame: 23 13 17;
+    --ground: 36 21 25;
+    --raised: 51 29 36;
+    --seam: 79 46 57;
+    --ink: 251 238 241;
+    --ink-muted: 217 179 191;
+    --ledge: 23 13 17;
+    --action: 255 179 199;
+    --action-ledge: 200 50 90;
+    --action-ink: 255 143 174;
+    --on-action: 36 21 25;
+    --on-bright: 36 21 25;
+    --link-line: var(--action-ink);
+    --tray: inset 0 1px 0 rgb(251 238 241 / 0.07);
+    --float: 0 24px 48px -12px rgb(23 13 17 / 0.6);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23fbeef1' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23fbeef1' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Surf, light mode (Écume): sea foam, sea-glass actions */
+  [data-palette="surf"] {
+    --frame: 220 235 234;
+    --ground: 241 247 246;
+    --raised: 255 255 255;
+    --seam: 207 227 225;
+    --ink: 11 43 53;
+    --ink-muted: 74 98 104;
+    --ledge: 207 227 225;
+    --action: 95 208 189;
+    --action-ledge: 31 143 132;
+    --action-ink: 22 118 109;
+    --on-action: 6 48 58;
+    --on-bright: 11 43 53;
+    --float: 0 24px 48px -12px rgb(11 43 53 / 0.22);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%230b2b35' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%230b2b35' stroke-opacity='.08' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Surf, dark mode: deep sea, sand actions on a turquoise ledge */
+  [data-palette="surf"].dark {
+    --frame: 4 22 26;
+    --ground: 8 42 48;
+    --raised: 15 58 66;
+    --seam: 30 90 99;
+    --ink: 243 236 223;
+    --ink-muted: 169 207 208;
+    --ledge: 4 22 26;
+    --action: 233 216 180;
+    --action-ledge: 31 163 163;
+    --action-ink: 79 209 207;
+    --on-action: 8 42 48;
+    --on-bright: 4 22 26;
+    --link-line: var(--action-ink);
+    --tray: inset 0 1px 0 rgb(243 236 223 / 0.07);
+    --float: 0 24px 48px -12px rgb(4 22 26 / 0.6);
+    --sparkle-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='96' viewBox='0 0 12 96'%3E%3Cg fill='none' stroke='%23f3ecdf' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(2 26) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(3 75) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
+    --sparkle-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' viewBox='0 0 96 12'%3E%3Cg fill='none' stroke='%23f3ecdf' stroke-opacity='.12' stroke-width='3.6' stroke-linejoin='round'%3E%3Cpath transform='translate(26 2) scale(.3333)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3Cpath transform='translate(75 3) scale(.25)' d='M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z'/%3E%3C/g%3E%3C/svg%3E");
   }
 
   @media (prefers-reduced-motion: reduce) {

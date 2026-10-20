@@ -46,8 +46,8 @@ Three claims, held equally, with none leading:
 - Live Discord presence through Lanyard: what Lucas is playing or listening to, derived on each render.
 - Theme: light, dark and system, dark by default.
 - Uploads through the Admin: Project images (PNG, JPEG, WebP, AVIF) and Resume PDFs, 4 MB maximum.
-- **Open decision**: the Contact page still asks for a VIE starting September 2025, which is out of date. Whether to remove it or replace it with a current request is undecided.
-- **Not binding**: the Contact note crediting phineas and antoinek as the design's inspiration, and the MDF 2025 Three.js scene, may change or go in later work.
+- The Contact page points to LinkedIn DMs only. The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.
+- **Not binding**: the MDF 2025 Three.js scene may change or go in later work.
 
 ## Brand Commitments
 

@@ -304,7 +304,7 @@ Density is relaxed: big slots with generous gaps, one focal object per row. The 
 
 **Key Characteristics:**
 - Two-zone client inside a 12px frame: a 320px sidebar beside a rounded profile panel, both on the palette's ground, the panel the only part that scrolls.
-- Two palettes, each with a dark and a light mode, all through the same role tokens: "electric" (the default; navy night in dark, off-white daytime in light) and "plum" (the plum and tangerine client). Dark is the default mode.
+- Five palettes, each with a dark and a light mode, all through the same role tokens: "electric" (the default; navy night in dark, off-white daytime in light), "plum" (the plum and tangerine client), "khaki" (olive and chocolate), "sakura" (burgundy night and cherry blossom) and "surf" (deep sea and sand, sea foam by day). Dark is the default mode.
 - One action colour for the Play button, the active tab, the sound switch when on and selection; its ink colour draws focus.
 - Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.
 - Chunky pressable controls on a solid ledge; raised slots and cards with soft 16px corners and a moulded-tray highlight.
@@ -313,7 +313,7 @@ Density is relaxed: big slots with generous gaps, one focal object per row. The 
 
 ## Colors
 
-A committed world in two palettes: the shell is the colour, with one action colour and a four-step rarity ramp that labels content. Every colour a component uses is a role token (frame, ground, raised, seam, ledge, ink, ink-muted, action, action-ledge, action-ink, on-action, on-bright, and the `-ink` variant of each rarity and status colour) that changes with the palette and the mode. The shadcn roles (background, card, primary, border, ring, destructive…) are mapped onto them, so every page and the Admin inherit the world without restyling. The palette is the `data-palette` attribute on `<html>` (absent for electric, `plum` for plum); the mode is next-themes' `dark` class.
+A committed world in five palettes: the shell is the colour, with one action colour and a four-step rarity ramp that labels content. Every colour a component uses is a role token (frame, ground, raised, seam, ledge, ink, ink-muted, action, action-ledge, action-ink, on-action, on-bright, and the `-ink` variant of each rarity and status colour) that changes with the palette and the mode. The shadcn roles (background, card, primary, border, ring, destructive…) are mapped onto them, so every page and the Admin inherit the world without restyling. The palette is the `data-palette` attribute on `<html>` (absent for electric, `plum` for plum); the mode is next-themes' `dark` class.
 
 ### Roles across palettes
 
@@ -331,6 +331,36 @@ A committed world in two palettes: the shell is the colour, with one action colo
 | action-ink | Electric Glow | Electric Deep | Tangerine | Tangerine Deep |
 | on-action | Navy | Off-white | Night | Night |
 | on-bright | Navy | Navy | Night | Night |
+| link-line | Electric | Electric Deep | Haze | Tangerine Deep |
+
+### More palettes (khaki, sakura, surf)
+Two more palettes on the same roles, chosen by Lucas on 2026-10-20 and selected the same way (`data-palette="khaki"`, `"sakura"`, `"surf"`). Their values live only in `styles/globals.css`; every text pair below is 4.5:1 or more.
+
+| Role | Khaki dark | Khaki light | Sakura dark | Sakura light |
+|---|---|---|---|---|
+| frame | #1a140f espresso | #ddd5c0 | #170d11 | #efdde1 |
+| ground | #262a1c olive night | #ece6d6 linen | #241519 burgundy night | #f8ecee blossom |
+| raised | #333826 | #f7f3e8 | #331d24 | #fffafb |
+| seam | #4b5236 | #d3cab2 | #4f2e39 | #ebd2d8 |
+| ink / ink-muted | #f1ead8 / #c4bfa3 | #2b2618 / #5f5a45 | #fbeef1 / #d9b3bf | #2d1b22 / #6b4c56 |
+| action | #e3d9b8 bone | #5e6b3a olive | #ffb3c7 sakura | #c8325a cherry |
+| action-ledge | #6b4429 chocolate | #4a3222 dark chocolate | #c8325a cherry | #8a1f3c |
+| action-ink, link-line | #d6b37e caramel | #4f5c2c | #ff8fae | #b0284e |
+| on-action / on-bright | #262a1c / #1a140f | #f7f3e8 / #2b2618 | #241519 / #241519 | #ffffff / #2d1b22 |
+
+| Role | Surf dark | Surf light ("Écume") |
+|---|---|---|
+| frame | #04161a | #dcebea |
+| ground | #082a30 deep sea | #f1f7f6 sea foam |
+| raised | #0f3a42 | #ffffff |
+| seam | #1e5a63 | #cfe3e1 |
+| ink / ink-muted | #f3ecdf / #a9cfd0 | #0b2b35 / #4a6268 |
+| action | #e9d8b4 sand | #5fd0bd sea glass |
+| action-ledge | #1fa3a3 turquoise | #1f8f84 |
+| action-ink, link-line | #4fd1cf | #16766d |
+| on-action / on-bright | #082a30 / #04161a | #06303a / #0b2b35 |
+
+Adding a palette is two blocks of these roles in `styles/globals.css` (light, then `.dark`), its name in `PALETTES` and its swatch in `PALETTE_SWATCH` (`lib/palette.ts`), and its name under `ThemeSwitch` in both dictionaries.
 
 ### Primary (the action)
 The action is the one thing to press. It is a role, not a hue: its fill, the ledge under it, its colour as text and focus (`action-ink`), and the text on it (`on-action`).
@@ -460,7 +490,7 @@ Every control is drawn in the client's vocabulary; shadcn and Radix stay as the 
 - **Outline:** ground fill (Navy), 2px seam border, on a ledge: the secondary button wherever it sits on a raised surface, so it stays distinct from its background (LinkedIn on the banner, GitHub with its live star count and the external link on item cards).
 - **Icon:** 44px square ledge buttons (sound, Locale, theme, socials, menu) with screen-reader labels.
 - **Ghost / Link:** no ledge; ghost tints the seam colour on hover, link is the action ink and underlined.
-- **Secondary link** (the shared `SECONDARY_LINK` style): inline links in copy and titles (a company name, the subscribe line). The action ink with a 2px underline 4px below in light; in the dark modes the ink with an Electric underline (Haze in plum), taking the action ink on hover. External ones open in a new tab.
+- **Secondary link** (the shared `SECONDARY_LINK` style): inline links in copy and titles (a company name, the subscribe line). The action ink with a 2px `link-line` underline 4px below; in the dark modes the ink, taking the action ink on hover. External ones open in a new tab.
 - **Destructive:** Busy Deep fill with Cream text in light, Busy with `on-bright` text in dark, on a ledge.
 - **States:** hover raises 2px onto a 6px ledge (fine pointers only); press sinks 4px in 80ms and releases in 160ms with Ease Pop; disabled drops the ledge to 50% opacity.
 
