@@ -28,7 +28,7 @@ const art = (...names: ReadonlyArray<string>) =>
   names.map((name) => `/images/chibi/${name}.webp`);
 
 const CHIBI: { readonly [P in ChibiPose]: ChibiArt } = {
-  banner: { day: art("banner") },
+  banner: { day: art("banner-day") },
   chilling: { day: art("chilling") },
   sleeping: { day: art("sleeping") },
   goodbye: { day: art("goodbye") },
@@ -39,11 +39,11 @@ const CHIBI: { readonly [P in ChibiPose]: ChibiArt } = {
   coding: { day: art("coding") },
   coffee: { day: art("coffee") },
   series: { day: art("series") },
-  music: { day: art("music", "music-b") },
+  music: { day: art("music-a", "music-b") },
 };
 
 /** Intrinsic size of every pose file (square). */
-export const CHIBI_SIZE = 640;
+export const CHIBI_SIZE = 1024;
 
 /** The frames of a pose, in the night outfit when it has one. */
 export const chibiFrames = (
