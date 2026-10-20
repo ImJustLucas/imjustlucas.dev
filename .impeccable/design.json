@@ -840,11 +840,6 @@
         "purpose": "Moulded-tray top highlight, both light modes."
       },
       {
-        "name": "well",
-        "value": "inset 0 2px 0 rgb(var(--ledge))",
-        "purpose": "The sunken item well inside a loadout bag; the tray's inverse, a ledge-coloured lip along its top edge. Never on anything pressable."
-      },
-      {
         "name": "float-electric-dark",
         "value": "0 24px 48px -12px rgb(2 4 16 / 0.6)",
         "purpose": "Mobile sheet and menus, electric dark."
@@ -950,11 +945,6 @@
         "name": "medal-turn",
         "value": "rotateY(180deg), 600ms, var(--ease-out), perspective 600px",
         "purpose": "A medal turns to its back on slot hover (fine pointers) or press; faces swap without turning under reduced motion."
-      },
-      {
-        "name": "chip-ripple",
-        "value": "translateY(-2px), var(--dur-hover), var(--ease-out), delay item * 30ms",
-        "purpose": "Chips in a loadout bag's well rise one after the other on bag hover."
       },
       {
         "name": "replay-hover",
@@ -1212,7 +1202,7 @@
       "kind": "nav",
       "refersTo": "tab-active",
       "description": "Lowercase menu; the action fill slides between 44px rows on its 3px action ledge (240ms) and each tab plays its own note.",
-      "html": "<nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-active\" aria-current=\"page\">me</a><a class=\"ds-tab\">what i've done</a><a class=\"ds-tab\">how i do it</a><a class=\"ds-tab\">my experiences</a></nav>",
+      "html": "<nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-active\" aria-current=\"page\">me</a><a class=\"ds-tab\">what i've done</a><a class=\"ds-tab\">yt videos</a><a class=\"ds-tab\">my experiences</a></nav>",
       "css": ".ds-tabs { display:flex; flex-direction:column; gap:4px; width:288px; background:#0a0f2e; padding:16px; border-radius:24px; } .ds-tab { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tab:hover { background:rgb(42 58 122 / 0.7); } .ds-tab-active, .ds-tab-active:hover { background:#f6f3ea; color:#0a0f2e; box-shadow:0 3px 0 #2f6bff; } .ds-tab:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
@@ -1267,7 +1257,7 @@
       "name": "Page Banner",
       "kind": "card",
       "refersTo": "page-banner",
-      "description": "Top of the experiences, how and videos pages: Headline, one muted line, a chibi pose on its ground stage disc, in a seam-bordered raised slot with the tray.",
+      "description": "Top of the projects, experiences and videos pages: Headline, one muted line, a chibi pose on its ground stage disc, in a seam-bordered raised slot with the tray.",
       "html": "<header class=\"ds-pb\"><h1 class=\"ds-pb-t\">My experiences</h1><p class=\"ds-pb-l\">Where I've played so far, and the diplomas I earned along the way</p><div class=\"ds-pb-c\"><span class=\"ds-pb-stage\"></span></div></header>",
       "css": ".ds-pb { display:grid; grid-template-columns:1fr 160px; column-gap:32px; row-gap:12px; align-items:center; padding:20px 28px; background:#141c48; border:2px solid #2a3a7a; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-pb-t { margin:0; align-self:end; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.75rem; font-weight:700; line-height:1.15; letter-spacing:-0.015em; } .ds-pb-l { margin:0; grid-column:1; align-self:start; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:500; line-height:1.65; color:#aab6e6; } .ds-pb-c { position:relative; grid-column:2; grid-row:1 / span 2; aspect-ratio:1; } .ds-pb-stage { position:absolute; left:6%; right:6%; top:14%; bottom:4%; border-radius:9999px; background:#0a0f2e; }"
     },
@@ -1288,12 +1278,12 @@
       "css": ".ds-medal { position:relative; width:112px; height:112px; padding:0; border:0; border-radius:9999px; background:transparent; perspective:600px; cursor:pointer; box-shadow:0 4px 0 #05081c; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-medal:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-medal:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; transition-duration:80ms; } .ds-medal:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-medal-in { position:absolute; inset:0; transform-style:preserve-3d; transition:transform 600ms cubic-bezier(0.23,1,0.32,1); } .ds-medal:hover .ds-medal-in { transform:rotateY(180deg); } .ds-face { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-sizing:border-box; border-radius:9999px; border:2px solid #2a3a7a; background:#0a0f2e; backface-visibility:hidden; } .ds-back { transform:rotateY(180deg); } .ds-rim { position:absolute; inset:6px; border-radius:9999px; border:2px dashed #2a3a7a; } .ds-lvl { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.8125rem; font-weight:700; color:#f6f3ea; } .ds-head { width:48px; height:48px; border-radius:9999px; background:#141c48; } .ds-yr { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.6875rem; font-weight:600; color:#aab6e6; }"
     },
     {
-      "name": "Loadout Bag",
-      "kind": "card",
-      "refersTo": "loadout-bag",
-      "description": "A Tech category as a raised slot: name in Title Large, item count in Data, and a sunken ground well (10px corners, Well shadow) of large Tech chips that ripple on hover.",
-      "html": "<article class=\"ds-bag\"><div class=\"ds-bag-h\"><h2 class=\"ds-bag-t\">Frontend</h2><span class=\"ds-bag-n\">6 items</span></div><ul class=\"ds-well\"><li class=\"ds-tc\" style=\"background:#61dafb;color:#1c0f2b\">React</li><li class=\"ds-tc\" style=\"background:#ffffff;color:#1c0f2b\">Next.js</li><li class=\"ds-tc\" style=\"background:#38bdf8;color:#1c0f2b\">Tailwind</li></ul></article>",
-      "css": ".ds-bag { display:flex; flex-direction:column; gap:16px; padding:20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-bag-h { display:flex; justify-content:space-between; align-items:baseline; gap:12px; } .ds-bag-t { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; line-height:1.25; } .ds-bag-n { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.8125rem; font-weight:500; color:#aab6e6; } .ds-well { list-style:none; margin:0; display:flex; flex-wrap:wrap; gap:8px; padding:12px; background:#0a0f2e; border-radius:10px; box-shadow:inset 0 2px 0 #05081c; } .ds-tc { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; padding:4px 12px; border-radius:9999px; transition:transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tc:nth-child(2) { transition-delay:30ms; } .ds-tc:nth-child(3) { transition-delay:60ms; } .ds-bag:hover .ds-tc { transform:translateY(-2px); }"
+      "name": "Loadout",
+      "kind": "custom",
+      "refersTo": "loadout",
+      "description": "The Projects filter: one outline ledge button per Tech the Projects use, with its colour disc, name and derived stat; the chosen one takes the action fill.",
+      "html": "<section class=\"ds-loadout\"><div class=\"ds-lo-h\"><h2 class=\"ds-lo-t\">loadout</h2><span class=\"ds-lo-n\">9 techs</span></div><div class=\"ds-lo-row\" role=\"group\" aria-label=\"Filter the projects by tech\"><button class=\"ds-lo-b\" aria-pressed=\"false\">all</button><button class=\"ds-lo-b\" aria-pressed=\"true\"><span class=\"ds-lo-d\" style=\"background:#ffffff\"></span>Next.js<span class=\"ds-lo-s\">2 projects · since 2023</span></button><button class=\"ds-lo-b\" aria-pressed=\"false\"><span class=\"ds-lo-d\" style=\"background:#00dc82\"></span>Nuxt<span class=\"ds-lo-s\">1 project · since 2021</span></button></div><p class=\"ds-lo-live\">2 projects of 5 built with Next.js</p></section>",
+      "css": ".ds-loadout { display:flex; flex-direction:column; gap:16px; padding:20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; } .ds-lo-h { display:flex; justify-content:space-between; align-items:baseline; gap:12px; } .ds-lo-t { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; } .ds-lo-n, .ds-lo-s, .ds-lo-live { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; font-size:0.8125rem; font-weight:500; color:#aab6e6; } .ds-lo-live { margin:0; } .ds-lo-row { display:flex; flex-wrap:wrap; gap:12px 8px; } .ds-lo-b { display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 12px; border:2px solid #2a3a7a; border-radius:10px; background:#0a0f2e; color:#f6f3ea; font:500 0.875rem/1.25rem Geist, ui-sans-serif, system-ui, sans-serif; cursor:pointer; box-shadow:0 4px 0 #05081c; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-lo-b:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-lo-b:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; transition-duration:80ms; } .ds-lo-b:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-lo-b[aria-pressed=\"true\"] { background:#f6f3ea; border-color:#f6f3ea; color:#0a0f2e; box-shadow:0 4px 0 #2f6bff; } .ds-lo-b[aria-pressed=\"true\"] .ds-lo-s { color:#0a0f2e; opacity:0.8; } .ds-lo-d { width:12px; height:12px; border-radius:9999px; box-shadow:0 0 0 2px #2a3a7a; }"
     },
     {
       "name": "Replay Tile",

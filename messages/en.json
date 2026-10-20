@@ -12,12 +12,7 @@
     "what": {
       "label": "what i've done",
       "title": "What i've done ?",
-      "description": "The projects Lucas has built, from side projects to work."
-    },
-    "how": {
-      "label": "how i do it",
-      "title": "How i create my apps?",
-      "description": "The languages, frameworks and tools Lucas uses to build his apps."
+      "description": "The projects Lucas has built, and the techs he built them with."
     },
     "experiences": {
       "label": "my experiences",
@@ -170,12 +165,16 @@
     "open": "Open {title}",
     "github": "GitHub",
     "stars": "{count, plural, one {# star} other {# stars}} on GitHub",
-    "noImage": "No screenshot yet"
-  },
-  "How": {
-    "intro": "My loadout: everything I build with, sorted by what it's for 🛠️",
+    "noImage": "No screenshot yet",
+    "intro": "Everything I've built, and the loadout I built it with. Pick a tech to see where I used it 🛠️",
     "chibiAlt": "Lucas coding on a laptop, sitting cross-legged",
-    "items": "{count, plural, one {# item} other {# items}}"
+    "loadout": "loadout",
+    "techs": "{count, plural, one {# tech} other {# techs}}",
+    "filter": "Filter the projects by tech",
+    "all": "all",
+    "techStat": "{count, plural, one {# project} other {# projects}} · since {since, number, ::group-off}",
+    "showing": "{count, plural, one {# project} other {# projects}} of {total} built with {tech}",
+    "showingAll": "{count, plural, one {# project} other {all # projects}}"
   },
   "Contact": {
     "intro": "If you want to contact me, you can do so via my <linkedin>LinkedIn</linkedin> DMs, I will respond as quickly as possible."

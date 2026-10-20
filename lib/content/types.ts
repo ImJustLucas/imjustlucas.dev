@@ -11,6 +11,7 @@ export type {
   TechCategoryInLocale,
   Video,
 } from "./catalog";
+export type { LoadoutEntry } from "./loadout";
 export type { Period } from "./period";
 export type {
   Achievement,

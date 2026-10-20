@@ -33,7 +33,7 @@ Three claims, held equally, with none leading:
 
 ## Operating Context
 
-- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects), how i do it (Techs by Tech category), my experiences (Experiences and diplomas), yt videos, contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu.
+- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu.
 - Every public page exists in both Locales (English default, French) and is statically generated; Projects and Videos regenerate daily.
 - The sidebar menu sits beside a scrollable content panel; on mobile the sidebar becomes an overlay.
 - The Admin (`/admin`) is French only, private, GitHub sign-in for the Owner alone, and works through forms: one save makes one commit on `main`.
@@ -52,7 +52,7 @@ Three claims, held equally, with none leading:
 ## Brand Commitments
 
 - Name and handle: **ImJustLucas** / imjustlucas, explained in the FAQ as "my reminder to keep it real and stay humble".
-- **Voice (binding)**: casual and playful, first person. Greetings like "Yoooo", emojis in copy and content, lowercase menu labels ("what i've done", "how i do it", "yt videos"). Formal or corporate rewrites would break it.
+- **Voice (binding)**: casual and playful, first person. Greetings like "Yoooo", emojis in copy and content, lowercase menu labels ("what i've done", "my experiences", "yt videos"). Formal or corporate rewrites would break it.
 - **Live Discord presence (binding)**: the presence card stays part of the site.
 - Avatar: the chibi ImJustLucas head, `public/images/chibi-avatar-64x64.png`, used in the sidebar.
 

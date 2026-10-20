@@ -9,7 +9,6 @@ import {
   type LucideIcon,
   MessageCircleHeart,
   UserRound,
-  Wrench,
 } from "lucide-react";
 
 import { useSounds } from "@/components/sound/SoundProvider";
@@ -22,7 +21,6 @@ import { cn } from "@/lib/utils";
 const TAB_ICONS: Partial<Record<RouteMessageKey, LucideIcon>> = {
   me: UserRound,
   what: Backpack,
-  how: Wrench,
   experiences: History,
   videos: Clapperboard,
   contact: MessageCircleHeart,

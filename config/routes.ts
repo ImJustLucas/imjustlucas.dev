@@ -22,7 +22,6 @@ export interface Route {
 export const ROUTES = {
   me: { path: "/", messageKey: "me", inMenu: true },
   what: { path: "/what", messageKey: "what", inMenu: true },
-  how: { path: "/how", messageKey: "how", inMenu: true },
   experiences: {
     path: "/experiences",
     messageKey: "experiences",
@@ -32,6 +31,15 @@ export const ROUTES = {
   contact: { path: "/contact", messageKey: "contact", inMenu: true },
   mdf2025: { path: "/mdf-2025", messageKey: "mdf2025", inMenu: false },
 } as const satisfies Record<string, Route>;
+
+/**
+ * Paths of retired Routes, each sent permanently to the Route that took over
+ * its content, in every Locale and unprefixed.
+ */
+export const RETIRED_PATHS: Readonly<Record<string, Route>> = {
+  // The Tech loadout moved onto the Projects page.
+  "/how": ROUTES.what,
+};
 
 /** Routes with a menu entry, in menu order. */
 export const MENU_ROUTES: readonly Route[] = Object.values(ROUTES).filter(

@@ -265,19 +265,18 @@ components:
     textColor: "{colors.off-white}"
     rounded: "{rounded.full}"
     size: "112px"
-  loadout-bag:
+  loadout:
     backgroundColor: "{colors.navy-raised}"
     textColor: "{colors.off-white}"
     rounded: "{rounded.lg}"
     padding: "{spacing.card}"
-  item-well:
+  loadout-button:
     backgroundColor: "{colors.navy}"
-    rounded: "{rounded.md}"
-    padding: "12px"
-  tech-chip-large:
+    textColor: "{colors.off-white}"
     typography: "{typography.label}"
-    rounded: "{rounded.full}"
-    padding: "4px 12px"
+    rounded: "{rounded.md}"
+    padding: "0 12px"
+    height: "44px"
   replay-tile:
     backgroundColor: "{colors.navy-raised}"
     textColor: "{colors.off-white}"
@@ -296,7 +295,7 @@ components:
 
 **Creative North Star: "The Player Profile"**
 
-The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the career path of stops on a track with the diplomas as medals, the loadout's bags of Techs, and the replays. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
+The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the inventory of every Project filtered by the loadout of Techs they use, the career path of stops on a track with the diplomas as medals, and the replays. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
 
 It is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means "this is the thing to press": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.
 
@@ -442,12 +441,12 @@ All three fonts are CSS variables (`--font-display`, `--font-geist-sans`, `--fon
 
 The client fills the viewport (`100dvh`, no page scroll) inside a 12px frame in the frame colour, with 12px gutters; only the content panel scrolls.
 
-- **Sidebar** (320px from 768px up, the ground colour, 24px corners, 16px padding, 24px between groups), top to bottom: the player card, the six tabs (44px rows, 4px apart), the friends panel, then the settings row (sound, Locale, theme) and the social row pushed to the bottom.
+- **Sidebar** (320px from 768px up, the ground colour, 24px corners, 16px padding, 24px between groups), top to bottom: the player card, the five tabs (44px rows, 4px apart), the friends panel, then the settings row (sound, Locale, theme) and the social row pushed to the bottom.
 - **Content panel**: the remaining width, 24px corners, 28px padding (16px below 768px), the ground colour. Page content is centred at a 1180px maximum width, with 48px between sections and 16px between a section title and its row.
 - **Rows** are plain CSS grids with 12px gaps, not a 12-column system: featured Projects run 1, 2 (768px) then 3 (1280px) columns; the about row splits 1:1 from 1024px; two or three achievements sit 2fr / 1fr / 1fr with the rarest first, while a single one takes the full row as a wide slot.
 - **Banner**: from 768px a two-column grid, the chibi (200 to 260px) on the left spanning greeting, role, current team and actions, with a minimum height of 340px; below 768px the chibi shrinks to 120px beside the greeting and the role, team and actions run full width, the Play button full width below 640px.
 - **Page banner**: a two-column grid, the text beside a chibi column of 96px, 128px from 640px and 160px from 768px; below 640px the Headline takes the full row and the chibi sits beside the line. Padding 16px, 24px from 640px, 20px by 28px from 768px; 48px down to the page's first section.
-- **Page rows**: the career path is one column of stops (a 44px track column, 56px from 640px, with 12px then 20px to the slot, 16px between stops); medals run 3 columns from 768px; loadout bags run 2 columns from 1024px, an odd last bag spanning the row; replays run 1, 2 (768px) then 3 (1280px) columns.
+- **Page rows**: the career path is one column of stops (a 44px track column, 56px from 640px, with 12px then 20px to the slot, 16px between stops); medals run 3 columns from 768px; the loadout's buttons are one row swiped sideways on phones (bleeding to the slot's edges, the chosen one scrolled into view) and wrap from 640px (8px apart, 12px between lines), above the item grid, which runs 1, 2 (768px) then 3 (1280px) columns; replays run 1, 2 (768px) then 3 (1280px) columns.
 - **Reading text** holds 65ch inside its slot, never the full panel width.
 - **Mobile** (below 768px): a 56px top bar on the ground colour (40px chibi head, name, sound switch, menu button) replaces the sidebar column. The same sidebar, mounted once, becomes a full-width sheet from 68px down, sliding up with Ease Drawer (260ms in, 180ms out), with the player card hidden and the panel `inert` behind it. Escape or widening to 768px closes it. Achievements with more than one slot become a horizontal snap row.
 - **Breakpoints** are Tailwind's: 640, 768 (the client's one structural switch), 1024, 1280.
@@ -462,7 +461,6 @@ Depth is tonal first (frame, then ground, then raised: Navy Frame, Navy, Navy Ra
 - **Ledge Pressed** (`0 0 0` with `translateY(4px)` and `brightness(0.94)`): active; the control sits on its ledge.
 - **Tab Ledge** (`0 3px 0 rgb(var(--action-ledge))`): under the sliding active-tab fill, which travels with it.
 - **Tray** (`inset 0 1px 0 rgb(246 243 234 / 0.07)` in electric dark, `inset 0 1px 0 rgb(255 241 230 / 0.08)` in plum dark, `inset 0 1px 0 rgb(255 255 255 / 0.9)` in both light modes): the top highlight inside the player card, banner, slots, item cards, accordion rows and presence card.
-- **Well** (`inset 0 2px 0 rgb(var(--ledge))`): the sunken item well inside a loadout bag, the tray's inverse: a ledge-coloured lip along its top edge, so it reads as pressed into the slot. Never on anything pressable.
 - **Float** (`0 24px 48px -12px rgb(2 4 16 / 0.6)` in electric dark, `rgb(16 19 31 / 0.22)` in electric light, `rgb(12 4 22 / 0.6)` in plum dark, `rgb(42 21 64 / 0.28)` in plum light): the mobile sheet and menus.
 
 ### Named Rules
@@ -472,7 +470,7 @@ Depth is tonal first (frame, then ground, then raised: Navy Frame, Navy, Navy Ra
 
 ## Shapes
 
-Fat, friendly corners from one scale: 24px for the frame's two zones (sidebar, panel, mobile top bar and sheet), 16px for slots, cards, the banner, accordion rows and menus, 10px for buttons, tabs, artwork and screenshots, full circles for the chibi head, the chibi's stage discs, status dots, palette swatches and all chips and tags. Borders are 2px, never hairlines: the seam colour on the banner, outline buttons, team chips, WIP tags and menus; the rarity colour on items. Plain slots (player card, about, hobbies, presence, accordion) are borderless raised surfaces with the tray highlight. Focus is a 2px ring in the action ink with a 2px offset (inset on accordion rows). The new objects keep the scale: stop discs, medals and the play disc are full circles with a 2px seam (or Online) ring, the item well takes 10px corners, the career track is a 4px rounded line. No angular chamfers, notched corners or clip-path frames.
+Fat, friendly corners from one scale: 24px for the frame's two zones (sidebar, panel, mobile top bar and sheet), 16px for slots, cards, the banner, accordion rows and menus, 10px for buttons, tabs, artwork and screenshots, full circles for the chibi head, the chibi's stage discs, status dots, palette swatches and all chips and tags. Borders are 2px, never hairlines: the seam colour on the banner, outline buttons, team chips, WIP tags and menus; the rarity colour on items. Plain slots (player card, about, hobbies, presence, accordion) are borderless raised surfaces with the tray highlight. Focus is a 2px ring in the action ink with a 2px offset (inset on accordion rows). The new objects keep the scale: stop discs, medals and the play disc are full circles with a 2px seam (or Online) ring, the career track is a 4px rounded line. No angular chamfers, notched corners or clip-path frames.
 
 Materials:
 - **The sparkle**: Lucas's hand tattoo, an outlined four-point star with slightly concave sides, the site's one ornament. On the frame it is drawn whole and small (8px and 6px stars, outlined) running along the 12px gutters only, including the gutter between sidebar and panel, at stroke opacity 0.12 in the dark ink on the dark frame (Off-white on Navy Frame, Cream on Night) and 0.08 in the light ink on the light frame (Ink Charcoal on Linen Frame, Plum on Lilac Frame); it is never clipped and never behind text. Filled in Legendary, it marks legendary achievements in their top-right corner.
@@ -518,7 +516,7 @@ Raised card, 16px corners, 2px frame and 4px top band in the item's rarity colou
 A link slot: rarity frame and top band, the achievement art in a circular stage (128px in the wide slot), the rarity tag and year in Data, the name in Title Large, a description in the muted ink and an arrow that nudges 4px on hover. The legendary slot also stands on the Legendary Ledge, carries the filled sparkle and the foil, and plays the unlock (arpeggio, then the coin) on click, holding navigation for about half a second so it is heard.
 
 ### Page banner
-The home banner's smaller cousin at the top of the experiences, how and videos pages: a raised slot with a 2px seam border and the tray, the page title in Headline, one line in Lucas's voice in the muted ink, and a full-body chibi pose on its ground stage disc (coffee for the career, coding for the loadout, series for the replays). The pose is not a button here and has no cue.
+The home banner's smaller cousin at the top of the projects, experiences and videos pages: a raised slot with a 2px seam border and the tray, the page title in Headline, one line in Lucas's voice in the muted ink, and a full-body chibi pose on its ground stage disc (coding for the inventory, coffee for the career, series for the replays). The pose is not a button here and has no cue.
 
 ### Career path (signature)
 Experiences as stops on a track, in the Owner's order. **Track:** a 4px rounded seam line running from under each disc to the next, lit Online between two consecutive ongoing stops. **Stop disc:** 44px (56px from 640px), ground fill with a 2px seam ring, the Experience's emoji (a muted briefcase line icon when it has none); an ongoing stop takes an Online ring and a breathing Online dot on a 3px ground rim at its shoulder. Hovering the slot tilts the emoji (-12deg, 1.1 scale, Ease Pop). **Slot:** a borderless raised slot with the tray: the period in Data and the "current team" tag while ongoing, the company in Title Large as a secondary link with an up-right arrow that nudges on hover (opens in a new tab; the slot itself is not a link), the role in ink with the contract type tag, and the description in the muted ink. Hovering ticks.
@@ -526,8 +524,8 @@ Experiences as stops on a track, in the Owner's order. **Track:** a 4px rounded 
 ### Medals (signature)
 The diplomas as coins Lucas earned, each in a raised slot (side by side below 768px, stacked and centred from 768px) beside the diploma in Title, the school in muted Label and the years in Data. **Medal:** a 96px (112px from 768px) round button on a ledge, ground face with a 2px seam border and a dashed seam rim inset 6px; the face carries a muted graduation cap and the level lettered in Unbounded 700, the back Lucas's chibi head and the year it was minted (the end year) in Mono. It turns like a coin (rotateY, 600ms, Ease Out) when its slot is hovered on fine pointers, and pressing it keeps it turned (`aria-pressed`), playing toggle on or off. The slot ticks on hover.
 
-### Loadout bag (signature)
-A Tech category as a raised slot with the tray: its name in Title Large with the item count in muted Data across from it, the description in the muted ink, then a sunken item well (ground fill, 10px corners, Well, 12px padding) holding the category's Techs as large Tech chips. Wells stretch so bags in a row end level. Hovering the bag ticks and the chips rise 2px one after the other.
+### Loadout (signature)
+The Projects page's filter, between its banner and the item grid: a raised slot with the tray, "loadout" in Title Large with the Tech count in muted Data across from it, then one pressable button per Tech that at least one Project uses, after an "all" button. The order and every number come from the Projects (`lib/content/loadout.ts`): the most used first, then the longest held, then by name; a Tech no Project uses is not shown. **Loadout button:** an outline ledge button (ground fill, 2px seam border, 44px, 10px corners) with a 12px disc in the Tech's own colour ringed in the seam, then the Tech name in Label over "2 projects · since 2023" in 0.75rem Data, on one line each. The chosen one (`aria-pressed`) takes the action fill on the action ledge with `on-action` text, like the active tab; pressing it again, or "all", shows every Project. Choosing plays toggle on, clearing toggle off, and each button ticks on hover. One Tech at a time; it is kept in the URL (`?tech=nextjs`) so a filtered view can be shared, and an unknown one shows everything. Below the buttons, a polite live line in muted Data says how many Projects are shown; items fade in (150ms) as they appear.
 
 ### Replay tile (signature)
 A Video as a borderless raised slot with the tray (16px top padding, 20px elsewhere from 640px): a 16:9 thumbnail with 10px corners over a pulsing seam skeleton, zooming to 1.03 over 300ms on hover; on it a 56px play disc (ground fill, 2px seam rim, ink play mark, on a ledge) that rises 8px into view on hover, always visible on touch, and sinks onto its ledge when the thumbnail is pressed. Below, the title in Title clamped to two lines, the date in Data with the "new" tag on the latest Video, and an outline "Watch now!" button with the YouTube mark pushed to the bottom. The thumbnail is the same link for the mouse, hidden from keyboards and screen readers; the tile ticks on hover. **Empty:** one raised slot with the chilling pose on its stage disc, the empty line and a subscribe secondary link.
@@ -535,7 +533,6 @@ A Video as a borderless raised slot with the tray (16px top padding, 20px elsewh
 ### Chips and tags
 - **Rarity tag:** rarity fill, `on-bright` text (Navy in electric, Night in plum), Tag type, full radius, 2px by 8px.
 - **Tech chip:** the Tech's own colour as fill and 2px border with computed ink, or an outline (see The Computed Ink Rule); Tag type, full radius, 2px by 10px.
-- **Large Tech chip:** the same chip in Label type, 4px by 12px, inside an item well.
 - **Live tag:** Online fill, `on-bright` text; the "current team" tag on an ongoing stop and the "new" tag on the latest Video are drawn the same. **WIP tag:** 2px seam outline, ink text; the contract type tag is drawn the same.
 
 ### Accordion (FAQ)
@@ -549,9 +546,9 @@ A pose's drawn frames alternate in steps (200ms each), never tweened, only while
 
 ### Sound kit and switch
 One synthesized instrument (a soft plucked kalimba tine) in D major pentatonic, master gain 0.22.
-- **Tick** (B5, very quiet): hover on tabs, item cards, achievement slots, hobbies, career slots, medal slots, loadout bags and replay tiles; fine pointers only, at most one every 60ms.
+- **Tick** (B5, very quiet): hover on tabs, item cards, achievement slots, hobbies, career slots, medal slots, loadout buttons and replay tiles; fine pointers only, at most one every 60ms.
 - **Press** (A4): secondary controls without a cue of their own (ledge and outline buttons, socials, the theme trigger, non-legendary achievements, secondary links, the replay thumbnail).
-- **Tab:** the tab's own degree (D4, E4, F#4, A4, B4, D5 in menu order).
+- **Tab:** the tab's own degree (D4, E4, F#4, A4, D5 in menu order).
 - **Confirm** (D4 and A4, then D5): the Play button.
 - **Toggle on / off** (A4 to D5 / D5 to A4): the menu sheet, the accordion, turning a medal, choosing a mode or a palette, the Locale switch, the sound switch turning on.
 - **Unlock** (D4 F#4 A4 D5, then the recorded coin): the legendary achievement.
@@ -567,9 +564,8 @@ The **sound switch** is a 44px icon button, the action fill with an `on-action` 
 - **Page change:** a 220ms fade with a 6px rise.
 - **Career arrival:** each stop disc pops on (from 0.5 scale and transparent, 320ms, Ease Pop) 160ms after the one above it, and the track segment below it draws down (scaleY from its top, 160ms, Ease In Out) 120ms after its disc, so the line reaches each stop as it lands.
 - **Medal turn:** 600ms rotateY with Ease Out, 600px perspective.
-- **Chip ripple:** in a loadout bag each chip rises with a 30ms stagger over the hover duration (150ms, Ease Out).
 - **Replay hover:** the thumbnail zooms to 1.03 over 300ms and the play disc fades and rises over 150ms, both Ease Out.
-- **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame. The career path arrives drawn, medals swap faces without turning, chips and thumbnails stay put, and the play disc only fades.
+- **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame. The career path arrives drawn, medals swap faces without turning, chips and thumbnails stay put, and the play disc only fades, and filtered items appear without fading.
 
 ### Admin
 The Admin sets the same fonts, modes (dark by default) and the visitor's palette, and inherits the world through the shadcn roles mapped in the stylesheet: the palette's ground and raised surfaces, seam borders, the ledge buttons, Busy or Busy Deep for errors.

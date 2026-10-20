@@ -63,17 +63,10 @@ export type Cue =
 
 /**
  * Each menu tab plays its own degree, in menu order, so walking down the
- * menu plays a rising scale: me D4, what i've done E4, how i do it F#4,
- * my experiences A4, yt videos B4, contact D5.
+ * menu plays a rising scale: me D4, what i've done E4, my experiences F#4,
+ * yt videos A4, contact D5.
  */
-export const TAB_NOTES: ReadonlyArray<Note> = [
-  "D4",
-  "E4",
-  "F#4",
-  "A4",
-  "B4",
-  "D5",
-];
+export const TAB_NOTES: ReadonlyArray<Note> = ["D4", "E4", "F#4", "A4", "D5"];
 
 const BOOP_NOTES: ReadonlyArray<Note> = ["D5", "E5", "F#5", "A5", "B5"];
 

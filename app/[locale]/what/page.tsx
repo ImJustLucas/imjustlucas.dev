@@ -1,8 +1,10 @@
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
-import { PageHeader, routeMetadata } from "@/components/page-header";
+import { PageBanner, routeMetadata } from "@/components/page-header";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { ProjectInventory } from "@/components/projects/ProjectInventory";
 import { ROUTES } from "@/config/routes";
+import { loadout } from "@/lib/content/loadout";
 import { getProjects } from "@/lib/content/server";
 
 // Live GitHub star counts: regenerated every 24 hours, and on every deploy.
@@ -12,19 +14,30 @@ export const revalidate = 86400;
 
 export const generateMetadata = routeMetadata(ROUTES.what);
 
+/** The inventory: every Project, filterable by the loadout of Techs they use. */
 export default async function What() {
-  const projects = await getProjects(await getLocale());
+  const locale = await getLocale();
+  const [projects, t] = await Promise.all([
+    getProjects(locale),
+    getTranslations("Projects"),
+  ]);
 
   return (
-    <div className="mx-auto max-w-[1180px]">
-      <PageHeader route={ROUTES.what} />
-      <ul className="grid gap-slot-gap md:grid-cols-2 xl:grid-cols-3">
-        {projects.map((project) => (
-          <li key={project.title}>
-            <ProjectCard project={project} />
-          </li>
-        ))}
-      </ul>
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-section">
+      <PageBanner
+        route={ROUTES.what}
+        intro={t("intro")}
+        pose="coding"
+        poseAlt={t("chibiAlt")}
+      />
+      <ProjectInventory
+        loadout={loadout(projects)}
+        items={projects.map((project) => ({
+          key: project.title,
+          techIds: project.techs.map((tech) => tech.id),
+          card: <ProjectCard project={project} />,
+        }))}
+      />
     </div>
   );
 }
