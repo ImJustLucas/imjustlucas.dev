@@ -35,7 +35,7 @@ Each pose gets its own outfit, matched to the activity, so the poses read as mom
 Shell and states:
 - **Banner (home)**: `Standing in a relaxed three-quarter pose, turned towards the viewer's right exactly like the reference (his visible ear on the left of the image), waving with the hand on the right of the image raised. He wears an oversized, slightly cropped long-sleeve Breton-stripe t-shirt (off-white with even navy-blue horizontal stripes that wrap around the body and the sleeves, drop shoulders, loose raw-edge cuffs, no logo or print), very baggy black wide-leg jeans stacking over the shoes, white sneakers, over-ear headphones resting around his neck. One small yellow four-point sparkle near his raised hand.`
 - **Chilling (no ongoing job)**: `Leaning back in a beanbag, hands behind his head, eyes half closed with a content smile. Oversized plum hoodie, grey joggers, white socks.`
-- **Sleeping (offline)**: `Curled up asleep on a small cloud-shaped pillow, a little "z" above his head. Tangerine pyjama shirt.`
+- **Sleeping (offline)**: `Curled up asleep on his side on a big plump plum (#3b2159) cushion, his head on the left of the image resting on his folded hands, his face still turned towards the viewer in three-quarter view, eyes closed, a tiny peaceful smile, his curls a little messy. He wears a very oversized, chunky, soft crewneck pullover in a light misty lilac-white (#ece6f3), with a few small electric-blue (#2f6bff) touches: the collar rib, the cuff ribs and a tiny four-point sparkle stitched on the chest; loose charcoal joggers and white socks. Three small hand-drawn yellow "z" shapes float above his head, the only lettering in the image.`
 - **Waving goodbye (page close)**: `Seen from three-quarter back, turning his head to wave goodbye over his shoulder, backpack on. Sky blue zip jacket, dark jeans, white sneakers.`
 - **Trophy (MDF 2025)**: `Holding a big gold trophy up with both hands, eyes closed in a proud grin, a few yellow four-point sparkles around the trophy. The checker camp-collar shirt from the reference and dark jeans.`
 
@@ -84,3 +84,7 @@ Two or three outfit edits in a row are fine, but each one redraws the whole imag
 ## LoL pose and the day/night wardrobe (2026-10-20)
 
 Approved by Lucas in two outfits: day, the Breton longsleeve with the cropped hem (`.impeccable/mocks/chibi/lol-day.png`), and night, the first "pyjama" result: grey hoodie with tangerine drawstrings, grey joggers, white socks, plum slides (`.impeccable/mocks/chibi/lol-night.png`). On both, the stripes of the raised arm still run along the sleeve; accepted, it hardly shows at site size. The banner and LoL poses follow Lucas's time in Paris (DESIGN.md); the banner still needs its night version.
+
+## Sleeping pose (2026-10-20)
+
+Approved by Lucas on the first try (`.impeccable/mocks/chibi/sleeping.png`): curled up on the plum cushion in the light lilac-white chunky pullover with electric-blue ribs and two small stitched sparkles, charcoal joggers, white socks. The small curl on top of the head is missing; accepted, it hardly shows at presence-card size. Lucas likes this pullover a lot.
