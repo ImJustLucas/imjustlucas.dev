@@ -20,7 +20,7 @@ Tests sit next to the module they cover as `*.test.ts` (`vitest.config.ts`: Node
 Personal portfolio site: Next.js 16 (App Router), React 19, Tailwind CSS, Shadcn/ui, next-intl, and Effect v4 on the server only (ADR-0002). Domain terms are in `GLOSSARY.md`; decisions in `docs/adr/`.
 
 - **Routing, Locales and interface strings** — every public page lives under `app/[locale]/` (`en`, `fr`) and needs its entry in `ROUTES` (`config/routes.ts`). See `docs/routing.md` before adding a page, a link, a redirect or visible text.
-- **Content** — Projects, Experiences, Techs, Tech categories and the Profile are JSON documents in `content/`, read by pages only through `lib/content/server.ts`; stars and Videos come from GitHub and YouTube. See `docs/content.md` before touching content, the catalog or revalidation.
+- **Content** — Projects, Experiences, Techs, Tech categories, Achievements, Hobbies and the Profile are JSON documents in `content/`, read by pages only through `lib/content/server.ts`; stars and Videos come from GitHub and YouTube. See `docs/content.md` before touching content, the catalog or revalidation.
 - **Admin** — `app/admin/` is the Owner's private space (GitHub sign-in, saves committed to the content branch). See `docs/admin.md` before touching the Admin, its pattern for editors, or its environment variables.
 - **Presence** — `components/presence/` shows the Owner's live Discord activity; the selection rule is the plain `select-presence.ts`.
 - **3D scene** — `app/[locale]/mdf-2025/` is a React Three Fiber scene celebrating a competition win.

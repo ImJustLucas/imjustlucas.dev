@@ -1,9 +1,11 @@
 import { Effect } from "effect";
 
+import { openAchievementsEditor } from "@/lib/admin/achievements";
 import type { AdminActionResult } from "@/lib/admin/action-result";
 import { AdminAccess, type AdminAction } from "@/lib/admin/admin-action";
 import { contentRepository, ownerGithubId } from "@/lib/admin/config";
 import { openExperiencesEditor } from "@/lib/admin/experiences";
+import { openHobbiesEditor } from "@/lib/admin/hobbies";
 import { openProfileEditor } from "@/lib/admin/profile";
 import { openProjectsEditor } from "@/lib/admin/projects";
 import { sessionIdentities } from "@/lib/admin/session";
@@ -54,3 +56,9 @@ export const getProjectsEditor = () => run(openProjectsEditor);
 
 /** Reads the Profile editor's content from the content branch, with its revision. */
 export const getProfileEditor = () => run(openProfileEditor);
+
+/** Reads the Achievements editor's content from the content branch, with its revision. */
+export const getAchievementsEditor = () => run(openAchievementsEditor);
+
+/** Reads the Hobbies editor's content from the content branch, with its revision. */
+export const getHobbiesEditor = () => run(openHobbiesEditor);

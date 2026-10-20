@@ -30,6 +30,7 @@ const favikon = {
     fr: "SaaS de marketing d'influence",
   },
   period: { start: "2023", end: "2025" },
+  emoji: "💜",
 };
 const predi = {
   company: "Predi.GG",
@@ -38,6 +39,7 @@ const predi = {
   link: "https://predi.gg",
   description: { en: "Co-founded Predi.GG", fr: "Cofondation de Predi.GG" },
   period: { start: "2025-09", end: "ongoing" },
+  emoji: "🔮",
 };
 
 const EXPERIENCES = "content/experiences.json";
@@ -56,6 +58,8 @@ const admin = (
       "content/tech-categories.json": "[]",
       "content/projects.json": "[]",
       [EXPERIENCES]: JSON.stringify(experiences),
+      "content/achievements.json": "[]",
+      "content/hobbies.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
@@ -88,6 +92,7 @@ const bam = {
     fr: "Développement fullstack pour Bam Karaoke",
   },
   period: { start: "2026-01", end: "ongoing" },
+  emoji: "🎤",
 } as const;
 
 describe("Admin actions on Experiences", () => {
@@ -160,6 +165,42 @@ describe("Admin actions on Experiences", () => {
           "period.start": "Année (AAAA) ou mois (AAAA-MM) attendu",
           "period.end": "Année (AAAA), mois (AAAA-MM) ou « en cours » attendu",
         },
+      });
+      expect(yield* commits).toEqual([]);
+    }),
+  );
+
+  it.effect("an empty emoji leaves the Experience without one", () =>
+    Effect.gen(function* () {
+      const { run, experiences } = yield* admin(owner);
+
+      const result = yield* run(
+        updateExperience({
+          revision: "memory-0",
+          index: 0,
+          ...favikon,
+          emoji: "",
+        }),
+      );
+
+      expect(result).toEqual({ kind: "saved", revision: "memory-1" });
+      const [edited] = yield* experiences;
+      expect(edited).not.toHaveProperty("emoji");
+      expect(edited).toEqual({ ...favikon, emoji: undefined });
+    }),
+  );
+
+  it.effect("an emoji longer than 8 characters is a field error", () =>
+    Effect.gen(function* () {
+      const { run, commits } = yield* admin(owner);
+
+      const result = yield* run(
+        createExperience({ revision: "memory-0", ...bam, emoji: "🎤🎤🎤🎤🎤" }),
+      );
+
+      expect(result).toEqual({
+        kind: "invalid",
+        fieldErrors: { emoji: "Emoji attendu (8 caractères au maximum)" },
       });
       expect(yield* commits).toEqual([]);
     }),

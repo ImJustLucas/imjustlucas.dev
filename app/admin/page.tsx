@@ -40,6 +40,19 @@ export default async function AdminHome() {
           </Link>
         </li>
         <li>
+          <Link
+            href="/admin/achievements"
+            className="underline underline-offset-4"
+          >
+            Achievements
+          </Link>
+        </li>
+        <li>
+          <Link href="/admin/hobbies" className="underline underline-offset-4">
+            Hobbies
+          </Link>
+        </li>
+        <li>
           <Link href="/admin/profile" className="underline underline-offset-4">
             Profile (liens et CV)
           </Link>

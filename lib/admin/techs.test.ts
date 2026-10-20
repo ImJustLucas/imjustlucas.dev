@@ -39,6 +39,7 @@ const portfolio = {
   period: { start: "2024", end: "ongoing" },
   techs: ["typescript"],
   openSource: true,
+  rarity: "common",
 };
 
 const TECHS = "content/techs.json";
@@ -58,6 +59,8 @@ const admin = (
       [CATEGORIES]: JSON.stringify(documents.techCategories ?? [frontend]),
       "content/projects.json": JSON.stringify([portfolio]),
       "content/experiences.json": "[]",
+      "content/achievements.json": "[]",
+      "content/hobbies.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
@@ -475,6 +478,8 @@ const withoutTechs = (identity: SignedInIdentity | undefined) =>
       [CATEGORIES]: JSON.stringify([frontend]),
       "content/projects.json": JSON.stringify([portfolio]),
       "content/experiences.json": "[]",
+      "content/achievements.json": "[]",
+      "content/hobbies.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({

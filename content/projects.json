@@ -10,7 +10,9 @@
     "period": { "start": "2025", "end": "ongoing" },
     "techs": [],
     "externalLink": "https://predi.gg",
-    "openSource": false
+    "openSource": false,
+    "rarity": "epic",
+    "featured": 1
   },
   {
     "title": "Qotum",
@@ -22,7 +24,9 @@
     "wip": true,
     "period": { "start": "2024", "end": "ongoing" },
     "techs": ["nextjs", "nestjs"],
-    "openSource": false
+    "openSource": false,
+    "rarity": "rare",
+    "featured": 2
   },
   {
     "title": "Tricks",
@@ -35,7 +39,9 @@
     "period": { "start": "2021", "end": "2023" },
     "techs": ["nuxtjs", "strapi"],
     "externalLink": "https://tonytrancard.fr/projects_side/thetricksnetwork",
-    "openSource": false
+    "openSource": false,
+    "rarity": "rare",
+    "featured": 3
   },
   {
     "title": "Next 13 Boilerplate",
@@ -49,7 +55,8 @@
     "techs": ["react", "nextjs", "styled-components"],
     "externalLink": "https://next-13-boilerplate.imjustlucas.dev/",
     "repository": "https://github.com/ImJustLucas/Next-13-Boilerplate",
-    "openSource": true
+    "openSource": true,
+    "rarity": "common"
   },
   {
     "title": "Bun Elysia Boilerplate",
@@ -62,6 +69,7 @@
     "period": { "start": "2024-05", "end": "2024-05" },
     "techs": ["bun", "elysiajs", "typescript"],
     "repository": "https://github.com/ImJustLucas/bun-elysia-boilerplate",
-    "openSource": true
+    "openSource": true,
+    "rarity": "common"
   }
 ]

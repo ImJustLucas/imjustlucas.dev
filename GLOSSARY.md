@@ -12,6 +12,18 @@ _Avoid_: Work, repo
 A position or step in Lucas's career, held over a period of time.
 _Avoid_: TimelineEvent, timeline entry, job
 
+**Rarity**:
+What kind of thing a Project or Achievement is: common (a side project), rare (shipped work), epic (a founded product) or legendary (a national win). Set by the Owner, never a quality score.
+_Avoid_: Tier, level, score
+
+**Achievement**:
+A distinction Lucas earned, such as a competition won, shown on the home page with its year, Rarity and art.
+_Avoid_: Trophy, award, badge
+
+**Hobby**:
+Something Lucas does outside work, shown on the home page with the chibi avatar pose that depicts it.
+_Avoid_: Interest, pastime
+
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".
 _Avoid_: Date (for a span), duration
@@ -47,5 +59,5 @@ Lucas, the only person ever allowed into the Admin.
 _Avoid_: User, admin (for the person)
 
 **Admin**:
-The private space where the Owner edits Projects, Experiences, Techs, Tech categories and the Profile.
+The private space where the Owner edits Projects, Experiences, Techs, Tech categories, Achievements, Hobbies and the Profile.
 _Avoid_: Back-office, dashboard

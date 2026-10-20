@@ -6,15 +6,15 @@ import {
   commitMessage,
   documents,
   gone,
+  imageUpload,
   inPeriodOrder,
   openEditor,
-  readUpload,
   saveContent,
   type Saved,
   type Upload,
 } from "@/lib/admin/admin-action";
-import { projectImage } from "@/lib/admin/project-image";
-import type { LocalizedText } from "@/lib/content/schema";
+import { projectImage } from "@/lib/admin/uploaded-image";
+import type { LocalizedText, Rarity } from "@/lib/content/schema";
 
 /**
  * Admin actions on Projects. Projects have no identifier: they are addressed
@@ -34,6 +34,10 @@ type ProjectFields = {
   /** Empty: none. */
   readonly repository: string;
   readonly openSource: boolean;
+  /** One of the Rarities; anything else is a field error. */
+  readonly rarity: string;
+  /** Its place on the home page, as typed (1 first). Empty: not featured. */
+  readonly featured: string;
   /** A new image, uploaded: committed with the Project. */
   readonly image?: Upload;
 };
@@ -42,18 +46,13 @@ type ProjectFields = {
  * The image a save gives the Project: the uploaded one, committed alongside
  * (or a field error), else the one it had.
  */
-const upload = (input: ProjectFields, current: string | undefined) => {
-  if (!input.image) return Effect.succeed({ image: current });
-  return Effect.map(readUpload(input.image), (bytes) => {
-    const uploaded = projectImage(input.title, bytes);
-    return uploaded.kind === "invalid"
-      ? { image: current, fieldErrors: { image: uploaded.error } }
-      : {
-          image: uploaded.url,
-          assets: [{ path: uploaded.path, content: bytes }],
-        };
+const upload = (input: ProjectFields, current: string | undefined) =>
+  imageUpload({
+    upload: input.image,
+    current,
+    field: "image",
+    store: (bytes) => projectImage(input.title, bytes),
   });
-};
 
 /**
  * The Project entry the fields describe, keys in document order. `image` is
@@ -69,6 +68,10 @@ const project = (input: ProjectFields, image: string | undefined) => ({
   ...(input.externalLink && { externalLink: input.externalLink }),
   ...(input.repository && { repository: input.repository }),
   openSource: input.openSource,
+  // Typed as a Rarity; `saveContent` validates it like every field.
+  rarity: input.rarity as Rarity,
+  // A place that is not a whole number is a field error; NaN stays one.
+  ...(input.featured !== "" && { featured: Number(input.featured) }),
 });
 
 const projectGone = gone("Ce Project");

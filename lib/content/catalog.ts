@@ -14,11 +14,16 @@ import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
 import { byStartMostRecentFirst, type Period } from "./period";
 import { ContentRepository, type Revision } from "./repository";
 import {
+  type Achievement,
   Content,
   DOCUMENT_PATHS,
   type Experience,
+  type Hobby,
+  type HobbyPose,
   type LocalizedText,
   type Profile,
+  type Project,
+  type Rarity,
   type Resume,
   type Tech,
 } from "./schema";
@@ -55,7 +60,13 @@ export type ResolvedProject = {
   readonly repository?: string;
   /** The repository's GitHub star count, only when there is at least one. */
   readonly stars?: number;
+  readonly rarity: Rarity;
+  /** Its place on the home page, 1 first; absent: not featured. */
+  readonly featured?: number;
 };
+
+/** How many Projects the home page features, at most. */
+const FEATURED_PROJECTS = 3;
 
 /** An Experience as pages render it. */
 export type ResolvedExperience = Experience;
@@ -81,6 +92,24 @@ export type ExperienceInLocale = Omit<
   readonly description: string;
 };
 
+/** An Achievement in one Locale: its name and description in that Locale. */
+export type AchievementInLocale = {
+  readonly name: string;
+  readonly description: string;
+  readonly year: number;
+  readonly rarity: Rarity;
+  /** A page of the site (without Locale, e.g. `/mdf-2025`) or a URL. */
+  readonly link: string;
+  /** The art's URL path, under `public/`. */
+  readonly art: string;
+};
+
+/** A Hobby in one Locale: its label in that Locale. */
+export type HobbyInLocale = {
+  readonly label: string;
+  readonly pose: HobbyPose;
+};
+
 /**
  * The content of one Locale, as pages render it: every descriptive text in
  * that Locale; proper nouns (titles, Tech names) as they are.
@@ -95,11 +124,26 @@ export type CatalogInLocale = {
     ReadonlyArray<ProjectInLocale>,
     CatalogError | GitHubStarsUnavailable
   >;
+  /**
+   * The Projects the home page features, at most 3: by their `featured`
+   * place, then by Period like `projects`.
+   */
+  readonly featuredProjects: Effect.Effect<
+    ReadonlyArray<ProjectInLocale>,
+    CatalogError | GitHubStarsUnavailable
+  >;
   /** Ordered by Period start, most recent first; ongoing first on ties. */
   readonly experiences: Effect.Effect<
     ReadonlyArray<ExperienceInLocale>,
     CatalogError
   >;
+  /** In stored order, the order the Owner gave them. */
+  readonly achievements: Effect.Effect<
+    ReadonlyArray<AchievementInLocale>,
+    CatalogError
+  >;
+  /** In stored order, the order the Owner gave them. */
+  readonly hobbies: Effect.Effect<ReadonlyArray<HobbyInLocale>, CatalogError>;
   /** The Profile's Resume in this Locale. */
   readonly resume: Effect.Effect<Resume, CatalogError>;
 };
@@ -130,6 +174,13 @@ export class ContentCatalog extends Context.Service<
       ReadonlyArray<ResolvedExperience>,
       CatalogError
     >;
+    /** In stored order. */
+    readonly achievements: Effect.Effect<
+      ReadonlyArray<Achievement>,
+      CatalogError
+    >;
+    /** In stored order. */
+    readonly hobbies: Effect.Effect<ReadonlyArray<Hobby>, CatalogError>;
     /** The Profile's channel's latest Videos, most recent first. */
     readonly videos: Effect.Effect<
       ReadonlyArray<Video>,
@@ -165,45 +216,68 @@ export class ContentCatalog extends Context.Service<
         );
       });
 
-      const projects = Effect.flatMap(load, (content) => {
-        const resolve = techResolver(content);
-        const projects = [...content.projects].sort((a, b) =>
-          byStartMostRecentFirst(a.period, b.period),
-        );
-        return Effect.forEach(
-          projects,
-          (project) => {
-            // Stars only for the Project's own repository, never for the
-            // Profile's GitHub link it falls back to.
-            const repository = project.openSource
-              ? project.repository
-              : undefined;
-            const resolved: ResolvedProject = {
-              title: project.title,
-              description: project.description,
-              ...(project.image && { image: project.image }),
-              wip: project.wip,
-              period: project.period,
-              techs: project.techs.map(resolve),
-              ...(project.externalLink && {
-                externalLink: project.externalLink,
-              }),
-              ...(project.openSource && {
-                repository: repository ?? content.profile.links.github,
-              }),
-            };
-            if (!repository) return Effect.succeed(resolved);
-            // No star count shown for a repository GitHub fails to give
-            // on a cold build.
-            return Effect.map(
-              stars.count(repository).pipe(orOnColdBuild(0)),
-              (count): ResolvedProject =>
-                count > 0 ? { ...resolved, stars: count } : resolved,
-            );
-          },
-          { concurrency: "unbounded" },
-        );
-      });
+      /**
+       * Resolves the Projects `select` picks from those ordered by Period,
+       * reading star counts for those only.
+       */
+      const resolvedProjects = (
+        select: (byPeriod: ReadonlyArray<Project>) => ReadonlyArray<Project> = (
+          byPeriod,
+        ) => byPeriod,
+      ) =>
+        Effect.flatMap(load, (content) => {
+          const resolve = techResolver(content);
+          const byPeriod = [...content.projects].sort((a, b) =>
+            byStartMostRecentFirst(a.period, b.period),
+          );
+          return Effect.forEach(
+            select(byPeriod),
+            (project) => {
+              // Stars only for the Project's own repository, never for the
+              // Profile's GitHub link it falls back to.
+              const repository = project.openSource
+                ? project.repository
+                : undefined;
+              const resolved: ResolvedProject = {
+                title: project.title,
+                description: project.description,
+                ...(project.image && { image: project.image }),
+                wip: project.wip,
+                period: project.period,
+                techs: project.techs.map(resolve),
+                ...(project.externalLink && {
+                  externalLink: project.externalLink,
+                }),
+                ...(project.openSource && {
+                  repository: repository ?? content.profile.links.github,
+                }),
+                rarity: project.rarity,
+                ...(project.featured !== undefined && {
+                  featured: project.featured,
+                }),
+              };
+              if (!repository) return Effect.succeed(resolved);
+              // No star count shown for a repository GitHub fails to give
+              // on a cold build.
+              return Effect.map(
+                stars.count(repository).pipe(orOnColdBuild(0)),
+                (count): ResolvedProject =>
+                  count > 0 ? { ...resolved, stars: count } : resolved,
+              );
+            },
+            { concurrency: "unbounded" },
+          );
+        });
+
+      const projects = resolvedProjects();
+
+      // The sort is stable: equal places keep their Period order.
+      const featuredProjects = resolvedProjects((byPeriod) =>
+        byPeriod
+          .filter((project) => project.featured !== undefined)
+          .sort((a, b) => a.featured! - b.featured!)
+          .slice(0, FEATURED_PROJECTS),
+      );
 
       const experiences = Effect.map(load, (content) =>
         [...content.experiences].sort((a, b) =>
@@ -228,6 +302,8 @@ export class ContentCatalog extends Context.Service<
       });
 
       const profile = Effect.map(load, (content) => content.profile);
+      const achievements = Effect.map(load, (content) => content.achievements);
+      const hobbies = Effect.map(load, (content) => content.hobbies);
 
       return {
         techCategories,
@@ -235,29 +311,45 @@ export class ContentCatalog extends Context.Service<
         experiences,
         videos,
         profile,
-        inLocale: (locale): CatalogInLocale => ({
-          techCategories: Effect.map(techCategories, (all) =>
-            all.map((category) => ({
-              ...category,
-              name: category.name[locale],
-              description: category.description[locale],
-            })),
-          ),
-          projects: Effect.map(projects, (all) =>
-            all.map((project) => ({
-              ...project,
-              description: project.description[locale],
-            })),
-          ),
-          experiences: Effect.map(experiences, (all) =>
-            all.map((experience) => ({
-              ...experience,
-              role: experience.role[locale],
-              description: experience.description[locale],
-            })),
-          ),
-          resume: Effect.map(profile, (profile) => profile.resumes[locale]),
-        }),
+        achievements,
+        hobbies,
+        inLocale: (locale): CatalogInLocale => {
+          const projectInLocale = (project: ResolvedProject) => ({
+            ...project,
+            description: project.description[locale],
+          });
+          return {
+            techCategories: Effect.map(techCategories, (all) =>
+              all.map((category) => ({
+                ...category,
+                name: category.name[locale],
+                description: category.description[locale],
+              })),
+            ),
+            projects: Effect.map(projects, (all) => all.map(projectInLocale)),
+            featuredProjects: Effect.map(featuredProjects, (all) =>
+              all.map(projectInLocale),
+            ),
+            experiences: Effect.map(experiences, (all) =>
+              all.map((experience) => ({
+                ...experience,
+                role: experience.role[locale],
+                description: experience.description[locale],
+              })),
+            ),
+            achievements: Effect.map(achievements, (all) =>
+              all.map((achievement) => ({
+                ...achievement,
+                name: achievement.name[locale],
+                description: achievement.description[locale],
+              })),
+            ),
+            hobbies: Effect.map(hobbies, (all) =>
+              all.map((hobby) => ({ ...hobby, label: hobby.label[locale] })),
+            ),
+            resume: Effect.map(profile, (profile) => profile.resumes[locale]),
+          };
+        },
       };
     }),
   );

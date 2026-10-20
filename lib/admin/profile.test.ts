@@ -54,6 +54,8 @@ const admin = (identity: SignedInIdentity | undefined) =>
       "content/tech-categories.json": "[]",
       "content/projects.json": "[]",
       "content/experiences.json": "[]",
+      "content/achievements.json": "[]",
+      "content/hobbies.json": "[]",
       [PROFILE]: JSON.stringify(testProfile),
       "public/pdf/cv-lucas.pdf": pdf(0x01),
       [FRENCH_RESUME]: pdf(0x02),

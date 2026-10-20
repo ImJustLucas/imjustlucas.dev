@@ -6,6 +6,7 @@ import {
   type Owner,
   ownerAccess,
 } from "@/lib/admin/owner-access";
+import type { UploadedImage } from "@/lib/admin/uploaded-image";
 import { type CatalogError, loadContent } from "@/lib/content/catalog";
 import { byStartMostRecentFirst, type Period } from "@/lib/content/period";
 import type {
@@ -83,6 +84,37 @@ export const readUpload = (
         cause,
       }),
   });
+
+/**
+ * The image path a save gives an entry: the one uploaded (named by `store`,
+ * e.g. `projectImage`), committed alongside, or a field error on `field`;
+ * else `current`, the one it had.
+ */
+export const imageUpload = (options: {
+  readonly upload: Upload | undefined;
+  readonly current: string | undefined;
+  readonly field: string;
+  readonly store: (bytes: Uint8Array) => UploadedImage;
+}): Effect.Effect<
+  {
+    readonly image: string | undefined;
+    readonly assets?: ReadonlyArray<ContentChange>;
+    readonly fieldErrors?: Readonly<Record<string, string>>;
+  },
+  UploadUnreadable
+> => {
+  const { upload, current, field, store } = options;
+  if (!upload) return Effect.succeed({ image: current });
+  return Effect.map(readUpload(upload), (bytes) => {
+    const uploaded = store(bytes);
+    return uploaded.kind === "invalid"
+      ? { image: current, fieldErrors: { [field]: uploaded.error } }
+      : {
+          image: uploaded.url,
+          assets: [{ path: uploaded.path, content: bytes }],
+        };
+  });
+};
 
 /**
  * A list editor's entries in display order, the order of the public pages
@@ -355,6 +387,32 @@ const FRENCH: ReadonlyArray<
   [
     /^Expected "entrepreneurship"( \| "[\w-]+")*$/,
     () => "Type de contrat inconnu",
+  ],
+  // The Rarity literals.
+  [/^Expected "common"( \| "[\w-]+")*$/, () => "Rareté inconnue"],
+  // The Hobby poses.
+  [/^Expected "surf"( \| "[\w-]+")*$/, () => "Pose inconnue"],
+  [
+    /^Expected a whole number from 1$/,
+    () => "Nombre entier attendu, à partir de 1",
+  ],
+  [
+    /^Expected an emoji \(at most 8 characters\)$/,
+    () => "Emoji attendu (8 caractères au maximum)",
+  ],
+  [
+    /^Expected a year from 2000 to 2100$/,
+    () => "Année attendue, de 2000 à 2100",
+  ],
+  [
+    /^Expected a page of the site \(\/…\) or an http\(s\) URL$/,
+    () =>
+      "Page du site attendue (commençant par /) ou lien commençant par http:// ou https://",
+  ],
+  [
+    /^Expected an image \(PNG, JPEG, WebP or AVIF\) in (\S+), or a WebP or PNG in (\S+)$/,
+    (m) =>
+      `Image attendue (PNG, JPEG, WebP ou AVIF) dans ${m[1]}, ou WebP ou PNG dans ${m[2]}`,
   ],
   [
     /^Expected https:\/\/github\.com\/<owner>\/<repository>$/,

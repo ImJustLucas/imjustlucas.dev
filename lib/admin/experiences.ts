@@ -26,6 +26,8 @@ type ExperienceFields = {
   readonly link: string;
   readonly description: LocalizedText;
   readonly period: PeriodInput;
+  /** Shown before the company on the home page. Empty: none. */
+  readonly emoji: string;
 };
 
 const experience = (input: ExperienceFields) => ({
@@ -36,6 +38,7 @@ const experience = (input: ExperienceFields) => ({
   link: input.link,
   description: { en: input.description.en, fr: input.description.fr },
   period: { start: input.period.start, end: input.period.end },
+  ...(input.emoji && { emoji: input.emoji }),
 });
 
 /** How a commit message names an Experience: company and role. */

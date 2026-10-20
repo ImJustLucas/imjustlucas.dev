@@ -12,6 +12,7 @@ import {
   deleteProjectAction,
   updateProjectAction,
 } from "@/app/admin/projects/actions";
+import { RarityField } from "@/app/admin/rarity-field";
 import { TechPicker } from "@/app/admin/techs/tech-picker";
 import {
   TypographyH2,
@@ -59,6 +60,18 @@ const ProjectFields: React.FC<{
     />
     <PeriodField name="period" defaultValue={project?.period} />
     <TechPicker techs={techs} selected={project?.techs} />
+    <div className="grid gap-3 sm:grid-cols-2">
+      <RarityField defaultValue={project?.rarity} />
+      {/* Left empty, the Project is not on the home page. */}
+      <AdminField
+        name="featured"
+        label="Place sur l'accueil (facultatif, 1 en premier)"
+        type="number"
+        min={1}
+        defaultValue={project?.featured?.toString()}
+        placeholder="Pas sur l'accueil"
+      />
+    </div>
     <div className="grid gap-3 sm:grid-cols-2">
       <AdminField
         name="externalLink"
@@ -123,7 +136,8 @@ export default async function ProjectsEditorPage() {
       <section className="flex flex-col gap-4">
         <TypographyMuted>
           Le site les affiche du plus récent au plus ancien, d&apos;après leur
-          période. Le nombre d&apos;étoiles vient de GitHub.
+          période. L&apos;accueil montre les trois premiers d&apos;après leur
+          place sur l&apos;accueil. Le nombre d&apos;étoiles vient de GitHub.
         </TypographyMuted>
         <ul className="flex flex-col gap-3">
           {projects.map(({ index, project }) => (

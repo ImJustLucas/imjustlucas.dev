@@ -176,8 +176,10 @@ export const AdminField: React.FC<{
   name: string;
   label: string;
   defaultValue?: string;
-  type?: "text" | "color";
+  type?: "text" | "color" | "number";
   placeholder?: string;
+  /** For a number. */
+  min?: number;
   className?: string;
 }> = ({ name, label, type = "text", className, ...input }) => {
   const error = useFieldError(name);
@@ -195,6 +197,45 @@ export const AdminField: React.FC<{
         )}
         {...input}
       />
+      <FieldError name={name} />
+    </label>
+  );
+};
+
+/**
+ * A choice among fixed `options` (value and French label). With no current
+ * value, it starts on "Choisir…", which cannot be sent back as a choice.
+ */
+export const SelectField: React.FC<{
+  name: string;
+  label: string;
+  options: ReadonlyArray<readonly [value: string, label: string]>;
+  defaultValue?: string;
+}> = ({ name, label, options, defaultValue }) => {
+  const error = useFieldError(name);
+  return (
+    <label className="flex flex-col gap-1 text-sm">
+      <span className="font-medium">{label}</span>
+      <select
+        name={name}
+        defaultValue={defaultValue ?? ""}
+        aria-invalid={error ? true : undefined}
+        className={cn(
+          "rounded-md border border-input bg-background px-3 py-2",
+          error && "border-destructive",
+        )}
+      >
+        {!defaultValue && (
+          <option value="" disabled>
+            Choisir…
+          </option>
+        )}
+        {options.map(([value, label]) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
       <FieldError name={name} />
     </label>
   );

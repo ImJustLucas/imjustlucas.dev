@@ -24,6 +24,7 @@ const experienceFields = (form: FormData) => ({
   link: field(form, "link"),
   description: localized(form, "description"),
   period: readPeriod(form, "period"),
+  emoji: field(form, "emoji"),
 });
 
 export async function createExperienceAction(_: FormState, form: FormData) {

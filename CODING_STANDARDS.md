@@ -10,7 +10,7 @@ Judgement calls a reviewer checks on every diff. Mechanical rules (import order,
 
 ## Domain language
 
-- Code names, test names, commit messages and Admin labels use the terms of `GLOSSARY.md` (Project, Experience, Tech, Tech category, Video, Profile, Resume, Period, Locale, Owner, Admin) and avoid the words listed under _Avoid_. French Admin labels may say "CV".
+- Code names, test names, commit messages and Admin labels use the terms of `GLOSSARY.md` (Project, Experience, Tech, Tech category, Achievement, Hobby, Rarity, Video, Profile, Resume, Period, Locale, Owner, Admin) and avoid the words listed under _Avoid_. French Admin labels may say "CV".
 
 ## Docs stay true
 

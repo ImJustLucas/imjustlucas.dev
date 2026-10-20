@@ -44,9 +44,11 @@ export const TechCategory = Schema.Struct({
 });
 export type TechCategory = typeof TechCategory.Type;
 
+const HTTP_URL = /^https?:\/\/\S+$/;
+
 /** An absolute `http(s)` URL. */
 export const Url = Schema.String.check(
-  Schema.isPattern(/^https?:\/\/\S+$/, { message: "Expected an http(s) URL" }),
+  Schema.isPattern(HTTP_URL, { message: "Expected an http(s) URL" }),
 );
 
 /** A public GitHub repository, as `https://github.com/<owner>/<name>`. */
@@ -68,13 +70,14 @@ const assetIn = (
   message: string,
 ): Schema.Codec<string> =>
   Schema.String.check(
-    Schema.isPattern(
-      new RegExp(
-        `^${folder}(?!.*\\.\\.)[a-z0-9][a-z0-9._-]*\\.(${extensions})$`,
-      ),
-      { message },
-    ),
+    Schema.isPattern(new RegExp(`^${assetPattern(folder, extensions)}$`), {
+      message,
+    }),
   );
+
+/** The pattern of a plain file of `folder` with one of `extensions`. */
+const assetPattern = (folder: string, extensions: string) =>
+  `${folder}(?!.*\\.\\.)[a-z0-9][a-z0-9._-]*\\.(${extensions})`;
 
 /** A Project image, e.g. `/images/projects/predi.png`. */
 export const ProjectImagePath = assetIn(
@@ -85,6 +88,23 @@ export const ProjectImagePath = assetIn(
 
 /** A Resume PDF, e.g. `/pdf/cv-lucas.pdf`. */
 export const ResumePath = assetIn("/pdf/", "pdf", "Expected a PDF in /pdf/");
+
+/**
+ * What kind of thing a Project or Achievement is, set by the Owner: a common
+ * side project, rare shipped work, an epic founded product, a legendary
+ * national win. Never a quality score.
+ */
+export const Rarity = Schema.Literals(["common", "rare", "epic", "legendary"]);
+export type Rarity = typeof Rarity.Type;
+
+/** A place in a list, from 1 (the first). */
+const Place = Schema.Number.check(
+  Schema.makeFilter((place) =>
+    Number.isInteger(place) && place > 0
+      ? undefined
+      : "Expected a whole number from 1",
+  ),
+);
 
 export const Project = Schema.Struct({
   /** Not translated: a proper noun. */
@@ -100,6 +120,12 @@ export const Project = Schema.Struct({
   /** Its star count is read from GitHub, never stored. */
   repository: Schema.optionalKey(GitHubRepository),
   openSource: Schema.Boolean,
+  rarity: Rarity,
+  /**
+   * Its place among the Projects the home page features, 1 first; absent:
+   * not featured.
+   */
+  featured: Schema.optionalKey(Place),
 });
 export type Project = typeof Project.Type;
 
@@ -121,8 +147,78 @@ export const Experience = Schema.Struct({
   link: Url,
   description: LocalizedText,
   period: Period,
+  /** Shown before the company on the home page, e.g. `🔮`. */
+  emoji: Schema.optionalKey(
+    Schema.String.check(
+      Schema.makeFilter((emoji) =>
+        emoji.length > 0 && emoji.length <= 8
+          ? undefined
+          : "Expected an emoji (at most 8 characters)",
+      ),
+    ),
+  ),
 });
 export type Experience = typeof Experience.Type;
+
+/** What Lucas does when he isn't working, as his chibi avatar shows it. */
+export const HobbyPose = Schema.Literals([
+  "surf",
+  "skate",
+  "lol",
+  "coding",
+  "coffee",
+  "series",
+  "music",
+]);
+export type HobbyPose = typeof HobbyPose.Type;
+
+export const Hobby = Schema.Struct({
+  label: LocalizedText,
+  pose: HobbyPose,
+});
+export type Hobby = typeof Hobby.Type;
+
+/**
+ * An Achievement's art: an image of `/images/achievements/` (what the Admin
+ * uploads), or a chibi pose of `/images/chibi/` (WebP or PNG).
+ */
+export const AchievementArtPath = Schema.String.check(
+  Schema.isPattern(
+    new RegExp(
+      `^(${assetPattern("/images/achievements/", "png|jpe?g|webp|avif")}|${assetPattern("/images/chibi/", "webp|png")})$`,
+    ),
+    {
+      message:
+        "Expected an image (PNG, JPEG, WebP or AVIF) in /images/achievements/, or a WebP or PNG in /images/chibi/",
+    },
+  ),
+);
+
+/** A page of the site, by its path without Locale, e.g. `/mdf-2025`. */
+const SITE_PATH = /^\/[a-z0-9-]*(\/[a-z0-9-]+)*$/;
+
+export const Achievement = Schema.Struct({
+  name: LocalizedText,
+  description: LocalizedText,
+  year: Schema.Number.check(
+    Schema.makeFilter((year) =>
+      Number.isInteger(year) && year >= 2000 && year <= 2100
+        ? undefined
+        : "Expected a year from 2000 to 2100",
+    ),
+  ),
+  rarity: Rarity,
+  /** A page of the site (e.g. `/mdf-2025`) or an http(s) URL. */
+  link: Schema.String.check(
+    Schema.makeFilter((link) =>
+      SITE_PATH.test(link) || HTTP_URL.test(link)
+        ? undefined
+        : "Expected a page of the site (/…) or an http(s) URL",
+    ),
+  ),
+  art: AchievementArtPath,
+});
+export type Achievement = typeof Achievement.Type;
 
 /** A calendar day, as `YYYY-MM-DD`. */
 export const CalendarDate = Schema.String.check(
@@ -197,6 +293,8 @@ export const Content = Schema.Struct({
   projects: Schema.Array(Project),
   experiences: Schema.Array(Experience),
   profile: Profile,
+  achievements: Schema.Array(Achievement),
+  hobbies: Schema.Array(Hobby),
 }).check(
   Schema.makeFilter((content) => {
     const seen = new Set<string>();
@@ -244,4 +342,6 @@ export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   projects: "content/projects.json",
   experiences: "content/experiences.json",
   profile: "content/profile.json",
+  achievements: "content/achievements.json",
+  hobbies: "content/hobbies.json",
 };
