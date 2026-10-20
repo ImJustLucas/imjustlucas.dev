@@ -63,6 +63,7 @@ const config: Config = {
         "on-action": token("on-action"),
         // Text on bright fills: navy in electric, Night in plum
         "on-bright": token("on-bright"),
+        "link-line": token("link-line"),
         // Fixed palette; `-ink` is the colour's role as text or thin line
         night: token("night"),
         cream: token("cream"),
