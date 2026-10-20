@@ -4,7 +4,7 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import { geistMono, geistSans } from "@/app/fonts";
+import { fontVariables } from "@/app/fonts";
 import { TypographyH1, TypographyP } from "@/components/typography";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function GlobalNotFound() {
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${fontVariables} antialiased bg-background text-foreground`}
       >
         <main className="flex h-dvh flex-col items-center justify-center gap-4 p-4 text-center">
           <TypographyH1 className="text-3xl font-semibold">404</TypographyH1>

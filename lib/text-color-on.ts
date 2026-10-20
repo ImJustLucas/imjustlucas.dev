@@ -23,3 +23,22 @@ export const textColorOn = (background: string): "#000000" | "#ffffff" =>
   contrastRatio(background, "#000000") >= contrastRatio(background, "#ffffff")
     ? "#000000"
     : "#ffffff";
+
+/** The client's two inks: Night (#1c0f2b) and Cream (#fff1e6). */
+export const NIGHT = "#1c0f2b";
+export const CREAM = "#fff1e6";
+
+/**
+ * The Computed Ink Rule: text on a coloured fill is whichever of Night or
+ * Cream contrasts more with it, or none when neither reaches 4.5:1, in which
+ * case the colour is drawn as an outline instead of a fill.
+ */
+export const inkOn = (
+  background: string,
+): typeof NIGHT | typeof CREAM | null => {
+  const night = contrastRatio(background, NIGHT);
+  const cream = contrastRatio(background, CREAM);
+  const best = Math.max(night, cream);
+  if (best < 4.5) return null;
+  return night >= cream ? NIGHT : CREAM;
+};

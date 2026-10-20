@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 
-import { geistMono, geistSans } from "@/app/fonts";
-import { TypographyH1 } from "@/components/typography";
+import { fontVariables } from "@/app/fonts";
+import { PresenceProvider } from "@/components/presence/PresenceProvider";
+import { SoundProvider } from "@/components/sound/SoundProvider";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
 import { getProfile } from "@/lib/content/server";
@@ -44,16 +44,11 @@ export default async function LocaleLayout({
 }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
-  const [t, profile] = await Promise.all([
-    getTranslations({ locale, namespace: "Layout" }),
-    getProfile(),
-  ]);
+  const profile = await getProfile();
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${fontVariables} antialiased`}>
         <NextIntlClientProvider>
           <ThemeProvider
             attribute="class"
@@ -63,20 +58,13 @@ export default async function LocaleLayout({
           >
             <Analytics />
             <SpeedInsights />
-            <TypographyH1 className="absolute top-96 opacity-0">
-              ImJustLucas
-            </TypographyH1>
-            <div className="fixed bottom-5 right-5 z-10">
-              <Image
-                src="/images/chibi-avatar-64x64.png"
-                alt={t("avatarAlt")}
-                width={32}
-                height={32}
-              />
-            </div>
-            <MobileMenuProvider>
-              <ClientLayout profile={profile}>{children}</ClientLayout>
-            </MobileMenuProvider>
+            <SoundProvider>
+              <PresenceProvider discordUserId={profile.discordUserId}>
+                <MobileMenuProvider>
+                  <ClientLayout profile={profile}>{children}</ClientLayout>
+                </MobileMenuProvider>
+              </PresenceProvider>
+            </SoundProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -5,100 +5,150 @@ type TypographyProps = {
   className?: string;
 };
 
+type HeadingProps = TypographyProps & {
+  /** The element, so the role's look never dictates the outline. */
+  as?: "h1" | "h2" | "h3" | "h4" | "p" | "span";
+  id?: string;
+};
+
+/**
+ * Display: the greeting on the profile banner. One per page at most;
+ * Unbounded, never forced to uppercase (the copy keeps its case).
+ */
+export const TypographyDisplay: React.FC<HeadingProps> = ({
+  as: Tag = "h1",
+  children,
+  className,
+  id,
+}) => (
+  <Tag
+    id={id}
+    className={cn("font-display text-display text-balance", className)}
+  >
+    {children}
+  </Tag>
+);
+
+/** Headline: a page title, the one visible `h1` of a page. */
+export const TypographyHeadline: React.FC<HeadingProps> = ({
+  as: Tag = "h1",
+  children,
+  className,
+  id,
+}) => (
+  <Tag
+    id={id}
+    className={cn(
+      "scroll-m-20 font-display text-headline text-balance",
+      className,
+    )}
+  >
+    {children}
+  </Tag>
+);
+
+/** Title: section titles, item and achievement names. */
+export const TypographyTitle: React.FC<HeadingProps> = ({
+  as: Tag = "h2",
+  children,
+  className,
+  id,
+}) => (
+  <Tag
+    id={id}
+    className={cn(
+      "scroll-m-20 font-display text-title text-balance",
+      className,
+    )}
+  >
+    {children}
+  </Tag>
+);
+
+/** Data: periods, dates, star counts, elapsed time; tabular figures. */
+export const TypographyData: React.FC<
+  TypographyProps & { as?: "span" | "p" | "time"; dateTime?: string }
+> = ({ as: Tag = "span", children, className, dateTime }) => (
+  <Tag
+    dateTime={dateTime}
+    className={cn("font-mono text-data tabular-nums", className)}
+  >
+    {children}
+  </Tag>
+);
+
+/** Tag: rarity, "live" and "new" tags, chips. */
+export const TypographyTag: React.FC<
+  TypographyProps & { style?: React.CSSProperties }
+> = ({ children, className, style }) => (
+  <span style={style} className={cn("text-tag", className)}>
+    {children}
+  </span>
+);
+
 export const TypographyH1: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <h1
-      className={cn(
-        "scroll-m-20 text-4xl font-extrabold tracking-tight",
-        className,
-      )}
-    >
-      {children}
-    </h1>
-  );
-};
+}) => (
+  <TypographyHeadline as="h1" className={className}>
+    {children}
+  </TypographyHeadline>
+);
 
 export const TypographyH2: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <h2
-      className={cn(
-        "scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0",
-        className,
-      )}
-    >
-      {children}
-    </h2>
-  );
-};
+}) => (
+  <TypographyHeadline as="h2" className={cn("pb-2", className)}>
+    {children}
+  </TypographyHeadline>
+);
 
 export const TypographyH3: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <h3
-      className={cn(
-        "scroll-m-20 text-2xl font-semibold tracking-tight mt-4",
-        className,
-      )}
-    >
-      {children}
-    </h3>
-  );
-};
+}) => (
+  <TypographyTitle as="h3" className={cn("mt-4 text-[1.375rem]", className)}>
+    {children}
+  </TypographyTitle>
+);
 
 export const TypographyH4: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <h4
-      className={cn(
-        "scroll-m-20 text-xl font-semibold tracking-tight",
-        className,
-      )}
-    >
-      {children}
-    </h4>
-  );
-};
+}) => (
+  <TypographyTitle as="h4" className={className}>
+    {children}
+  </TypographyTitle>
+);
 
+/** Body: paragraphs, capped at 65ch. */
 export const TypographyP: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
-      {children}
-    </p>
-  );
-};
+}) => (
+  <p
+    className={cn(
+      "max-w-[65ch] leading-[1.65] [&:not(:first-child)]:mt-6",
+      className,
+    )}
+  >
+    {children}
+  </p>
+);
 
 export const TypographySmall: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <small className={cn("text-sm font-medium leading-none", className)}>
-      {children}
-    </small>
-  );
-};
+}) => (
+  <small className={cn("text-label leading-none", className)}>{children}</small>
+);
 
+/** Secondary text: Haze in the dark theme, Dusk in the light one. */
 export const TypographyMuted: React.FC<TypographyProps> = ({
   children,
   className,
-}) => {
-  return (
-    <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
-  );
-};
+}) => <p className={cn("text-label text-ink-muted", className)}>{children}</p>;
 
 export const Bold: React.FC<TypographyProps> = ({ children, className }) => {
   return <span className={cn("font-semibold", className)}>{children}</span>;

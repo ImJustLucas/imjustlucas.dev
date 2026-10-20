@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes";
 
 import { AdminNoticeProvider } from "@/app/admin/admin-form";
 import { SignInScreen } from "@/app/admin/admin-screens";
-import { geistMono, geistSans } from "@/app/fonts";
+import { fontVariables } from "@/app/fonts";
 import { currentOwnerAccess } from "@/lib/admin/session";
 
 export const metadata: Metadata = {
@@ -24,9 +24,7 @@ export default async function AdminLayout({
   const access = await currentOwnerAccess();
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${fontVariables} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

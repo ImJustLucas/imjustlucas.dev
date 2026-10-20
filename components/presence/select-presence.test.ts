@@ -2,7 +2,7 @@ import type { Activity, LanyardData, Spotify } from "react-use-lanyard";
 
 import { describe, expect, it } from "vitest";
 
-import { selectPresence } from "./select-presence";
+import { presenceStatus, selectPresence } from "./select-presence";
 
 const lanyardStatus = (overrides: Partial<LanyardData> = {}): LanyardData => ({
   listening_to_spotify: false,
@@ -101,15 +101,48 @@ describe("selectPresence", () => {
 
     expect(
       selectPresence(lanyardStatus({ activities: [customStatus] })),
-    ).toEqual({ kind: "nothing" });
+    ).toEqual({ kind: "status", status: "online" });
   });
 
-  it("shows nothing when Lucas neither plays nor listens", () => {
-    expect(selectPresence(lanyardStatus())).toEqual({ kind: "nothing" });
+  it("shows his status when Lucas neither plays nor listens", () => {
+    expect(selectPresence(lanyardStatus())).toEqual({
+      kind: "status",
+      status: "online",
+    });
+    for (const status of ["idle", "dnd", "offline"] as const) {
+      expect(selectPresence(lanyardStatus({ discord_status: status }))).toEqual(
+        { kind: "status", status },
+      );
+    }
   });
 
-  it("shows nothing before the live status has arrived", () => {
-    expect(selectPresence(undefined)).toEqual({ kind: "nothing" });
+  it("is connecting before the live status has arrived", () => {
+    expect(selectPresence(undefined)).toEqual({ kind: "connecting" });
+    expect(presenceStatus(undefined)).toBe("connecting");
+  });
+
+  it("shows Lucas offline when Lanyard is unreachable", () => {
+    expect(selectPresence(undefined, { unreachable: true })).toEqual({
+      kind: "status",
+      status: "offline",
+    });
+    expect(presenceStatus(undefined, { unreachable: true })).toBe("offline");
+  });
+
+  it("colours the status ring with his Discord status", () => {
+    expect(presenceStatus(lanyardStatus({ discord_status: "dnd" }))).toBe(
+      "dnd",
+    );
+  });
+
+  it("gives the time the game started, for the elapsed time", () => {
+    const presence = selectPresence(
+      lanyardStatus({
+        activities: [game({ timestamps: { start: 1000, end: 2000 } })],
+      }),
+    );
+
+    expect(presence).toMatchObject({ kind: "playing", startedAt: 1000 });
   });
 
   it("drops the card as soon as the game ends", () => {
@@ -118,7 +151,8 @@ describe("selectPresence", () => {
     );
 
     expect(selectPresence(lanyardStatus({ activities: [] }))).toEqual({
-      kind: "nothing",
+      kind: "status",
+      status: "online",
     });
   });
 
@@ -138,7 +172,7 @@ describe("selectPresence", () => {
       selectPresence(
         lanyardStatus({ listening_to_spotify: false, spotify: track() }),
       ),
-    ).toEqual({ kind: "nothing" });
+    ).toEqual({ kind: "status", status: "online" });
   });
 
   describe("missing artwork", () => {

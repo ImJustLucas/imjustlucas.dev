@@ -2,7 +2,10 @@ import type { Activity, LanyardData, Spotify } from "react-use-lanyard";
 
 export type PresenceImage = { url: string; alt: string };
 
-/** What the Presence card shows, derived from the live Lanyard status. */
+/** Lucas's Discord status, as Discord names it. */
+export type DiscordStatus = LanyardData["discord_status"];
+
+/** What the friends panel shows, derived from the live Lanyard status. */
 export type Presence =
   | {
       kind: "playing";
@@ -11,6 +14,8 @@ export type Presence =
       state?: string;
       artwork?: PresenceImage;
       badge?: PresenceImage;
+      /** When the game started, in epoch milliseconds. */
+      startedAt?: number;
     }
   | {
       kind: "listening";
@@ -18,7 +23,10 @@ export type Presence =
       artist: string;
       artwork?: PresenceImage;
     }
-  | { kind: "nothing" };
+  /** Neither playing nor listening: online, away (idle), busy (dnd), offline. */
+  | { kind: "status"; status: DiscordStatus }
+  /** The live status has not arrived yet. */
+  | { kind: "connecting" };
 
 const PLAYING = 0;
 const MEDIA_PROXY_PREFIX = "mp:";
@@ -60,6 +68,7 @@ const playing = (game: Activity): Presence => {
     ...(game.state && { state: game.state }),
     ...(artwork && { artwork }),
     ...(badge && { badge }),
+    ...(game.timestamps?.start && { startedAt: game.timestamps.start }),
   };
 };
 
@@ -73,16 +82,34 @@ const listening = (spotify: Spotify): Presence => ({
 });
 
 /**
- * Picks what the Presence card shows: the game Lucas is playing, otherwise
- * the track he is listening to on Spotify, otherwise nothing.
+ * Picks what the friends panel shows: the game Lucas is playing, otherwise
+ * the track he is listening to on Spotify, otherwise his Discord status.
+ * Before the live status arrives it is connecting; once Lanyard is deemed
+ * unreachable, he shows as offline, so the panel always shows a state.
  */
-export const selectPresence = (status: LanyardData | undefined): Presence => {
-  const game = status?.activities.find((activity) => activity.type === PLAYING);
+export const selectPresence = (
+  status: LanyardData | undefined,
+  { unreachable = false }: { unreachable?: boolean } = {},
+): Presence => {
+  if (!status) {
+    return unreachable
+      ? { kind: "status", status: "offline" }
+      : { kind: "connecting" };
+  }
+
+  const game = status.activities.find((activity) => activity.type === PLAYING);
   if (game) return playing(game);
 
-  if (status?.listening_to_spotify && status.spotify) {
+  if (status.listening_to_spotify && status.spotify) {
     return listening(status.spotify);
   }
 
-  return { kind: "nothing" };
+  return { kind: "status", status: status.discord_status };
 };
+
+/** The status ring's colour: his Discord status, or none while connecting. */
+export const presenceStatus = (
+  status: LanyardData | undefined,
+  { unreachable = false }: { unreachable?: boolean } = {},
+): DiscordStatus | "connecting" =>
+  status?.discord_status ?? (unreachable ? "offline" : "connecting");

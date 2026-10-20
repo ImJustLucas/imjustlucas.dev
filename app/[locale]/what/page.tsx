@@ -16,13 +16,15 @@ export default async function What() {
   const projects = await getProjects(await getLocale());
 
   return (
-    <div className="">
+    <div className="mx-auto max-w-[1180px]">
       <PageHeader route={ROUTES.what} />
-      <div className="flex flex-wrap gap-4">
+      <ul className="grid gap-slot-gap md:grid-cols-2 xl:grid-cols-3">
         {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
+          <li key={project.title}>
+            <ProjectCard project={project} />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

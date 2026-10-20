@@ -2,10 +2,16 @@
 
 import * as React from "react";
 
+import { ChevronDown } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
+/**
+ * The client's accordion: Velvet rows with 16px corners and gaps instead of
+ * hairline dividers, and a chevron that turns with Ease In Out.
+ */
 const Accordion = AccordionPrimitive.Root;
 
 const AccordionItem = React.forwardRef<
@@ -14,7 +20,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("border-b", className)}
+    className={cn("tray overflow-hidden rounded-lg bg-raised", className)}
     {...props}
   />
 ));
@@ -28,12 +34,16 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-4 font-medium transition-all",
+        "group flex min-h-14 flex-1 items-center justify-between gap-4 rounded-lg px-5 py-3 text-left font-medium text-ink transition-colors duration-hover ease-out hover:bg-seam/40 focus-visible:-outline-offset-2",
         className,
       )}
       {...props}
     >
       {children}
+      <ChevronDown
+        aria-hidden
+        className="size-5 shrink-0 text-ink-muted transition-transform duration-200 ease-in-out group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+      />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
@@ -48,7 +58,12 @@ const AccordionContent = React.forwardRef<
     className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("pb-4 pt-1 text-muted-foreground", className)}>
+    <div
+      className={cn(
+        "max-w-[65ch] px-5 pb-5 leading-[1.65] text-ink-muted",
+        className,
+      )}
+    >
       {children}
     </div>
   </AccordionPrimitive.Content>

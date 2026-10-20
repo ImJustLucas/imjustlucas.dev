@@ -40,8 +40,7 @@
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.175.0",
-    "use-sound": "^4.0.3"
+    "three": "^0.175.0"
   },
   "devDependencies": {
     "@effect/vitest": "4.0.5",

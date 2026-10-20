@@ -2,7 +2,13 @@ import { describe, expect, it } from "vitest";
 
 import techs from "@/content/techs.json";
 
-import { contrastRatio, textColorOn } from "./text-color-on";
+import {
+  contrastRatio,
+  CREAM,
+  inkOn,
+  NIGHT,
+  textColorOn,
+} from "./text-color-on";
 
 const AA = 4.5;
 
@@ -38,5 +44,25 @@ describe("textColorOn", () => {
 
   it.each(techs)("reaches AA contrast on the $name badge", ({ color }) => {
     expect(contrastRatio(color, textColorOn(color))).toBeGreaterThanOrEqual(AA);
+  });
+});
+
+describe("inkOn", () => {
+  it("writes Night on bright fills and Cream on deep ones", () => {
+    expect(inkOn("#ff8a3d")).toBe(NIGHT);
+    expect(inkOn("#ffd84d")).toBe(NIGHT);
+    expect(inkOn("#3b2159")).toBe(CREAM);
+  });
+
+  it("gives no ink when neither reaches AA, so the chip is an outline", () => {
+    expect(inkOn("#7f6f8f")).toBeNull();
+  });
+
+  it("reaches AA whenever it gives an ink", () => {
+    for (let v = 0; v < 256; v++) {
+      const grey = `#${v.toString(16).padStart(2, "0").repeat(3)}`;
+      const ink = inkOn(grey);
+      if (ink) expect(contrastRatio(grey, ink)).toBeGreaterThanOrEqual(AA);
+    }
   });
 });

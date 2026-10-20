@@ -4,7 +4,9 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
+import { Check, Moon, Sun } from "lucide-react";
+
+import { useSounds } from "@/components/sound/SoundProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,31 +14,44 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+const THEMES = ["dark", "light", "system"] as const;
 
+/** The theme menu: dark ("LAN night", the default), light, or the system's. */
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const { play } = useSounds();
   const t = useTranslations("ThemeSwitch");
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">{t("toggle")}</span>
-        </Button>
+      <DropdownMenuTrigger
+        className="ledge relative inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-raised text-ink"
+        onClick={() => play("press")}
+      >
+        <Sun aria-hidden className="size-5 dark:hidden" />
+        <Moon aria-hidden className="hidden size-5 dark:block" />
+        <span className="sr-only">{t("toggle")}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          {t("light")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          {t("dark")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          {t("system")}
-        </DropdownMenuItem>
+      <DropdownMenuContent
+        align="start"
+        side="top"
+        className="float min-w-40 rounded-lg border-2 border-seam bg-raised p-1.5"
+      >
+        {THEMES.map((value) => (
+          <DropdownMenuItem
+            key={value}
+            onClick={() => {
+              setTheme(value);
+              play("toggleOn");
+            }}
+            className="flex h-10 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-label text-ink focus:bg-seam"
+          >
+            {t(value)}
+            {theme === value && (
+              <Check aria-hidden className="size-4 text-tangerine-ink" />
+            )}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

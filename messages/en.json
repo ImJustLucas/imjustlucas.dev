@@ -58,7 +58,7 @@
     "creativeMindsetTitle": "Creative Mindset",
     "creativeMindset": "I love tackling projects with a creative approach. My process usually starts with a good brainstorming session, lots of inspiration-hunting, and diving deep into the latest tech tools. Whether it's building from scratch or refining an existing idea, I aim to create with both quality and originality in mind.",
     "downloadResume": "Download my resume",
-    "resumeLastUpdated": "Last updated: {date, date, long}",
+    "resumeLastUpdated": "updated {date, date, medium}",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -73,7 +73,23 @@
         "question": "Coffee or tea?",
         "answer": "Definitely coffee. Paris runs on it, after all!"
       }
-    }
+    },
+    "greeting": "Yoooo, I'm Lucas!",
+    "role": "fullstack dev, co-founder of Predi.GG",
+    "currentTeam": "current team",
+    "chilling": "just chilling, you know",
+    "chillingAlt": "Lucas lounging in a tangerine beanbag",
+    "bannerAlt": "Lucas waving hello, headphones around his neck",
+    "boop": "boop Lucas",
+    "achievementsTitle": "achievements",
+    "trophyAlt": "Lucas holding up a gold trophy",
+    "inventoryTitle": "inventory",
+    "seeInventory": "see the whole inventory",
+    "aboutTitle": "about me",
+    "hobbiesTitle": "what i do when i'm not shipping",
+    "goodbye": "that's it for now, thanks for stopping by!",
+    "goodbyeAlt": "Lucas waving goodbye in his flower puffer jacket",
+    "sayHi": "come say hi"
   },
   "Experiences": {
     "contractTypes": {
@@ -101,15 +117,41 @@
   },
   "Sidebar": {
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "menu": "menu",
+    "client": "player profile",
+    "settings": "settings",
+    "socials": "socials",
+    "playerLine": "fullstack dev · paris"
   },
   "Presence": {
     "listeningBy": "by {artist}",
-    "spotifyLogo": "Spotify logo"
+    "spotifyLogo": "Spotify logo",
+    "title": "friends",
+    "live": "live",
+    "playing": "playing",
+    "playingFor": "playing for {elapsed}",
+    "sleepingAlt": "Lucas asleep on a plum cushion",
+    "status": {
+      "online": "online",
+      "idle": "away",
+      "dnd": "busy",
+      "offline": "offline",
+      "connecting": "connecting…"
+    },
+    "line": {
+      "online": "probably shipping something",
+      "idle": "brb, coffee run ☕",
+      "dnd": "in the zone, do not disturb",
+      "offline": "zzz… back soon"
+    }
   },
   "Projects": {
     "wip": "WIP",
-    "open": "Open {title}"
+    "open": "Open {title}",
+    "github": "GitHub",
+    "stars": "{count, plural, one {# star} other {# stars}} on GitHub",
+    "noImage": "No screenshot yet"
   },
   "How": {
     "intro": "I leverage cutting-edge technologies to build robust and scalable applications. Here's an overview of my technical expertise:"
@@ -136,5 +178,17 @@
     "title": "Page not found",
     "message": "This page does not exist, or no longer does.",
     "home": "Back to the home page"
+  },
+  "Sound": {
+    "label": "sound",
+    "on": "sound on",
+    "off": "sound off",
+    "offReducedMotion": "sound off (reduced motion)"
+  },
+  "Rarity": {
+    "common": "common",
+    "rare": "rare",
+    "epic": "epic",
+    "legendary": "legendary"
   }
 }
