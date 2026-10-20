@@ -45,7 +45,7 @@ Hobbies:
 - **Playing LoL**: `Celebrating a win: standing, the fist on the right of the image pumped up in the air and the other hand holding the side of the over-ear gaming headset on his head, eyes squeezed shut in a huge open-mouth grin. The Breton-stripe longsleeve of the banner (stripes wrapping around each sleeve and bending with the folds of the raised arms), very baggy black wide-leg jeans, white sneakers. Three small yellow four-point sparkles around the raised fist. No game logo anywhere.`
 - **Coding**: `Sitting cross-legged on the floor, seen in three-quarter view turned towards the right of the image, a laptop resting on his lap with its screen facing him, typing with both hands, a focused happy smile with the tip of his tongue poking out. The laptop is plain silver with no logo; the back of its lid, facing the viewer, carries one small sticker of a yellow four-point sparkle. Oversized charcoal overshirt open over a plum (#3b2159) t-shirt, very baggy black wide-leg jeans, white sneakers.`
 - **Coffee**: `Holding a steaming mug with both hands close to the viewer, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
-- **Series**: `Sitting wrapped in a violet blanket with a bowl of popcorn, looking at something off-screen with wide amused eyes. Grey hoodie under the blanket.`
+- **Series**: `Sitting on the big plum (#3b2159) cushion of the sleeping pose, wrapped in a soft violet (#b47cff) blanket over his shoulders, holding a tangerine (#ff8a3d) bowl of popcorn in his lap, one piece of popcorn halfway to his mouth, looking towards the right of the image at a screen we do not see, wide amused eyes and an open-mouth laugh. Under the blanket he wears the night outfit: the light misty lilac-white chunky pullover with electric-blue (#2f6bff) rib collar and cuffs, charcoal joggers, white socks.`
 - **Music**: `Standing in a three-quarter view turned towards the right of the image, eyes closed, head tilted to the side and nodding to the beat, a dreamy open-mouth smile as if singing along. The same dark over-ear headphones as the banner sit on his head, one hand pressing an ear cup, the other hand raised snapping its fingers. Oversized washed sky-blue t-shirt (#8fb8d8 with a few flat lighter faded patches) over a white long-sleeve, very baggy washed dark-blue jeans, white sneakers. Two small yellow music notes float near his head.`
 
 ## First test (2026-10-20, banner pose)
@@ -110,3 +110,7 @@ A second frame is an edit of the approved pose in its own Gemini conversation: s
 ## Coding pose (2026-10-20)
 
 Approved: cross-legged with the laptop, tongue out, two sparkle stickers on the lid. Two outfits kept: the Breton longsleeve with baggy black jeans is the default (`.impeccable/mocks/chibi/coding.png`, an outfit edit where the stripes did wrap around the bent sleeves), and the charcoal overshirt over a plum tee is the alternate (`coding-overshirt.png`).
+
+## Surf pose (2026-10-20)
+
+Approved on the first try (`.impeccable/mocks/chibi/surf.png`): damp curls with water drops that keep the curl on top, a clean shaka, plum wetsuit top with a tangerine stripe, sky-blue board shorts, white board with a gold stripe. The board is held diagonally behind him rather than under the arm; accepted.
