@@ -78,7 +78,7 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
   Each pose has its own outfit matched to the activity; face, hair, eyes, line and cel shading never change. Prompts and outfits: `docs/design/chibi-poses.md`.
   Preferred route: the same artist, so the style stays identical. Alternative: image generation from the existing chibi as reference, kept only if Lucas judges it equal in quality and his commission terms allow derivatives.
 - Achievement art for MDF 2025 (from the trophy or `mdf-cheque.png`) and for each other achievement.
-- The sparkle backdrop tile (SVG, authored in code).
+- The sparkle: Lucas's hand tattoo (outlined four-point star) redrawn as an SVG, used for the backdrop tile and the legendary mark.
 
 ## Decisions (Lucas, 2026-10-20)
 
