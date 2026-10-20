@@ -46,7 +46,7 @@ Hobbies:
 - **Coding**: `Sitting with a laptop on his lap, typing, a small happy smile. Grey overshirt open over a plum t-shirt, dark jeans.`
 - **Coffee**: `Holding a steaming mug with both hands close to the viewer, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
 - **Series**: `Sitting wrapped in a violet blanket with a bowl of popcorn, looking at something off-screen with wide amused eyes. Grey hoodie under the blanket.`
-- **Music**: `Eyes closed, head tilted, nodding to the beat, over-ear headphones on his head and one hand holding them. Sky blue t-shirt, dark jeans.`
+- **Music**: `Standing in a three-quarter view turned towards the right of the image, eyes closed, head tilted to the side and nodding to the beat, a dreamy open-mouth smile as if singing along. The same dark over-ear headphones as the banner sit on his head, one hand pressing an ear cup, the other hand raised snapping its fingers. Oversized washed sky-blue t-shirt (#8fb8d8 with a few flat lighter faded patches) over a white long-sleeve, very baggy washed dark-blue jeans, white sneakers. Two small yellow music notes float near his head.`
 
 ## First test (2026-10-20, banner pose)
 
@@ -88,3 +88,7 @@ Approved by Lucas in two outfits: day, the Breton longsleeve with the cropped he
 ## Sleeping pose (2026-10-20)
 
 Approved by Lucas on the first try (`.impeccable/mocks/chibi/sleeping.png`): curled up on the plum cushion in the light lilac-white chunky pullover with electric-blue ribs and two small stitched sparkles, charcoal joggers, white socks. The small curl on top of the head is missing; accepted, it hardly shows at presence-card size. Lucas likes this pullover a lot.
+
+## Night outfit (2026-10-20)
+
+The sleeping pose's pullover replaces the grey hoodie as the night outfit for the banner and LoL poses: light misty lilac-white chunky crewneck with electric-blue (#2f6bff) rib collar and cuffs and two small stitched sparkles, charcoal joggers, white socks.
