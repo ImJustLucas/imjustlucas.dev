@@ -41,7 +41,7 @@ Shell and states:
 
 Hobbies:
 - **Surf**: `Carrying a surfboard under his arm, wet hair, barefoot. Short-sleeve wetsuit top in plum with a tangerine stripe, sky blue board shorts. The surfboard is white with a gold stripe.`
-- **Skate**: `Riding a skateboard mid-push, arms out for balance. Violet hoodie, grey beanie, loose dark jeans, white skate shoes.`
+- **Skate**: `Carving on a skateboard that rolls towards the right of the image, the board level and parallel to the bottom edge, both feet on the deck, knees bent, body leaning into the turn, front arm reaching forward and back arm behind for balance, head turned and slightly tilted to look ahead where he is rolling (still the three-quarter face of the reference), a big happy open-mouth smile, his curls blown back by the wind. Oversized washed black hoodie (charcoal #2b2b30 with a few lighter faded patches in #4a4a52 drawn as flat shapes), very baggy washed dark-blue wide-leg jeans (#2c3e5c with flat lighter faded patches in #4a5f80 on the thighs and knees), white skate shoes. A plain street skateboard: black grip tape, plum (#3b2159) deck edge, tangerine (#ff8a3d) wheels, exactly four wheels. No hat, so his hair stays fully visible.`
 - **Playing LoL**: `Sitting cross-legged with a gaming controller, focused and grinning, over-ear headset on his head. Black hoodie with a tangerine drawstring, grey joggers.`
 - **Coding**: `Sitting with a laptop on his lap, typing, a small happy smile. Grey overshirt open over a plum t-shirt, dark jeans.`
 - **Coffee**: `Holding a steaming mug with both hands close to the viewer, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
@@ -72,3 +72,7 @@ The outlined four-point sparkle of the tattoo is also the site's sparkle motif (
 ## Coffee pose (2026-10-20)
 
 Approved by Lucas on the first try (`.impeccable/mocks/chibi/coffee.png`), with the commissioned art and the approved banner attached. The orientation came out right because the prompt named the sides of the image, the closed-eye smile keeps him recognisable, and the tangerine scarf and plum mug sit in the site's palette. A one-line edit in the same Gemini conversation moved the scarf ends to the front (`.impeccable/mocks/chibi/coffee-scarf-front.png`); Lucas likes both. The scarf-in-front version is the default for the site: its silhouette stays clean once the background is removed and at small sizes; the cape version stays as an alternate.
+
+## Skate pose (2026-10-20)
+
+Approved by Lucas (`.impeccable/mocks/chibi/skate.png`): washed black hoodie with a few faded areas on the shoulders, washed dark-blue baggy jeans, front arm pointing the way. A first violet-hoodie version was dropped. Two lessons: faded clothes must be asked as a few small flat lighter areas, or they turn into camouflage; and re-running a prompt in the same conversation keeps the previous pose, so a new pose always needs a new conversation. Known limit: he stands facing the viewer with both feet pointing forward, not sideways like a real skater; a side-stance variant is being tried in a fresh conversation.
