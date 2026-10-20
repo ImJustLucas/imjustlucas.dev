@@ -75,6 +75,16 @@ const playImpactSound = () => {
   audio.play().catch((e) => console.error("Audio play failed:", e));
 };
 
+const CERTIFICATE_BOX = new THREE.Box3(
+  new THREE.Vector3(-2.5, -1.5, -0.025),
+  new THREE.Vector3(2.5, 1.5, 0.025),
+);
+const CERTIFICATE_CENTER = CERTIFICATE_BOX.getCenter(new THREE.Vector3());
+/** The physics constants are tuned per 60 fps frame. */
+const FRAMES_PER_SECOND = 60;
+/** The longest step taken at once, so a frame after a tab switch can't teleport coins. */
+const MAX_DELTA = 1 / 20;
+
 const CustomCoin = ({
   position = [0, 0, 0],
   scale = 1,
@@ -96,7 +106,6 @@ const CustomCoin = ({
   const fallSpeed = useMemo(() => Math.random() * 0.03 + 0.02, []);
   // eslint-disable-next-line react-hooks/purity
   const rotationSpeed = useMemo(() => Math.random() * 0.02 + 0.01, []);
-  const certificateRef = useRef<THREE.Box3>(new THREE.Box3());
   const coinRef = useRef<THREE.Sphere>(new THREE.Sphere());
   const velocity = useRef<THREE.Vector3>(
     isUserCoin
@@ -113,12 +122,6 @@ const CustomCoin = ({
   const hasImpacted = useRef<boolean>(false);
 
   useEffect(() => {
-    certificateRef.current.set(
-      new THREE.Vector3(-2.5, -1.5, -0.025),
-      new THREE.Vector3(2.5, 1.5, 0.025),
-    );
-    certificateRef.current.translate(new THREE.Vector3(0, 0, 0));
-
     if (meshRef.current) {
       lastPosition.current.copy(meshRef.current.position);
     }
@@ -130,8 +133,10 @@ const CustomCoin = ({
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += rotationSpeed;
-      meshRef.current.rotation.x += rotationSpeed * 0.5;
+      const step = Math.min(delta, MAX_DELTA) * FRAMES_PER_SECOND;
+
+      meshRef.current.rotation.y += rotationSpeed * step;
+      meshRef.current.rotation.x += rotationSpeed * 0.5 * step;
 
       if (shaderRef.current) {
         //@ts-expect-error unknown property
@@ -139,19 +144,15 @@ const CustomCoin = ({
       }
 
       if (!fallen) {
-        meshRef.current.position.x += velocity.current.x;
-        meshRef.current.position.y += velocity.current.y;
-        meshRef.current.position.z += velocity.current.z;
+        meshRef.current.position.addScaledVector(velocity.current, step);
 
-        coinRef.current.set(meshRef.current.position.clone(), 0.5 * scale);
+        coinRef.current.center.copy(meshRef.current.position);
+        coinRef.current.radius = 0.5 * scale;
 
-        if (certificateRef.current.intersectsSphere(coinRef.current)) {
-          const certificateCenter = new THREE.Vector3();
-          certificateRef.current.getCenter(certificateCenter);
-
+        if (CERTIFICATE_BOX.intersectsSphere(coinRef.current)) {
           tempVector.current
             .copy(meshRef.current.position)
-            .sub(certificateCenter)
+            .sub(CERTIFICATE_CENTER)
             .normalize();
 
           tempVector.current.x += (Math.random() - 0.5) * 0.2;
@@ -176,7 +177,7 @@ const CustomCoin = ({
             }, 500);
           }
         } else {
-          velocity.current.y -= 0.001;
+          velocity.current.y -= 0.001 * step;
         }
 
         if (meshRef.current.position.y < -10) {
@@ -196,11 +197,11 @@ const CustomCoin = ({
           }, Math.random() * 2000);
         }
 
-        const movement = new THREE.Vector3()
-          .subVectors(meshRef.current.position, lastPosition.current)
-          .length();
+        const movement = meshRef.current.position.distanceTo(
+          lastPosition.current,
+        );
 
-        if (movement < 0.001) {
+        if (movement < 0.001 * step) {
           inactiveTime.current += delta;
           if (inactiveTime.current > 2) {
             onInactive();
