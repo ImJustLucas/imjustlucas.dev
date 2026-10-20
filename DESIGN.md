@@ -287,7 +287,7 @@ Fat, friendly corners from one scale: 24px for the panel, 16px for slots, cards 
 Materials:
 - **Sparkle backdrop**: a tiled SVG of small four-point sparkles on the Night frame only, at 6% opacity (4% in light on Lilac Frame). Never behind text.
 - **Legendary foil**: legendary items get a slow foil sheen (a moving light band across a pale gold gradient) only while hovered or during their unlock moment; at rest they are flat Legendary.
-- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied only to his real life (surf, skate, playing LoL, coding, coffee, watching a series, music, plus chilling, sleeping, waving and the trophy). Every pose keeps the commissioned artist's style and his face, hair and eyes, but wears its own outfit matched to the activity, in flat colours that may pick up the palette, with the grey checker of the original shirt as a recurring detail (`docs/design/chibi-poses.md`); art is produced once, versioned in `public/images/chibi/`, and the hobby list behind it lives in the content, editable in the Admin.
+- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied only to his real life (surf, skate, playing LoL, coding, coffee, watching a series, music, plus chilling, sleeping, waving and the trophy). Every pose keeps the commissioned artist's style and his face, hair and eyes, but wears its own outfit matched to the activity, in flat colours that may pick up the palette (`docs/design/chibi-poses.md`); art is produced once, versioned in `public/images/chibi/`, and the hobby list behind it lives in the content, editable in the Admin.
 
 ## Motion and Sound
 

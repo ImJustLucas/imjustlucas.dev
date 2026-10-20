@@ -7,6 +7,8 @@ The ImJustLucas chibi was commissioned from an artist. New poses are generated w
 1. Attach the commissioned reference image. Once a pose is approved, attach it too: two references hold the body proportions better than the head alone.
 2. Paste the **base prompt**, then the **pose line** for the pose you want.
 3. Ask for a PNG on pure white. Background removal (transparent WebP) happens after approval.
+4. Never attach an earlier generated test that already looks like the target: the model returns it unchanged instead of drawing a new image.
+5. Describe left and right as sides of the image, not of his body ("the hand on the right of the image"): "his right hand" makes the model mirror the whole character. A mirrored result that is otherwise good can simply be flipped horizontally.
 
 ## Base prompt (identical for every pose)
 
@@ -25,27 +27,31 @@ Plain pure white background, no floor shadow, no text, no border, centred, the w
 Each pose gets its own outfit, matched to the activity, so the poses read as moments of his life rather than one costume. The face, hair, line and shading never change.
 
 - Outfits may pick up the site's colours: plum (#3b2159), tangerine (#ff8a3d), violet (#b47cff), sky blue (#46c2ff), gold (#ffd84d), always as flat colours.
-- The grey and charcoal checker of the commissioned shirt is his signature: when the outfit is not the checker shirt, it shows up as a small detail (a hoodie lining, a beanie, the grip of the skateboard, a mug).
+- When the outfit is not the checker shirt of the reference, the prompt says so explicitly ("Do not copy the shirt from the reference"), otherwise the model copies it.
 - No real brand logos on clothes or objects.
 
 ## Pose lines
 
 Shell and states:
-- **Banner (home)**: `Standing in a relaxed three-quarter pose, waving at the viewer with his right hand raised. He wears the white short-sleeve camp-collar shirt with the grey and charcoal checker pattern from the reference, open at the collar, dark straight jeans and white sneakers, over-ear headphones resting around his neck. One small yellow four-point sparkle near his raised hand.`
-- **Chilling (no ongoing job)**: `Leaning back in a beanbag, hands behind his head, eyes half closed with a content smile. Oversized plum hoodie with a checker-pattern hood lining, grey joggers, white socks.`
-- **Sleeping (offline)**: `Curled up asleep on a small cloud-shaped pillow, a little "z" above his head. Tangerine pyjama shirt with small checker pocket.`
+- **Banner (home)**: `Standing in a relaxed three-quarter pose, turned towards the viewer's right exactly like the reference (his visible ear on the left of the image), waving with the hand on the right of the image raised. He wears an oversized, slightly cropped long-sleeve Breton-stripe t-shirt (off-white with even navy-blue horizontal stripes, drop shoulders, loose raw-edge cuffs, no logo or print), very baggy black wide-leg jeans stacking over the shoes, white sneakers, over-ear headphones resting around his neck. One small yellow four-point sparkle near his raised hand.`
+- **Chilling (no ongoing job)**: `Leaning back in a beanbag, hands behind his head, eyes half closed with a content smile. Oversized plum hoodie, grey joggers, white socks.`
+- **Sleeping (offline)**: `Curled up asleep on a small cloud-shaped pillow, a little "z" above his head. Tangerine pyjama shirt.`
 - **Waving goodbye (page close)**: `Seen from three-quarter back, turning his head to wave goodbye over his shoulder, backpack on. Sky blue zip jacket, dark jeans, white sneakers.`
 - **Trophy (MDF 2025)**: `Holding a big gold trophy up with both hands, eyes closed in a proud grin, a few yellow four-point sparkles around the trophy. The checker camp-collar shirt from the reference and dark jeans.`
 
 Hobbies:
 - **Surf**: `Carrying a surfboard under his arm, wet hair, barefoot. Short-sleeve wetsuit top in plum with a tangerine stripe, sky blue board shorts. The surfboard is white with a gold stripe.`
-- **Skate**: `Riding a skateboard mid-push, arms out for balance. Violet hoodie, grey checker beanie, loose dark jeans, white skate shoes; the board's grip tape shows a small checker pattern.`
+- **Skate**: `Riding a skateboard mid-push, arms out for balance. Violet hoodie, grey beanie, loose dark jeans, white skate shoes.`
 - **Playing LoL**: `Sitting cross-legged with a gaming controller, focused and grinning, over-ear headset on his head. Black hoodie with a tangerine drawstring, grey joggers.`
-- **Coding**: `Sitting with a laptop on his lap, typing, a small happy smile. Grey checker overshirt open over a plum t-shirt, dark jeans.`
-- **Coffee**: `Holding a steaming mug with both hands, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf; the mug has a small checker pattern.`
+- **Coding**: `Sitting with a laptop on his lap, typing, a small happy smile. Grey overshirt open over a plum t-shirt, dark jeans.`
+- **Coffee**: `Holding a steaming mug with both hands, eyes closed, savouring it. Cosy cream knit sweater with a tangerine scarf.`
 - **Series**: `Sitting wrapped in a violet blanket with a bowl of popcorn, looking at something off-screen with wide amused eyes. Grey hoodie under the blanket.`
-- **Music**: `Eyes closed, head tilted, nodding to the beat, over-ear headphones on his head and one hand holding them. Sky blue t-shirt with a small checker pocket, dark jeans.`
+- **Music**: `Eyes closed, head tilted, nodding to the beat, over-ear headphones on his head and one hand holding them. Sky blue t-shirt, dark jeans.`
 
 ## First test (2026-10-20, banner pose)
 
 Face, hair, eyes, colours and outline colour match the reference closely, and the headphones and sparkle work. What gave it away as generated, and what the base prompt now asks for: the line weight is more uniform than the artist's, the jeans and shirt use soft gradients instead of flat cel shading, and the body is about three and a half heads tall, so it reads less chibi and a bit stiff.
+
+## Second test (2026-10-20, banner pose in a Breton-stripe longsleeve)
+
+Approved by Lucas after a horizontal flip (`.impeccable/mocks/chibi/banner-wave-flipped.png`): about two and a half heads tall, flatter shading, livelier line, and the face reads as the commissioned character. The prompt asked for "his right hand", so the model mirrored him; the pose line now names sides of the image instead.
