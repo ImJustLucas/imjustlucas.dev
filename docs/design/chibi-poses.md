@@ -71,4 +71,4 @@ The outlined four-point sparkle of the tattoo is also the site's sparkle motif (
 
 ## Coffee pose (2026-10-20)
 
-Approved by Lucas on the first try (`.impeccable/mocks/chibi/coffee.png`), with the commissioned art and the approved banner attached. The orientation came out right because the prompt named the sides of the image, the closed-eye smile keeps him recognisable, and the tangerine scarf and plum mug sit in the site's palette. One small flaw if it is ever redone: the scarf hangs behind his back like a cape.
+Approved by Lucas on the first try (`.impeccable/mocks/chibi/coffee.png`), with the commissioned art and the approved banner attached. The orientation came out right because the prompt named the sides of the image, the closed-eye smile keeps him recognisable, and the tangerine scarf and plum mug sit in the site's palette. A one-line edit in the same Gemini conversation moved the scarf ends to the front (`.impeccable/mocks/chibi/coffee-scarf-front.png`); Lucas likes both. The scarf-in-front version is the default for the site: its silhouette stays clean once the background is removed and at small sizes; the cape version stays as an alternate.
