@@ -240,7 +240,7 @@ The sidebar menu is the signature control.
 - **Hover / focus:** the label takes the primary colour on a 10% primary fill (20% on focus), over 200ms.
 - **Active:** the same 10% fill, medium weight, and an 8px primary dot on the right.
 - **Press:** scales to 95% and plays `/sounds/click.mp3`.
-- **Mobile:** the same menu inside the full-screen overlay; choosing a Route closes it.
+- **Mobile:** the same menu inside the full-screen overlay; choosing a Route or pressing Escape closes it. While it is open the page behind is inert, and closing it returns focus to the menu button.
 
 ### Presence card (signature)
 A compact card in the sidebar footer, shown only while Lucas is playing or listening. Artwork at 48px with 6px corners, a 20px circular badge (the Spotify mark) overlapping its bottom-right corner with a 2px background-coloured ring, then the title in the primary colour and a muted second line. When nothing is live, it is not rendered at all.
