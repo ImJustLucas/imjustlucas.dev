@@ -23,17 +23,17 @@ Four readers arrive here first (PRODUCT.md): a recruiter skimming between tabs o
 
 THESIS: The home page is Lucas's player profile screen: banner, current team, achievement showcase, inventory, all real data inside a cosy game client. It refuses the category default of a dark neutral sidebar with a centred "Hi, I'm" paragraph and cards that only get colour from screenshots.
 
-OWN-WORLD: Night frame with faint sparkles, Plum shell, Velvet slots with 2px Seam borders and 16px corners, Cream text, one Tangerine accent on the Play button, active tab and sound switch, rarity frames (common lilac-grey, rare sky, epic violet, legendary gold) on items, chunky controls that sink onto a ledge, Unbounded for titles, Geist for reading, Geist Mono for stats, a kalimba note on every press.
+OWN-WORLD (palette amended by Lucas on 2026-10-20, see Decisions 7): in the default electric palette, a navy night frame with faint sparkles, navy shell, raised navy slots with 16px corners, off-white text, and one action colour on the Play button, active tab and sound switch: off-white on an electric-blue ledge in dark, electric blue on a deep-blue ledge in light (the plum palette keeps Night, Plum, Velvet, Cream and Tangerine); rarity frames (common lilac-grey, rare sky, epic violet, legendary gold) on items, chunky controls that sink onto a ledge, Unbounded for titles, Geist for reading, Geist Mono for stats, a kalimba note on every press.
 
 STORY: The visitor understands that Lucas is a fullstack developer in Paris who plays for Bam Karaoke and co-founded Predi.GG, believes he ships and wins (MDF 2025 legendary, Projects with live stars), sees he is a real person right now (presence), and presses Download my resume or goes to the inventory.
 
-FIRST VIEWPORT: Desktop 1440x900. Left, the 320px sidebar: player card on top (64px chibi head in a live status ring, "ImJustLucas", role line), the six lowercase tabs, the always-on friends panel, settings row (sound switch first, Locale, theme) and socials at the bottom. Right, the panel opens on a full-width banner slot about 340px tall: a full-body chibi pose (about 260px) on the left; on the right the Display greeting "Yoooo, I'm Lucas!", one role line, then "current team" as two chips derived from ongoing Experiences (🎤 Bam Karaoke, 🔮 Predi.GG); bottom right of the banner, the Tangerine Play button "Download my resume" with the resume date in Data beside it, and a Ledge LinkedIn button. Under the banner, the achievement row: today MDF 2025 alone as one wide legendary slot, with room for up to two more added later in the Admin; the top edge of the featured inventory row peeks above the fold.
+FIRST VIEWPORT: Desktop 1440x900. Left, the 320px sidebar: player card on top (64px chibi head in a live status ring, "ImJustLucas", role line), the six lowercase tabs, the always-on friends panel, settings row (sound switch first, Locale, theme) and socials at the bottom. Right, the panel opens on a full-width banner slot about 340px tall: a full-body chibi pose (about 260px) on the left; on the right the Display greeting "Yoooo, I'm Lucas!", one role line, then "current team" as two chips derived from ongoing Experiences (🎤 Bam Karaoke, 🔮 Predi.GG); bottom right of the banner, the action-coloured Play button "Download my resume" with the resume date in Data beside it, and a Ledge LinkedIn button. Under the banner, the achievement row: today MDF 2025 alone as one wide legendary slot, with room for up to two more added later in the Admin; the top edge of the featured inventory row peeks above the fold.
 
 FORM: The game-client player profile (cosy, not competitive), third on the ordered list of seven grounded candidates; seed key 14c08ff6.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-Signature interaction: walking down the tabs plays a rising pentatonic scale while the Tangerine fill slides from tab to tab; the legendary MDF slot plays its foil sheen once per session when it enters view, and clicking it plays the unlock sound before navigating to `/mdf-2025`.
+Signature interaction: walking down the tabs plays a rising pentatonic scale while the action fill slides from tab to tab; the legendary MDF slot plays its foil sheen once per session when it enters view, and clicking it plays the unlock sound before navigating to `/mdf-2025`.
 
 ## Page sequence (home)
 
@@ -49,7 +49,7 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 - The sidebar is mounted once and restyled between the desktop column and the mobile sheet (`docs/routing.md`); one Lanyard socket, one sound engine.
 - Mobile (390 wide): 56px top bar with chibi head, name, sound switch and menu button; the sheet slides up with Ease Drawer holding the tabs, friends panel and settings. Banner stacks: chibi 120px beside the greeting, chips wrap, Play button full width; the showcase becomes a horizontal snap row with MDF first; inventory goes to one column.
 - Page changes crossfade with a 6px rise (220ms); the active tab fill slides (240ms).
-- Every target is at least 44px; focus is the 2px Tangerine ring with offset; one visible `h1` per page (the greeting on home, styled Display).
+- Every target is at least 44px; focus is the 2px action-ink ring with offset; one visible `h1` per page (the greeting on home, styled Display).
 
 ## States and ranges
 
@@ -90,6 +90,7 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 5. **Chibi art**: commissioned from an artist today; generation is welcome if it reaches the same quality.
 
 6. **Role line**: "fullstack dev, co-founder of Predi.GG" / "fullstack dev, cofondateur de Predi.GG", lowercase like the menu, from the dictionaries.
+7. **Palette** (later the same day): orange as the active colour did not suit him; electric blue does. The default palette is "electric": dark mode E (frame #05081c, ground #0a0f2e, raised #141c48, seam #2a3a7a, off-white #f6f3ea text, the action off-white with navy text on an electric-blue #2f6bff ledge, electric blue for link underlines and focus #6f97ff) and light mode F (frame #e8e4d9, ground #f6f3ea, raised #fffdf8, ink #10131f, the action electric blue #1a4fe8 with off-white text on a #0d2fa6 ledge). Plum and tangerine stays as a second palette in the theme menu, stored per visitor.
 
 ## Chibi art
 

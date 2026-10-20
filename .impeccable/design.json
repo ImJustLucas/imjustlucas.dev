@@ -1,15 +1,285 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T12:36:32+00:00",
+  "generatedAt": "2026-10-20T13:02:55+00:00",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
+      "navy-frame": {
+        "role": "neutral",
+        "displayName": "Navy Frame",
+        "canonical": "#05081c",
+        "oklch": "oklch(14.5% 0.0435 271.7)",
+        "cssVariable": "--frame, --ledge (electric dark)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0435 271.7)",
+          "oklch(26.4% 0.0435 271.7)",
+          "oklch(37.9% 0.0435 271.7)",
+          "oklch(49.3% 0.0435 271.7)",
+          "oklch(60.7% 0.0435 271.7)",
+          "oklch(72.1% 0.0435 271.7)",
+          "oklch(83.6% 0.0435 271.7)",
+          "oklch(95.0% 0.0435 271.7)"
+        ]
+      },
+      "navy": {
+        "role": "neutral",
+        "displayName": "Navy",
+        "canonical": "#0a0f2e",
+        "oklch": "oklch(18.6% 0.0622 272.0)",
+        "cssVariable": "--ground, --on-action (electric dark); --on-bright (electric)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0622 272.0)",
+          "oklch(26.4% 0.0622 272.0)",
+          "oklch(37.9% 0.0622 272.0)",
+          "oklch(49.3% 0.0622 272.0)",
+          "oklch(60.7% 0.0622 272.0)",
+          "oklch(72.1% 0.0622 272.0)",
+          "oklch(83.6% 0.0622 272.0)",
+          "oklch(95.0% 0.0622 272.0)"
+        ]
+      },
+      "navy-raised": {
+        "role": "neutral",
+        "displayName": "Navy Raised",
+        "canonical": "#141c48",
+        "oklch": "oklch(24.9% 0.0824 271.4)",
+        "cssVariable": "--raised (electric dark)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0824 271.4)",
+          "oklch(26.4% 0.0824 271.4)",
+          "oklch(37.9% 0.0824 271.4)",
+          "oklch(49.3% 0.0824 271.4)",
+          "oklch(60.7% 0.0824 271.4)",
+          "oklch(72.1% 0.0824 271.4)",
+          "oklch(83.6% 0.0824 271.4)",
+          "oklch(95.0% 0.0824 271.4)"
+        ]
+      },
+      "navy-seam": {
+        "role": "neutral",
+        "displayName": "Navy Seam",
+        "canonical": "#2a3a7a",
+        "oklch": "oklch(37.2% 0.1104 269.8)",
+        "cssVariable": "--seam (electric dark)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.1104 269.8)",
+          "oklch(26.4% 0.1104 269.8)",
+          "oklch(37.9% 0.1104 269.8)",
+          "oklch(49.3% 0.1104 269.8)",
+          "oklch(60.7% 0.1104 269.8)",
+          "oklch(72.1% 0.1104 269.8)",
+          "oklch(83.6% 0.1104 269.8)",
+          "oklch(95.0% 0.1104 269.8)"
+        ]
+      },
+      "off-white": {
+        "role": "neutral",
+        "displayName": "Off-white",
+        "canonical": "#f6f3ea",
+        "oklch": "oklch(96.4% 0.0123 91.5)",
+        "cssVariable": "--off-white; --ink, --action (electric dark); --ground, --on-action (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0123 91.5)",
+          "oklch(26.4% 0.0123 91.5)",
+          "oklch(37.9% 0.0123 91.5)",
+          "oklch(49.3% 0.0123 91.5)",
+          "oklch(60.7% 0.0123 91.5)",
+          "oklch(72.1% 0.0123 91.5)",
+          "oklch(83.6% 0.0123 91.5)",
+          "oklch(95.0% 0.0123 91.5)"
+        ]
+      },
+      "navy-haze": {
+        "role": "neutral",
+        "displayName": "Navy Haze",
+        "canonical": "#aab6e6",
+        "oklch": "oklch(78.4% 0.0698 273.8)",
+        "cssVariable": "--ink-muted (electric dark)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0698 273.8)",
+          "oklch(26.4% 0.0698 273.8)",
+          "oklch(37.9% 0.0698 273.8)",
+          "oklch(49.3% 0.0698 273.8)",
+          "oklch(60.7% 0.0698 273.8)",
+          "oklch(72.1% 0.0698 273.8)",
+          "oklch(83.6% 0.0698 273.8)",
+          "oklch(95.0% 0.0698 273.8)"
+        ]
+      },
+      "linen-frame": {
+        "role": "neutral",
+        "displayName": "Linen Frame",
+        "canonical": "#e8e4d9",
+        "oklch": "oklch(91.9% 0.0154 90.2)",
+        "cssVariable": "--frame (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0154 90.2)",
+          "oklch(26.4% 0.0154 90.2)",
+          "oklch(37.9% 0.0154 90.2)",
+          "oklch(49.3% 0.0154 90.2)",
+          "oklch(60.7% 0.0154 90.2)",
+          "oklch(72.1% 0.0154 90.2)",
+          "oklch(83.6% 0.0154 90.2)",
+          "oklch(95.0% 0.0154 90.2)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#fffdf8",
+        "oklch": "oklch(99.4% 0.0069 88.6)",
+        "cssVariable": "--raised (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0069 88.6)",
+          "oklch(26.4% 0.0069 88.6)",
+          "oklch(37.9% 0.0069 88.6)",
+          "oklch(49.3% 0.0069 88.6)",
+          "oklch(60.7% 0.0069 88.6)",
+          "oklch(72.1% 0.0069 88.6)",
+          "oklch(83.6% 0.0069 88.6)",
+          "oklch(95.0% 0.0069 88.6)"
+        ]
+      },
+      "linen-seam": {
+        "role": "neutral",
+        "displayName": "Linen Seam",
+        "canonical": "#dcd6c6",
+        "oklch": "oklch(87.6% 0.0226 89.8)",
+        "cssVariable": "--seam, --ledge (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0226 89.8)",
+          "oklch(26.4% 0.0226 89.8)",
+          "oklch(37.9% 0.0226 89.8)",
+          "oklch(49.3% 0.0226 89.8)",
+          "oklch(60.7% 0.0226 89.8)",
+          "oklch(72.1% 0.0226 89.8)",
+          "oklch(83.6% 0.0226 89.8)",
+          "oklch(95.0% 0.0226 89.8)"
+        ]
+      },
+      "ink-charcoal": {
+        "role": "neutral",
+        "displayName": "Ink Charcoal",
+        "canonical": "#10131f",
+        "oklch": "oklch(19.0% 0.0249 273.0)",
+        "cssVariable": "--ink (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0249 273.0)",
+          "oklch(26.4% 0.0249 273.0)",
+          "oklch(37.9% 0.0249 273.0)",
+          "oklch(49.3% 0.0249 273.0)",
+          "oklch(60.7% 0.0249 273.0)",
+          "oklch(72.1% 0.0249 273.0)",
+          "oklch(83.6% 0.0249 273.0)",
+          "oklch(95.0% 0.0249 273.0)"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "#545a6e",
+        "oklch": "oklch(47.0% 0.0333 272.0)",
+        "cssVariable": "--ink-muted (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.0333 272.0)",
+          "oklch(26.4% 0.0333 272.0)",
+          "oklch(37.9% 0.0333 272.0)",
+          "oklch(49.3% 0.0333 272.0)",
+          "oklch(60.7% 0.0333 272.0)",
+          "oklch(72.1% 0.0333 272.0)",
+          "oklch(83.6% 0.0333 272.0)",
+          "oklch(95.0% 0.0333 272.0)"
+        ]
+      },
+      "electric": {
+        "role": "primary",
+        "displayName": "Electric",
+        "canonical": "#2f6bff",
+        "oklch": "oklch(58.1% 0.2289 263.9)",
+        "cssVariable": "--electric; --action-ledge (electric dark); link underline in electric dark",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.2289 263.9)",
+          "oklch(26.4% 0.2289 263.9)",
+          "oklch(37.9% 0.2289 263.9)",
+          "oklch(49.3% 0.2289 263.9)",
+          "oklch(60.7% 0.2289 263.9)",
+          "oklch(72.1% 0.2289 263.9)",
+          "oklch(83.6% 0.2289 263.9)",
+          "oklch(95.0% 0.2289 263.9)"
+        ]
+      },
+      "electric-glow": {
+        "role": "primary",
+        "displayName": "Electric Glow",
+        "canonical": "#6f97ff",
+        "oklch": "oklch(69.5% 0.1593 266.5)",
+        "cssVariable": "--action-ink (electric dark)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.1593 266.5)",
+          "oklch(26.4% 0.1593 266.5)",
+          "oklch(37.9% 0.1593 266.5)",
+          "oklch(49.3% 0.1593 266.5)",
+          "oklch(60.7% 0.1593 266.5)",
+          "oklch(72.1% 0.1593 266.5)",
+          "oklch(83.6% 0.1593 266.5)",
+          "oklch(95.0% 0.1593 266.5)"
+        ]
+      },
+      "electric-deep": {
+        "role": "primary",
+        "displayName": "Electric Deep",
+        "canonical": "#1a4fe8",
+        "oklch": "oklch(50.4% 0.2362 264.3)",
+        "cssVariable": "--action, --action-ink (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.2362 264.3)",
+          "oklch(26.4% 0.2362 264.3)",
+          "oklch(37.9% 0.2362 264.3)",
+          "oklch(49.3% 0.2362 264.3)",
+          "oklch(60.7% 0.2362 264.3)",
+          "oklch(72.1% 0.2362 264.3)",
+          "oklch(83.6% 0.2362 264.3)",
+          "oklch(95.0% 0.2362 264.3)"
+        ]
+      },
+      "electric-ledge": {
+        "role": "primary",
+        "displayName": "Electric Ledge",
+        "canonical": "#0d2fa6",
+        "oklch": "oklch(38.0% 0.1923 264.9)",
+        "cssVariable": "--action-ledge (electric light)",
+        "palette": "electric",
+        "tonalRamp": [
+          "oklch(15.0% 0.1923 264.9)",
+          "oklch(26.4% 0.1923 264.9)",
+          "oklch(37.9% 0.1923 264.9)",
+          "oklch(49.3% 0.1923 264.9)",
+          "oklch(60.7% 0.1923 264.9)",
+          "oklch(72.1% 0.1923 264.9)",
+          "oklch(83.6% 0.1923 264.9)",
+          "oklch(95.0% 0.1923 264.9)"
+        ]
+      },
       "night": {
         "role": "neutral",
         "displayName": "Night",
         "canonical": "#1c0f2b",
         "oklch": "oklch(20.3% 0.0556 303.2)",
-        "cssVariable": "--night",
+        "cssVariable": "--night; --frame, --ledge (plum dark); --on-action, --on-bright (plum)",
         "tonalRamp": [
           "oklch(15.0% 0.0556 303.2)",
           "oklch(26.4% 0.0556 303.2)",
@@ -19,14 +289,15 @@
           "oklch(72.1% 0.0556 303.2)",
           "oklch(83.6% 0.0556 303.2)",
           "oklch(95.0% 0.0556 303.2)"
-        ]
+        ],
+        "palette": "plum"
       },
       "plum": {
         "role": "neutral",
         "displayName": "Plum",
         "canonical": "#2a1540",
         "oklch": "oklch(25.0% 0.0797 303.7)",
-        "cssVariable": "--ground (dark), --ink (light)",
+        "cssVariable": "--ground (plum dark), --ink (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0797 303.7)",
           "oklch(26.4% 0.0797 303.7)",
@@ -36,14 +307,15 @@
           "oklch(72.1% 0.0797 303.7)",
           "oklch(83.6% 0.0797 303.7)",
           "oklch(95.0% 0.0797 303.7)"
-        ]
+        ],
+        "palette": "plum"
       },
       "velvet": {
         "role": "neutral",
         "displayName": "Velvet",
         "canonical": "#3b2159",
         "oklch": "oklch(31.2% 0.0980 302.5)",
-        "cssVariable": "--raised (dark)",
+        "cssVariable": "--raised (plum dark)",
         "tonalRamp": [
           "oklch(15.0% 0.0980 302.5)",
           "oklch(26.4% 0.0980 302.5)",
@@ -53,14 +325,15 @@
           "oklch(72.1% 0.0980 302.5)",
           "oklch(83.6% 0.0980 302.5)",
           "oklch(95.0% 0.0980 302.5)"
-        ]
+        ],
+        "palette": "plum"
       },
       "seam": {
         "role": "neutral",
         "displayName": "Seam",
         "canonical": "#5a3a80",
         "oklch": "oklch(42.0% 0.1156 302.8)",
-        "cssVariable": "--seam (dark)",
+        "cssVariable": "--seam (plum dark)",
         "tonalRamp": [
           "oklch(15.0% 0.1156 302.8)",
           "oklch(26.4% 0.1156 302.8)",
@@ -70,14 +343,15 @@
           "oklch(72.1% 0.1156 302.8)",
           "oklch(83.6% 0.1156 302.8)",
           "oklch(95.0% 0.1156 302.8)"
-        ]
+        ],
+        "palette": "plum"
       },
       "cream": {
         "role": "neutral",
         "displayName": "Cream",
         "canonical": "#fff1e6",
         "oklch": "oklch(96.6% 0.0211 60.8)",
-        "cssVariable": "--cream",
+        "cssVariable": "--cream; --ink (plum dark)",
         "tonalRamp": [
           "oklch(15.0% 0.0211 60.8)",
           "oklch(26.4% 0.0211 60.8)",
@@ -87,14 +361,15 @@
           "oklch(72.1% 0.0211 60.8)",
           "oklch(83.6% 0.0211 60.8)",
           "oklch(95.0% 0.0211 60.8)"
-        ]
+        ],
+        "palette": "plum"
       },
       "haze": {
         "role": "neutral",
         "displayName": "Haze",
         "canonical": "#c9b6e4",
         "oklch": "oklch(80.7% 0.0670 303.7)",
-        "cssVariable": "--ink-muted (dark)",
+        "cssVariable": "--ink-muted (plum dark)",
         "tonalRamp": [
           "oklch(15.0% 0.0670 303.7)",
           "oklch(26.4% 0.0670 303.7)",
@@ -104,14 +379,15 @@
           "oklch(72.1% 0.0670 303.7)",
           "oklch(83.6% 0.0670 303.7)",
           "oklch(95.0% 0.0670 303.7)"
-        ]
+        ],
+        "palette": "plum"
       },
       "lilac-frame": {
         "role": "neutral",
         "displayName": "Lilac Frame",
         "canonical": "#e9ddfa",
         "oklch": "oklch(91.6% 0.0410 304.3)",
-        "cssVariable": "--frame (light)",
+        "cssVariable": "--frame (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0410 304.3)",
           "oklch(26.4% 0.0410 304.3)",
@@ -121,14 +397,15 @@
           "oklch(72.1% 0.0410 304.3)",
           "oklch(83.6% 0.0410 304.3)",
           "oklch(95.0% 0.0410 304.3)"
-        ]
+        ],
+        "palette": "plum"
       },
       "lilac-wash": {
         "role": "neutral",
         "displayName": "Lilac Wash",
         "canonical": "#f6f0ff",
         "oklch": "oklch(96.4% 0.0209 304.0)",
-        "cssVariable": "--ground (light)",
+        "cssVariable": "--ground (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0209 304.0)",
           "oklch(26.4% 0.0209 304.0)",
@@ -138,14 +415,15 @@
           "oklch(72.1% 0.0209 304.0)",
           "oklch(83.6% 0.0209 304.0)",
           "oklch(95.0% 0.0209 304.0)"
-        ]
+        ],
+        "palette": "plum"
       },
       "sheet": {
         "role": "neutral",
         "displayName": "Sheet",
         "canonical": "#ffffff",
         "oklch": "oklch(100.0% 0.0000 89.9)",
-        "cssVariable": "--raised (light)",
+        "cssVariable": "--raised (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0000 89.9)",
           "oklch(26.4% 0.0000 89.9)",
@@ -155,14 +433,15 @@
           "oklch(72.1% 0.0000 89.9)",
           "oklch(83.6% 0.0000 89.9)",
           "oklch(95.0% 0.0000 89.9)"
-        ]
+        ],
+        "palette": "plum"
       },
       "seam-light": {
         "role": "neutral",
         "displayName": "Seam Light",
         "canonical": "#d6c3f0",
         "oklch": "oklch(84.7% 0.0649 304.2)",
-        "cssVariable": "--seam, --ledge (light)",
+        "cssVariable": "--seam, --ledge (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0649 304.2)",
           "oklch(26.4% 0.0649 304.2)",
@@ -172,14 +451,15 @@
           "oklch(72.1% 0.0649 304.2)",
           "oklch(83.6% 0.0649 304.2)",
           "oklch(95.0% 0.0649 304.2)"
-        ]
+        ],
+        "palette": "plum"
       },
       "dusk": {
         "role": "neutral",
         "displayName": "Dusk",
         "canonical": "#5b4a73",
         "oklch": "oklch(44.4% 0.0687 302.7)",
-        "cssVariable": "--ink-muted (light)",
+        "cssVariable": "--ink-muted (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.0687 302.7)",
           "oklch(26.4% 0.0687 302.7)",
@@ -189,14 +469,15 @@
           "oklch(72.1% 0.0687 302.7)",
           "oklch(83.6% 0.0687 302.7)",
           "oklch(95.0% 0.0687 302.7)"
-        ]
+        ],
+        "palette": "plum"
       },
       "tangerine": {
         "role": "primary",
         "displayName": "Tangerine",
         "canonical": "#ff8a3d",
         "oklch": "oklch(75.0% 0.1668 50.5)",
-        "cssVariable": "--tangerine",
+        "cssVariable": "--tangerine; --action (plum), --action-ink (plum dark)",
         "tonalRamp": [
           "oklch(15.0% 0.1668 50.5)",
           "oklch(26.4% 0.1668 50.5)",
@@ -206,14 +487,15 @@
           "oklch(72.1% 0.1668 50.5)",
           "oklch(83.6% 0.1668 50.5)",
           "oklch(95.0% 0.1668 50.5)"
-        ]
+        ],
+        "palette": "plum"
       },
       "tangerine-ledge": {
         "role": "primary",
         "displayName": "Tangerine Ledge",
         "canonical": "#c25a12",
         "oklch": "oklch(58.7% 0.1527 48.2)",
-        "cssVariable": "--tangerine-ledge",
+        "cssVariable": "--tangerine-ledge; --action-ledge (plum)",
         "tonalRamp": [
           "oklch(15.0% 0.1527 48.2)",
           "oklch(26.4% 0.1527 48.2)",
@@ -223,14 +505,15 @@
           "oklch(72.1% 0.1527 48.2)",
           "oklch(83.6% 0.1527 48.2)",
           "oklch(95.0% 0.1527 48.2)"
-        ]
+        ],
+        "palette": "plum"
       },
       "tangerine-deep": {
         "role": "primary",
         "displayName": "Tangerine Deep",
         "canonical": "#b8470c",
         "oklch": "oklch(54.4% 0.1587 42.0)",
-        "cssVariable": "--tangerine-ink (light)",
+        "cssVariable": "--action-ink (plum light)",
         "tonalRamp": [
           "oklch(15.0% 0.1587 42.0)",
           "oklch(26.4% 0.1587 42.0)",
@@ -240,7 +523,8 @@
           "oklch(72.1% 0.1587 42.0)",
           "oklch(83.6% 0.1587 42.0)",
           "oklch(95.0% 0.1587 42.0)"
-        ]
+        ],
+        "palette": "plum"
       },
       "legendary-ledge": {
         "role": "rarity",
@@ -504,7 +788,7 @@
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Paragraphs at 65ch; the banner role line at weight 500, 1.0625rem to 1.25rem."
+        "purpose": "Paragraphs at 65ch; the banner role line at weight 500 in the muted ink, 1.0625rem to 1.25rem."
       },
       "label": {
         "displayName": "Label",
@@ -512,7 +796,7 @@
       },
       "tag": {
         "displayName": "Tag",
-        "purpose": "Rarity, live and WIP tags, Tech chips."
+        "purpose": "Rarity, live and WIP tags, Tech chips, the theme menu's section labels."
       },
       "data": {
         "displayName": "Data",
@@ -523,7 +807,7 @@
       {
         "name": "ledge",
         "value": "0 4px 0 rgb(var(--ledge))",
-        "purpose": "Every pressable control at rest; ledge is Night under Velvet, Seam Light under Sheet, Tangerine Ledge under tangerine, #8a6200 under the legendary slot."
+        "purpose": "Every pressable control at rest; the frame colour under raised and ground controls in dark (Navy Frame, Night), the seam colour in light (Linen Seam, Seam Light), the action ledge under action controls (Electric, Electric Ledge, Tangerine Ledge), #8a6200 under the legendary slot."
       },
       {
         "name": "ledge-raised",
@@ -536,24 +820,44 @@
         "purpose": "Active: the control sits on its ledge (80ms)."
       },
       {
-        "name": "tray-dark",
+        "name": "tab-ledge",
+        "value": "0 3px 0 rgb(var(--action-ledge))",
+        "purpose": "Under the sliding active-tab fill."
+      },
+      {
+        "name": "tray-electric-dark",
+        "value": "inset 0 1px 0 rgb(246 243 234 / 0.07)",
+        "purpose": "Moulded-tray top highlight inside slots and cards, electric dark."
+      },
+      {
+        "name": "tray-plum-dark",
         "value": "inset 0 1px 0 rgb(255 241 230 / 0.08)",
-        "purpose": "Moulded-tray top highlight inside slots and cards, dark theme."
+        "purpose": "Moulded-tray top highlight, plum dark."
       },
       {
         "name": "tray-light",
         "value": "inset 0 1px 0 rgb(255 255 255 / 0.9)",
-        "purpose": "Moulded-tray top highlight, light theme."
+        "purpose": "Moulded-tray top highlight, both light modes."
       },
       {
-        "name": "float-dark",
+        "name": "float-electric-dark",
+        "value": "0 24px 48px -12px rgb(2 4 16 / 0.6)",
+        "purpose": "Mobile sheet and menus, electric dark."
+      },
+      {
+        "name": "float-electric-light",
+        "value": "0 24px 48px -12px rgb(16 19 31 / 0.22)",
+        "purpose": "Mobile sheet and menus, electric light."
+      },
+      {
+        "name": "float-plum-dark",
         "value": "0 24px 48px -12px rgb(12 4 22 / 0.6)",
-        "purpose": "Mobile sheet and menus, dark theme."
+        "purpose": "Mobile sheet and menus, plum dark."
       },
       {
-        "name": "float-light",
+        "name": "float-plum-light",
         "value": "0 24px 48px -12px rgb(42 21 64 / 0.28)",
-        "purpose": "Mobile sheet and menus, light theme."
+        "purpose": "Mobile sheet and menus, plum light."
       }
     ],
     "motion": [
@@ -655,7 +959,7 @@
         "press": "A4, secondary controls without their own cue",
         "tab": "D4 E4 F#4 A4 B4 D5 in menu order",
         "confirm": "D4+A4 then D5, the Play button",
-        "toggleOn": "A4 to D5",
+        "toggleOn": "A4 to D5 (also choosing a mode or a palette)",
         "toggleOff": "D5 to A4",
         "unlock": "D4 F#4 A4 D5 then coin.mp3, legendary achievement",
         "boop": "random D5-B5 with a 2-semitone bend, banner chibi",
@@ -664,13 +968,84 @@
     },
     "sparkle": {
       "path": "M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z",
-      "frame": "outlined 8px and 6px stars along the 12px gutters only; stroke opacity 0.12 Cream on Night, 0.08 Plum on Lilac Frame",
+      "frame": "outlined 8px and 6px stars along the 12px gutters only; stroke opacity 0.12 in the dark ink on the dark frame (Off-white on Navy Frame, Cream on Night), 0.08 in the light ink on the light frame (Ink Charcoal on Linen Frame, Plum on Lilac Frame)",
       "legendaryMark": "filled Legendary, top-right of legendary achievement slots"
     },
-    "themes": {
-      "default": "dark",
-      "dark": "LAN night: frame Night, ground Plum, raised Velvet, seam Seam, ink Cream, ink-muted Haze, ledge Night",
-      "light": "daytime lobby: frame Lilac Frame, ground Lilac Wash, raised Sheet, seam and ledge Seam Light, ink Plum, ink-muted Dusk, accents as their -deep variants when used as text"
+    "palettes": {
+      "default": "electric",
+      "defaultMode": "dark",
+      "selection": "data-palette on <html> (absent for electric, \"plum\" for plum); mode by next-themes' dark class",
+      "storage": "localStorage imjustlucas.palette, applied before the first paint by PALETTE_SCRIPT (lib/palette.ts) in the <head> of both root layouts; the Admin follows it",
+      "roles": [
+        "frame",
+        "ground",
+        "raised",
+        "seam",
+        "ledge",
+        "ink",
+        "ink-muted",
+        "action",
+        "action-ledge",
+        "action-ink",
+        "on-action",
+        "on-bright"
+      ],
+      "electric-dark": {
+        "frame": "navy-frame",
+        "ground": "navy",
+        "raised": "navy-raised",
+        "seam": "navy-seam",
+        "ledge": "navy-frame",
+        "ink": "off-white",
+        "ink-muted": "navy-haze",
+        "action": "off-white",
+        "action-ledge": "electric",
+        "action-ink": "electric-glow",
+        "on-action": "navy",
+        "on-bright": "navy"
+      },
+      "electric-light": {
+        "frame": "linen-frame",
+        "ground": "off-white",
+        "raised": "paper",
+        "seam": "linen-seam",
+        "ledge": "linen-seam",
+        "ink": "ink-charcoal",
+        "ink-muted": "slate",
+        "action": "electric-deep",
+        "action-ledge": "electric-ledge",
+        "action-ink": "electric-deep",
+        "on-action": "off-white",
+        "on-bright": "navy"
+      },
+      "plum-dark": {
+        "frame": "night",
+        "ground": "plum",
+        "raised": "velvet",
+        "seam": "seam",
+        "ledge": "night",
+        "ink": "cream",
+        "ink-muted": "haze",
+        "action": "tangerine",
+        "action-ledge": "tangerine-ledge",
+        "action-ink": "tangerine",
+        "on-action": "night",
+        "on-bright": "night"
+      },
+      "plum-light": {
+        "frame": "lilac-frame",
+        "ground": "lilac-wash",
+        "raised": "sheet",
+        "seam": "seam-light",
+        "ledge": "seam-light",
+        "ink": "plum",
+        "ink-muted": "dusk",
+        "action": "tangerine",
+        "action-ledge": "tangerine-ledge",
+        "action-ink": "tangerine-deep",
+        "on-action": "night",
+        "on-bright": "night"
+      }
     }
   },
   "components": [
@@ -678,49 +1053,49 @@
       "name": "Play Button",
       "kind": "button",
       "refersTo": "button-play",
-      "description": "The one primary action per screen, e.g. Download my resume; plays the confirm chord.",
+      "description": "The one primary action per screen, e.g. Download my resume: the action fill (Off-white, Navy label) on the action ledge (Electric); plays the confirm chord.",
       "html": "<button class=\"ds-btn-play\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 15V3\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/></svg>Download my resume</button>",
-      "css": ".ds-btn-play { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#ff8a3d; color:#1c0f2b; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:52px; padding:0 24px; border:none; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:700; line-height:1; } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+      "css": ".ds-btn-play { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#f6f3ea; color:#0a0f2e; box-shadow:0 4px 0 #2f6bff; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:52px; padding:0 24px; border:none; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:700; line-height:1; } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #2f6bff; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #2f6bff; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
       "name": "Ledge Button",
       "kind": "button",
       "refersTo": "button-ledge",
-      "description": "The default secondary button: Velvet on a Night ledge.",
+      "description": "The default secondary button: raised fill (Navy Raised) on a Navy Frame ledge.",
       "html": "<button class=\"ds-btn-ledge\">come say hi →</button>",
-      "css": ".ds-btn-ledge { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#3b2159; color:#fff1e6; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:none; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-ledge:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-ledge:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-ledge:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+      "css": ".ds-btn-ledge { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#141c48; color:#f6f3ea; box-shadow:0 4px 0 #05081c; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:none; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-ledge:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-btn-ledge:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-ledge:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
       "name": "Outline Button",
       "kind": "button",
       "refersTo": "button-outline",
-      "description": "Secondary button on Velvet surfaces: Plum fill, 2px Seam border, on a ledge; GitHub with its live star count.",
+      "description": "Secondary button on raised surfaces: ground fill (Navy), 2px seam border, on a ledge; GitHub with its live star count.",
       "html": "<div class=\"ds-velvet\"><button class=\"ds-btn-outline\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>GitHub <span class=\"ds-data\">128</span></button></div>",
-      "css": ".ds-velvet { background:#3b2159; padding:20px; border-radius:16px; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; margin-left:4px; } .ds-btn-outline { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#2a1540; color:#fff1e6; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:2px solid #5a3a80; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-outline:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-outline:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-outline:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+      "css": ".ds-velvet { background:#141c48; padding:20px; border-radius:16px; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#aab6e6; margin-left:4px; } .ds-btn-outline { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#0a0f2e; color:#f6f3ea; box-shadow:0 4px 0 #05081c; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:2px solid #2a3a7a; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-outline:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-btn-outline:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-outline:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
       "name": "Sound Switch",
       "kind": "button",
       "refersTo": "sound-switch-on",
-      "description": "Always-visible 44px switch: Tangerine when on, Velvet with a struck speaker when off.",
+      "description": "Always-visible 44px switch: the action fill on the action ledge when on, raised with a struck speaker when off.",
       "html": "<button class=\"ds-sound\" aria-pressed=\"true\" aria-label=\"sound\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.4 18.4a9 9 0 0 0 0-12.8\"/></svg></button>",
-      "css": ".ds-sound { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#ff8a3d; color:#1c0f2b; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); width:44px; height:44px; border:none; } .ds-sound:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-sound:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; filter:brightness(0.94); transition-duration:80ms; } .ds-sound:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+      "css": ".ds-sound { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#f6f3ea; color:#0a0f2e; box-shadow:0 4px 0 #2f6bff; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); width:44px; height:44px; border:none; } .ds-sound:hover { transform:translateY(-2px); box-shadow:0 6px 0 #2f6bff; } .ds-sound:active { transform:translateY(4px); box-shadow:0 0 0 #2f6bff; filter:brightness(0.94); transition-duration:80ms; } .ds-sound:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
       "name": "Client Tabs",
       "kind": "nav",
       "refersTo": "tab-active",
-      "description": "Lowercase menu; the Tangerine fill slides between 44px rows (240ms) and each tab plays its own note.",
+      "description": "Lowercase menu; the action fill slides between 44px rows on its 3px action ledge (240ms) and each tab plays its own note.",
       "html": "<nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-active\" aria-current=\"page\">me</a><a class=\"ds-tab\">what i've done</a><a class=\"ds-tab\">how i do it</a><a class=\"ds-tab\">my experiences</a></nav>",
-      "css": ".ds-tabs { display:flex; flex-direction:column; gap:4px; width:288px; background:#2a1540; padding:16px; border-radius:24px; } .ds-tab { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#fff1e6; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tab:hover { background:rgb(90 58 128 / 0.7); } .ds-tab-active, .ds-tab-active:hover { background:#ff8a3d; color:#1c0f2b; } .ds-tab:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+      "css": ".ds-tabs { display:flex; flex-direction:column; gap:4px; width:288px; background:#0a0f2e; padding:16px; border-radius:24px; } .ds-tab { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tab:hover { background:rgb(42 58 122 / 0.7); } .ds-tab-active, .ds-tab-active:hover { background:#f6f3ea; color:#0a0f2e; box-shadow:0 3px 0 #2f6bff; } .ds-tab:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
     {
       "name": "Item Card",
       "kind": "card",
       "refersTo": "item-card",
-      "description": "A Project framed by its rarity: 2px frame, 4px top band, tag; screenshot, period in Data, Tech chips.",
+      "description": "A Project framed by its rarity: 2px frame, 4px top band, tag with on-bright text; screenshot, period in Data, Tech chips.",
       "html": "<article class=\"ds-item\"><span class=\"ds-band\"></span><div class=\"ds-item-in\"><div class=\"ds-shot\"></div><div class=\"ds-row\"><h3 class=\"ds-title\">Predi.GG</h3><span class=\"ds-rarity\">epic</span></div><span class=\"ds-data\">2025 - Today</span><p class=\"ds-desc\">Predict, compete, and win.</p><div class=\"ds-chips\"><span class=\"ds-chip\" style=\"background:#000;border-color:#000;color:#fff1e6\">Next.js</span><span class=\"ds-chip\" style=\"background:#e0234e;border-color:#e0234e;color:#1c0f2b\">NestJS</span></div></div></article>",
-      "css": ".ds-item { width:320px; display:flex; flex-direction:column; overflow:hidden; background:#3b2159; color:#fff1e6; border:2px solid #b47cff; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-band { height:4px; background:#b47cff; } .ds-item-in { display:flex; flex-direction:column; gap:12px; padding:16px 20px 20px; } .ds-shot { aspect-ratio:16/9; border-radius:10px; background:#2a1540; } .ds-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; } .ds-title { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-rarity { background:#b47cff; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; font-variant-numeric:tabular-nums; } .ds-desc { margin:0; color:#c9b6e4; font-family:Geist, ui-sans-serif, system-ui, sans-serif; line-height:1.65; } .ds-chips { display:flex; gap:6px; flex-wrap:wrap; } .ds-chip { border:2px solid; border-radius:9999px; padding:2px 10px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; }"
+      "css": ".ds-item { width:320px; display:flex; flex-direction:column; overflow:hidden; background:#141c48; color:#f6f3ea; border:2px solid #b47cff; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); } .ds-band { height:4px; background:#b47cff; } .ds-item-in { display:flex; flex-direction:column; gap:12px; padding:16px 20px 20px; } .ds-shot { aspect-ratio:16/9; border-radius:10px; background:#0a0f2e; } .ds-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; } .ds-title { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-rarity { background:#b47cff; color:#0a0f2e; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#aab6e6; font-variant-numeric:tabular-nums; } .ds-desc { margin:0; color:#aab6e6; font-family:Geist, ui-sans-serif, system-ui, sans-serif; line-height:1.65; } .ds-chips { display:flex; gap:6px; flex-wrap:wrap; } .ds-chip { border:2px solid; border-radius:9999px; padding:2px 10px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; }"
     },
     {
       "name": "Legendary Achievement Slot",
@@ -728,54 +1103,62 @@
       "refersTo": "achievement-slot",
       "description": "Pressable legendary slot: gold frame and band, filled sparkle, Legendary Ledge, foil sweep on hover; plays the unlock.",
       "html": "<a class=\"ds-ach\" href=\"#\"><span class=\"ds-band-l\"></span><span class=\"ds-ach-in\"><span class=\"ds-stage\"></span><span class=\"ds-ach-text\"><span><span class=\"ds-tag-l\">legendary</span> <span class=\"ds-yr\">2025</span></span><span class=\"ds-ach-name\">MasterDevFrance 2025</span><span class=\"ds-ach-desc\">winner of the national competition for technical excellence</span></span><svg class=\"ds-spark\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z\" fill=\"#ffd84d\"/></svg></span><span class=\"ds-foil\"></span></a>",
-      "css": ".ds-ach { position:relative; display:flex; flex-direction:column; overflow:hidden; width:560px; text-decoration:none; color:#fff1e6; background:#3b2159; border:2px solid #ffd84d; border-radius:16px; box-shadow:0 4px 0 #8a6200; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-ach:hover { transform:translateY(-2px); box-shadow:0 6px 0 #8a6200; } .ds-ach:active { transform:translateY(4px); box-shadow:0 0 0 #8a6200; } .ds-ach:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; } .ds-band-l { height:4px; background:#ffd84d; } .ds-ach-in { display:flex; align-items:center; gap:24px; padding:20px; } .ds-stage { width:96px; height:96px; flex:none; border-radius:9999px; background:#2a1540; } .ds-ach-text { display:flex; flex-direction:column; gap:8px; } .ds-tag-l { background:#ffd84d; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; } .ds-yr { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; } .ds-ach-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; } .ds-ach-desc { font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; line-height:1.65; } .ds-spark { position:absolute; right:16px; top:20px; width:24px; height:24px; } .ds-foil { position:absolute; top:0; bottom:0; left:0; width:33%; pointer-events:none; background:linear-gradient(90deg, transparent, rgb(255 236 150 / 0.35), transparent); mix-blend-mode:screen; transform:translateX(-120%) skewX(-18deg); } .ds-ach:hover .ds-foil { animation:ds-foil 900ms cubic-bezier(0.23,1,0.32,1) both; } @keyframes ds-foil { to { transform:translateX(320%) skewX(-18deg); } }"
+      "css": ".ds-ach { position:relative; display:flex; flex-direction:column; overflow:hidden; width:560px; text-decoration:none; color:#f6f3ea; background:#141c48; border:2px solid #ffd84d; border-radius:16px; box-shadow:0 4px 0 #8a6200; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-ach:hover { transform:translateY(-2px); box-shadow:0 6px 0 #8a6200; } .ds-ach:active { transform:translateY(4px); box-shadow:0 0 0 #8a6200; } .ds-ach:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-band-l { height:4px; background:#ffd84d; } .ds-ach-in { display:flex; align-items:center; gap:24px; padding:20px; } .ds-stage { width:96px; height:96px; flex:none; border-radius:9999px; background:#0a0f2e; } .ds-ach-text { display:flex; flex-direction:column; gap:8px; } .ds-tag-l { background:#ffd84d; color:#0a0f2e; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; } .ds-yr { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#aab6e6; } .ds-ach-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; } .ds-ach-desc { font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#aab6e6; line-height:1.65; } .ds-spark { position:absolute; right:16px; top:20px; width:24px; height:24px; } .ds-foil { position:absolute; top:0; bottom:0; left:0; width:33%; pointer-events:none; background:linear-gradient(90deg, transparent, rgb(255 236 150 / 0.35), transparent); mix-blend-mode:screen; transform:translateX(-120%) skewX(-18deg); } .ds-ach:hover .ds-foil { animation:ds-foil 900ms cubic-bezier(0.23,1,0.32,1) both; } @keyframes ds-foil { to { transform:translateX(320%) skewX(-18deg); } }"
     },
     {
       "name": "Presence Card",
       "kind": "custom",
       "refersTo": "presence-card",
-      "description": "The friends panel: always shown, fixed 76px card; listening state with equaliser bars and the stepping music pose, playing state with the LoL pose.",
+      "description": "The friends panel: always shown, fixed 76px card; live tag in Online with on-bright text; listening state with equaliser bars and the stepping music pose, playing state with the LoL pose.",
       "html": "<section class=\"ds-friends\"><div class=\"ds-fhead\"><span>friends</span><span class=\"ds-live\">live</span></div><div class=\"ds-pres\"><span class=\"ds-art\"></span><span class=\"ds-ptext\"><span class=\"ds-song\">RAT INTERLUDE</span><span class=\"ds-artist\">by La Fève</span></span><span class=\"ds-eq\"><i></i><i style=\"animation-delay:.25s\"></i><i style=\"animation-delay:.5s\"></i></span></div></section>",
-      "css": ".ds-friends { width:288px; display:flex; flex-direction:column; gap:8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; } .ds-fhead { display:flex; justify-content:space-between; align-items:center; padding:0 4px; color:#c9b6e4; font-size:0.875rem; font-weight:500; } .ds-live { background:#5fe08a; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-size:0.75rem; font-weight:600; } .ds-pres { display:flex; align-items:center; gap:12px; height:76px; box-sizing:border-box; padding:12px; background:#3b2159; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-art { width:48px; height:48px; border-radius:10px; background:#5a3a80; flex:none; } .ds-ptext { flex:1; min-width:0; display:flex; flex-direction:column; } .ds-song { color:#fff1e6; font-size:0.875rem; font-weight:500; } .ds-artist { color:#c9b6e4; font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; } .ds-eq { display:flex; align-items:flex-end; gap:3px; height:20px; } .ds-eq i { width:3px; height:100%; border-radius:9999px; background:#5fe08a; transform-origin:bottom; animation:ds-eq 0.9s cubic-bezier(0.77,0,0.175,1) infinite; } @keyframes ds-eq { 0%,100% { transform:scaleY(0.35); } 50% { transform:scaleY(1); } } @media (prefers-reduced-motion: reduce) { .ds-eq i { animation:none; transform:scaleY(0.5); } }"
+      "css": ".ds-friends { width:288px; display:flex; flex-direction:column; gap:8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; } .ds-fhead { display:flex; justify-content:space-between; align-items:center; padding:0 4px; color:#aab6e6; font-size:0.875rem; font-weight:500; } .ds-live { background:#5fe08a; color:#0a0f2e; border-radius:9999px; padding:2px 8px; font-size:0.75rem; font-weight:600; } .ds-pres { display:flex; align-items:center; gap:12px; height:76px; box-sizing:border-box; padding:12px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); } .ds-art { width:48px; height:48px; border-radius:10px; background:#2a3a7a; flex:none; } .ds-ptext { flex:1; min-width:0; display:flex; flex-direction:column; } .ds-song { color:#f6f3ea; font-size:0.875rem; font-weight:500; } .ds-artist { color:#aab6e6; font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; } .ds-eq { display:flex; align-items:flex-end; gap:3px; height:20px; } .ds-eq i { width:3px; height:100%; border-radius:9999px; background:#5fe08a; transform-origin:bottom; animation:ds-eq 0.9s cubic-bezier(0.77,0,0.175,1) infinite; } @keyframes ds-eq { 0%,100% { transform:scaleY(0.35); } 50% { transform:scaleY(1); } } @media (prefers-reduced-motion: reduce) { .ds-eq i { animation:none; transform:scaleY(0.5); } }"
     },
     {
       "name": "Team Chip",
       "kind": "chip",
       "refersTo": "team-chip",
-      "description": "One per ongoing Experience on the banner: emoji then company.",
+      "description": "One per ongoing Experience on the banner: ground fill, 2px seam border, emoji then company.",
       "html": "<div class=\"ds-velvet2\"><span class=\"ds-team\">🎤 Bam Karaoke</span><span class=\"ds-team\">🔮 Predi.GG</span></div>",
-      "css": ".ds-velvet2 { display:flex; gap:8px; background:#3b2159; padding:20px; border-radius:16px; } .ds-team { display:inline-flex; align-items:center; gap:8px; height:40px; box-sizing:border-box; padding:0 16px 0 10px; border:2px solid #5a3a80; border-radius:9999px; background:#2a1540; color:#fff1e6; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; }"
+      "css": ".ds-velvet2 { display:flex; gap:8px; background:#141c48; padding:20px; border-radius:16px; } .ds-team { display:inline-flex; align-items:center; gap:8px; height:40px; box-sizing:border-box; padding:0 16px 0 10px; border:2px solid #2a3a7a; border-radius:9999px; background:#0a0f2e; color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; }"
     },
     {
       "name": "Accordion Row",
       "kind": "custom",
       "refersTo": "accordion-row",
-      "description": "FAQ rows: Velvet, 16px corners, 12px gaps instead of dividers, chevron turning with Ease In Out.",
+      "description": "FAQ rows: raised, 16px corners, 12px gaps instead of dividers, chevron turning with Ease In Out.",
       "html": "<details class=\"ds-acc\"><summary>Why imjustlucas?<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><p>Because it is just me, Lucas.</p></details>",
-      "css": ".ds-acc { width:560px; background:#3b2159; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#fff1e6; } .ds-acc summary { display:flex; justify-content:space-between; align-items:center; min-height:56px; padding:12px 20px; box-sizing:border-box; font-weight:500; cursor:pointer; list-style:none; border-radius:16px; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-acc summary::-webkit-details-marker { display:none; } .ds-acc summary:hover { background:rgb(90 58 128 / 0.4); } .ds-acc summary:focus-visible { outline:2px solid #ff8a3d; outline-offset:-2px; } .ds-acc svg { color:#c9b6e4; transition:transform 200ms cubic-bezier(0.77,0,0.175,1); } .ds-acc[open] svg { transform:rotate(180deg); } .ds-acc p { margin:0; padding:0 20px 20px; color:#c9b6e4; line-height:1.65; max-width:65ch; }"
+      "css": ".ds-acc { width:560px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#f6f3ea; } .ds-acc summary { display:flex; justify-content:space-between; align-items:center; min-height:56px; padding:12px 20px; box-sizing:border-box; font-weight:500; cursor:pointer; list-style:none; border-radius:16px; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-acc summary::-webkit-details-marker { display:none; } .ds-acc summary:hover { background:rgb(42 58 122 / 0.4); } .ds-acc summary:focus-visible { outline:2px solid #6f97ff; outline-offset:-2px; } .ds-acc svg { color:#aab6e6; transition:transform 200ms cubic-bezier(0.77,0,0.175,1); } .ds-acc[open] svg { transform:rotate(180deg); } .ds-acc p { margin:0; padding:0 20px 20px; color:#aab6e6; line-height:1.65; max-width:65ch; }"
+    },
+    {
+      "name": "Theme Menu",
+      "kind": "custom",
+      "refersTo": "theme-menu",
+      "description": "The theme switch's menu: a mode section (dark, light, system) and a palette section (electric blue, plum) with round swatches; lowercase labels, action-ink check on the current choice.",
+      "html": "<div class=\"ds-menu\" role=\"menu\"><div class=\"ds-menu-label\">mode</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">dark<svg class=\"ds-check\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">light</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\">system</div><div class=\"ds-menu-sep\"></div><div class=\"ds-menu-label\">palette</div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\"><span class=\"ds-sw-row\"><span class=\"ds-sw ds-sw-electric\"></span>electric blue</span><svg class=\"ds-check\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></div><div class=\"ds-menu-item\" role=\"menuitem\" tabindex=\"0\"><span class=\"ds-sw-row\"><span class=\"ds-sw ds-sw-plum\"></span>plum</span></div></div>",
+      "css": ".ds-menu { width:192px; padding:6px; background:#141c48; border:2px solid #2a3a7a; border-radius:16px; box-shadow:0 24px 48px -12px rgb(2 4 16 / 0.6); font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#f6f3ea; } .ds-menu-label { padding:8px 12px 4px; color:#aab6e6; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; line-height:1rem; } .ds-menu-item { display:flex; align-items:center; justify-content:space-between; gap:12px; height:40px; padding:0 12px; border-radius:10px; font-size:0.875rem; font-weight:500; cursor:pointer; outline:none; } .ds-menu-item:hover, .ds-menu-item:focus-visible { background:#2a3a7a; } .ds-check { color:#6f97ff; } .ds-menu-sep { height:2px; margin:6px 4px; background:#2a3a7a; } .ds-sw-row { display:flex; align-items:center; gap:10px; } .ds-sw { width:14px; height:14px; box-sizing:border-box; border-radius:9999px; border:2px solid; } .ds-sw-electric { background:#f6f3ea; border-color:#2f6bff; } .ds-sw-plum { background:#1c0f2b; border-color:#ff8a3d; }"
     }
   ],
   "narrative": {
     "northStar": "The Player Profile",
-    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink onto a ledge when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means \"this is the thing to press\". Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
+    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means \"this is the thing to press\": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a glowing neon accent (electric blue is a solid ledge and an underline here, never a glow), hextech gold trim (gold belongs to the legendary rarity alone), and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
     "keyCharacteristics": [
-      "Two-zone client inside a 12px Night frame: a 320px Plum sidebar beside a rounded Plum profile panel, the only part that scrolls.",
-      "Plum owns the whole shell in the default dark theme (\"LAN night\"); a lilac \"daytime lobby\" theme is the alternative, through the same role tokens.",
-      "One accent, tangerine, for the Play button, the active tab, the sound switch when on, selection and focus.",
+      "Two-zone client inside a 12px frame: a 320px sidebar beside a rounded profile panel, both on the palette's ground, the panel the only part that scrolls.",
+      "Two palettes, each with a dark and a light mode, all through the same role tokens: \"electric\" (the default; navy night in dark, off-white daytime in light) and \"plum\" (the plum and tangerine client). Dark is the default mode.",
+      "One action colour for the Play button, the active tab, the sound switch when on and selection; its ink colour draws focus.",
       "Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.",
-      "Chunky pressable controls on a solid ledge; Velvet slots and cards with soft 16px corners and a moulded-tray highlight.",
+      "Chunky pressable controls on a solid ledge; raised slots and cards with soft 16px corners and a moulded-tray highlight.",
       "A one-instrument kalimba kit in D major pentatonic, on by default, behind an always-visible switch.",
       "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye."
     ],
     "rules": [
       {
-        "name": "The Plum Owns the Shell Rule",
-        "body": "In the dark theme the frame, sidebar and panel are Night, Plum and Velvet. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.",
+        "name": "The Palette Owns the Shell Rule",
+        "body": "The frame, sidebar and panel are the palette's own frame, ground and raised colours (Navy Frame, Navy and Navy Raised in electric dark; Night, Plum and Velvet in plum dark), always through the role tokens. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.",
         "section": "colors"
       },
       {
-        "name": "The One Tangerine Rule",
-        "body": "A Tangerine fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus focus and selection. A second Tangerine-filled button in the panel means one of them is wrong. Secondary links stay Cream with a Haze underline in dark (Tangerine only on hover) and use Tangerine Deep as their ink in light.",
+        "name": "The One Action Rule",
+        "body": "An action fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus selection; the action ink draws focus. A second action-filled button in the panel means one of them is wrong. A component never names Tangerine, Electric or Off-white directly for this role; it uses `action`, `action-ledge`, `action-ink` and `on-action`, so both palettes follow. Secondary links use the action ink as their text in light; in electric dark they stay ink with an Electric underline and take the action ink on hover.",
         "section": "colors"
       },
       {
@@ -810,18 +1193,19 @@
       }
     ],
     "dos": [
-      "**Do** let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one, through the role tokens rather than fixed colours.",
-      "**Do** keep a Tangerine fill to the Play button, the active tab, the sound switch when on, focus and selection.",
+      "**Do** let the palette's own frame, ground and raised colours own the whole shell (Navy Frame #05081c, Navy #0a0f2e and Navy Raised #141c48 by default), through the role tokens rather than fixed colours, so every component works in both palettes and both modes.",
+      "**Do** keep the action fill to the Play button, the active tab, the sound switch when on and selection, and the action ink to focus, the menu check and link text.",
       "**Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and hide a missing number rather than show zero.",
       "**Do** compute the ink on Tech colours and use the deep `-ink` variants for coloured text in light.",
       "**Do** give every pressable control a ledge, a 44px target and a note from the kit.",
-      "**Do** use an outline button (Plum fill, 2px Seam border) for secondary actions sitting on a Velvet surface.",
+      "**Do** use an outline button (ground fill, 2px seam border) for secondary actions sitting on a raised surface.",
       "**Do** keep the sound switch visible on every page and honour reduced motion for both motion and sound.",
       "**Do** write every new string in both Locales and keep the lowercase, casual voice."
     ],
     "donts": [
       "**Don't** invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.",
       "**Don't** use rarity colours for decoration, headings or backgrounds.",
+      "**Don't** hard-code Tangerine, Electric, Off-white or Night for the action or for text on a bright fill; use `action`, `action-ledge`, `action-ink`, `on-action` and `on-bright`.",
       "**Don't** drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.",
       "**Don't** go back to neutral zinc surfaces with colour only from content.",
       "**Don't** play sound automatically, on hover for touch pointers, from presence updates, or anywhere the visitor cannot silence it.",
