@@ -18,7 +18,7 @@ export function RarityTag({
   return (
     <TypographyTag
       className={cn(
-        "inline-flex items-center rounded-full px-2 py-0.5 text-night",
+        "inline-flex items-center rounded-full px-2 py-0.5 text-on-bright",
         RARITY_STYLE[rarity].tag,
         className,
       )}

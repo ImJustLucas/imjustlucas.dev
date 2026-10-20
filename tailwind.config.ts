@@ -53,14 +53,25 @@ const config: Config = {
         seam: token("seam"),
         ledge: token("ledge"),
         ink: { DEFAULT: token("ink"), muted: token("ink-muted") },
+        // The one thing to press: the Play button, the active tab, the sound
+        // switch when on, focus and selection (`ink` is its role as text)
+        action: {
+          DEFAULT: token("action"),
+          ledge: token("action-ledge"),
+          ink: token("action-ink"),
+        },
+        "on-action": token("on-action"),
+        // Text on bright fills: navy in electric, Night in plum
+        "on-bright": token("on-bright"),
         // Fixed palette; `-ink` is the colour's role as text or thin line
         night: token("night"),
         cream: token("cream"),
         tangerine: {
           DEFAULT: token("tangerine"),
           ledge: token("tangerine-ledge"),
-          ink: token("tangerine-ink"),
         },
+        electric: token("electric"),
+        "off-white": token("off-white"),
         legendary: { DEFAULT: token("legendary"), ink: token("legendary-ink") },
         epic: { DEFAULT: token("epic"), ink: token("epic-ink") },
         rare: { DEFAULT: token("rare"), ink: token("rare-ink") },

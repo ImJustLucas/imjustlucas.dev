@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { useSounds } from "./SoundProvider";
 
 /**
- * The always-visible sound switch: Tangerine when sound is on, Velvet with a
+ * The always-visible sound switch: the action colour when sound is on, raised with a
  * struck speaker when off; its label also says when reduced motion turned
  * sound off.
  */
@@ -32,7 +32,7 @@ export function SoundSwitch({ className }: { className?: string }) {
       className={cn(
         "ledge inline-flex size-11 shrink-0 items-center justify-center rounded-md",
         state.enabled
-          ? "ledge-tangerine bg-tangerine text-night"
+          ? "ledge-action bg-action text-on-action"
           : "bg-raised text-ink",
         className,
       )}

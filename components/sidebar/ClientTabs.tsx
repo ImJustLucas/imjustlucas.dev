@@ -32,7 +32,7 @@ const TAB_ICONS: Partial<Record<RouteMessageKey, LucideIcon>> = {
 const TAB_STEP = 48;
 
 /**
- * The client tabs: the menu, generated from `MENU_ROUTES`. The Tangerine
+ * The client tabs: the menu, generated from `MENU_ROUTES`. The action
  * fill slides from tab to tab, and each tab plays its own note, so walking
  * down the menu plays a rising scale.
  */
@@ -52,7 +52,7 @@ export function ClientTabs() {
         <li
           aria-hidden
           className={cn(
-            "pointer-events-none absolute inset-x-0 top-0 h-11 rounded-md bg-tangerine transition-[transform,opacity] duration-tab ease-in-out motion-reduce:transition-none",
+            "pointer-events-none absolute inset-x-0 top-0 h-11 rounded-md bg-action shadow-[0_3px_0_rgb(var(--action-ledge))] transition-[transform,opacity] duration-tab ease-in-out motion-reduce:transition-none",
             active < 0 && "opacity-0",
           )}
           style={{
@@ -75,7 +75,7 @@ export function ClientTabs() {
                 className={cn(
                   "flex h-11 items-center gap-3 rounded-md px-3.5 text-label transition-colors duration-hover ease-out",
                   isActive
-                    ? "text-night"
+                    ? "text-on-action"
                     : "text-ink hover:bg-seam/70 active:bg-seam",
                 )}
               >

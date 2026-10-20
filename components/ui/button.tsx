@@ -8,7 +8,7 @@ import { Slot } from "@radix-ui/react-slot";
 
 /**
  * The client's buttons (DESIGN.md, Buttons): chunky controls on a ledge that
- * sink when pressed. `play` is the one Tangerine primary action of a screen;
+ * sink when pressed. `play` is the one action-coloured primary action of a screen;
  * `default` is the Velvet ledge button; `ghost` and `link` have no ledge
  * because they are not raised controls.
  */
@@ -18,13 +18,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "ledge bg-raised text-ink hover:bg-seam/40",
-        play: "ledge ledge-tangerine bg-tangerine font-display text-play text-night",
-        destructive: "ledge bg-busy-ink text-cream dark:text-night",
+        play: "ledge ledge-action bg-action font-display text-play text-on-action",
+        destructive: "ledge bg-busy-ink text-cream dark:text-on-bright",
         outline: "ledge border-2 border-seam bg-ground text-ink",
         secondary: "ledge bg-raised text-ink hover:bg-seam/40",
         ghost:
           "text-ink transition-colors duration-hover ease-out hover:bg-seam/60",
-        link: "text-tangerine-ink underline underline-offset-4 hover:no-underline",
+        link: "text-action-ink underline underline-offset-4 hover:no-underline",
       },
       size: {
         default: "h-11 px-4",

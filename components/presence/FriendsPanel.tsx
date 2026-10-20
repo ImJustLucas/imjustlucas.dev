@@ -30,7 +30,7 @@ export function FriendsPanel() {
           {t("title")}
         </span>
         {live && (
-          <TypographyTag className="rounded-full bg-online px-2 py-0.5 text-night">
+          <TypographyTag className="rounded-full bg-online px-2 py-0.5 text-on-bright">
             {t("live")}
           </TypographyTag>
         )}
@@ -97,7 +97,7 @@ function Artwork({
         <span
           className={cn(
             "absolute -bottom-1 -right-1 size-5 overflow-hidden rounded-full border-2 border-raised",
-            badge.dark && "bg-night",
+            badge.dark && "bg-on-bright",
           )}
         >
           <Image src={badge.url} alt={badge.alt} width={20} height={20} />

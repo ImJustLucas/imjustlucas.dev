@@ -12,6 +12,7 @@ import { SoundProvider } from "@/components/sound/SoundProvider";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
 import { getProfile } from "@/lib/content/server";
+import { PALETTE_SCRIPT } from "@/lib/palette";
 
 import ClientLayout from "./ClientLayout";
 
@@ -48,6 +49,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        {/* The visitor's palette, before the first paint */}
+        <script dangerouslySetInnerHTML={{ __html: PALETTE_SCRIPT }} />
+      </head>
       <body className={`${fontVariables} antialiased`}>
         <NextIntlClientProvider>
           <ThemeProvider

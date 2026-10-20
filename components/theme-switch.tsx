@@ -6,19 +6,31 @@ import { useTheme } from "next-themes";
 
 import { Check, Moon, Sun } from "lucide-react";
 
+import { usePalette } from "@/components/palette/use-palette";
 import { useSounds } from "@/components/sound/SoundProvider";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { PALETTES } from "@/lib/palette";
 
-const THEMES = ["dark", "light", "system"] as const;
+const MODES = ["dark", "light", "system"] as const;
 
-/** The theme menu: dark ("LAN night", the default), light, or the system's. */
+const itemClass =
+  "flex h-10 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-label text-ink focus:bg-seam";
+
+/**
+ * The theme menu: the mode (dark, the default, light, or the system's) and
+ * the palette (electric blue, the default, or plum), each remembered per
+ * visitor.
+ */
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const { palette, setPalette } = usePalette();
   const { play } = useSounds();
   const t = useTranslations("ThemeSwitch");
 
@@ -35,20 +47,52 @@ export function ModeToggle() {
       <DropdownMenuContent
         align="start"
         side="top"
-        className="min-w-40 rounded-lg border-2 border-seam bg-raised p-1.5 shadow-[var(--float)]"
+        className="min-w-48 rounded-lg border-2 border-seam bg-raised p-1.5 shadow-[var(--float)]"
       >
-        {THEMES.map((value) => (
+        <DropdownMenuLabel className="px-3 pb-1 pt-2 text-tag text-ink-muted">
+          {t("mode")}
+        </DropdownMenuLabel>
+        {MODES.map((value) => (
           <DropdownMenuItem
             key={value}
             onClick={() => {
               setTheme(value);
               play("toggleOn");
             }}
-            className="flex h-10 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-label text-ink focus:bg-seam"
+            className={itemClass}
           >
             {t(value)}
             {theme === value && (
-              <Check aria-hidden className="size-4 text-tangerine-ink" />
+              <Check aria-hidden className="size-4 text-action-ink" />
+            )}
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator className="mx-1 my-1.5 h-0.5 bg-seam" />
+        <DropdownMenuLabel className="px-3 pb-1 pt-1 text-tag text-ink-muted">
+          {t("palette")}
+        </DropdownMenuLabel>
+        {PALETTES.map((value) => (
+          <DropdownMenuItem
+            key={value}
+            onClick={() => {
+              setPalette(value);
+              play("toggleOn");
+            }}
+            className={itemClass}
+          >
+            <span className="flex items-center gap-2.5">
+              <span
+                aria-hidden
+                className={
+                  value === "electric"
+                    ? "size-3.5 rounded-full border-2 border-electric bg-off-white"
+                    : "size-3.5 rounded-full border-2 border-tangerine bg-night"
+                }
+              />
+              {t(value)}
+            </span>
+            {palette === value && (
+              <Check aria-hidden className="size-4 text-action-ink" />
             )}
           </DropdownMenuItem>
         ))}

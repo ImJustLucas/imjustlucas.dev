@@ -46,9 +46,13 @@
   },
   "ThemeSwitch": {
     "toggle": "Changer de thème",
-    "light": "Clair",
-    "dark": "Sombre",
-    "system": "Système"
+    "light": "clair",
+    "dark": "sombre",
+    "system": "système",
+    "mode": "mode",
+    "palette": "palette",
+    "electric": "bleu électrique",
+    "plum": "prune"
   },
   "LocaleSwitcher": {
     "switch": "English"

@@ -7,6 +7,7 @@ import { AdminNoticeProvider } from "@/app/admin/admin-form";
 import { SignInScreen } from "@/app/admin/admin-screens";
 import { fontVariables } from "@/app/fonts";
 import { currentOwnerAccess } from "@/lib/admin/session";
+import { PALETTE_SCRIPT } from "@/lib/palette";
 
 export const metadata: Metadata = {
   title: "Admin · ImJustLucas",
@@ -24,6 +25,10 @@ export default async function AdminLayout({
   const access = await currentOwnerAccess();
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        {/* The Owner's palette, before the first paint */}
+        <script dangerouslySetInnerHTML={{ __html: PALETTE_SCRIPT }} />
+      </head>
       <body className={`${fontVariables} antialiased`}>
         <ThemeProvider
           attribute="class"
