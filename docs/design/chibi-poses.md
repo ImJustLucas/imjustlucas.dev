@@ -106,3 +106,7 @@ A second frame is an edit of the approved pose in its own Gemini conversation: s
 
 - Trophy approved (`.impeccable/mocks/chibi/trophy.png`): the commissioned checker shirt, a plain gold cup held up in one hand (the prompt asked for both), teeth-out grin, sparkles. It goes in the MDF 2025 achievement slot.
 - Music frame B (`.impeccable/mocks/chibi/music-frame-b.png`): an edit of the music pose with a round "oh" mouth and snapped fingers. Legs and feet register exactly with frame A (measured offset 0,0), so no realignment is needed. Gemini kept the head tilt and the notes where they were, so the loop moves only the mouth and the hand.
+
+## Coding pose (2026-10-20)
+
+Approved: cross-legged with the laptop, tongue out, two sparkle stickers on the lid. Two outfits kept: the Breton longsleeve with baggy black jeans is the default (`.impeccable/mocks/chibi/coding.png`, an outfit edit where the stripes did wrap around the bent sleeves), and the charcoal overshirt over a plum tee is the alternate (`coding-overshirt.png`).
