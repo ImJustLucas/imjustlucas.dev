@@ -89,6 +89,8 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 4. **Hobbies**: surf, skate, playing LoL, coding, coffee, watching a series, listening to music.
 5. **Chibi art**: commissioned from an artist today; generation is welcome if it reaches the same quality.
 
-## Still open
+6. **Role line**: "fullstack dev, co-founder of Predi.GG" / "fullstack dev, cofondateur de Predi.GG", lowercase like the menu, from the dictionaries.
 
-- **Role line** under the greeting, in both Locales (for example "fullstack dev, co-founder of Predi.GG"). The builder must not write it alone.
+## Chibi art
+
+Thirteen approved poses live in `.impeccable/mocks/chibi/` (white backgrounds); see `docs/design/chibi-poses.md`. The banner uses `banner-wave-flipped.png` by day; its night version is not made yet, so the night banner falls back to the day one.
