@@ -92,3 +92,8 @@ Approved by Lucas on the first try (`.impeccable/mocks/chibi/sleeping.png`): cur
 ## Night outfit (2026-10-20)
 
 The sleeping pose's pullover replaces the grey hoodie as the night outfit for the banner and LoL poses: light misty lilac-white chunky crewneck with electric-blue (#2f6bff) rib collar and cuffs and two small stitched sparkles, charcoal joggers, white socks.
+
+## LoL night and music (2026-10-20)
+
+- LoL night redone with the night pullover by an outfit edit (`.impeccable/mocks/chibi/lol-night.png`); the grey-hoodie version is kept as `lol-night-hoodie.png`. Gemini stitched three sparkles instead of two; accepted.
+- Music approved on the first try (`.impeccable/mocks/chibi/music.png`): eyes closed, singing along, hand on the ear cup, washed sky-blue tee over a white long-sleeve, washed dark-blue jeans, two music notes. Lucas's favourite so far. It also serves the "listening" presence state.
