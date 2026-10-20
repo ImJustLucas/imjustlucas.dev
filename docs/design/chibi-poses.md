@@ -34,9 +34,9 @@ Each pose gets its own outfit, matched to the activity, so the poses read as mom
 
 Shell and states:
 - **Banner (home)**: `Standing in a relaxed three-quarter pose, turned towards the viewer's right exactly like the reference (his visible ear on the left of the image), waving with the hand on the right of the image raised. He wears an oversized, slightly cropped long-sleeve Breton-stripe t-shirt (off-white with even navy-blue horizontal stripes that wrap around the body and the sleeves, drop shoulders, loose raw-edge cuffs, no logo or print), very baggy black wide-leg jeans stacking over the shoes, white sneakers, over-ear headphones resting around his neck. One small yellow four-point sparkle near his raised hand.`
-- **Chilling (no ongoing job)**: `Leaning back in a beanbag, hands behind his head, eyes half closed with a content smile. Oversized plum hoodie, grey joggers, white socks.`
+- **Chilling (no ongoing job)**: `Lounging back in a big round tangerine (#ff8a3d) beanbag, hands behind his head, legs crossed, eyes half closed and a lazy, content smile. The Breton longsleeve of the banner, very baggy black wide-leg jeans, white sneakers.`
 - **Sleeping (offline)**: `Curled up asleep on his side on a big plump plum (#3b2159) cushion, his head on the left of the image resting on his folded hands, his face still turned towards the viewer in three-quarter view, eyes closed, a tiny peaceful smile, his curls a little messy. He wears a very oversized, chunky, soft crewneck pullover in a light misty lilac-white (#ece6f3), with a few small electric-blue (#2f6bff) touches: the collar rib, the cuff ribs and a tiny four-point sparkle stitched on the chest; loose charcoal joggers and white socks. Three small hand-drawn yellow "z" shapes float above his head, the only lettering in the image.`
-- **Waving goodbye (page close)**: `Seen from three-quarter back, turning his head to wave goodbye over his shoulder, backpack on. Sky blue zip jacket, dark jeans, white sneakers.`
+- **Waving goodbye (page close)**: `Walking away towards the right of the image, seen from three-quarter back, turning his head back over his shoulder towards the viewer with a big warm smile, waving goodbye with the hand on the left of the image raised high. A small sky-blue (#46c2ff) backpack on his back. Plum (#3b2159) zip jacket with a tangerine (#ff8a3d) zipper pull, very baggy black wide-leg jeans, white sneakers.`
 - **Trophy (MDF 2025)**: `Holding a big gold trophy up with both hands, eyes closed in a proud grin, a few yellow four-point sparkles around the trophy. The checker camp-collar shirt from the reference and dark jeans.`
 
 Hobbies:
@@ -114,3 +114,8 @@ Approved: cross-legged with the laptop, tongue out, two sparkle stickers on the 
 ## Surf pose (2026-10-20)
 
 Approved on the first try (`.impeccable/mocks/chibi/surf.png`): damp curls with water drops that keep the curl on top, a clean shaka, plum wetsuit top with a tangerine stripe, sky-blue board shorts, white board with a gold stripe. The board is held diagonally behind him rather than under the arm; accepted.
+
+## Series and chilling poses (2026-10-20)
+
+- Series approved (`.impeccable/mocks/chibi/series.png`): on the plum cushion of the sleeping pose, violet blanket over the night pullover, tangerine popcorn bowl, laughing towards a screen on the right. The day/evening pair of seats is a motif: plum cushion at night, tangerine beanbag by day.
+- Chilling approved (`.impeccable/mocks/chibi/chilling.png`): lounging in the tangerine beanbag in the Breton longsleeve, hands behind the head, half-closed eyes and a lazy smile. The stripes wrapped correctly around the bent arms. Legs are crossed at the knees rather than the ankles; accepted.
