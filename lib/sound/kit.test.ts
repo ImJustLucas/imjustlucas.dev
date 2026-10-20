@@ -19,6 +19,8 @@ const CUES: ReadonlyArray<Cue> = [
   "unlock",
   "boop",
   "miss",
+  "throw",
+  "clink",
 ];
 
 const pitchClass = (midi: number) => midi % 12;
@@ -29,9 +31,10 @@ describe("the sound kit", () => {
   it("never gets louder than a master gain of 0.25", () => {
     expect(MASTER_GAIN).toBeLessThanOrEqual(0.25);
     for (const cue of CUES) {
-      for (const pluck of cueSound(cue, { random: 0.99 }).plucks) {
-        expect(pluck.gain).toBeGreaterThan(0);
-        expect(pluck.gain).toBeLessThanOrEqual(1);
+      const sound = cueSound(cue, { random: 0.99 });
+      for (const { gain } of [...sound.plucks, ...(sound.samples ?? [])]) {
+        expect(gain).toBeGreaterThan(0);
+        expect(gain).toBeLessThanOrEqual(1);
       }
     }
   });
@@ -71,7 +74,14 @@ describe("the sound kit", () => {
     const unlock = cueSound("unlock");
     expect(unlock.plucks.map((p) => p.note)).toEqual(["D4", "F#4", "A4", "D5"]);
     const lastPluck = Math.max(...unlock.plucks.map((p) => p.at));
-    expect(unlock.coinAt).toBeGreaterThan(lastPluck);
+    expect(unlock.samples).toHaveLength(1);
+    expect(unlock.samples?.[0].sample).toBe("coin");
+    expect(unlock.samples?.[0].at).toBeGreaterThan(lastPluck);
+  });
+
+  it("throws a coin with the coin and lands it with the impact", () => {
+    expect(cueSound("throw").samples?.map((s) => s.sample)).toEqual(["coin"]);
+    expect(cueSound("clink").samples?.map((s) => s.sample)).toEqual(["impact"]);
   });
 
   it("bends the boop upwards on a degree picked by the random number", () => {

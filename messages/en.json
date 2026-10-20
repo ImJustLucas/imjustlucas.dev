@@ -183,7 +183,9 @@
   "Mdf2025": {
     "winner": "Proud winner of the MasterDevFrance 2025 competition - a national recognition for technical excellence and innovation in software development.",
     "loading": "Loading...",
-    "loadingScene": "Loading scene: {progress}%"
+    "loadingScene": "Loading scene: {progress}%",
+    "pause": "Pause animation",
+    "play": "Play animation"
   },
   "NotFound": {
     "title": "Page not found",

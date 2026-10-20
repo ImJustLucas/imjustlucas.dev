@@ -11,10 +11,15 @@ import {
 } from "@react-three/drei";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
+import { useTranslations } from "next-intl";
 
+import { Pause, Play } from "lucide-react";
 import * as THREE from "three";
 
+import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { useSounds } from "@/components/sound/SoundProvider";
+import { Button } from "@/components/ui/button";
+import { SAMPLES } from "@/lib/sound/kit";
 
 import { Certificate } from "./certificate";
 import SceneLoader from "./scene-loader";
@@ -58,23 +63,6 @@ const GoldenShaderMaterial = shaderMaterial(
 
 extend({ GoldenShaderMaterial });
 
-/** Follows the site's sound switch (set by `MasterDevScene`). */
-const sound = { enabled: false };
-
-const playCoinSound = () => {
-  if (!sound.enabled) return;
-  const audio = new Audio("/sounds/coin.mp3");
-  audio.volume = 0.3;
-  audio.play().catch((e) => console.error("Audio play failed:", e));
-};
-
-const playImpactSound = () => {
-  if (!sound.enabled) return;
-  const audio = new Audio("/sounds/impact.mp3");
-  audio.volume = 0.4;
-  audio.play().catch((e) => console.error("Audio play failed:", e));
-};
-
 const CERTIFICATE_BOX = new THREE.Box3(
   new THREE.Vector3(-2.5, -1.5, -0.025),
   new THREE.Vector3(2.5, 1.5, 0.025),
@@ -91,12 +79,18 @@ const CustomCoin = ({
   isUserCoin = false,
   velocity: initialVelocity = [0, 0, 0],
   onInactive = () => {},
+  onImpact,
+  still = false,
 }: {
   position: [number, number, number];
   scale?: number;
   isUserCoin?: boolean;
   velocity?: [number, number, number];
   onInactive?: () => void;
+  /** Called when the coin lands on the certificate (the visitor's coins only). */
+  onImpact?: () => void;
+  /** Frozen where it is: paused, or reduced motion. */
+  still?: boolean;
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const shaderRef = useRef(null);
@@ -120,27 +114,27 @@ const CustomCoin = ({
   const lastPosition = useRef<THREE.Vector3>(new THREE.Vector3());
   const inactiveTime = useRef<number>(0);
   const hasImpacted = useRef<boolean>(false);
+  // Its own clock, so the shimmer resumes where it paused.
+  const shimmerTime = useRef<number>(0);
 
   useEffect(() => {
     if (meshRef.current) {
       lastPosition.current.copy(meshRef.current.position);
     }
+  }, []);
 
-    if (isUserCoin) {
-      playCoinSound();
-    }
-  }, [isUserCoin]);
-
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
+    if (still) return;
     if (meshRef.current) {
       const step = Math.min(delta, MAX_DELTA) * FRAMES_PER_SECOND;
 
       meshRef.current.rotation.y += rotationSpeed * step;
       meshRef.current.rotation.x += rotationSpeed * 0.5 * step;
 
+      shimmerTime.current += step / FRAMES_PER_SECOND;
       if (shaderRef.current) {
         //@ts-expect-error unknown property
-        shaderRef.current.time = state.clock.elapsedTime;
+        shaderRef.current.time = shimmerTime.current;
       }
 
       if (!fallen) {
@@ -168,8 +162,8 @@ const CustomCoin = ({
               velocity.current.z * velocity.current.z,
           );
 
-          if (impactVelocity > 0.01 && !hasImpacted.current) {
-            playImpactSound();
+          if (onImpact && impactVelocity > 0.01 && !hasImpacted.current) {
+            onImpact();
             hasImpacted.current = true;
 
             setTimeout(() => {
@@ -226,7 +220,13 @@ const CustomCoin = ({
   );
 };
 
-const Coins = ({ count = 20 }: { count?: number }) => {
+const Coins = ({
+  count = 20,
+  still = false,
+}: {
+  count?: number;
+  still?: boolean;
+}) => {
   const { viewport } = useThree();
   const [coins, setCoins] = useState<
     Array<{
@@ -264,14 +264,16 @@ const Coins = ({ count = 20 }: { count?: number }) => {
           position={coin.position}
           scale={coin.scale}
           onInactive={() => handleInactiveCoin(coin.id)}
+          still={still}
         />
       ))}
     </>
   );
 };
 
-const Scene = () => {
+const Scene = ({ still }: { still: boolean }) => {
   const { camera, viewport, mouse } = useThree();
+  const { play } = useSounds();
   const [userCoins, setUserCoins] = useState<
     {
       position: [number, number, number];
@@ -289,6 +291,7 @@ const Scene = () => {
   // Mutating the R3F camera in an event handler is the intended pattern.
   // eslint-disable-next-line react-hooks/immutability
   const handleClick = useCallback(() => {
+    if (still) return;
     const cameraPosition = camera.position.clone();
     // eslint-disable-next-line react-hooks/immutability
     camera.far = 4;
@@ -311,7 +314,14 @@ const Scene = () => {
         velocity: [direction.x * 0.2, direction.y * 0.2, direction.z * 0.2],
       },
     ]);
-  }, [camera, mouse, viewport]);
+    play("throw");
+  }, [camera, mouse, viewport, still, play]);
+
+  // Only a coin the visitor threw makes a sound when it lands.
+  const handleImpact = useCallback(
+    () => play("clink", { random: Math.random() }),
+    [play],
+  );
 
   const handleInactiveUserCoin = useCallback((id: number) => {
     setUserCoins((prevCoins) => prevCoins.filter((coin) => coin.id !== id));
@@ -334,11 +344,17 @@ const Scene = () => {
       />
 
       <Environment preset="sunset" />
-      <Stars radius={100} depth={50} count={1000} factor={4} />
+      <Stars
+        radius={100}
+        depth={50}
+        count={1000}
+        factor={4}
+        speed={still ? 0 : 1}
+      />
 
-      <Certificate position={[0, 0, 0]} />
+      <Certificate position={[0, 0, 0]} still={still} />
 
-      <Coins count={15} />
+      <Coins count={15} still={still} />
 
       {userCoins.map((coin) => (
         <CustomCoin
@@ -348,6 +364,8 @@ const Scene = () => {
           isUserCoin={true}
           velocity={coin.velocity}
           onInactive={() => handleInactiveUserCoin(coin.id)}
+          onImpact={handleImpact}
+          still={still}
         />
       ))}
 
@@ -380,28 +398,34 @@ const Scene = () => {
 };
 
 export default function MasterDevScene() {
-  const { state } = useSounds();
-  useEffect(() => {
-    sound.enabled = state.enabled;
-  }, [state.enabled]);
-  useEffect(() => {
-    const preloadAudio = (url: string) => {
-      const audio = new Audio(url);
-      audio.volume = 0;
-      audio.muted = true;
-      audio.play().catch(() => {});
-    };
+  const t = useTranslations("Mdf2025");
+  const reducedMotion = useReducedMotion();
+  // null until the visitor chooses: still under reduced motion, moving otherwise.
+  const [paused, setPaused] = useState<boolean | null>(null);
+  const still = paused ?? reducedMotion;
 
-    preloadAudio("/sounds/coin.mp3");
-    preloadAudio("/sounds/impact.mp3");
+  useEffect(() => {
+    // Warm the HTTP cache, so the first throw sounds at once.
+    for (const url of Object.values(SAMPLES)) {
+      fetch(url).catch(() => {});
+    }
   }, []);
 
   return (
     <>
       <SceneLoader />
-      <Canvas shadows>
-        <Scene />
+      <Canvas shadows frameloop={still ? "demand" : "always"}>
+        <Scene still={still} />
       </Canvas>
+      <Button
+        variant="secondary"
+        size="sm"
+        className="absolute bottom-3 right-3 z-10"
+        onClick={() => setPaused(!still)}
+      >
+        {still ? <Play aria-hidden /> : <Pause aria-hidden />}
+        {still ? t("play") : t("pause")}
+      </Button>
     </>
   );
 }

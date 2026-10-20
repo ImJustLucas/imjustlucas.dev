@@ -7,20 +7,25 @@ import * as THREE from "three";
 
 export const Certificate = ({
   position = [0, 0, 0],
+  still = false,
 }: {
   position?: [number, number, number];
+  /** Held where it is: paused, or reduced motion. */
+  still?: boolean;
 }) => {
   const groupRef = useRef<THREE.Group>(null);
+  // Its own clock, so the bob resumes where it paused.
+  const time = useRef(0);
 
   const { scene } = useGLTF("/models/cheque.glb");
 
   const initialYRotation = -Math.PI / 2;
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.position.y =
-        position[1] + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
-    }
+  useFrame((_, delta) => {
+    if (still || !groupRef.current) return;
+    time.current += Math.min(delta, 1 / 20);
+    groupRef.current.position.y =
+      position[1] + Math.sin(time.current * 0.5) * 0.1;
   });
 
   return (

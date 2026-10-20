@@ -5,18 +5,20 @@ import {
   frequency,
   MASTER_GAIN,
   type Pluck,
+  type Sample,
+  SAMPLES,
 } from "./kit";
 
 /**
- * Plays the kit with Web Audio, so it costs no download (except the coin of
- * the unlock). Browser only. Nothing sounds before `arm()`, which the sound
+ * Plays the kit with Web Audio, so it costs no download (except the
+ * recorded coin and impact, fetched once on first use). Browser only. Nothing sounds before `arm()`, which the sound
  * provider calls on the visitor's first press or key: no sound ever plays on
  * page load, scroll or presence updates.
  */
 export class SoundEngine {
   private context: AudioContext | undefined;
   private master: GainNode | undefined;
-  private coin: Promise<AudioBuffer | undefined> | undefined;
+  private buffers = new Map<Sample, Promise<AudioBuffer | undefined>>();
   private armed = false;
   private lastTick = 0;
 
@@ -42,16 +44,15 @@ export class SoundEngine {
     const sound = cueSound(cue, options);
     const start = context.currentTime + 0.005;
     for (const pluck of sound.plucks) this.pluck(context, master, pluck, start);
-    if (sound.coinAt !== undefined) {
-      const at = start + sound.coinAt;
-      void this.coinBuffer(context).then((buffer) => {
+    for (const { sample, at, gain: level } of sound.samples ?? []) {
+      void this.buffer(context, sample).then((buffer) => {
         if (!buffer) return;
         const source = context.createBufferSource();
         const gain = context.createGain();
-        gain.gain.value = 0.55;
+        gain.gain.value = level;
         source.buffer = buffer;
         source.connect(gain).connect(master);
-        source.start(Math.max(at, context.currentTime));
+        source.start(Math.max(start + at, context.currentTime));
       });
     }
   }
@@ -106,11 +107,15 @@ export class SoundEngine {
     }
   }
 
-  private coinBuffer(context: AudioContext) {
-    this.coin ??= fetch("/sounds/coin.mp3")
-      .then((response) => response.arrayBuffer())
-      .then((data) => context.decodeAudioData(data))
-      .catch(() => undefined);
-    return this.coin;
+  private buffer(context: AudioContext, sample: Sample) {
+    let buffer = this.buffers.get(sample);
+    if (!buffer) {
+      buffer = fetch(SAMPLES[sample])
+        .then((response) => response.arrayBuffer())
+        .then((data) => context.decodeAudioData(data))
+        .catch(() => undefined);
+      this.buffers.set(sample, buffer);
+    }
+    return buffer;
   }
 }
