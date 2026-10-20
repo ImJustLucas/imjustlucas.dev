@@ -27,7 +27,7 @@ OWN-WORLD: Night frame with faint sparkles, Plum shell, Velvet slots with 2px Se
 
 STORY: The visitor understands that Lucas is a fullstack developer in Paris who plays for Bam Karaoke and co-founded Predi.GG, believes he ships and wins (MDF 2025 legendary, Projects with live stars), sees he is a real person right now (presence), and presses Download my resume or goes to the inventory.
 
-FIRST VIEWPORT: Desktop 1440x900. Left, the 320px sidebar: player card on top (64px chibi head in a live status ring, "ImJustLucas", role line), the six lowercase tabs, the always-on friends panel, settings row (sound switch first, Locale, theme) and socials at the bottom. Right, the panel opens on a full-width banner slot about 340px tall: a full-body chibi pose (about 260px) on the left; on the right the Display greeting "Yoooo, I'm Lucas!", one role line, then "current team" as two chips derived from ongoing Experiences (🎤 Bam Karaoke, 🔮 Predi.GG); bottom right of the banner, the Tangerine Play button "Download my resume" with the resume date in Data beside it, and a Ledge LinkedIn button. Under the banner, a row of three achievement slots with MDF 2025 legendary first and largest; the top edge of the inventory row peeks above the fold.
+FIRST VIEWPORT: Desktop 1440x900. Left, the 320px sidebar: player card on top (64px chibi head in a live status ring, "ImJustLucas", role line), the six lowercase tabs, the always-on friends panel, settings row (sound switch first, Locale, theme) and socials at the bottom. Right, the panel opens on a full-width banner slot about 340px tall: a full-body chibi pose (about 260px) on the left; on the right the Display greeting "Yoooo, I'm Lucas!", one role line, then "current team" as two chips derived from ongoing Experiences (🎤 Bam Karaoke, 🔮 Predi.GG); bottom right of the banner, the Tangerine Play button "Download my resume" with the resume date in Data beside it, and a Ledge LinkedIn button. Under the banner, the achievement row: today MDF 2025 alone as one wide legendary slot, with room for up to two more added later in the Admin; the top edge of the featured inventory row peeks above the fold.
 
 FORM: The game-client player profile (cosy, not competitive), third on the ordered list of seven grounded candidates; seed key 14c08ff6.
 
@@ -38,9 +38,9 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 ## Page sequence (home)
 
 1. **Banner** (above): greeting, role, current team, Play button, LinkedIn.
-2. **Achievement showcase** (above): three slots, MDF 2025 legendary first; the other two come from the achievements content (see open decisions). Each slot links to its proof when one exists.
-3. **Inventory, featured**: up to three Project item cards from a `featured` flag, rarity-framed, with "see the whole inventory" to `/what`.
-4. **About**: the bio ("Creative Mindset" today) in a 65ch reading slot, beside a slot of real hobbies drawn as chibi poses (skate, surf, karaoke, LoL) once Lucas confirms the list.
+2. **Achievement showcase** (above): achievements are an Admin-editable content type (name per Locale, year, rarity, link, art). Today it holds only MDF 2025, shown as one wide legendary slot linking to `/mdf-2025`; Lucas adds others when he has a win of that level. Never pad the row with lesser items.
+3. **Inventory, featured**: up to three Project item cards chosen and ordered by Lucas in the Admin (a `featured` flag and order on Projects), rarity-framed, with "see the whole inventory" to `/what`. His intended first selection: Predi.GG, his current job (Bam Karaoke, which first needs a Project entry added in the Admin), and others he picks. Nothing on the home page is chosen in code.
+4. **About**: the bio ("Creative Mindset" today) in a 65ch reading slot, beside a "what i do when i'm not shipping" slot of his real hobbies, each a chibi pose with a lowercase label: surf, skate, playing LoL, coding, a coffee, watching a series, listening to music. The list lives in the content (Admin-editable), not in the component.
 5. **FAQ**: the existing questions as Velvet accordion rows with toggle sounds.
 6. Close: a small chibi waving and the contact tab link, so the page ends on Lucas, not on trivia.
 
@@ -54,9 +54,9 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 ## States and ranges
 
 - **Presence**: playing, listening, online with nothing running, away, busy, offline, connecting (skeleton of the same height), Lanyard unreachable (shown as offline). Never hidden. Long song or game names truncate to one line with the full text in a tooltip.
-- **Current team**: 0 to 3 ongoing Experiences. With 0, the chips give way to a line Lucas must write (see open decisions); never an invented status.
-- **Achievements**: 1 to 3 slots; with 1, MDF takes the row with a wider slot.
-- **Featured Projects**: 0 to 3; 0 hides the section and keeps the link to `/what`; stars missing hide the count, never show 0.
+- **Current team**: 0 to 3 ongoing Experiences. With 0, the chips give way to the chibi chilling and the line "en mode chilling tu connais" (EN: "just chilling, you know"), both from the dictionaries; never an invented status.
+- **Achievements**: 1 to 3 slots, today 1; with 1, MDF takes the row as a wide slot; with 2 or 3, the legendary one comes first and is largest.
+- **Featured Projects**: 0 to 3, in Lucas's Admin order; 0 hides the section and keeps the link to `/what`; stars missing hide the count, never show 0.
 - **Resume**: always present per Locale; the date comes from `content/profile.json`.
 - **Locales**: French strings run up to 30% longer (role line, Play label "Télécharger mon CV"); the banner must hold two-line role text without moving the Play button out of the first viewport.
 - **Sound**: on, off, and off-by-reduced-motion; the switch reflects all three, and the first press after load is the first sound.
@@ -66,20 +66,27 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 
 - Binding from PRODUCT.md: the casual voice and lowercase menu labels, live Discord presence, full EN/FR parity, Admin-editable content, no invented testimonials, metrics or game stats.
 - Other sessions own these files' current fixes: Geist wiring (PR #24), Badge as span (PR #25), and the accessibility P1s (badge contrast, global `select-none`, Escape on the mobile menu, `<main>`). Build on top of them once merged; do not redo them.
-- New content fields go through the content catalog and the Admin (ADR and `docs/content.md`), not hard-coded: a `featured` flag and a `rarity` field on Projects, and achievements.
+- New content goes through the content catalog and the Admin (ADR and `docs/content.md`), never hard-coded: a `featured` flag, a home order and a `rarity` field on Projects; an achievements document; the hobbies list. Lucas must be able to change all of it himself.
 - `components/typography` gains the display, headline and data roles; Techs still render only through their badge component, restyled as chips.
 - Sound and motion honour `prefers-reduced-motion`; no sound before the first interaction.
 
 ## Assets to produce
 
-- Chibi poses in the existing head's style, transparent WebP with provenance: full-body waving with a headset (banner), skateboard, surfboard, karaoke mic, controller, trophy, sleeping (offline presence), waving goodbye (page close). Generated or commissioned; listed for Lucas to approve.
+- Chibi poses in the existing head's style (originally commissioned from an artist), transparent WebP with provenance:
+  - shell and states: full-body waving with a headset (banner), chilling (no ongoing job), sleeping (offline presence), waving goodbye (page close), trophy (MDF slot);
+  - hobbies: surfboard, skateboard, playing LoL with a controller or keyboard, coding on a laptop, holding a coffee, watching a series, headphones on for music.
+  Preferred route: the same artist, so the style stays identical. Alternative: image generation from the existing chibi as reference, kept only if Lucas judges it equal in quality and his commission terms allow derivatives.
 - Achievement art for MDF 2025 (from the trophy or `mdf-cheque.png`) and for each other achievement.
 - The sparkle backdrop tile (SVG, authored in code).
 
-## Open decisions (Lucas decides, the builder must not invent)
+## Decisions (Lucas, 2026-10-20)
 
-1. **Achievements**: a new Admin-editable content type (name, year, rarity, link, art) or derived from diplomas plus MDF. Which two achievements sit beside MDF 2025?
-2. **Rarity per Project**: confirm the proposed mapping (Predi.GG epic; Qotum and Tricks rare; the two boilerplates common) and which Projects are featured.
-3. **Role line** in both Locales, and the line shown when no Experience is ongoing.
-4. **Hobby list** for the About slot (skate, surf, ski, karaoke, LoL?), so no pose claims a hobby that is not his.
-5. **Chibi art**: generated in this repo or commissioned from an artist.
+1. **Achievements**: Admin-editable content type; only MDF 2025 for now, no other win of that level yet.
+2. **Featured Projects and rarity**: chosen, ordered and rated by Lucas in the Admin. The proposed starting rarities (Predi.GG epic; Qotum, Tricks and Bam Karaoke rare; the two boilerplates common) are only defaults he can change.
+3. **No ongoing job**: "en mode chilling tu connais" / "just chilling, you know".
+4. **Hobbies**: surf, skate, playing LoL, coding, coffee, watching a series, listening to music.
+5. **Chibi art**: commissioned from an artist today; generation is welcome if it reaches the same quality.
+
+## Still open
+
+- **Role line** under the greeting, in both Locales (for example "fullstack dev, co-founder of Predi.GG"). The builder must not write it alone.

@@ -194,7 +194,7 @@ A committed plum world: the shell is the colour, with cream type, one tangerine 
 
 ### Rarity (functional)
 Rarity says what kind of thing an item is, set per item in the Admin. It is never a quality score and never invented.
-- **Legendary** (#ffd84d / deep #8a6200): wins and awards. Today only MasterDevFrance 2025.
+- **Legendary** (#ffd84d / deep #8a6200): wins and awards of national level. Today only MasterDevFrance 2025; nothing lesser is promoted to fill the tier.
 - **Epic** (#b47cff / deep #7a3fd1): products Lucas founded or co-founded and runs in production (Predi.GG).
 - **Rare** (#46c2ff / deep #0b6fa8): shipped products and real client or employer work (Qotum, Tricks, Bam Karaoke).
 - **Common** (#b9a9cc / deep #6b5a80): side projects, boilerplates, experiments.
@@ -287,7 +287,7 @@ Fat, friendly corners from one scale: 24px for the panel, 16px for slots, cards 
 Materials:
 - **Sparkle backdrop**: a tiled SVG of small four-point sparkles on the Night frame only, at 6% opacity (4% in light on Lilac Frame). Never behind text.
 - **Legendary foil**: legendary items get a slow foil sheen (a moving light band across a pale gold gradient) only while hovered or during their unlock moment; at rest they are flat Legendary.
-- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied to real life (headset, skateboard, karaoke mic, controller, trophy). Art is produced once and versioned in `public/images/chibi/`.
+- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied only to his real life (surf, skate, playing LoL, coding, coffee, watching a series, music, plus chilling, sleeping, waving and the trophy). Every pose keeps the commissioned artist's style; art is produced once, versioned in `public/images/chibi/`, and the hobby list behind it lives in the content, editable in the Admin.
 
 ## Motion and Sound
 
