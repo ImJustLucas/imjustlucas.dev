@@ -61,6 +61,7 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 - **Locales**: French strings run up to 30% longer (role line, Play label "Télécharger mon CV"); the banner must hold two-line role text without moving the Play button out of the first viewport.
 - **Sound**: on, off, and off-by-reduced-motion; the switch reflects all three, and the first press after load is the first sound.
 - **Themes**: dark (default) and light, each checked against the contrast rules in DESIGN.md.
+- **Day and night**: the banner chibi wears the day or night outfit by Lucas's time in Paris (night 21:00 to 07:00). Pages are static, so the server renders the day version and the client switches after mount with a short crossfade (none under reduced motion); the image slot keeps the same size so nothing shifts.
 
 ## Constraints
 
