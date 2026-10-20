@@ -157,9 +157,9 @@ export function AchievementSlot({
   );
 
   const className = cn(
-    "group tray relative flex flex-col overflow-hidden rounded-lg border-2 bg-raised",
+    "group tray ledge relative flex flex-col overflow-hidden rounded-lg border-2 bg-raised",
     rarity.frame,
-    legendary && "ledge ledge-legendary",
+    legendary && "ledge-legendary",
   );
   const handlers = {
     onClick,

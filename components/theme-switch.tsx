@@ -35,7 +35,7 @@ export function ModeToggle() {
       <DropdownMenuContent
         align="start"
         side="top"
-        className="float min-w-40 rounded-lg border-2 border-seam bg-raised p-1.5"
+        className="min-w-40 rounded-lg border-2 border-seam bg-raised p-1.5 shadow-[var(--float)]"
       >
         {THEMES.map((value) => (
           <DropdownMenuItem
