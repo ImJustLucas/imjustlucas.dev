@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T10:49:50.839832Z",
+  "generatedAt": "2026-10-20T12:36:32+00:00",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
@@ -9,6 +9,7 @@
         "displayName": "Night",
         "canonical": "#1c0f2b",
         "oklch": "oklch(20.3% 0.0556 303.2)",
+        "cssVariable": "--night",
         "tonalRamp": [
           "oklch(15.0% 0.0556 303.2)",
           "oklch(26.4% 0.0556 303.2)",
@@ -25,6 +26,7 @@
         "displayName": "Plum",
         "canonical": "#2a1540",
         "oklch": "oklch(25.0% 0.0797 303.7)",
+        "cssVariable": "--ground (dark), --ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0797 303.7)",
           "oklch(26.4% 0.0797 303.7)",
@@ -41,6 +43,7 @@
         "displayName": "Velvet",
         "canonical": "#3b2159",
         "oklch": "oklch(31.2% 0.0980 302.5)",
+        "cssVariable": "--raised (dark)",
         "tonalRamp": [
           "oklch(15.0% 0.0980 302.5)",
           "oklch(26.4% 0.0980 302.5)",
@@ -57,6 +60,7 @@
         "displayName": "Seam",
         "canonical": "#5a3a80",
         "oklch": "oklch(42.0% 0.1156 302.8)",
+        "cssVariable": "--seam (dark)",
         "tonalRamp": [
           "oklch(15.0% 0.1156 302.8)",
           "oklch(26.4% 0.1156 302.8)",
@@ -73,6 +77,7 @@
         "displayName": "Cream",
         "canonical": "#fff1e6",
         "oklch": "oklch(96.6% 0.0211 60.8)",
+        "cssVariable": "--cream",
         "tonalRamp": [
           "oklch(15.0% 0.0211 60.8)",
           "oklch(26.4% 0.0211 60.8)",
@@ -89,6 +94,7 @@
         "displayName": "Haze",
         "canonical": "#c9b6e4",
         "oklch": "oklch(80.7% 0.0670 303.7)",
+        "cssVariable": "--ink-muted (dark)",
         "tonalRamp": [
           "oklch(15.0% 0.0670 303.7)",
           "oklch(26.4% 0.0670 303.7)",
@@ -105,6 +111,7 @@
         "displayName": "Lilac Frame",
         "canonical": "#e9ddfa",
         "oklch": "oklch(91.6% 0.0410 304.3)",
+        "cssVariable": "--frame (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0410 304.3)",
           "oklch(26.4% 0.0410 304.3)",
@@ -121,6 +128,7 @@
         "displayName": "Lilac Wash",
         "canonical": "#f6f0ff",
         "oklch": "oklch(96.4% 0.0209 304.0)",
+        "cssVariable": "--ground (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0209 304.0)",
           "oklch(26.4% 0.0209 304.0)",
@@ -137,6 +145,7 @@
         "displayName": "Sheet",
         "canonical": "#ffffff",
         "oklch": "oklch(100.0% 0.0000 89.9)",
+        "cssVariable": "--raised (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0000 89.9)",
           "oklch(26.4% 0.0000 89.9)",
@@ -153,6 +162,7 @@
         "displayName": "Seam Light",
         "canonical": "#d6c3f0",
         "oklch": "oklch(84.7% 0.0649 304.2)",
+        "cssVariable": "--seam, --ledge (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0649 304.2)",
           "oklch(26.4% 0.0649 304.2)",
@@ -169,6 +179,7 @@
         "displayName": "Dusk",
         "canonical": "#5b4a73",
         "oklch": "oklch(44.4% 0.0687 302.7)",
+        "cssVariable": "--ink-muted (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0687 302.7)",
           "oklch(26.4% 0.0687 302.7)",
@@ -185,6 +196,7 @@
         "displayName": "Tangerine",
         "canonical": "#ff8a3d",
         "oklch": "oklch(75.0% 0.1668 50.5)",
+        "cssVariable": "--tangerine",
         "tonalRamp": [
           "oklch(15.0% 0.1668 50.5)",
           "oklch(26.4% 0.1668 50.5)",
@@ -201,6 +213,7 @@
         "displayName": "Tangerine Ledge",
         "canonical": "#c25a12",
         "oklch": "oklch(58.7% 0.1527 48.2)",
+        "cssVariable": "--tangerine-ledge",
         "tonalRamp": [
           "oklch(15.0% 0.1527 48.2)",
           "oklch(26.4% 0.1527 48.2)",
@@ -217,6 +230,7 @@
         "displayName": "Tangerine Deep",
         "canonical": "#b8470c",
         "oklch": "oklch(54.4% 0.1587 42.0)",
+        "cssVariable": "--tangerine-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.1587 42.0)",
           "oklch(26.4% 0.1587 42.0)",
@@ -228,11 +242,29 @@
           "oklch(95.0% 0.1587 42.0)"
         ]
       },
+      "legendary-ledge": {
+        "role": "rarity",
+        "displayName": "Legendary Ledge",
+        "canonical": "#8a6200",
+        "oklch": "oklch(52.4% 0.1084 80.6)",
+        "cssVariable": ".ledge-legendary",
+        "tonalRamp": [
+          "oklch(15.0% 0.1084 80.6)",
+          "oklch(26.4% 0.1084 80.6)",
+          "oklch(37.9% 0.1084 80.6)",
+          "oklch(49.3% 0.1084 80.6)",
+          "oklch(60.7% 0.1084 80.6)",
+          "oklch(72.1% 0.1084 80.6)",
+          "oklch(83.6% 0.1084 80.6)",
+          "oklch(95.0% 0.1084 80.6)"
+        ]
+      },
       "common": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Common",
         "canonical": "#b9a9cc",
         "oklch": "oklch(76.0% 0.0523 305.9)",
+        "cssVariable": "--common",
         "tonalRamp": [
           "oklch(15.0% 0.0523 305.9)",
           "oklch(26.4% 0.0523 305.9)",
@@ -245,10 +277,11 @@
         ]
       },
       "common-deep": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Common Deep",
         "canonical": "#6b5a80",
         "oklch": "oklch(49.9% 0.0625 304.7)",
+        "cssVariable": "--common-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.0625 304.7)",
           "oklch(26.4% 0.0625 304.7)",
@@ -261,10 +294,11 @@
         ]
       },
       "rare": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Rare",
         "canonical": "#46c2ff",
         "oklch": "oklch(77.1% 0.1380 234.3)",
+        "cssVariable": "--rare",
         "tonalRamp": [
           "oklch(15.0% 0.1380 234.3)",
           "oklch(26.4% 0.1380 234.3)",
@@ -277,10 +311,11 @@
         ]
       },
       "rare-deep": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Rare Deep",
         "canonical": "#0b6fa8",
         "oklch": "oklch(52.0% 0.1209 242.5)",
+        "cssVariable": "--rare-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.1209 242.5)",
           "oklch(26.4% 0.1209 242.5)",
@@ -293,10 +328,11 @@
         ]
       },
       "epic": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Epic",
         "canonical": "#b47cff",
         "oklch": "oklch(69.9% 0.1897 301.4)",
+        "cssVariable": "--epic",
         "tonalRamp": [
           "oklch(15.0% 0.1897 301.4)",
           "oklch(26.4% 0.1897 301.4)",
@@ -309,10 +345,11 @@
         ]
       },
       "epic-deep": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Epic Deep",
         "canonical": "#7a3fd1",
         "oklch": "oklch(52.2% 0.2113 296.9)",
+        "cssVariable": "--epic-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.2113 296.9)",
           "oklch(26.4% 0.2113 296.9)",
@@ -325,10 +362,11 @@
         ]
       },
       "legendary": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Legendary",
         "canonical": "#ffd84d",
         "oklch": "oklch(89.2% 0.1569 93.0)",
+        "cssVariable": "--legendary",
         "tonalRamp": [
           "oklch(15.0% 0.1569 93.0)",
           "oklch(26.4% 0.1569 93.0)",
@@ -341,10 +379,11 @@
         ]
       },
       "legendary-deep": {
-        "role": "secondary",
+        "role": "rarity",
         "displayName": "Legendary Deep",
         "canonical": "#8a6200",
         "oklch": "oklch(52.4% 0.1084 80.6)",
+        "cssVariable": "--legendary-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.1084 80.6)",
           "oklch(26.4% 0.1084 80.6)",
@@ -357,10 +396,11 @@
         ]
       },
       "online": {
-        "role": "success",
+        "role": "status",
         "displayName": "Online",
         "canonical": "#5fe08a",
         "oklch": "oklch(81.3% 0.1670 151.8)",
+        "cssVariable": "--online",
         "tonalRamp": [
           "oklch(15.0% 0.1670 151.8)",
           "oklch(26.4% 0.1670 151.8)",
@@ -373,10 +413,11 @@
         ]
       },
       "online-deep": {
-        "role": "success",
+        "role": "status",
         "displayName": "Online Deep",
         "canonical": "#1d7a45",
         "oklch": "oklch(51.3% 0.1188 153.3)",
+        "cssVariable": "--online-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.1188 153.3)",
           "oklch(26.4% 0.1188 153.3)",
@@ -389,10 +430,11 @@
         ]
       },
       "away": {
-        "role": "warning",
+        "role": "status",
         "displayName": "Away",
         "canonical": "#ffb02e",
         "oklch": "oklch(81.4% 0.1604 73.8)",
+        "cssVariable": "--away",
         "tonalRamp": [
           "oklch(15.0% 0.1604 73.8)",
           "oklch(26.4% 0.1604 73.8)",
@@ -405,10 +447,11 @@
         ]
       },
       "busy": {
-        "role": "error",
+        "role": "status",
         "displayName": "Busy",
         "canonical": "#ff5d73",
         "oklch": "oklch(69.6% 0.1964 15.9)",
+        "cssVariable": "--busy",
         "tonalRamp": [
           "oklch(15.0% 0.1964 15.9)",
           "oklch(26.4% 0.1964 15.9)",
@@ -421,10 +464,11 @@
         ]
       },
       "busy-deep": {
-        "role": "error",
+        "role": "status",
         "displayName": "Busy Deep",
         "canonical": "#c0233d",
         "oklch": "oklch(52.7% 0.1900 18.7)",
+        "cssVariable": "--busy-ink (light)",
         "tonalRamp": [
           "oklch(15.0% 0.1900 18.7)",
           "oklch(26.4% 0.1900 18.7)",
@@ -437,284 +481,291 @@
         ]
       }
     },
-    "themes": {
-      "note": "Seed values chosen before implementation (seed 14c08ff6). Dark is the default theme.",
-      "dark": {
-        "frame": "night",
-        "background": "plum",
-        "card": "velvet",
-        "border": "seam",
-        "foreground": "cream",
-        "muted-foreground": "haze",
-        "primary": "tangerine",
-        "primary-foreground": "night",
-        "ring": "tangerine",
-        "destructive": "busy",
-        "success": "online"
-      },
-      "light": {
-        "frame": "lilac-frame",
-        "background": "lilac-wash",
-        "card": "sheet",
-        "border": "seam-light",
-        "foreground": "plum",
-        "muted-foreground": "dusk",
-        "primary": "tangerine",
-        "primary-foreground": "night",
-        "primary-text": "tangerine-deep",
-        "ring": "tangerine-deep",
-        "destructive": "busy-deep",
-        "success": "online-deep"
-      }
-    },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "The greeting on the profile banner; one per page at most."
+        "purpose": "The banner greeting, the home page's h1; 1.875rem below 640px. One per page."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page titles, one visible h1 per page."
+        "purpose": "Page titles on the other pages, one visible h1 each."
+      },
+      "title-large": {
+        "displayName": "Title Large",
+        "purpose": "Player name, achievement names, h3 in long-form content."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Section titles, item and achievement names, the sidebar player name (1.375rem)."
+        "purpose": "Section titles, item names, the mobile top bar name, the goodbye line."
       },
       "button-play": {
         "displayName": "Button Play",
-        "purpose": "The Play button label only."
+        "purpose": "The Play button's label only."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Paragraphs, capped at 65ch."
+        "purpose": "Paragraphs at 65ch; the banner role line at weight 500, 1.0625rem to 1.25rem."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Tabs, buttons, presence lines, chips at rest."
+        "purpose": "Tabs, buttons, chips, presence lines, small section labels."
       },
       "tag": {
         "displayName": "Tag",
-        "purpose": "Rarity, live and new tags; Tech chips."
+        "purpose": "Rarity, live and WIP tags, Tech chips."
       },
       "data": {
         "displayName": "Data",
-        "purpose": "Periods, dates, star counts, elapsed time; tabular numbers."
-      },
-      "wiring": "Unbounded (variable, next/font/google, latin-ext) as --font-display beside --font-geist-sans and --font-geist-mono, set on body or below."
+        "purpose": "Periods, dates, star counts, elapsed time, the Locale code; tabular figures."
+      }
     },
     "shadows": [
       {
         "name": "ledge",
-        "value": "0 4px 0 var(--ledge)",
-        "purpose": "Every pressable control at rest; --ledge is the control's darker shade (tangerine-ledge or night). Pressed: translateY(4px) and 0 ledge."
+        "value": "0 4px 0 rgb(var(--ledge))",
+        "purpose": "Every pressable control at rest; ledge is Night under Velvet, Seam Light under Sheet, Tangerine Ledge under tangerine, #8a6200 under the legendary slot."
       },
       {
         "name": "ledge-raised",
-        "value": "0 6px 0 var(--ledge)",
-        "purpose": "Hover on pressable controls, with translateY(-2px)."
+        "value": "0 6px 0 rgb(var(--ledge)); transform: translateY(-2px)",
+        "purpose": "Hover on pressable controls, hover-capable pointers only."
       },
       {
-        "name": "tray",
+        "name": "ledge-pressed",
+        "value": "0 0 0 rgb(var(--ledge)); transform: translateY(4px); filter: brightness(0.94)",
+        "purpose": "Active: the control sits on its ledge (80ms)."
+      },
+      {
+        "name": "tray-dark",
         "value": "inset 0 1px 0 rgb(255 241 230 / 0.08)",
-        "purpose": "Top highlight inside slots, cards and the player card (dark)."
+        "purpose": "Moulded-tray top highlight inside slots and cards, dark theme."
       },
       {
-        "name": "float",
+        "name": "tray-light",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.9)",
+        "purpose": "Moulded-tray top highlight, light theme."
+      },
+      {
+        "name": "float-dark",
         "value": "0 24px 48px -12px rgb(12 4 22 / 0.6)",
-        "purpose": "Tooltips, the theme menu, the mobile client sheet."
+        "purpose": "Mobile sheet and menus, dark theme."
+      },
+      {
+        "name": "float-light",
+        "value": "0 24px 48px -12px rgb(42 21 64 / 0.28)",
+        "purpose": "Mobile sheet and menus, light theme."
       }
     ],
     "motion": [
       {
         "name": "ease-out",
         "value": "cubic-bezier(0.23, 1, 0.32, 1)",
-        "purpose": "Hovers, entrances, state changes."
+        "purpose": "Hovers, entrances, page changes, the foil."
       },
       {
         "name": "ease-pop",
         "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "purpose": "Press release, tag entrances, chibi hop."
+        "purpose": "The press release only; a deliberate small overshoot."
       },
       {
         "name": "ease-in-out",
         "value": "cubic-bezier(0.77, 0, 0.175, 1)",
-        "purpose": "Sliding tab indicator, accordion chevron."
+        "purpose": "Tab fill slide, accordion chevron, ambient loops."
       },
       {
         "name": "ease-drawer",
         "value": "cubic-bezier(0.32, 0.72, 0, 1)",
-        "purpose": "Mobile client sheet."
+        "purpose": "The mobile client sheet."
       },
       {
-        "name": "press",
-        "value": "80ms down / 160ms release",
-        "purpose": "Ledge controls."
+        "name": "dur-press",
+        "value": "80ms",
+        "purpose": "Press down."
       },
       {
-        "name": "hover",
+        "name": "dur-release",
+        "value": "160ms",
+        "purpose": "Press release."
+      },
+      {
+        "name": "dur-hover",
         "value": "150ms",
-        "purpose": "Colour and lift on hover."
+        "purpose": "Hover colour changes."
       },
       {
-        "name": "tab-slide",
+        "name": "dur-tab",
         "value": "240ms",
-        "purpose": "Active tab fill sliding between tabs."
+        "purpose": "Active tab fill slide."
       },
       {
-        "name": "page",
+        "name": "dur-page",
         "value": "220ms",
-        "purpose": "Page change: fade and 6px rise via View Transitions."
+        "purpose": "Page change: fade with a 6px rise."
       },
       {
-        "name": "sheet",
-        "value": "260ms in / 180ms out",
-        "purpose": "Mobile client sheet."
+        "name": "dur-sheet-in",
+        "value": "260ms",
+        "purpose": "Mobile sheet opening."
       },
       {
-        "name": "unlock",
+        "name": "dur-sheet-out",
+        "value": "180ms",
+        "purpose": "Mobile sheet closing."
+      },
+      {
+        "name": "dur-unlock",
         "value": "900ms",
-        "purpose": "Legendary foil sheen, once per session and on click."
+        "purpose": "Legendary foil sweep."
+      },
+      {
+        "name": "chibi-frame",
+        "value": "200ms steps",
+        "purpose": "Each drawn chibi frame, never tweened."
+      },
+      {
+        "name": "press-depth / raise / rise",
+        "value": "4px / 2px / 6px",
+        "purpose": "Distances, all zero under prefers-reduced-motion."
       }
     ],
-    "sound": {
-      "instrument": "Soft plucked kalimba tine, synthesized with Web Audio (no download).",
-      "key": "D major pentatonic (D E F# A B), two octaves",
-      "masterGainMax": 0.25,
-      "default": "on; off when prefers-reduced-motion: reduce; stored per visitor in localStorage; governs the MDF 2025 scene too",
-      "cues": [
-        {
-          "name": "tick",
-          "notes": "B5 (very quiet)",
-          "trigger": "hover on tabs and item cards, fine pointers only, max one per 60ms"
-        },
-        {
-          "name": "tab",
-          "notes": "me D4, what i've done E4, how i do it F#4, my experiences A4, yt videos B4, contact D5",
-          "trigger": "selecting a menu tab"
-        },
-        {
-          "name": "confirm",
-          "notes": "D4+A4, then D5",
-          "trigger": "Play button and other primary actions"
-        },
-        {
-          "name": "toggle-on",
-          "notes": "A4 to D5",
-          "trigger": "theme, Locale, accordion open, sound switch on"
-        },
-        {
-          "name": "toggle-off",
-          "notes": "D5 to A4",
-          "trigger": "accordion close, theme back; silent for the sound switch itself"
-        },
-        {
-          "name": "unlock",
-          "notes": "D4 F#4 A4 D5 arpeggio, then coin.mp3",
-          "trigger": "clicking the legendary achievement"
-        },
-        {
-          "name": "boop",
-          "notes": "random degree with a short upward bend",
-          "trigger": "clicking the chibi"
-        },
-        {
-          "name": "miss",
-          "notes": "A3 to F#3",
-          "trigger": "404 button, Admin errors"
-        }
-      ],
-      "never": [
-        "before the first user interaction",
-        "on automatic events (presence, page load, scroll)",
-        "on hover for touch devices",
-        "where the visitor cannot silence it"
-      ]
-    },
     "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
       {
         "name": "md",
         "value": "768px",
-        "purpose": "Sidebar becomes the 320px client column; below it, a 56px top bar and a full-screen client sheet."
+        "note": "the client's structural switch: sidebar column vs mobile top bar and sheet"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
       }
-    ]
+    ],
+    "sound": {
+      "instrument": "synthesized kalimba tine, D major pentatonic",
+      "masterGain": 0.22,
+      "cues": {
+        "tick": "B5, very quiet, hover, fine pointers only, max one per 60ms",
+        "press": "A4, secondary controls without their own cue",
+        "tab": "D4 E4 F#4 A4 B4 D5 in menu order",
+        "confirm": "D4+A4 then D5, the Play button",
+        "toggleOn": "A4 to D5",
+        "toggleOff": "D5 to A4",
+        "unlock": "D4 F#4 A4 D5 then coin.mp3, legendary achievement",
+        "boop": "random D5-B5 with a 2-semitone bend, banner chibi",
+        "miss": "A3 to F#3, errors (defined, not yet wired)"
+      }
+    },
+    "sparkle": {
+      "path": "M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z",
+      "frame": "outlined 8px and 6px stars along the 12px gutters only; stroke opacity 0.12 Cream on Night, 0.08 Plum on Lilac Frame",
+      "legendaryMark": "filled Legendary, top-right of legendary achievement slots"
+    },
+    "themes": {
+      "default": "dark",
+      "dark": "LAN night: frame Night, ground Plum, raised Velvet, seam Seam, ink Cream, ink-muted Haze, ledge Night",
+      "light": "daytime lobby: frame Lilac Frame, ground Lilac Wash, raised Sheet, seam and ledge Seam Light, ink Plum, ink-muted Dusk, accents as their -deep variants when used as text"
+    }
   },
   "components": [
     {
       "name": "Play Button",
       "kind": "button",
       "refersTo": "button-play",
-      "description": "The one primary action per screen, e.g. Download my resume on the home page.",
-      "html": "<button class=\"ds-btn-play\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v12\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M5 21h14\"/></svg>Download my resume</button>",
-      "css": ".ds-btn-play { display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 24px; border:0; border-radius:10px; background:#ff8a3d; color:#1c0f2b; font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:1.0625rem; cursor:pointer; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
+      "description": "The one primary action per screen, e.g. Download my resume; plays the confirm chord.",
+      "html": "<button class=\"ds-btn-play\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 15V3\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/></svg>Download my resume</button>",
+      "css": ".ds-btn-play { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#ff8a3d; color:#1c0f2b; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:52px; padding:0 24px; border:none; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:700; line-height:1; } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
     },
     {
       "name": "Ledge Button",
       "kind": "button",
       "refersTo": "button-ledge",
-      "description": "Secondary pressable action on Velvet, e.g. LinkedIn or a GitHub link with its stars.",
-      "html": "<button class=\"ds-btn-ledge\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"m12 2 3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21.1l1.5-7L2 9.3l7-.8z\"/></svg><span>GitHub</span><span class=\"ds-data\">37</span></button>",
-      "css": ".ds-btn-ledge { display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 16px; border:0; border-radius:10px; background:#3b2159; color:#fff1e6; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:500; font-size:0.875rem; cursor:pointer; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-btn-ledge .ds-data { font-family:'Geist Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; color:#ffd84d; } .ds-btn-ledge:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-ledge:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; transition-duration:80ms; } .ds-btn-ledge:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
+      "description": "The default secondary button: Velvet on a Night ledge.",
+      "html": "<button class=\"ds-btn-ledge\">come say hi →</button>",
+      "css": ".ds-btn-ledge { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#3b2159; color:#fff1e6; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:none; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-ledge:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-ledge:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-ledge:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary button on Velvet surfaces: Plum fill, 2px Seam border, on a ledge; GitHub with its live star count.",
+      "html": "<div class=\"ds-velvet\"><button class=\"ds-btn-outline\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"/><path d=\"M9 18c-4.51 2-5-2-7-2\"/></svg>GitHub <span class=\"ds-data\">128</span></button></div>",
+      "css": ".ds-velvet { background:#3b2159; padding:20px; border-radius:16px; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; margin-left:4px; } .ds-btn-outline { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#2a1540; color:#fff1e6; box-shadow:0 4px 0 #1c0f2b; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:44px; padding:0 16px; border:2px solid #5a3a80; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; } .ds-btn-outline:hover { transform:translateY(-2px); box-shadow:0 6px 0 #1c0f2b; } .ds-btn-outline:active { transform:translateY(4px); box-shadow:0 0 0 #1c0f2b; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-outline:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
     },
     {
       "name": "Sound Switch",
       "kind": "button",
-      "refersTo": "sound-toggle-on",
-      "description": "The global sound switch, always visible: Tangerine when on, Velvet when off.",
-      "html": "<button class=\"ds-sound\" aria-pressed=\"true\" aria-label=\"Sound on\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 5 6 9H2v6h4l5 4V5z\"/><path d=\"M15.5 8.5a5 5 0 0 1 0 7\"/><path d=\"M19 5a10 10 0 0 1 0 14\"/></svg></button>",
-      "css": ".ds-sound { width:44px; height:44px; display:inline-grid; place-items:center; border:0; border-radius:10px; background:#ff8a3d; color:#1c0f2b; cursor:pointer; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-sound[aria-pressed='false'] { background:#3b2159; color:#c9b6e4; box-shadow:0 4px 0 #1c0f2b; } .ds-sound:hover { transform:translateY(-2px); } .ds-sound:active { transform:translateY(4px); box-shadow:none; transition-duration:80ms; } .ds-sound:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; }"
+      "refersTo": "sound-switch-on",
+      "description": "Always-visible 44px switch: Tangerine when on, Velvet with a struck speaker when off.",
+      "html": "<button class=\"ds-sound\" aria-pressed=\"true\" aria-label=\"sound\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.4 18.4a9 9 0 0 0 0-12.8\"/></svg></button>",
+      "css": ".ds-sound { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#ff8a3d; color:#1c0f2b; box-shadow:0 4px 0 #c25a12; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); width:44px; height:44px; border:none; } .ds-sound:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c25a12; } .ds-sound:active { transform:translateY(4px); box-shadow:0 0 0 #c25a12; filter:brightness(0.94); transition-duration:80ms; } .ds-sound:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
     },
     {
       "name": "Client Tabs",
       "kind": "nav",
       "refersTo": "tab-active",
-      "description": "The sidebar menu as client tabs: lowercase labels, sliding Tangerine fill on the active tab.",
-      "html": "<nav class=\"ds-tabs\"><a href=\"#\" aria-current=\"page\">me</a><a href=\"#\">what i've done</a><a href=\"#\">how i do it</a><a href=\"#\">my experiences</a><a href=\"#\">yt videos</a><a href=\"#\">contact</a></nav>",
-      "css": ".ds-tabs { display:flex; flex-direction:column; gap:6px; width:280px; padding:12px; background:#2a1540; border-radius:16px; } .ds-tabs a { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#fff1e6; text-decoration:none; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:500; font-size:0.875rem; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1), color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tabs a:hover { background:#5a3a80; } .ds-tabs a[aria-current='page'] { background:#ff8a3d; color:#1c0f2b; box-shadow:0 3px 0 #c25a12; } .ds-tabs a:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
-    },
-    {
-      "name": "Player Card",
-      "kind": "card",
-      "refersTo": "player-card",
-      "description": "Top of the sidebar: chibi head in a real Discord status ring, name, role line.",
-      "html": "<div class=\"ds-player\"><span class=\"ds-ring\"><span class=\"ds-head\">IJL</span></span><div><p class=\"ds-name\">ImJustLucas</p><p class=\"ds-sub\">Fullstack dev · Paris</p></div></div>",
-      "css": ".ds-player { display:flex; align-items:center; gap:14px; padding:16px; width:280px; background:#3b2159; color:#fff1e6; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-ring { display:grid; place-items:center; width:64px; height:64px; border-radius:9999px; border:3px solid #5fe08a; background:#2a1540; } .ds-head { font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:0.875rem; color:#ffd84d; } .ds-name { margin:0; font-family:'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; font-weight:600; font-size:1.375rem; } .ds-sub { margin:2px 0 0; font-family:'Geist', ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; color:#c9b6e4; }"
-    },
-    {
-      "name": "Presence Card",
-      "kind": "custom",
-      "refersTo": "presence-card",
-      "description": "Friends panel: always shows a state (playing, listening, online, offline); here, listening with equaliser bars.",
-      "html": "<div class=\"ds-presence\"><span class=\"ds-art\"></span><div class=\"ds-lines\"><p class=\"ds-live\">listening</p><p class=\"ds-title\">Song title</p><p class=\"ds-artist\">Artist</p></div><span class=\"ds-eq\"><i></i><i></i><i></i></span></div>",
-      "css": ".ds-presence { display:flex; align-items:center; gap:12px; padding:12px; width:280px; background:#3b2159; color:#fff1e6; border-radius:16px; } .ds-art { width:48px; height:48px; border-radius:10px; background:linear-gradient(135deg,#46c2ff,#b47cff); flex:none; } .ds-lines p { margin:0; } .ds-live { display:inline-block; padding:1px 8px; border-radius:9999px; background:#5fe08a; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-title { font:500 0.875rem/1.25rem 'Geist', ui-sans-serif, system-ui, sans-serif; color:#ff8a3d; margin-top:4px !important; } .ds-artist { font:400 0.8125rem/1.2rem 'Geist', ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; } .ds-eq { margin-left:auto; display:flex; align-items:flex-end; gap:3px; height:16px; } .ds-eq i { width:3px; background:#5fe08a; border-radius:2px; transform-origin:bottom; animation:ds-eq 1s linear infinite; height:16px; } .ds-eq i:nth-child(2) { animation-duration:.8s; } .ds-eq i:nth-child(3) { animation-duration:1.2s; } @keyframes ds-eq { 0%,100% { transform:scaleY(.3); } 50% { transform:scaleY(1); } } @media (prefers-reduced-motion: reduce) { .ds-eq i { animation:none; transform:scaleY(.6); } }"
+      "description": "Lowercase menu; the Tangerine fill slides between 44px rows (240ms) and each tab plays its own note.",
+      "html": "<nav class=\"ds-tabs\"><a class=\"ds-tab ds-tab-active\" aria-current=\"page\">me</a><a class=\"ds-tab\">what i've done</a><a class=\"ds-tab\">how i do it</a><a class=\"ds-tab\">my experiences</a></nav>",
+      "css": ".ds-tabs { display:flex; flex-direction:column; gap:4px; width:288px; background:#2a1540; padding:16px; border-radius:24px; } .ds-tab { display:flex; align-items:center; height:44px; padding:0 14px; border-radius:10px; color:#fff1e6; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-tab:hover { background:rgb(90 58 128 / 0.7); } .ds-tab-active, .ds-tab-active:hover { background:#ff8a3d; color:#1c0f2b; } .ds-tab:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; }"
     },
     {
       "name": "Item Card",
       "kind": "card",
       "refersTo": "item-card",
-      "description": "A Project in the inventory: rarity frame and band, tag, title, one line, Tech loadout.",
-      "html": "<article class=\"ds-item\" data-rarity=\"epic\"><span class=\"ds-tag\">epic</span><div class=\"ds-img\"></div><h3>Predi.GG</h3><p>Esports prediction app I co-founded and run.</p><div class=\"ds-chips\"><span style=\"background:#3b82f6;color:#1c0f2b\">TypeScript</span><span style=\"background:#2dd4bf;color:#1c0f2b\">Tailwind CSS</span></div></article>",
-      "css": ".ds-item { position:relative; width:300px; padding:20px; background:#3b2159; color:#fff1e6; border:2px solid #b47cff; border-top-width:6px; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); transition:transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-item:hover { transform:translateY(-2px); } .ds-tag { position:absolute; top:12px; right:12px; padding:2px 8px; border-radius:9999px; background:#b47cff; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; letter-spacing:.02em; } .ds-img { height:120px; border-radius:10px; background:#2a1540; margin-bottom:14px; } .ds-item h3 { margin:0 0 4px; font:600 1.125rem/1.3 'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-item p { margin:0 0 12px; font:400 0.9375rem/1.5 'Geist', ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; } .ds-chips { display:flex; flex-wrap:wrap; gap:6px; } .ds-chips span { padding:4px 10px; border-radius:9999px; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; }"
+      "description": "A Project framed by its rarity: 2px frame, 4px top band, tag; screenshot, period in Data, Tech chips.",
+      "html": "<article class=\"ds-item\"><span class=\"ds-band\"></span><div class=\"ds-item-in\"><div class=\"ds-shot\"></div><div class=\"ds-row\"><h3 class=\"ds-title\">Predi.GG</h3><span class=\"ds-rarity\">epic</span></div><span class=\"ds-data\">2025 - Today</span><p class=\"ds-desc\">Predict, compete, and win.</p><div class=\"ds-chips\"><span class=\"ds-chip\" style=\"background:#000;border-color:#000;color:#fff1e6\">Next.js</span><span class=\"ds-chip\" style=\"background:#e0234e;border-color:#e0234e;color:#1c0f2b\">NestJS</span></div></div></article>",
+      "css": ".ds-item { width:320px; display:flex; flex-direction:column; overflow:hidden; background:#3b2159; color:#fff1e6; border:2px solid #b47cff; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-band { height:4px; background:#b47cff; } .ds-item-in { display:flex; flex-direction:column; gap:12px; padding:16px 20px 20px; } .ds-shot { aspect-ratio:16/9; border-radius:10px; background:#2a1540; } .ds-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; } .ds-title { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-rarity { background:#b47cff; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; } .ds-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; font-variant-numeric:tabular-nums; } .ds-desc { margin:0; color:#c9b6e4; font-family:Geist, ui-sans-serif, system-ui, sans-serif; line-height:1.65; } .ds-chips { display:flex; gap:6px; flex-wrap:wrap; } .ds-chip { border:2px solid; border-radius:9999px; padding:2px 10px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.02em; }"
     },
     {
-      "name": "Achievement Slot",
+      "name": "Legendary Achievement Slot",
       "kind": "card",
       "refersTo": "achievement-slot",
-      "description": "A real achievement; legendary slots carry the foil sheen on hover. MDF 2025 links to its page.",
-      "html": "<a class=\"ds-ach\" href=\"#\"><span class=\"ds-ach-art\">🏆</span><span class=\"ds-ach-tag\">legendary</span><span class=\"ds-ach-name\">MasterDevFrance</span><span class=\"ds-ach-year\">2025</span></a>",
-      "css": ".ds-ach { position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:center; gap:6px; width:180px; padding:20px 16px; background:#3b2159; color:#fff1e6; text-decoration:none; border:2px solid #ffd84d; border-radius:16px; box-shadow:0 4px 0 #1c0f2b; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-ach::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg, transparent 35%, rgb(255 241 230 / 0.35) 50%, transparent 65%); transform:translateX(-120%); } .ds-ach:hover { transform:translateY(-2px); } .ds-ach:hover::after { transform:translateX(120%); transition:transform 900ms cubic-bezier(0.23,1,0.32,1); } .ds-ach-art { font-size:2.5rem; } .ds-ach-tag { padding:2px 8px; border-radius:9999px; background:#ffd84d; color:#1c0f2b; font:600 0.75rem/1rem 'Geist', ui-sans-serif, system-ui, sans-serif; } .ds-ach-name { font:600 1rem/1.3 'Unbounded', 'Geist', ui-sans-serif, system-ui, sans-serif; text-align:center; } .ds-ach-year { font:500 0.8125rem/1.25rem 'Geist Mono', ui-monospace, monospace; color:#c9b6e4; } .ds-ach:focus-visible { outline:2px solid #ff8a3d; outline-offset:4px; } @media (prefers-reduced-motion: reduce) { .ds-ach::after { display:none; } .ds-ach:hover { transform:none; } }"
+      "description": "Pressable legendary slot: gold frame and band, filled sparkle, Legendary Ledge, foil sweep on hover; plays the unlock.",
+      "html": "<a class=\"ds-ach\" href=\"#\"><span class=\"ds-band-l\"></span><span class=\"ds-ach-in\"><span class=\"ds-stage\"></span><span class=\"ds-ach-text\"><span><span class=\"ds-tag-l\">legendary</span> <span class=\"ds-yr\">2025</span></span><span class=\"ds-ach-name\">MasterDevFrance 2025</span><span class=\"ds-ach-desc\">winner of the national competition for technical excellence</span></span><svg class=\"ds-spark\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z\" fill=\"#ffd84d\"/></svg></span><span class=\"ds-foil\"></span></a>",
+      "css": ".ds-ach { position:relative; display:flex; flex-direction:column; overflow:hidden; width:560px; text-decoration:none; color:#fff1e6; background:#3b2159; border:2px solid #ffd84d; border-radius:16px; box-shadow:0 4px 0 #8a6200; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-ach:hover { transform:translateY(-2px); box-shadow:0 6px 0 #8a6200; } .ds-ach:active { transform:translateY(4px); box-shadow:0 0 0 #8a6200; } .ds-ach:focus-visible { outline:2px solid #ff8a3d; outline-offset:2px; } .ds-band-l { height:4px; background:#ffd84d; } .ds-ach-in { display:flex; align-items:center; gap:24px; padding:20px; } .ds-stage { width:96px; height:96px; flex:none; border-radius:9999px; background:#2a1540; } .ds-ach-text { display:flex; flex-direction:column; gap:8px; } .ds-tag-l { background:#ffd84d; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; } .ds-yr { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; color:#c9b6e4; } .ds-ach-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; } .ds-ach-desc { font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#c9b6e4; line-height:1.65; } .ds-spark { position:absolute; right:16px; top:20px; width:24px; height:24px; } .ds-foil { position:absolute; top:0; bottom:0; left:0; width:33%; pointer-events:none; background:linear-gradient(90deg, transparent, rgb(255 236 150 / 0.35), transparent); mix-blend-mode:screen; transform:translateX(-120%) skewX(-18deg); } .ds-ach:hover .ds-foil { animation:ds-foil 900ms cubic-bezier(0.23,1,0.32,1) both; } @keyframes ds-foil { to { transform:translateX(320%) skewX(-18deg); } }"
+    },
+    {
+      "name": "Presence Card",
+      "kind": "custom",
+      "refersTo": "presence-card",
+      "description": "The friends panel: always shown, fixed 76px card; listening state with equaliser bars.",
+      "html": "<section class=\"ds-friends\"><div class=\"ds-fhead\"><span>friends</span><span class=\"ds-live\">live</span></div><div class=\"ds-pres\"><span class=\"ds-art\"></span><span class=\"ds-ptext\"><span class=\"ds-song\">RAT INTERLUDE</span><span class=\"ds-artist\">by La Fève</span></span><span class=\"ds-eq\"><i></i><i style=\"animation-delay:.25s\"></i><i style=\"animation-delay:.5s\"></i></span></div></section>",
+      "css": ".ds-friends { width:288px; display:flex; flex-direction:column; gap:8px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; } .ds-fhead { display:flex; justify-content:space-between; align-items:center; padding:0 4px; color:#c9b6e4; font-size:0.875rem; font-weight:500; } .ds-live { background:#5fe08a; color:#1c0f2b; border-radius:9999px; padding:2px 8px; font-size:0.75rem; font-weight:600; } .ds-pres { display:flex; align-items:center; gap:12px; height:76px; box-sizing:border-box; padding:12px; background:#3b2159; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); } .ds-art { width:48px; height:48px; border-radius:10px; background:#5a3a80; flex:none; } .ds-ptext { flex:1; min-width:0; display:flex; flex-direction:column; } .ds-song { color:#fff1e6; font-size:0.875rem; font-weight:500; } .ds-artist { color:#c9b6e4; font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; } .ds-eq { display:flex; align-items:flex-end; gap:3px; height:20px; } .ds-eq i { width:3px; height:100%; border-radius:9999px; background:#5fe08a; transform-origin:bottom; animation:ds-eq 0.9s cubic-bezier(0.77,0,0.175,1) infinite; } @keyframes ds-eq { 0%,100% { transform:scaleY(0.35); } 50% { transform:scaleY(1); } } @media (prefers-reduced-motion: reduce) { .ds-eq i { animation:none; transform:scaleY(0.5); } }"
+    },
+    {
+      "name": "Team Chip",
+      "kind": "chip",
+      "refersTo": "team-chip",
+      "description": "One per ongoing Experience on the banner: emoji then company.",
+      "html": "<div class=\"ds-velvet2\"><span class=\"ds-team\">🎤 Bam Karaoke</span><span class=\"ds-team\">🔮 Predi.GG</span></div>",
+      "css": ".ds-velvet2 { display:flex; gap:8px; background:#3b2159; padding:20px; border-radius:16px; } .ds-team { display:inline-flex; align-items:center; gap:8px; height:40px; box-sizing:border-box; padding:0 16px 0 10px; border:2px solid #5a3a80; border-radius:9999px; background:#2a1540; color:#fff1e6; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; }"
+    },
+    {
+      "name": "Accordion Row",
+      "kind": "custom",
+      "refersTo": "accordion-row",
+      "description": "FAQ rows: Velvet, 16px corners, 12px gaps instead of dividers, chevron turning with Ease In Out.",
+      "html": "<details class=\"ds-acc\"><summary>Why imjustlucas?<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><p>Because it is just me, Lucas.</p></details>",
+      "css": ".ds-acc { width:560px; background:#3b2159; border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 241 230 / 0.08); font-family:Geist, ui-sans-serif, system-ui, sans-serif; color:#fff1e6; } .ds-acc summary { display:flex; justify-content:space-between; align-items:center; min-height:56px; padding:12px 20px; box-sizing:border-box; font-weight:500; cursor:pointer; list-style:none; border-radius:16px; transition:background-color 150ms cubic-bezier(0.23,1,0.32,1); } .ds-acc summary::-webkit-details-marker { display:none; } .ds-acc summary:hover { background:rgb(90 58 128 / 0.4); } .ds-acc summary:focus-visible { outline:2px solid #ff8a3d; outline-offset:-2px; } .ds-acc svg { color:#c9b6e4; transition:transform 200ms cubic-bezier(0.77,0,0.175,1); } .ds-acc[open] svg { transform:rotate(180deg); } .ds-acc p { margin:0; padding:0 20px 20px; color:#c9b6e4; line-height:1.65; max-width:65ch; }"
     }
   ],
   "narrative": {
     "northStar": "The Player Profile",
-    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi and its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, and the settings row with the sound switch. The content panel is the profile screen: a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of Projects framed by rarity, and a match history of Experiences. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means \"this is the thing to press\". Everything clickable answers with a short note from one instrument, so moving around the site sounds like a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays exactly as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels); the world makes room for it instead of dressing it up. Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
+    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink onto a ledge when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means \"this is the thing to press\". Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
     "keyCharacteristics": [
-      "Two-zone client: a 320px sidebar (player card, tabs, live friends panel, settings) beside a rounded plum profile panel.",
-      "Plum owns the whole shell in the default dark theme; a lilac \"daytime lobby\" theme is the alternative.",
-      "One accent, tangerine, for the primary action, the active tab, focus and selection.",
-      "Rarity colours (common, rare, epic, legendary) carry meaning on content, never decoration.",
-      "Chunky, pressable controls with a visible ledge; slots and cards with soft 16px corners.",
-      "A one-instrument sound kit in D major pentatonic, on by default, with a global mute that is always visible.",
-      "The chibi is the mascot: poses, reactions, empty states."
+      "Two-zone client inside a 12px Night frame: a 320px Plum sidebar beside a rounded Plum profile panel, the only part that scrolls.",
+      "Plum owns the whole shell in the default dark theme (\"LAN night\"); a lilac \"daytime lobby\" theme is the alternative, through the same role tokens.",
+      "One accent, tangerine, for the Play button, the active tab, the sound switch when on, selection and focus.",
+      "Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.",
+      "Chunky pressable controls on a solid ledge; Velvet slots and cards with soft 16px corners and a moulded-tray highlight.",
+      "A one-instrument kalimba kit in D major pentatonic, on by default, behind an always-visible switch.",
+      "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye."
     ],
     "rules": [
       {
@@ -724,57 +775,59 @@
       },
       {
         "name": "The One Tangerine Rule",
-        "body": "Tangerine marks the single most important action or state in view: the Play button, the active tab, the sound switch when on, focus. A second tangerine button on the same screen means one of them is wrong.",
+        "body": "A Tangerine fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus focus and selection. A second Tangerine-filled button in the panel means one of them is wrong. Secondary links stay Cream with a Haze underline in dark (Tangerine only on hover) and use Tangerine Deep as their ink in light.",
         "section": "colors"
       },
       {
         "name": "The Rarity Is Data Rule",
-        "body": "A rarity colour appears only on an item whose rarity field says so, as its frame, top band and tag. Never use the rarity hues for headings, backgrounds or decoration.",
+        "body": "A rarity colour appears only on an item whose rarity field says so, as its 2px frame, 4px top band and tag (and the filled sparkle on legendary). Never use the rarity hues for headings, backgrounds or decoration.",
         "section": "colors"
       },
       {
         "name": "The Computed Ink Rule",
-        "body": "Text on any coloured fill (rarity, status, a Tech's own colour) is whichever of Night or Cream gives the higher contrast ratio, computed, never chosen by hand. A Tech chip that fails 4.5:1 with both is drawn as an outline in the Tech colour instead.",
+        "body": "Text on a colour that is not part of the palette (a Tech's own colour) is whichever of Night or Cream contrasts more, computed; if neither reaches 4.5:1, the chip is drawn as a 2px outline in that colour with the theme's ink instead of a fill.",
         "section": "colors"
       },
       {
         "name": "The Copy Keeps Its Case Rule",
-        "body": "Type is set in the case the copy is written in. Unbounded is never forced to uppercase: the lowercase menu labels and the casual voice are binding, and shouting caps would turn the cosy client into an esports HUD.",
+        "body": "Type is set in the case the copy is written in. Unbounded is never forced to uppercase; the lowercase menu labels and casual voice are binding. The one uppercase string is the two-letter Locale code, in Data.",
         "section": "typography"
       },
       {
         "name": "The Typography Primitives Rule",
-        "body": "Text still goes through `components/typography`, which gains the display, headline and data roles; a raw heading with its own sizes is drift.",
+        "body": "Text goes through `components/typography` (Display, Headline, Title, Data, Tag, P, Muted), with the element chosen by `as` so the look never dictates the outline. A raw heading with its own sizes is drift.",
         "section": "typography"
       },
       {
         "name": "The Real Button Rule",
-        "body": "Anything pressable has a ledge and sinks when pressed; anything with a ledge is pressable. Static cards never get one.",
+        "body": "Anything pressable has a ledge and sinks onto it when pressed; anything with a ledge is pressable. Static cards and slots never get one. Ghost and link controls are not raised controls and have none.",
         "section": "elevation"
       },
       {
         "name": "The Float Means On Top Rule",
-        "body": "Blurred shadows and backdrop blur belong only to layers above the client (tooltips, menus, the mobile sheet).",
+        "body": "Blurred shadows belong only to layers above the client (the mobile sheet, menus).",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one.",
-      "Do keep Tangerine (#ff8a3d) to one primary action per screen plus the active tab, the sound switch and focus.",
-      "Do derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and label live data with its state.",
-      "Do compute the ink on every coloured fill and use the deep variants for coloured text in light.",
-      "Do give every pressable control a ledge, a 44px target and a note from the kit.",
-      "Do keep the sound switch visible on every page and honour reduced motion for both motion and sound.",
-      "Do write every new string in both Locales and keep the lowercase, casual voice."
+      "**Do** let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one, through the role tokens rather than fixed colours.",
+      "**Do** keep a Tangerine fill to the Play button, the active tab, the sound switch when on, focus and selection.",
+      "**Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and hide a missing number rather than show zero.",
+      "**Do** compute the ink on Tech colours and use the deep `-ink` variants for coloured text in light.",
+      "**Do** give every pressable control a ledge, a 44px target and a note from the kit.",
+      "**Do** use an outline button (Plum fill, 2px Seam border) for secondary actions sitting on a Velvet surface.",
+      "**Do** keep the sound switch visible on every page and honour reduced motion for both motion and sound.",
+      "**Do** write every new string in both Locales and keep the lowercase, casual voice."
     ],
     "donts": [
-      "Don't invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.",
-      "Don't use rarity colours for decoration, headings or backgrounds.",
-      "Don't drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.",
-      "Don't go back to neutral zinc surfaces with colour only from content.",
-      "Don't play sound automatically, on hover for touch devices, or anywhere the visitor cannot silence it.",
-      "Don't put blur or soft shadows on anything that does not float above the client.",
-      "Don't make the presence card disappear; it always shows a state."
+      "**Don't** invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.",
+      "**Don't** use rarity colours for decoration, headings or backgrounds.",
+      "**Don't** drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.",
+      "**Don't** go back to neutral zinc surfaces with colour only from content.",
+      "**Don't** play sound automatically, on hover for touch pointers, from presence updates, or anywhere the visitor cannot silence it.",
+      "**Don't** put blur or soft shadows on anything that does not float above the client.",
+      "**Don't** let the chibi hop, slide or tween; its movement lives in its drawn frames.",
+      "**Don't** make the presence card disappear or change height; it always shows a state."
     ]
   }
 }

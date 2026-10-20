@@ -16,6 +16,7 @@ colors:
   tangerine: "#ff8a3d"
   tangerine-ledge: "#c25a12"
   tangerine-deep: "#b8470c"
+  legendary-ledge: "#8a6200"
   common: "#b9a9cc"
   common-deep: "#6b5a80"
   rare: "#46c2ff"
@@ -42,6 +43,11 @@ typography:
     fontWeight: 700
     lineHeight: 1.15
     letterSpacing: "-0.015em"
+  title-large:
+    fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.375rem"
+    fontWeight: 600
+    lineHeight: 1.25
   title:
     fontFamily: "Unbounded, Geist, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.125rem"
@@ -73,6 +79,7 @@ typography:
     fontSize: "0.8125rem"
     fontWeight: 500
     lineHeight: "1.25rem"
+    fontFeature: "\"tnum\""
 rounded:
   sm: "6px"
   md: "10px"
@@ -102,14 +109,26 @@ components:
     rounded: "{rounded.md}"
     padding: "0 16px"
     height: "44px"
+  button-outline:
+    backgroundColor: "{colors.plum}"
+    textColor: "{colors.cream}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "0 16px"
+    height: "44px"
   button-icon:
     backgroundColor: "{colors.velvet}"
     textColor: "{colors.cream}"
     rounded: "{rounded.md}"
     size: "44px"
-  sound-toggle-on:
+  sound-switch-on:
     backgroundColor: "{colors.tangerine}"
     textColor: "{colors.night}"
+    rounded: "{rounded.md}"
+    size: "44px"
+  sound-switch-off:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
     rounded: "{rounded.md}"
     size: "44px"
   tab:
@@ -130,11 +149,32 @@ components:
     textColor: "{colors.cream}"
     rounded: "{rounded.xl}"
     padding: "{spacing.panel}"
+  sidebar:
+    backgroundColor: "{colors.plum}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.xl}"
+    padding: "16px"
+    width: "{spacing.sidebar}"
+  mobile-top-bar:
+    backgroundColor: "{colors.plum}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.xl}"
+    height: "56px"
   player-card:
     backgroundColor: "{colors.velvet}"
     textColor: "{colors.cream}"
     rounded: "{rounded.lg}"
     padding: "16px"
+  banner:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "28px"
+  slot:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.card}"
   item-card:
     backgroundColor: "{colors.velvet}"
     textColor: "{colors.cream}"
@@ -144,23 +184,41 @@ components:
     backgroundColor: "{colors.velvet}"
     textColor: "{colors.cream}"
     rounded: "{rounded.lg}"
-    padding: "16px"
+    padding: "20px"
   presence-card:
     backgroundColor: "{colors.velvet}"
     textColor: "{colors.cream}"
     rounded: "{rounded.lg}"
     padding: "12px"
+    height: "76px"
+  accordion-row:
+    backgroundColor: "{colors.velvet}"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.lg}"
+    padding: "12px 20px"
+  team-chip:
+    backgroundColor: "{colors.plum}"
+    textColor: "{colors.cream}"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    padding: "0 16px 0 10px"
+    height: "40px"
   rarity-tag:
+    textColor: "{colors.night}"
     typography: "{typography.tag}"
     rounded: "{rounded.full}"
     padding: "2px 8px"
   tech-chip:
     typography: "{typography.tag}"
     rounded: "{rounded.full}"
-    padding: "4px 10px"
+    padding: "2px 10px"
+  live-tag:
+    backgroundColor: "{colors.online}"
+    textColor: "{colors.night}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
 ---
-
-<!-- SEED: chosen with Lucas on 2026-10-20 in the Impeccable world workshop (seed 14c08ff6), before implementation. Values below are decided and contrast-checked, but no page uses them yet; re-run /impeccable document once the home page and shell are built so this file describes the shipped world. -->
 
 # Design System: ImJustLucas
 
@@ -168,66 +226,67 @@ components:
 
 **Creative North Star: "The Player Profile"**
 
-The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi and its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, and the settings row with the sound switch. The content panel is the profile screen: a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of Projects framed by rarity, and a match history of Experiences. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
+The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
 
-It is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means "this is the thing to press". Everything clickable answers with a short note from one instrument, so moving around the site sounds like a little melody, and one visible switch silences it all.
+It is a cosy client, not a competitive one: deep plum instead of hextech navy and gold, soft fat corners, chunky buttons that sink onto a ledge when pressed, warm cream text, candy rarity colours, and a single tangerine accent that means "this is the thing to press". Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.
 
-Density is relaxed: big slots with generous gaps, one focal object per row. The voice stays exactly as PRODUCT.md binds it (first person, "Yoooo", emojis, lowercase menu labels); the world makes room for it instead of dressing it up. Anti-references: the previous "Dev's Desk" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).
+Density is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, "Yoooo", emojis, lowercase menu labels). Anti-references: the previous "Dev's Desk" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a neon accent, and esports HUD aggression (angular chamfers, scanlines, rank emblems).
 
 **Key Characteristics:**
-- Two-zone client: a 320px sidebar (player card, tabs, live friends panel, settings) beside a rounded plum profile panel.
-- Plum owns the whole shell in the default dark theme; a lilac "daytime lobby" theme is the alternative.
-- One accent, tangerine, for the primary action, the active tab, focus and selection.
-- Rarity colours (common, rare, epic, legendary) carry meaning on content, never decoration.
-- Chunky, pressable controls with a visible ledge; slots and cards with soft 16px corners.
-- A one-instrument sound kit in D major pentatonic, on by default, with a global mute that is always visible.
-- The chibi is the mascot: poses, reactions, empty states.
+- Two-zone client inside a 12px Night frame: a 320px Plum sidebar beside a rounded Plum profile panel, the only part that scrolls.
+- Plum owns the whole shell in the default dark theme ("LAN night"); a lilac "daytime lobby" theme is the alternative, through the same role tokens.
+- One accent, tangerine, for the Play button, the active tab, the sound switch when on, selection and focus.
+- Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.
+- Chunky pressable controls on a solid ledge; Velvet slots and cards with soft 16px corners and a moulded-tray highlight.
+- A one-instrument kalimba kit in D major pentatonic, on by default, behind an always-visible switch.
+- The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye.
 
 ## Colors
 
-A committed plum world: the shell is the colour, with cream type, one tangerine accent and a four-step rarity ramp that labels content.
+A committed plum world: the shell is the colour, with cream type, one tangerine accent and a four-step rarity ramp that labels content. Every colour is a role token that flips with the theme (frame, ground, raised, seam, ink, ink-muted, ledge, and the `-ink` variant of each accent), and the shadcn roles (background, card, primary, border, ring, destructive…) are mapped onto them, so every page and the Admin inherit the world without restyling.
 
 ### Primary
-- **Tangerine** (#ff8a3d): the accent. Fills the Play button (Download my resume), the active tab, the sound switch when on, selection and keyboard focus rings in the dark theme. Text on it is always Night (7.8:1). It stays under a tenth of any screen; its rarity is what makes "press here" obvious.
-- **Tangerine Ledge** (#c25a12): the solid edge under tangerine controls (the button's bottom face), never text.
-- **Tangerine Deep** (#b8470c): tangerine's role as text, link underline and focus ring in the light theme (4.8:1 on Lilac Wash).
+- **Tangerine** (#ff8a3d): the accent. Fills the Play button, the sliding active-tab fill, the sound switch when on, and text selection (with Night text). In the dark theme it is also the focus ring and a link's hover colour. Text on it is always Night.
+- **Tangerine Ledge** (#c25a12): the solid face under tangerine controls, never text.
+- **Tangerine Deep** (#b8470c): tangerine as text, link and focus ring in the light theme (the role `tangerine-ink`); in dark that role is Tangerine itself.
 
 ### Rarity (functional)
 Rarity says what kind of thing an item is, set per item in the Admin. It is never a quality score and never invented.
-- **Legendary** (#ffd84d / deep #8a6200): wins and awards of national level. Today only MasterDevFrance 2025; nothing lesser is promoted to fill the tier.
-- **Epic** (#b47cff / deep #7a3fd1): products Lucas founded or co-founded and runs in production (Predi.GG).
-- **Rare** (#46c2ff / deep #0b6fa8): shipped products and real client or employer work (Qotum, Tricks, Bam Karaoke).
-- **Common** (#b9a9cc / deep #6b5a80): side projects, boilerplates, experiments.
+- **Legendary** (#ffd84d, deep #8a6200): national-level wins. Today only MasterDevFrance 2025. **Legendary Ledge** (#8a6200) is the ledge under the legendary achievement slot.
+- **Epic** (#b47cff, deep #7a3fd1): products Lucas founded or co-founded and runs in production.
+- **Rare** (#46c2ff, deep #0b6fa8): shipped products and real client or employer work.
+- **Common** (#b9a9cc, deep #6b5a80): side projects, boilerplates, experiments. Its frame is drawn at 70% opacity (Common in dark, Common Deep in light) so it reads as the quiet tier.
 
 ### Status (functional)
-Discord's own presence vocabulary, used only for the player card ring and the friends panel.
-- **Online** (#5fe08a / deep #1d7a45), **Away** (#ffb02e), **Busy** (#ff5d73 / deep #c0233d), offline uses **Common**.
-- **Busy** and **Busy Deep** double as the error colour in the Admin (dark and light).
+Discord's presence vocabulary, used for the status ring, the presence dots and the live tag.
+- **Online** (#5fe08a, deep #1d7a45): online ring, the breathing dot, the equaliser bars, the live tag fill.
+- **Away** (#ffb02e): idle ring and dot. **Busy** (#ff5d73, deep #c0233d): do-not-disturb ring and dot. Offline uses **Common** (its label in Common's ink); connecting uses **Seam**.
+- **Busy Deep** in light and **Busy** in dark are also the destructive and error colour.
 
 ### Neutral (dark theme, "LAN night", the default)
-- **Night** (#1c0f2b): the window frame around the panel, carrying a faint sparkle pattern; also the text colour on every bright fill.
-- **Plum** (#2a1540): the shell ground, sidebar and content panel.
-- **Velvet** (#3b2159): raised surfaces: player card, slots, item cards, ledge buttons, presence card.
-- **Seam** (#5a3a80): slot borders, dividers, the inactive tab hover fill.
-- **Cream** (#fff1e6): primary text (14.8:1 on Plum, 12.3:1 on Velvet).
-- **Haze** (#c9b6e4): secondary text, periods, artist lines (7.3:1 on Velvet).
+- **Night** (#1c0f2b): the window frame around sidebar and panel, carrying the sparkles; the ledge under Velvet controls; and the text on every bright fill.
+- **Plum** (#2a1540): the ground: sidebar, content panel, mobile top bar, the fill of outline buttons and team chips, the chibi's stage disc.
+- **Velvet** (#3b2159): raised surfaces: player card, banner, slots, item cards, accordion rows, presence card, ledge and icon buttons, the theme menu.
+- **Seam** (#5a3a80): 2px borders, the tab hover fill (at 70%), menu item focus, skeletons, scrollbar thumb.
+- **Cream** (#fff1e6): primary text.
+- **Haze** (#c9b6e4): secondary text: role lines, periods, descriptions, artist lines, section labels.
 
 ### Neutral (light theme, "daytime lobby")
 - **Lilac Frame** (#e9ddfa): the window frame. No text sits directly on it.
-- **Lilac Wash** (#f6f0ff): the shell ground.
+- **Lilac Wash** (#f6f0ff): the ground.
 - **Sheet** (#ffffff): raised surfaces.
-- **Seam Light** (#d6c3f0): borders and dividers.
-- **Plum** (#2a1540): primary text (14.7:1 on Lilac Wash). **Dusk** (#5b4a73): secondary text (7.1:1).
-- In light, bright rarity and status colours stay as fills and 2px frames with Night text; whenever they become text or a thin line on a light surface, use their deep variant (all 4.8:1 or more on Lilac Wash and Sheet).
+- **Seam Light** (#d6c3f0): borders, dividers, and the ledge under Sheet controls.
+- **Plum** (#2a1540): primary text. **Dusk** (#5b4a73): secondary text.
+- In light, bright rarity and status colours stay as fills, bands and 2px frames with Night text; as text or a thin line on a light surface they switch to their deep variant.
 
 ### Named Rules
 **The Plum Owns the Shell Rule.** In the dark theme the frame, sidebar and panel are Night, Plum and Velvet. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.
 
-**The One Tangerine Rule.** Tangerine marks the single most important action or state in view: the Play button, the active tab, the sound switch when on, focus. A second tangerine button on the same screen means one of them is wrong.
+**The One Tangerine Rule.** A Tangerine fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus focus and selection. A second Tangerine-filled button in the panel means one of them is wrong. Secondary links stay Cream with a Haze underline in dark (Tangerine only on hover) and use Tangerine Deep as their ink in light.
 
-**The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its frame, top band and tag. Never use the rarity hues for headings, backgrounds or decoration.
+**The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its 2px frame, 4px top band and tag (and the filled sparkle on legendary). Never use the rarity hues for headings, backgrounds or decoration.
 
-**The Computed Ink Rule.** Text on any coloured fill (rarity, status, a Tech's own colour) is whichever of Night or Cream gives the higher contrast ratio, computed, never chosen by hand. A Tech chip that fails 4.5:1 with both is drawn as an outline in the Tech colour instead.
+**The Computed Ink Rule.** Text on a colour that is not part of the palette (a Tech's own colour) is whichever of Night or Cream contrasts more, computed; if neither reaches 4.5:1, the chip is drawn as a 2px outline in that colour with the theme's ink instead of a fill.
 
 ## Typography
 
@@ -235,145 +294,145 @@ Discord's own presence vocabulary, used only for the player card ring and the fr
 **Body Font:** Geist (with ui-sans-serif, system-ui)
 **Data Font:** Geist Mono (with ui-monospace, SFMono-Regular)
 
-**Character:** Unbounded is the game title: wide, round-shouldered and heavy, friendly at 700 and never aggressive. Geist does the reading and the controls, so menus and paragraphs stay plain and fast. Geist Mono, with tabular figures, sets the stats: dates, periods, star counts, elapsed time.
+**Character:** Unbounded is the game title: wide, round-shouldered and heavy, friendly at 600 and 700 and never aggressive. Geist does the reading and the controls, so menus and paragraphs stay plain and fast. Geist Mono with tabular figures sets the stats: dates, periods, star counts, elapsed time, the Locale code.
 
-**Wiring.** Unbounded is a variable Google font (weights 200 to 900, Latin Extended for French) loaded through `next/font/google` and exposed as `--font-display` beside the existing `--font-geist-sans` and `--font-geist-mono`; set on `body` or below, never on `html`.
+All three fonts are CSS variables (`--font-display`, `--font-geist-sans`, `--font-geist-mono`) set on `<body>` by every root layout (the Locale segment and the Admin); Unbounded loads Latin and Latin Extended for French.
 
 ### Hierarchy
-- **Display** (Unbounded 700, clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem), line-height 1.05, -0.02em): the greeting on the profile banner ("Yoooo, I'm Lucas!"). One per page at most.
-- **Headline** (Unbounded 700, 1.75rem, line-height 1.15, -0.015em): page titles, one visible `h1` per page.
-- **Title** (Unbounded 600, 1.125rem, line-height 1.3): section titles (achievements, inventory, match history), item and achievement names, the player name in the sidebar (at 1.375rem).
-- **Button Play** (Unbounded 700, 1.0625rem): the label of the Play button only.
-- **Body** (Geist 400, 1rem, line-height 1.65): paragraphs, capped at 65ch.
-- **Label** (Geist 500, 0.875rem): tabs, buttons, presence lines, chip text at rest.
-- **Tag** (Geist 600, 0.75rem, +0.02em): rarity tags, "live" and "new" tags, Tech chips.
-- **Data** (Geist Mono 500, 0.8125rem, tabular numbers): periods, dates, star counts, elapsed time.
+- **Display** (Unbounded 700, clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem), 1.05, -0.02em): the banner greeting, the home page's `h1`. Drops to 1.875rem below 640px so "Yoooo, I'm Lucas!" fits beside the 120px chibi. One per page at most.
+- **Headline** (Unbounded 700, 1.75rem, 1.15, -0.015em): page titles on the other pages, one visible `h1` each.
+- **Title Large** (Unbounded 600, 1.375rem): the player name, achievement names, `h3` in long-form content.
+- **Title** (Unbounded 600, 1.125rem, 1.3): section titles (achievements, inventory, about me, FAQ), item names, the mobile top bar name, the goodbye line.
+- **Button Play** (Unbounded 700, 1.0625rem): the Play button's label only.
+- **Body** (Geist 400, 1rem, 1.65): paragraphs, capped at 65ch (the FAQ column at 72ch). The banner role line is Body at weight 500 in Haze, 1.0625rem, rising to 1.25rem from 768px.
+- **Label** (Geist 500, 0.875rem): tabs, buttons, chips, presence lines, small section labels ("current team", "friends").
+- **Tag** (Geist 600, 0.75rem, +0.02em): rarity tags, live and WIP tags, Tech chips.
+- **Data** (Geist Mono 500, 0.8125rem, tabular figures): periods, dates, star counts, elapsed time (m:ss), the resume date, the Locale code.
 
 ### Named Rules
-**The Copy Keeps Its Case Rule.** Type is set in the case the copy is written in. Unbounded is never forced to uppercase: the lowercase menu labels and the casual voice are binding, and shouting caps would turn the cosy client into an esports HUD.
+**The Copy Keeps Its Case Rule.** Type is set in the case the copy is written in. Unbounded is never forced to uppercase; the lowercase menu labels and casual voice are binding. The one uppercase string is the two-letter Locale code, in Data.
 
-**The Typography Primitives Rule.** Text still goes through `components/typography`, which gains the display, headline and data roles; a raw heading with its own sizes is drift.
+**The Typography Primitives Rule.** Text goes through `components/typography` (Display, Headline, Title, Data, Tag, P, Muted), with the element chosen by `as` so the look never dictates the outline. A raw heading with its own sizes is drift.
 
 ## Layout
 
-The client fills the viewport (`100dvh`, no page scroll) inside a 12px Night frame; only the content panel scrolls.
+The client fills the viewport (`100dvh`, no page scroll) inside a 12px Night frame with 12px gutters; only the content panel scrolls.
 
-- **Sidebar** (320px from 768px up), top to bottom: the player card, the tabs 24px below, the friends panel, then the settings row (sound, Locale, theme) and the social row pushed to the bottom.
-- **Content panel**: the rest of the width, 24px corners, 28px padding (16px on mobile), Plum ground.
-- **Profile pages** are built from slots on a 12-column grid with 12px gaps and 48px between sections. Full-width rows alternate with rows of 2 or 3 slots so the scroll has a rhythm: a dense inventory row earns a quiet text row after it.
-- **Reading text** (bio, FAQ) holds a 65ch column inside its slot, never the full panel width.
-- **Mobile** (below 768px): a 56px top bar (chibi head, name, sound switch, menu button, all 44px targets) replaces the sidebar. The menu opens as a full-screen client sheet holding the same sidebar, mounted once and restyled (`docs/routing.md`). Slot rows collapse to one column; the achievement showcase becomes a horizontal snap row.
-- The fixed corner chibi of the previous site is retired; the mascot lives in the player card, the banner and empty states, where it covers nothing.
+- **Sidebar** (320px from 768px up, Plum, 24px corners, 16px padding, 24px between groups), top to bottom: the player card, the six tabs (44px rows, 4px apart), the friends panel, then the settings row (sound, Locale, theme) and the social row pushed to the bottom.
+- **Content panel**: the remaining width, 24px corners, 28px padding (16px below 768px), Plum ground. Page content is centred at a 1180px maximum width, with 48px between sections and 16px between a section title and its row.
+- **Rows** are plain CSS grids with 12px gaps, not a 12-column system: featured Projects run 1, 2 (768px) then 3 (1280px) columns; the about row splits 1:1 from 1024px; two or three achievements sit 2fr / 1fr / 1fr with the rarest first, while a single one takes the full row as a wide slot.
+- **Banner**: from 768px a two-column grid, the chibi (200 to 260px) on the left spanning greeting, role, current team and actions, with a minimum height of 340px; below 768px the chibi shrinks to 120px beside the greeting and the role, team and actions run full width, the Play button full width below 640px.
+- **Reading text** holds 65ch inside its slot, never the full panel width.
+- **Mobile** (below 768px): a 56px Plum top bar (40px chibi head, name, sound switch, menu button) replaces the sidebar column. The same sidebar, mounted once, becomes a full-width sheet from 68px down, sliding up with Ease Drawer (260ms in, 180ms out), with the player card hidden and the panel `inert` behind it. Escape or widening to 768px closes it. Achievements with more than one slot become a horizontal snap row.
+- **Breakpoints** are Tailwind's: 640, 768 (the client's one structural switch), 1024, 1280.
 
 ## Elevation & Depth
 
-Depth is tonal first (Night, then Plum, then Velvet; Lilac Frame, Lilac Wash, Sheet in light) and tactile second: controls have a solid ledge underneath, as if they were real buttons on a console, and slots have a faint top highlight like a moulded tray. Soft blurred shadows exist only for things that float.
+Depth is tonal first (Night, then Plum, then Velvet; Lilac Frame, Lilac Wash, Sheet in light) and tactile second: pressable controls stand on a solid ledge like console buttons, and slots carry a one-pixel top highlight like a moulded tray. A soft blurred shadow exists only for layers that float above the client.
 
 ### Shadow Vocabulary
-- **Ledge** (`box-shadow: 0 4px 0 var(--ledge)`, where the ledge is the control's own darker shade, Tangerine Ledge for tangerine controls, Night for Velvet ones): every pressable control at rest. Pressing moves the control down 4px and the ledge to 0.
-- **Ledge Raised** (`box-shadow: 0 6px 0 var(--ledge)` with `translateY(-2px)`): hover on pressable controls and on item cards that link somewhere.
-- **Tray** (`box-shadow: inset 0 1px 0 rgb(255 241 230 / 0.08)`): the top highlight inside slots, cards and the player card in the dark theme.
-- **Float** (`box-shadow: 0 24px 48px -12px rgb(12 4 22 / 0.6)`): tooltips, the theme menu, the mobile client sheet.
+- **Ledge** (`box-shadow: 0 4px 0 rgb(var(--ledge))`): every pressable control at rest. The ledge is Night under Velvet and Plum controls, Seam Light under Sheet, Tangerine Ledge under tangerine controls, Legendary Ledge under the legendary slot.
+- **Ledge Raised** (`0 6px 0` with `translateY(-2px)`): hover, on hover-capable pointers only.
+- **Ledge Pressed** (`0 0 0` with `translateY(4px)` and `brightness(0.94)`): active; the control sits on its ledge.
+- **Tray** (`inset 0 1px 0 rgb(255 241 230 / 0.08)` in dark, `inset 0 1px 0 rgb(255 255 255 / 0.9)` in light): the top highlight inside the player card, banner, slots, item cards, accordion rows and presence card.
+- **Float** (`0 24px 48px -12px rgb(12 4 22 / 0.6)` in dark, `0 24px 48px -12px rgb(42 21 64 / 0.28)` in light): the mobile sheet and menus.
 
 ### Named Rules
-**The Real Button Rule.** Anything pressable has a ledge and sinks when pressed; anything with a ledge is pressable. Static cards never get one.
+**The Real Button Rule.** Anything pressable has a ledge and sinks onto it when pressed; anything with a ledge is pressable. Static cards and slots never get one. Ghost and link controls are not raised controls and have none.
 
-**The Float Means On Top Rule.** Blurred shadows and backdrop blur belong only to layers above the client (tooltips, menus, the mobile sheet).
+**The Float Means On Top Rule.** Blurred shadows belong only to layers above the client (the mobile sheet, menus).
 
 ## Shapes
 
-Fat, friendly corners from one scale: 24px for the panel, 16px for slots, cards and the player card, 10px for buttons, tabs and artwork, full circles for avatars, status rings and chips. Borders are 2px, never hairlines: Seam on resting slots, the rarity colour on items (with a 4px top band in the same colour), Tangerine for focus (2px ring with a 2px offset). No angular chamfers, notched corners or clip-path frames.
+Fat, friendly corners from one scale: 24px for the frame's two zones (sidebar, panel, mobile top bar and sheet), 16px for slots, cards, the banner, accordion rows and menus, 10px for buttons, tabs, artwork and screenshots, full circles for the chibi head, the chibi's stage discs, status dots and all chips and tags. Borders are 2px, never hairlines: Seam on the banner, outline buttons, team chips and WIP tags; the rarity colour on items. Plain slots (player card, about, hobbies, presence, accordion) are borderless Velvet with the tray highlight. Focus is a 2px ring in Tangerine (Tangerine Deep in light) with a 2px offset (inset on accordion rows). No angular chamfers, notched corners or clip-path frames.
 
 Materials:
-- **The sparkle**: Lucas's own hand tattoo, an outlined four-point star with slightly concave sides, redrawn as an SVG. It is the site's one ornament: tiled small on the Night frame only, at 6% opacity (4% in light on Lilac Frame), never behind text; and filled Legendary as the mark of legendary achievements. No other star or sparkle shape appears in the chrome.
-- **Legendary foil**: legendary items get a slow foil sheen (a moving light band across a pale gold gradient) only while hovered or during their unlock moment; at rest they are flat Legendary.
-- **Chibi art**: the ImJustLucas chibi in the existing style, transparent, in poses tied only to his real life (surf, skate, playing LoL, coding, coffee, watching a series, music, plus chilling, sleeping, waving and the trophy). Every pose keeps the commissioned artist's style and his face, hair and eyes, but wears its own outfit matched to the activity, in flat colours that may pick up the palette (`docs/design/chibi-poses.md`); art is produced once, versioned in `public/images/chibi/`, and the hobby list behind it lives in the content, editable in the Admin.
-- **Day and night wardrobe**: the two most-seen poses, the home banner and the LoL pose, exist in a day outfit (the Breton-stripe longsleeve and baggy black jeans) and a night outfit (a very oversized chunky pullover in light misty lilac-white with electric-blue rib collar and cuffs and two small stitched sparkles, charcoal joggers, white socks). Which one shows follows Lucas's real time in Paris (`Europe/Paris`): night from 21:00 to 07:00, day otherwise. It is live data like the presence card, never the visitor's theme or clock.
-
-## Motion and Sound
-
-Motion and sound are one grammar: a control moves the way a button moves and plays one note when it does. Nothing moves or sounds on its own except the live presence, which may move but never sounds.
-
-### Motion tokens
-- **Ease Out** (`cubic-bezier(0.23, 1, 0.32, 1)`): every hover, entrance and state change.
-- **Ease Pop** (`cubic-bezier(0.34, 1.56, 0.64, 1)`): small overshoots on press release, tag and badge entrances, the chibi hop.
-- **Ease In Out** (`cubic-bezier(0.77, 0, 0.175, 1)`): the sliding tab indicator and the accordion chevron.
-- **Ease Drawer** (`cubic-bezier(0.32, 0.72, 0, 1)`): the mobile client sheet.
-- **Durations:** press down 80ms, release 160ms; hover 150ms; tab indicator 240ms; page change 220ms (fade and a 6px rise, through View Transitions where supported); mobile sheet 260ms in, 180ms out; unlock moment 900ms.
-
-### Signature moves
-- **The press:** pressable controls sink 4px onto their ledge and pop back with Ease Pop.
-- **The tab slide:** the tangerine active-tab fill slides between tabs instead of jumping.
-- **The unlock:** the legendary achievement plays its foil sheen once per session when it first scrolls into view; clicking it replays the sheen with the unlock sound.
-- **Live presence:** three equaliser bars while Lucas listens, a breathing green dot while he plays; a new song or game crossfades in over 200ms.
-- **The chibi:** blinks now and then; on click it hops, swaps to a random pose and plays a boop.
-- **Chibi frames:** some poses have a second frame drawn from the first (same framing, a small change: head, mouth, a hand, the floating notes). The two frames alternate in steps, never tweened, at 4 to 6 frames per second (150 to 250ms each), for a low-frame-rate, 8-bit feel. A pose animates on hover or click, or while its live state is on (the music pose while Lucas is listening); it pauses offscreen, never makes a sound by itself, and shows the first frame only under reduced motion. Extras drawn in code may join the loop in the same steps (speed lines, a small ground shadow), but the chibi itself never hops or slides: all of its movement comes from the drawn frames (Lucas tried a 4px hop and rejected it).
-
-### Sound kit
-One instrument (a soft plucked kalimba tine) in one key (D major pentatonic: D, E, F#, A, B, over two octaves), synthesized with Web Audio so it costs no download. Recorded samples are allowed later only if they keep the same instrument and key.
-- **Tick** (B5, very quiet): hover on tabs and item cards, fine pointers only, at most one every 60ms.
-- **Tab**: each menu item plays its own degree in menu order (me D4, what i've done E4, how i do it F#4, my experiences A4, yt videos B4, contact D5), so walking down the menu plays a scale.
-- **Confirm** (D4 and A4 together, then D5): the Play button and other primary actions.
-- **Toggle on / off** (A4 to D5 / D5 to A4): theme, Locale, accordion, the sound switch itself (only the "on" direction is audible).
-- **Unlock** (arpeggio D4 F#4 A4 D5, then the existing `coin.mp3`): clicking the legendary achievement.
-- **Boop** (a random degree with a short upward bend): clicking the chibi.
-- **Miss** (A3 to F#3): the 404 page's button and Admin errors.
-
-### Sound switch
-A speaker button, always visible: first in the sidebar settings row and in the mobile top bar, 44px, Tangerine when sound is on, Velvet with a struck speaker when off, with a localized label ("sound on" / "son activé") for assistive tech and as a tooltip. Sound is on by default and off by default when the visitor's system asks for reduced motion. The choice is stored per visitor in `localStorage` and also governs the MDF 2025 scene. No sound ever plays before the visitor's first interaction, on automatic events (presence updates, page loads, scroll), or above a master gain of 0.25.
-
-### Reduced motion
-Under `prefers-reduced-motion: reduce`: no translation, scale or rotation (presses and tabs change colour only), fades of 150ms or less, ambient loops (equaliser, breathing dot, sparkles, foil) shown static, and sound off unless the visitor turns it on.
+- **The sparkle**: Lucas's hand tattoo, an outlined four-point star with slightly concave sides, the site's one ornament. On the frame it is drawn whole and small (8px and 6px stars, outlined) running along the 12px gutters only, including the gutter between sidebar and panel, at stroke opacity 0.12 in Cream on Night and 0.08 in Plum on Lilac Frame; it is never clipped and never behind text. Filled in Legendary, it marks legendary achievements in their top-right corner.
+- **Legendary foil**: a pale gold light band sweeps across a legendary slot over 900ms with Ease Out, once per session when it first scrolls into view, again on hover and on click; at rest the slot is flat.
+- **Chibi art**: the ImJustLucas chibi as transparent square WebP poses (`public/images/chibi/`, registry `lib/chibi.ts`): banner, chilling, sleeping, goodbye, trophy, and the hobbies surf, skate, LoL, coding, coffee, series, music. Every pose keeps the commissioned style, face, hair and eyes, and wears its own outfit (`docs/design/chibi-poses.md`). A pose may have a night outfit, worn by Lucas's time in Paris (`Europe/Paris`, 21:00 to 07:00), never the visitor's clock or theme; poses without night art wear their day one. Pages render the day art and switch after mount with a 300ms crossfade, with no layout shift. The full-body chibi stands in front of a circular ground-coloured stage disc.
 
 ## Components
 
-Every control is rebuilt in the client's vocabulary; a stock shadcn look inside the client is a lapse. shadcn and Radix stay as the behaviour layer.
+Every control is drawn in the client's vocabulary; shadcn and Radix stay as the behaviour layer.
 
 ### Buttons
-- **Shape:** 10px corners, 2px focus ring in Tangerine (Tangerine Deep in light) with a 2px offset.
-- **Play** (primary): Tangerine fill, Night label in Unbounded 700, 52px tall, 24px side padding, Tangerine Ledge underneath; one per screen (the Play button is "Download my resume" on the home page).
-- **Ledge** (secondary): Velvet fill, Cream label, Night ledge, 44px tall; Sheet fill, Plum label and Seam Light ledge in light.
-- **Icon:** 44px square ledge buttons for settings and socials, with `sr-only` labels.
-- **States:** hover raises 2px with a 6px ledge; press sinks onto the ledge; disabled drops the ledge and goes to 50% opacity.
+- **Shape:** 10px corners, Label type, 16px icons, a 2px Tangerine focus ring with a 2px offset.
+- **Play** (primary): Tangerine fill, Night label in Unbounded 700, 52px tall with 24px side padding, on a Tangerine Ledge; plays the confirm chord. One per screen (on home, "Download my resume", with its date in Data beside it).
+- **Ledge** (default): Velvet fill (Sheet in light), Cream label, 44px tall, 16px padding; hover also tints Seam at 40%.
+- **Outline:** Plum fill (the ground), 2px Seam border, on a ledge: the secondary button wherever it sits on a Velvet surface, so it stays distinct from its background (LinkedIn on the banner, GitHub with its live star count and the external link on item cards).
+- **Icon:** 44px square ledge buttons (sound, Locale, theme, socials, menu) with screen-reader labels.
+- **Ghost / Link:** no ledge; ghost tints Seam on hover, link is Tangerine Deep (Tangerine in dark) and underlined.
+- **Destructive:** Busy Deep fill with Cream text in light, Busy with Night text in dark, on a ledge.
+- **States:** hover raises 2px onto a 6px ledge (fine pointers only); press sinks 4px in 80ms and releases in 160ms with Ease Pop; disabled drops the ledge to 50% opacity.
 
 ### Tabs (the menu)
-- **Style:** full-width 44px rows in Geist 500, lowercase labels from the message dictionaries, an icon slot on the left.
-- **Hover:** Seam fill and the tick sound. **Active:** the sliding Tangerine fill, Night text, `aria-current="page"`. **Focus-visible:** the Tangerine ring.
-- **Mobile:** the same tabs inside the full-screen client sheet; choosing one plays its note and closes the sheet.
+- **Style:** full-width 44px rows, Label type, a lowercase label from the dictionaries and an 18px line icon on the left.
+- **Hover:** Seam at 70% and the tick. **Active:** the Tangerine fill slides to the tab (240ms, Ease In Out), Night text, `aria-current="page"`. Each tab plays its own note, so walking down the menu plays a rising scale.
+- **Mobile:** the same tabs in the sheet; choosing one plays its note and closes the sheet.
 
 ### Player card (signature)
-Velvet slot at the top of the sidebar: the chibi head (64px) in a 3px status ring coloured by Lucas's real Discord status, the name "ImJustLucas" in Unbounded, and one Haze line with his role and city from the dictionaries. No level, rank or XP numbers.
+Velvet slot at the top of the sidebar: the 64px chibi head in a 3px status ring coloured by Lucas's live Discord status (Seam while connecting), "ImJustLucas" in Title Large, and one Haze Label line with role and city. No level, rank or XP.
 
 ### Friends panel / presence (signature)
-Always rendered, titled with a live tag. **Playing:** game art 48px, game name, elapsed time in Data, breathing dot. **Listening:** album art 48px with the Spotify mark, title and artist, equaliser bars. **Online with no activity, away, busy:** the chibi head with the status and a playful line. **Offline or unreachable:** "offline" in Common with a chibi sleeping pose. **Connecting:** a skeleton of the same size, so the sidebar never jumps. Presence never plays a sound.
+A Label heading in Haze with a live tag (Online fill) while Lucas is online, and a presence card of a fixed 76px height so the sidebar never jumps. **Playing:** 48px game art with a small badge, game name, detail line, a breathing Online dot and elapsed time in Data (m:ss). **Listening:** 48px album art with the Spotify mark, title and artist, three Online equaliser bars. **Online, away, busy:** the 44px chibi head in its ring, a status dot and label, and a playful line. **Offline:** the sleeping pose and "offline" in Common's ink. **Connecting:** a Seam skeleton of the same size; if Lanyard is unreachable after 10 seconds the card shows offline. Long names truncate to one line with the full text as a native tooltip. Presence never plays a sound.
+
+### Banner (signature)
+A Velvet slot with a 2px Seam border and the tray: the full-body chibi on its stage disc (a button: booping swaps to another pose with the boop cue; hover plays its drawn frames), the Display greeting, the role line, "current team" with one team chip per ongoing Experience (or the chilling pose and line when there is none), and the actions: Play with the resume date, then the outline LinkedIn button.
+
+### Team chip
+40px tall, full radius, Plum fill with a 2px Seam border, the Experience's emoji then the company in Label; the role is read to assistive tech only.
 
 ### Item card (Projects)
-Velvet card, 16px corners, 2px frame and 4px top band in the item's rarity colour, rarity tag top-right. Image band (10px corners, top-anchored crop), title in Unbounded 600, one line saying what it is and Lucas's role, the Tech loadout as chips, and a footer with the GitHub ledge button and its live star count in Data. Heights follow content; rows align by grid, not by fixed height.
+Velvet card, 16px corners, 2px frame and 4px top band in the item's rarity colour, the tray. A 16:9 screenshot (10px corners, top-anchored crop, a placeholder icon and label when missing), the name in Title with the rarity tag beside it, the period in Data with a WIP tag, three lines of description in Haze, the Tech loadout as chips, and a footer of outline buttons. Padding 16px, 20px from 640px. Hovering plays the tick; heights follow content within an aligned grid.
 
 ### Achievement slot (signature)
-Square-ish slot with the achievement art centred, its name in Title, the year in Data and the rarity tag; legendary slots carry the foil material and link to their page (MDF 2025 links to `/mdf-2025`).
+A link slot: rarity frame and top band, the achievement art in a circular stage (128px in the wide slot), the rarity tag and year in Data, the name in Title Large, a description in Haze and an arrow that nudges 4px on hover. The legendary slot also stands on the Legendary Ledge, carries the filled sparkle and the foil, and plays the unlock (arpeggio, then the coin) on click, holding navigation for about half a second so it is heard.
 
-### Chips
-- **Tech chip:** the Tech's own colour as fill with computed ink (see The Computed Ink Rule), full radius, Tag type.
-- **Rarity tag:** rarity fill, Night text, full radius. **Live / New tags:** Online or Tangerine fill, Night text.
-
-### Match history (Experiences timeline)
-One continuous vertical track from the first internship to today: each Experience is a row with its period in Data, company and role, contract type and description; ongoing rows sit at the top with a "live" tag and an Online dot, and the track is solid Seam behind finished rows and Tangerine behind ongoing ones.
+### Chips and tags
+- **Rarity tag:** rarity fill, Night text, Tag type, full radius, 2px by 8px.
+- **Tech chip:** the Tech's own colour as fill and 2px border with computed ink, or an outline (see The Computed Ink Rule); Tag type, full radius, 2px by 10px.
+- **Live tag:** Online fill, Night text. **WIP tag:** 2px Seam outline, ink text.
 
 ### Accordion (FAQ)
-Velvet rows with 16px corners and 12px gaps instead of hairline dividers; a chevron that rotates over 200ms with Ease In Out and the toggle sounds.
+Velvet rows with 16px corners, the tray and 12px gaps instead of dividers; the trigger is at least 56px tall with 20px side padding and a Seam hover tint; the chevron turns over 200ms with Ease In Out; the answer is Haze body text at 65ch; opening and closing play the toggle notes.
+
+### Theme menu
+The theme switch is an icon button that opens a Velvet menu (16px corners, 2px Seam border, Float) of 40px items (dark, light, system), Seam on focus, a Tangerine Deep check on the current one.
+
+### Chibi sprites
+A pose's drawn frames alternate in steps (200ms each), never tweened, only while it plays (hover, a live state), on screen and without reduced motion; otherwise the first frame shows. The chibi itself never hops, slides or scales.
+
+### Sound kit and switch
+One synthesized instrument (a soft plucked kalimba tine) in D major pentatonic, master gain 0.22.
+- **Tick** (B5, very quiet): hover on tabs, item cards, achievement slots and hobbies; fine pointers only, at most one every 60ms.
+- **Press** (A4): secondary controls without a cue of their own (ledge and outline buttons, socials, the theme trigger, non-legendary achievements).
+- **Tab:** the tab's own degree (D4, E4, F#4, A4, B4, D5 in menu order).
+- **Confirm** (D4 and A4, then D5): the Play button.
+- **Toggle on / off** (A4 to D5 / D5 to A4): the menu sheet, the accordion, choosing a theme, the Locale switch, the sound switch turning on.
+- **Unlock** (D4 F#4 A4 D5, then the recorded coin): the legendary achievement.
+- **Boop** (a random high degree with a 2-semitone upward bend): the banner chibi.
+- **Miss** (A3 to F#3): defined in the kit for errors.
+The **sound switch** is a 44px icon button, Tangerine with a speaker when on, Velvet with a struck speaker when off, with a localized label that also says when reduced motion turned sound off. It shows once in the settings row from 768px up and once in the mobile top bar below. Sound is on by default, off by default under reduced motion, stored per visitor in `localStorage`, and never plays before the first interaction or on automatic events.
+
+### Motion
+- **Ease Out** (`cubic-bezier(0.23, 1, 0.32, 1)`): hovers, entrances, page changes, the foil.
+- **Ease Pop** (`cubic-bezier(0.34, 1.56, 0.64, 1)`): the press release only, a deliberate small overshoot.
+- **Ease In Out** (`cubic-bezier(0.77, 0, 0.175, 1)`): the tab fill, the accordion chevron, ambient loops.
+- **Ease Drawer** (`cubic-bezier(0.32, 0.72, 0, 1)`): the mobile sheet.
+- **Page change:** a 220ms fade with a 6px rise. **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame.
 
 ### Admin
-The Admin keeps its forms and works on the same tokens in a calmer register: Lilac Wash or Plum page, Sheet or Velvet fields with 2px Seam borders, Busy for errors, Online Deep or Online for the saved notice. No sounds in the Admin except Miss on an error.
+The Admin sets the same fonts and themes (dark by default) and inherits the world through the shadcn roles mapped in the stylesheet: Plum or Lilac Wash ground, Velvet or Sheet surfaces, Seam borders, the ledge buttons, Busy or Busy Deep for errors.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one.
-- **Do** keep Tangerine (#ff8a3d) to one primary action per screen plus the active tab, the sound switch and focus.
-- **Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and label live data with its state.
-- **Do** compute the ink on every coloured fill and use the deep variants for coloured text in light.
+- **Do** let Plum (#2a1540), Night (#1c0f2b) and Velvet (#3b2159) own the whole dark shell, and Lilac Wash (#f6f0ff) the light one, through the role tokens rather than fixed colours.
+- **Do** keep a Tangerine fill to the Play button, the active tab, the sound switch when on, focus and selection.
+- **Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and hide a missing number rather than show zero.
+- **Do** compute the ink on Tech colours and use the deep `-ink` variants for coloured text in light.
 - **Do** give every pressable control a ledge, a 44px target and a note from the kit.
+- **Do** use an outline button (Plum fill, 2px Seam border) for secondary actions sitting on a Velvet surface.
 - **Do** keep the sound switch visible on every page and honour reduced motion for both motion and sound.
 - **Do** write every new string in both Locales and keep the lowercase, casual voice.
 
@@ -382,6 +441,7 @@ The Admin keeps its forms and works on the same tokens in a calmer register: Lil
 - **Don't** use rarity colours for decoration, headings or backgrounds.
 - **Don't** drift into esports HUD aggression: no chamfered corners, scanlines, hex grids, glowing neon edges or forced uppercase.
 - **Don't** go back to neutral zinc surfaces with colour only from content.
-- **Don't** play sound automatically, on hover for touch devices, or anywhere the visitor cannot silence it.
+- **Don't** play sound automatically, on hover for touch pointers, from presence updates, or anywhere the visitor cannot silence it.
 - **Don't** put blur or soft shadows on anything that does not float above the client.
-- **Don't** make the presence card disappear; it always shows a state.
+- **Don't** let the chibi hop, slide or tween; its movement lives in its drawn frames.
+- **Don't** make the presence card disappear or change height; it always shows a state.
