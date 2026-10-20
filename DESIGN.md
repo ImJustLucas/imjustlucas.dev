@@ -307,6 +307,7 @@ Motion and sound are one grammar: a control moves the way a button moves and pla
 - **The unlock:** the legendary achievement plays its foil sheen once per session when it first scrolls into view; clicking it replays the sheen with the unlock sound.
 - **Live presence:** three equaliser bars while Lucas listens, a breathing green dot while he plays; a new song or game crossfades in over 200ms.
 - **The chibi:** blinks now and then; on click it hops, swaps to a random pose and plays a boop.
+- **Chibi frames:** some poses have a second frame drawn from the first (same framing, a small change: head, mouth, a hand, the floating notes). The two frames alternate in steps, never tweened, at 4 to 6 frames per second (150 to 250ms each), for a low-frame-rate, 8-bit feel. A pose animates on hover or click, or while its live state is on (the music pose while Lucas is listening); it pauses offscreen, never makes a sound by itself, and shows the first frame only under reduced motion. Extras drawn in code may join the loop in the same steps: speed lines, a hop of 2 to 3px, a small ground shadow.
 
 ### Sound kit
 One instrument (a soft plucked kalimba tine) in one key (D major pentatonic: D, E, F#, A, B, over two octaves), synthesized with Web Audio so it costs no download. Recorded samples are allowed later only if they keep the same instrument and key.

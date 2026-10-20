@@ -97,3 +97,7 @@ The sleeping pose's pullover replaces the grey hoodie as the night outfit for th
 
 - LoL night redone with the night pullover by an outfit edit (`.impeccable/mocks/chibi/lol-night.png`); the grey-hoodie version is kept as `lol-night-hoodie.png`. Gemini stitched three sparkles instead of two; accepted.
 - Music approved on the first try (`.impeccable/mocks/chibi/music.png`): eyes closed, singing along, hand on the ear cup, washed sky-blue tee over a white long-sleeve, washed dark-blue jeans, two music notes. Lucas's favourite so far. It also serves the "listening" presence state.
+
+## Animation frames
+
+A second frame is an edit of the approved pose in its own Gemini conversation: same framing, size and position, only a small change. Frames alternate in steps (DESIGN.md, Motion and Sound). Legs and feet stay identical so the frames register; small offsets are realigned by hand before use.
