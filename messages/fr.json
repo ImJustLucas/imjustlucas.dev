@@ -186,8 +186,12 @@
   },
   "NotFound": {
     "title": "Page introuvable",
-    "message": "Cette page n'existe pas, ou plus.",
-    "home": "Retour à l'accueil"
+    "headline": "Lessivé !",
+    "message": "C'est flat total : cette page n'existe pas, ou plus. Rien à surfer, alors je fais la sieste 😴",
+    "play": "Réapparaître <home>à l'accueil</home>",
+    "respawn": "Réapparaître",
+    "code": "erreur 404",
+    "chibiAlt": "Lucas endormi sur un coussin prune"
   },
   "Sound": {
     "label": "son",

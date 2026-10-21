@@ -287,6 +287,13 @@ components:
     textColor: "{colors.off-white}"
     rounded: "{rounded.full}"
     size: "56px"
+  not-found-slot:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.headline}"
+    rounded: "{rounded.lg}"
+    padding: "24px 40px 36px"
+    width: "34rem"
 ---
 
 # Design System: ImJustLucas
@@ -483,7 +490,7 @@ Every control is drawn in the client's vocabulary; shadcn and Radix stay as the 
 
 ### Buttons
 - **Shape:** 10px corners, Label type, 16px icons, a 2px action-ink focus ring with a 2px offset.
-- **Play** (primary): the action fill (Off-white), `on-action` label (Navy) in Unbounded 700, 52px tall with 24px side padding, on the action ledge (Electric); plays the confirm chord. One per screen (on home, "Download my resume", with its date in Data beside it).
+- **Play** (primary): the action fill (Off-white), `on-action` label (Navy) in Unbounded 700, 52px tall with 24px side padding, on the action ledge (Electric); plays the confirm chord. One per screen (on home, "Download my resume", with its date in Data beside it; on the 404, "Respawn at home", with the error code under it).
 - **Ledge** (default): raised fill (Navy Raised), ink label, 44px tall, 16px padding; hover also tints the seam colour at 40%.
 - **Outline:** ground fill (Navy), 2px seam border, on a ledge: the secondary button wherever it sits on a raised surface, so it stays distinct from its background (LinkedIn on the banner, GitHub with its live star count and the external link on item cards).
 - **Icon:** 44px square ledge buttons (sound, Locale, theme, socials, menu) with screen-reader labels.
@@ -529,6 +536,11 @@ The Projects page's filter, between its banner and the item grid: a raised slot 
 
 ### Replay tile (signature)
 A Video as a borderless raised slot with the tray (16px top padding, 20px elsewhere from 640px): a 16:9 thumbnail with 10px corners over a pulsing seam skeleton, zooming to 1.03 over 300ms on hover; on it a 56px play disc (ground fill, 2px seam rim, ink play mark, on a ledge) that rises 8px into view on hover, always visible on touch, and sinks onto its ledge when the thumbnail is pressed. Below, the title in Title clamped to two lines, the date in Data with the "new" tag on the latest Video, and an outline "Watch now!" button with the YouTube mark pushed to the bottom. The thumbnail is the same link for the mouse, hidden from keyboards and screen readers; the tile ticks on hover. **Empty:** one raised slot with the chilling pose on its stage disc, the empty line and a subscribe secondary link.
+
+### Not found (the 404)
+The client's "wiped out" screen, where the voice gets the room the audit asked for. Both 404s draw the same `NotFoundSlot` (`components/not-found`): a raised slot with a 2px seam border and the tray, at most 34rem wide and centred in its panel, holding the sleeping pose on its ground stage disc (160px, 208px from 640px), the Headline as the page's `h1` ("Wiped out!", "Lessivé !"), one line in the muted ink at the page banner's size ("total flat spell… so I took a nap 😴"), then the screen's one Play button with a house icon, "Respawn at home" ("Réapparaître à l'accueil"), and the error code in muted Data under it. Padding 20px with 28px at the bottom; from 640px, 24px at the top, 40px at the sides and 36px at the bottom. The pose is not a button and the slot has no cue; Play plays confirm.
+- **Locale 404** (`app/[locale]/page-not-found`): in the shell, in its Locale, centred in the content panel's height. Below 640px Play takes the full width and shows only the verb ("Respawn", "Réapparaître"); the destination stays in its accessible name. The status stays 404 (`proxy.ts` rewrites with it).
+- **Global 404** (`app/global-not-found.tsx`): outside every Locale, so it speaks both, English first. The client's sparkle frame holds a single ground panel, no sidebar; the headline and line are set twice (the French in `lang="fr"`, its headline in the muted ink) from the same dictionary strings, and Play reads "Respawn · Réapparaître" and goes to the root address, which sends the visitor to their browser's Locale. On the narrowest phones its two words wrap onto two lines. It reads the visitor's palette and mode before the first paint (the palette script plus next-themes' stored mode, dark by default) since it has no ThemeProvider, and plays no sound, as it has no switch to silence it.
 
 ### Chips and tags
 - **Rarity tag:** rarity fill, `on-bright` text (Navy in electric, Night in plum), Tag type, full radius, 2px by 8px.
