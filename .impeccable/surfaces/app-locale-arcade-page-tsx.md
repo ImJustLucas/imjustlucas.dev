@@ -2,7 +2,7 @@
 version: 1
 slug: "app-locale-arcade-page-tsx"
 primary_target: "app/[locale]/arcade/page.tsx"
-related_targets: ["components/arcade/OllieGame.tsx","lib/arcade/ollie.ts"]
+related_targets: ["components/arcade/ArcadeFloor.tsx","components/arcade/CabinetParts.tsx","components/arcade/ollie/OllieGame.tsx","components/arcade/surf/SurfGame.tsx","lib/arcade/ollie.ts","lib/arcade/surf.ts"]
 ---
 
 # Surface brief: Arcade (the game library)
@@ -38,3 +38,7 @@ Signature interaction: the jump. Lucas swaps from the rolling pose to the ollie 
 - Reduced motion: far layers stand still, the middle layer drifts slowly, no tumble, no shake.
 - Sound off: silent game; nothing sounds before the visitor's first press.
 - No storage: the best score holds for the visit only.
+
+## Surf (second cabinet, 2026-10-21)
+
+Lucas's brief: a Flappy Bird with his chibi, a press pops him off the swell and gravity brings him back, between obstacles below (rocks, buoys) and above (gulls, jetty pilings); a palette of its own from the site's "surf" sea and sand, day or night by his time in Paris; obstacles as legible as Ollie's, with the same sticker rim. Built on the Ollie cabinet's parts, now shared (`CabinetParts.tsx`, `use-board-run.ts`), so the cards, the first-name strip, the deck and the leaderboard behave the same in both. The shelf's playable tiles became buttons that open their cabinet (`?cabinet=surf`). Signature interaction: the pop, the surf-ride pose tilting nose up as he climbs; the crash swaps to the surf-wipeout pose, which drops into the foam; a new best ends on the surf pose, waist-deep, board under the arm.

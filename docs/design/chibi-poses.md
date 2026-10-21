@@ -135,11 +135,11 @@ Lucas provided more poses with their backgrounds already removed (2048px PNG), e
 
 Not added, as they repeat poses already on the site: `classic` (the banner), `coffee_1`/`coffee_2` (the coffee pose and a variant with a bag), `listening`/`listening_2` (the music frames), `playing_day`/`playing-night_2` (LoL day and night), `playing_night` (the grey-hoodie LoL night, kept as `lol-night-hoodie.png`), `sleep`, `surfing`, `winning` (the trophy), `working` (coding), and the `pfp` busts.
 
-## Surf cabinet poses (to generate)
+## Surf cabinet poses
 
 The Surf cabinet of the Arcade is a Flappy-style game: a tap lifts Lucas off the swell, gravity brings him back. It needs two poses in the surf outfit, each in its own new conversation, with the commissioned art and the approved surf pose attached, after the base prompt:
 
 - **Riding**: `Standing on his white surfboard with a gold stripe, riding towards the right of the image, the board level and parallel to the bottom edge, knees bent in a low surf stance, arms spread for balance, the front hand pointing forward, a big happy open-mouth smile, wet curls with a few water drops. Plum (#3b2159) short-sleeve wetsuit top with a tangerine (#ff8a3d) stripe, sky-blue board shorts, barefoot. A small white spray of water behind the tail of the board, drawn in the same flat style; no sea and no wave, only the spray.`
 - **Wipeout**: `Falling off his white surfboard with a gold stripe: the board flipped up behind him on the left of the image, Lucas tumbling forward towards the right of the image, arms flailing, eyes squeezed shut and mouth open in a funny "whoa" face, wet curls flying, a few water drops and a small white splash around him, drawn in the same flat style. Same plum wetsuit top with the tangerine stripe and sky-blue board shorts, barefoot. No sea and no wave.`
 
-Keep both on pure white, square, the whole body and board visible with margin. Once approved, they become the `surf-ride` and `surf-wipeout` poses and the cabinet's `status` turns `playable` in `lib/arcade/cabinets.ts`.
+Keep both on pure white, square, the whole body and board visible with margin. They are the `surf-ride` and `surf-wipeout` poses (`public/images/chibi/surf-ride.webp`, `surf-wipeout.webp`), drawn only inside the Surf cabinet; a new best there ends on the approved surf pose, waist-deep.

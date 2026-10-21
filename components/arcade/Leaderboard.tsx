@@ -9,6 +9,7 @@ import {
   TypographyTitle,
 } from "@/components/typography";
 import { type Board, LEADERBOARD_SIZE } from "@/lib/arcade/board";
+import type { CabinetId } from "@/lib/arcade/cabinets";
 import { cn } from "@/lib/utils";
 
 const pad = (value: number) => String(value).padStart(5, "0");
@@ -20,13 +21,14 @@ const pad = (value: number) => String(value).padStart(5, "0");
 export function Leaderboard({
   board,
   playerId,
-  game,
+  cabinet,
 }: {
   board: Board | null;
   playerId: string | null;
-  game: string;
+  cabinet: CabinetId;
 }) {
   const t = useTranslations("Arcade.board");
+  const arcade = useTranslations("Arcade");
   return (
     <section
       aria-labelledby="arcade-board"
@@ -36,7 +38,9 @@ export function Leaderboard({
         <TypographyTitle as="h2" id="arcade-board">
           {t("title", { size: LEADERBOARD_SIZE })}
         </TypographyTitle>
-        <TypographyData className="text-ink-muted">{game}</TypographyData>
+        <TypographyData className="text-ink-muted">
+          {arcade(`cabinets.${cabinet}.name`)}
+        </TypographyData>
       </div>
 
       {board === null ? (
@@ -51,7 +55,9 @@ export function Leaderboard({
       ) : board.kind === "unavailable" ? (
         <TypographyMuted className="px-1">{t("unavailable")}</TypographyMuted>
       ) : board.top.length === 0 ? (
-        <TypographyMuted className="px-1">{t("empty")}</TypographyMuted>
+        <TypographyMuted className="px-1">
+          {arcade(`cabinets.${cabinet}.empty`)}
+        </TypographyMuted>
       ) : (
         <ol className="flex flex-col gap-1">
           {board.top.map((entry, i) => {

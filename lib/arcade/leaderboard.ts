@@ -8,8 +8,9 @@ import {
   type StartedRun,
   type SubmittedRun,
 } from "@/lib/arcade/board";
-import { MAX_RUN_STEPS, replayOllie, score, STEP } from "@/lib/arcade/ollie";
+import * as ollie from "@/lib/arcade/ollie";
 import { isPlayerId, parseName } from "@/lib/arcade/player-name";
+import * as surf from "@/lib/arcade/surf";
 
 /**
  * The Arcade's leaderboards (DESIGN.md, Arcade): the ten best players of each
@@ -28,6 +29,43 @@ export const LIMITS = {
   start: { count: 60, windowSeconds: 10 * 60 },
   submit: { count: 20, windowSeconds: 10 * 60 },
 } as const;
+
+/** What a replay says of a run: how many steps it took, and its score. */
+type Replayed = { readonly steps: number; readonly points: number };
+
+type Input = { readonly step: number; readonly press: boolean };
+
+/**
+ * Each game's own rules, replaying a run from its seed and inputs: null when
+ * the inputs do not make a run that could have been played.
+ */
+const REPLAY: {
+  readonly [G in LeaderboardGame]: {
+    readonly step: number;
+    readonly replay: (
+      seed: number,
+      inputs: ReadonlyArray<Input>,
+    ) => Replayed | null;
+  };
+} = {
+  ollie: {
+    step: ollie.STEP,
+    replay: (seed, inputs) => {
+      const run = ollie.replayOllie(seed, inputs);
+      return run && { steps: run.steps, points: ollie.score(run) };
+    },
+  },
+  surf: {
+    step: surf.STEP,
+    replay: (seed, inputs) => {
+      const run = surf.replaySurf(seed, inputs);
+      return run && { steps: run.steps, points: surf.score(run) };
+    },
+  },
+};
+
+/** The most inputs a result may carry: one press and release every 5 steps. */
+const MAX_INPUTS = Math.max(ollie.MAX_RUN_STEPS, surf.MAX_RUN_STEPS) / 10;
 
 /** A run handed out, waiting for its result. */
 export const OpenRun = Schema.Struct({
@@ -102,7 +140,7 @@ const Submission = Schema.Struct({
   name: Schema.String,
   inputs: Schema.Array(
     Schema.Struct({ step: Schema.Number, press: Schema.Boolean }),
-  ).check(Schema.isMaxLength(MAX_RUN_STEPS / 10)),
+  ).check(Schema.isMaxLength(MAX_INPUTS)),
 });
 
 /**
@@ -129,15 +167,17 @@ export const submitRun = (input: unknown, client: string) =>
     const run = yield* scores.takeRun(runId);
     if (!run) return { kind: "expired" } as SubmittedRun;
 
-    const played = replayOllie(run.seed, inputs);
+    // The game's own rules play the run again
+    const rules = REPLAY[run.game];
+    const played = rules.replay(run.seed, inputs);
     if (!played) return { kind: "refused" } as SubmittedRun;
     // A run takes at least as long as its steps (pauses only add time)
     const now = yield* Clock.currentTimeMillis;
-    if (now - run.startedAt < played.steps * STEP * 1000 * 0.95) {
+    if (now - run.startedAt < played.steps * rules.step * 1000 * 0.95) {
       return { kind: "refused" } as SubmittedRun;
     }
 
-    const points = score(played);
+    const { points } = played;
     if (points > 0) {
       yield* scores.record(run.game, {
         playerId,

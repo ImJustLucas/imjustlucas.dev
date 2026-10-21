@@ -21,6 +21,7 @@ import {
   score,
   STEP,
 } from "./ollie";
+import * as surf from "./surf";
 
 import { describe, expect, it } from "@effect/vitest";
 
@@ -193,6 +194,97 @@ describe("a run sent to the leaderboard", () => {
       }
       expect(yield* startRun("ollie", "9.9.9.9")).toEqual({ kind: "limited" });
       expect((yield* startRun("ollie", "8.8.8.8")).kind).toBe("started");
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+});
+
+/** Plays a Surf run of `seed`, popping through the gates for a while. */
+const playSurf = (seed: number, gates: number) => {
+  const state = surf.createSurf(seed);
+  const inputs: surf.SurfInput[] = [];
+  const pop = () => {
+    inputs.push({ step: state.steps, press: true });
+    surf.press(state);
+  };
+  pop();
+  while (state.phase !== "over") {
+    surf.advance(state, 1 / 60);
+    const next = state.obstacles.find(
+      (g) => g.x + 40 > surf.PLAYER.x - 10 && g.x - surf.PLAYER.x < 260,
+    );
+    const aim = next ? next.floor + 8 : 30;
+    const going = surf.score(state) < gates;
+    if (going && state.player.lift < aim && state.player.velocity <= 0) pop();
+  }
+  return {
+    inputs,
+    score: surf.score(state),
+    seconds: state.steps * surf.STEP,
+  };
+};
+
+describe("a Surf run sent to the leaderboard", () => {
+  it.effect("is replayed with Surf's rules, on Surf's own board", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("surf", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const run = playSurf(started.seed, 6);
+      expect(run.score).toBe(6);
+      yield* TestClock.adjust(`${Math.ceil(run.seconds) + 1} seconds`);
+      const result = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs: run.inputs,
+        },
+        "1.2.3.4",
+      );
+      expect(result).toMatchObject({ kind: "ranked", score: 6, rank: 1 });
+      expect(yield* leaderboard("surf")).toEqual([
+        { playerId: LEA, name: "Léa", score: 6 },
+      ]);
+      expect(yield* leaderboard("ollie")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("never scores presses with another game's rules", () =>
+    Effect.gen(function* () {
+      // Presses that skate an Ollie run, sent as the result of a Surf run
+      const started = yield* startRun("surf", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const skated = play(started.seed, 4);
+      yield* TestClock.adjust("1 hour");
+      const result = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs: skated.inputs,
+        },
+        "1.2.3.4",
+      );
+      const surfed = surf.replaySurf(started.seed, skated.inputs);
+      if (surfed) {
+        expect(result).toMatchObject({ score: surf.score(surfed) });
+      } else {
+        expect(result).toEqual({ kind: "refused" });
+      }
+      expect(result).not.toMatchObject({ score: skated.score });
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("refuses a Surf run sent faster than it could be played", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("surf", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const { inputs } = playSurf(started.seed, 3);
+      const result = yield* submitRun(
+        { runId: started.runId, playerId: LEA, name: "Léa", inputs },
+        "1.2.3.4",
+      );
+      expect(result).toEqual({ kind: "refused" });
+      expect(yield* leaderboard("surf")).toEqual([]);
     }).pipe(Effect.provide(layerInMemory())),
   );
 });

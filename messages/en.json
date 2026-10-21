@@ -260,15 +260,24 @@
       "ollie": {
         "name": "Ollie",
         "tagline": "skate down a Paris street and jump the cones",
-        "poseAlt": "Lucas on his skateboard"
+        "poseAlt": "Lucas on his skateboard",
+        "game": "Ollie, a skate game: Lucas rolls down a Paris street, jump the cones, bins, benches and low pigeons, skate under the high ones, and pick up sparkles.",
+        "hint": "space, ↑ or click to jump, hold for a higher ollie, esc to pause",
+        "hintTouch": "tap the street to jump, hold for a higher ollie",
+        "started": "Run started. Jump with space.",
+        "empty": "nobody on the board yet, your turn 🛹"
       },
       "surf": {
         "name": "Surf",
         "tagline": "ride the swell between rocks and gulls",
-        "poseAlt": "Lucas with his surfboard, still locked"
+        "poseAlt": "Lucas with his surfboard",
+        "game": "Surf, a surf game: Lucas rides the swell, pop him up to fly through each gap between the rocks and buoys below and the jetty pilings and gulls above.",
+        "hint": "space, ↑ or click to pop up, again to climb higher, esc to pause",
+        "hintTouch": "tap the sea to pop up, again to climb higher",
+        "started": "Run started. Pop up with space.",
+        "empty": "nobody on the board yet, your turn 🏄"
       }
     },
-    "game": "Ollie, a skate game: Lucas rolls down a Paris street, jump the cones, bins, benches and low pigeons, skate under the high ones, and pick up sparkles.",
     "loading": "loading the cabinet…",
     "play": "play",
     "playAgain": "play again",
@@ -280,9 +289,6 @@
     "newBest": "new best!",
     "score": "score",
     "best": "best",
-    "hint": "space, ↑ or click to jump, hold for a higher ollie, esc to pause",
-    "hintTouch": "tap the street to jump, hold for a higher ollie",
-    "started": "Run started. Jump with space.",
     "over": "Game over: {score} points. Best: {best}.",
     "overBest": "Game over: {score} points, a new best!",
     "pausedLive": "Paused.",
@@ -290,7 +296,6 @@
       "title": "top {size}",
       "you": "you",
       "loading": "loading the leaderboard…",
-      "empty": "nobody on the board yet, your turn 🛹",
       "unavailable": "the leaderboard is taking a break, your runs still count for your best"
     },
     "entry": {

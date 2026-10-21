@@ -260,15 +260,24 @@
       "ollie": {
         "name": "Ollie",
         "tagline": "skate dans une rue de Paris et saute les plots",
-        "poseAlt": "Lucas sur son skate"
+        "poseAlt": "Lucas sur son skate",
+        "game": "Ollie, un jeu de skate : Lucas descend une rue de Paris, saute les plots, poubelles, bancs et pigeons bas, passe sous les pigeons hauts et ramasse les sparkles.",
+        "hint": "espace, ↑ ou clic pour sauter, maintiens pour un ollie plus haut, échap pour la pause",
+        "hintTouch": "tape la rue pour sauter, maintiens pour un ollie plus haut",
+        "started": "Partie lancée. Saute avec espace.",
+        "empty": "personne au classement pour l'instant, à toi de jouer 🛹"
       },
       "surf": {
         "name": "Surf",
         "tagline": "surfe la houle entre rochers et mouettes",
-        "poseAlt": "Lucas avec sa planche de surf, encore verrouillé"
+        "poseAlt": "Lucas avec sa planche de surf",
+        "game": "Surf, un jeu de surf : Lucas surfe la houle, fais-le décoller pour passer chaque trou entre les rochers et bouées en bas et les piliers de jetée et mouettes en haut.",
+        "hint": "espace, ↑ ou clic pour décoller, encore pour monter plus haut, échap pour la pause",
+        "hintTouch": "tape la mer pour décoller, encore pour monter plus haut",
+        "started": "Partie lancée. Décolle avec espace.",
+        "empty": "personne au classement pour l'instant, à toi de jouer 🏄"
       }
     },
-    "game": "Ollie, un jeu de skate : Lucas descend une rue de Paris, saute les plots, poubelles, bancs et pigeons bas, passe sous les pigeons hauts et ramasse les sparkles.",
     "loading": "la borne s'allume…",
     "play": "jouer",
     "playAgain": "rejouer",
@@ -280,9 +289,6 @@
     "newBest": "nouveau record !",
     "score": "score",
     "best": "record",
-    "hint": "espace, ↑ ou clic pour sauter, maintiens pour un ollie plus haut, échap pour la pause",
-    "hintTouch": "tape la rue pour sauter, maintiens pour un ollie plus haut",
-    "started": "Partie lancée. Saute avec espace.",
     "over": "Game over : {score} points. Record : {best}.",
     "overBest": "Game over : {score} points, nouveau record !",
     "pausedLive": "En pause.",
@@ -290,7 +296,6 @@
       "title": "top {size}",
       "you": "toi",
       "loading": "chargement du classement…",
-      "empty": "personne au classement pour l'instant, à toi de jouer 🛹",
       "unavailable": "le classement fait une pause, tes parties comptent quand même pour ton record"
     },
     "entry": {

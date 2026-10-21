@@ -5,7 +5,7 @@
  */
 
 /** The games with a leaderboard. */
-export const LEADERBOARD_GAMES = ["ollie"] as const;
+export const LEADERBOARD_GAMES = ["ollie", "surf"] as const;
 export type LeaderboardGame = (typeof LEADERBOARD_GAMES)[number];
 
 export const isLeaderboardGame = (game: string): game is LeaderboardGame =>

@@ -1,0 +1,852 @@
+import {
+  type Gate,
+  OBSTACLE_WIDTH,
+  PLAYER,
+  POP_VELOCITY,
+  type SurfState,
+  WORLD,
+} from "@/lib/arcade/surf";
+
+import { sparklePath } from "../ollie/draw";
+
+/**
+ * Draws Surf's sea on a 2D canvas (DESIGN.md, Arcade). The game has its own
+ * palette, the sea and sand of the site's "surf" palette carried into a
+ * coast by day or by night (Lucas's time in Paris), never the site's
+ * palette. Everything is drawn in world units; the caller sets the
+ * transform from the world to the canvas.
+ */
+
+export type SurfArt = {
+  /** On the board: the riding pose, on the swell and in the air. */
+  readonly ride: HTMLImageElement | null;
+  /** The crash, and floating after it. */
+  readonly wipeout: HTMLImageElement | null;
+  /** A new best: the surf pose, board under the arm, waist-deep. */
+  readonly shaka: HTMLImageElement | null;
+};
+
+/** The pose Lucas takes once a run is over. */
+export type SurfEnding = "wipeout" | "shaka";
+
+/** Seconds after the crash when the fall gives way to the end pose. */
+export const END_POSE_AT = 0.7;
+
+export type SurfScene = {
+  readonly night: boolean;
+  readonly reducedMotion: boolean;
+  readonly art: SurfArt;
+  /** Seconds since the crash, or null while he rides. */
+  readonly crashAge: number | null;
+  /** The end pose of a finished run, once the fall has played. */
+  readonly ending: SurfEnding | null;
+  /** Seconds on a free-running clock, for idle motion (swell, wings). */
+  readonly now: number;
+};
+
+const COAST = {
+  day: {
+    skyTop: "#8fd8e6",
+    skyLow: "#fdf0d5",
+    sun: "#fff4cf",
+    cloud: "rgba(255, 255, 255, 0.85)",
+    headland: "#9cc7c9",
+    headlandShade: "#86b6b8",
+    beach: "#e9d8b4",
+    lighthouse: "#fffaf0",
+    lighthouseBand: "#e2574c",
+    beam: null,
+    seaFar: "#5fd0bd",
+    seaNear: "#1fa3a3",
+    glitter: "rgba(255, 250, 240, 0.7)",
+    swell: "#4cc3b3",
+    swellFoam: "rgba(241, 247, 246, 0.75)",
+    front: "#127c84",
+    frontDeep: "#0b5560",
+    foam: "#f1f7f6",
+    haze: "rgba(253, 240, 213, 0.32)",
+    shadow: "rgba(11, 43, 53, 0.22)",
+  },
+  night: {
+    skyTop: "#04161a",
+    skyLow: "#0f3a42",
+    sun: "#fff1c9",
+    cloud: "rgba(255, 255, 255, 0.05)",
+    headland: "#0a2a30",
+    headlandShade: "#082429",
+    beach: "#5a5444",
+    lighthouse: "#cfe3e1",
+    lighthouseBand: "#a8443c",
+    beam: "rgba(255, 227, 161, 0.22)",
+    seaFar: "#0f3a42",
+    seaNear: "#082a30",
+    glitter: "rgba(233, 216, 180, 0.55)",
+    swell: "#1e5a63",
+    swellFoam: "rgba(169, 207, 208, 0.45)",
+    front: "#0a3038",
+    frontDeep: "#04161a",
+    foam: "#cfe3e1",
+    haze: "rgba(4, 22, 26, 0.3)",
+    shadow: "rgba(0, 0, 0, 0.35)",
+  },
+} as const;
+
+type Coast = (typeof COAST)["day"] | (typeof COAST)["night"];
+
+/** The line around the obstacles, the chibi art's maroon (as in Ollie). */
+const OUTLINE = "#4a1f24";
+/** The sticker rim around the obstacles. */
+const RIM = "#fffaf0";
+const ROCK = "#76707c";
+const ROCK_LIGHT = "#948e9a";
+const ROCK_DARK = "#5a5560";
+const WEED = "#3f8f5a";
+const BEACON_RED = "#e2574c";
+const BEACON_WHITE = "#fffaf0";
+const BEACON_LAMP = "#ffd84d";
+const WOOD = "#a8734a";
+const WOOD_DARK = "#7f5236";
+const WOOD_WET = "#5e3d2a";
+const BARNACLE = "#e9d8b4";
+const GULL = "#fbfbf7";
+const GULL_WING = "#a9b4bc";
+const GULL_TIP = "#2b2f3a";
+const GULL_BEAK = "#f2b33d";
+const SPARKLE_FILL = "#fffaf0";
+const SPARKLE_LINE = "#1fa3a3";
+
+/** Where the horizon sits: the sky above, the open sea below. */
+const HORIZON = 214;
+
+/** A stable pseudo-random number in [0, 1) for a slot of the coast. */
+const hash = (n: number, salt = 0) => {
+  let x = (Math.imul(n, 374761393) + Math.imul(salt + 1, 668265263)) | 0;
+  x = Math.imul(x ^ (x >>> 13), 1274126177);
+  x ^= x >>> 16;
+  return (x >>> 0) / 4294967296;
+};
+
+/** The slots of a repeating layer that are on screen, with their left x. */
+const slots = (offset: number, width: number) => {
+  const first = Math.floor(offset / width) - 1;
+  const count = Math.ceil(WORLD.width / width) + 3;
+  return Array.from({ length: count }, (_, k) => {
+    const index = first + k;
+    return { index, x: index * width - offset };
+  });
+};
+
+const sky = (ctx: CanvasRenderingContext2D, coast: Coast, scene: SurfScene) => {
+  const gradient = ctx.createLinearGradient(0, 0, 0, HORIZON);
+  gradient.addColorStop(0, coast.skyTop);
+  gradient.addColorStop(1, coast.skyLow);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, WORLD.width, HORIZON);
+
+  if (scene.night) {
+    for (let i = 0; i < 52; i++) {
+      const twinkle = scene.reducedMotion
+        ? 0.7
+        : 0.45 + 0.55 * Math.abs(Math.sin(scene.now * 1.2 + i * 1.7));
+      ctx.globalAlpha = twinkle * (0.4 + hash(i, 3) * 0.6);
+      ctx.fillStyle = "#fff6e0";
+      const size = hash(i, 4) < 0.15 ? 2 : 1.2;
+      ctx.fillRect(hash(i, 1) * WORLD.width, hash(i, 2) * 170, size, size);
+    }
+    ctx.globalAlpha = 1;
+    // The moon, a crescent, over the sea
+    ctx.fillStyle = coast.sun;
+    ctx.beginPath();
+    ctx.arc(468, 64, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = coast.skyTop;
+    ctx.beginPath();
+    ctx.arc(478, 56, 19, 0, Math.PI * 2);
+    ctx.fill();
+  } else {
+    // A low sun, half a glow
+    const glow = ctx.createRadialGradient(470, 150, 10, 470, 150, 110);
+    glow.addColorStop(0, "rgba(255, 244, 207, 0.9)");
+    glow.addColorStop(1, "rgba(255, 244, 207, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(360, 40, 220, HORIZON - 40);
+    ctx.fillStyle = coast.sun;
+    ctx.beginPath();
+    ctx.arc(470, 150, 30, 0, Math.PI * 2);
+    ctx.fill();
+  }
+};
+
+const clouds = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  offset: number,
+) => {
+  ctx.fillStyle = coast.cloud;
+  for (const { index, x } of slots(offset, 280)) {
+    if (hash(index, 9) < 0.5) continue;
+    const y = 36 + hash(index, 10) * 70;
+    const cx = x + hash(index, 11) * 130;
+    ctx.beginPath();
+    ctx.arc(cx, y, 14, 0, Math.PI * 2);
+    ctx.arc(cx + 18, y - 7, 18, 0, Math.PI * 2);
+    ctx.arc(cx + 38, y, 13, 0, Math.PI * 2);
+    ctx.rect(cx, y, 38, 13);
+    ctx.fill();
+  }
+};
+
+const lighthouse = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  x: number,
+  base: number,
+  scene: SurfScene,
+) => {
+  // The beam sweeps at night, still under reduced motion
+  if (coast.beam) {
+    const sweep = scene.reducedMotion ? 0.4 : Math.sin(scene.now * 0.9);
+    ctx.save();
+    ctx.translate(x, base - 50);
+    ctx.rotate(sweep * 0.5 + Math.PI);
+    ctx.fillStyle = coast.beam;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(-220, -26);
+    ctx.lineTo(-220, 26);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.fillStyle = coast.lighthouse;
+  ctx.beginPath();
+  ctx.moveTo(x - 7, base);
+  ctx.lineTo(x - 5, base - 44);
+  ctx.lineTo(x + 5, base - 44);
+  ctx.lineTo(x + 7, base);
+  ctx.fill();
+  ctx.fillStyle = coast.lighthouseBand;
+  ctx.fillRect(x - 6.4, base - 18, 12.8, 7);
+  ctx.fillRect(x - 5.6, base - 36, 11.2, 7);
+  ctx.fillRect(x - 6, base - 52, 12, 8);
+  ctx.fillStyle = coast.beam ? "#ffe3a1" : coast.lighthouse;
+  ctx.fillRect(x - 4, base - 50, 8, 5);
+};
+
+/** The far coast: headlands, a strip of beach, now and then a lighthouse. */
+const headlands = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  offset: number,
+  scene: SurfScene,
+) => {
+  const base = HORIZON;
+  for (const { index, x } of slots(offset, 220)) {
+    if (hash(index, 20) < 0.35) continue;
+    const height = 18 + hash(index, 21) * 34;
+    const width = 120 + hash(index, 22) * 90;
+    ctx.fillStyle =
+      hash(index, 23) < 0.5 ? coast.headland : coast.headlandShade;
+    ctx.beginPath();
+    ctx.moveTo(x, base);
+    ctx.bezierCurveTo(
+      x + width * 0.2,
+      base - height,
+      x + width * 0.55,
+      base - height * 1.1,
+      x + width * 0.75,
+      base - height * 0.7,
+    );
+    ctx.quadraticCurveTo(x + width * 0.9, base - height * 0.4, x + width, base);
+    ctx.fill();
+    ctx.fillStyle = coast.beach;
+    ctx.fillRect(x + width * 0.1, base - 3, width * 0.8, 3);
+    if (index % 5 === 2) {
+      lighthouse(
+        ctx,
+        coast,
+        x + width * 0.375,
+        base - height * 0.875 + 3,
+        scene,
+      );
+    }
+  }
+};
+
+/** The open sea from the horizon to the swell, with light on the water. */
+const openSea = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  scene: SurfScene,
+) => {
+  const gradient = ctx.createLinearGradient(0, HORIZON, 0, WORLD.sea);
+  gradient.addColorStop(0, coast.seaFar);
+  gradient.addColorStop(1, coast.seaNear);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, HORIZON, WORLD.width, WORLD.sea - HORIZON + 20);
+  // The sun's (or the moon's) path on the water, glinting
+  ctx.fillStyle = coast.glitter;
+  for (let i = 0; i < 18; i++) {
+    const y = HORIZON + 4 + i * 6;
+    const spread = 10 + i * 4;
+    const shimmer = scene.reducedMotion
+      ? 0
+      : Math.sin(scene.now * 2 + i * 1.3) * 4;
+    const cx = (scene.night ? 468 : 470) + shimmer;
+    ctx.globalAlpha = 1 - i / 20;
+    ctx.fillRect(cx - spread / 2 + hash(i, 5) * 6, y, spread * 0.6, 1.5);
+  }
+  ctx.globalAlpha = 1;
+};
+
+/** Long rolling lines of swell between the horizon and Lucas. */
+const swells = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  offset: number,
+  scene: SurfScene,
+) => {
+  const rows = [
+    { y: 238, amp: 2, length: 90, speed: 0.4 },
+    { y: 262, amp: 3, length: 120, speed: 0.6 },
+    { y: 292, amp: 4, length: 150, speed: 0.8 },
+  ];
+  const t = scene.reducedMotion ? 0 : scene.now;
+  for (const row of rows) {
+    const shift = offset * row.speed;
+    ctx.fillStyle = coast.swell;
+    ctx.beginPath();
+    ctx.moveTo(0, row.y + 12);
+    for (let x = 0; x <= WORLD.width; x += 8) {
+      const y =
+        row.y +
+        Math.sin(((x + shift) / row.length) * Math.PI * 2 + t) * row.amp;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(WORLD.width, row.y + 12);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = coast.swellFoam;
+    for (const { index, x } of slots(shift, row.length)) {
+      if (hash(index, row.y) < 0.5) continue;
+      ctx.fillRect(x + row.length * 0.3, row.y - row.amp - 1, 18, 1.5);
+    }
+  }
+};
+
+/** The water Lucas rides on, drawn over his board and the gates' feet. */
+const frontSea = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  offset: number,
+  scene: SurfScene,
+) => {
+  const t = scene.reducedMotion ? 0 : scene.now * 2.4;
+  const surface = (x: number) =>
+    WORLD.sea + 5 + Math.sin((x + offset) * 0.035 + t) * 2.5;
+  const gradient = ctx.createLinearGradient(0, WORLD.sea, 0, WORLD.height);
+  gradient.addColorStop(0, coast.front);
+  gradient.addColorStop(1, coast.frontDeep);
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.moveTo(0, WORLD.height);
+  for (let x = 0; x <= WORLD.width; x += 6) ctx.lineTo(x, surface(x));
+  ctx.lineTo(WORLD.width, WORLD.height);
+  ctx.closePath();
+  ctx.fill();
+  // The foam lip, and a few streaks of foam under it
+  ctx.strokeStyle = coast.foam;
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  for (let x = 0; x <= WORLD.width; x += 6) {
+    if (x === 0) ctx.moveTo(x, surface(x));
+    else ctx.lineTo(x, surface(x));
+  }
+  ctx.stroke();
+  ctx.globalAlpha = 0.45;
+  ctx.lineWidth = 1.5;
+  for (const { index, x } of slots(offset * 1.1, 70)) {
+    const y = WORLD.sea + 18 + hash(index, 70) * 40;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 14 + hash(index, 71) * 18, y);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+};
+
+/**
+ * Fills and outlines the current path in the maroon line. Each obstacle is
+ * drawn twice: first its light rim alone (`rimPass`), then its shapes, so
+ * it reads like a sticker against the sea and the sky, as in Ollie.
+ */
+let rimPass = false;
+
+const outlined = (ctx: CanvasRenderingContext2D, fill: string) => {
+  ctx.lineJoin = "round";
+  if (rimPass) {
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = RIM;
+    ctx.stroke();
+    return;
+  }
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = OUTLINE;
+  ctx.stroke();
+};
+
+/** A seed for a gate's own shape, the same for as long as it is on screen. */
+const gateSeed = (gate: Gate) => Math.round(gate.floor * 31 + gate.ceiling * 7);
+
+/** A sea stack rising from the water to the gap's floor. */
+const rock = (ctx: CanvasRenderingContext2D, gate: Gate) => {
+  const width = OBSTACLE_WIDTH.rock;
+  const left = gate.x - width / 2;
+  const top = WORLD.sea - gate.floor;
+  const bottom = WORLD.height + 10;
+  const seed = gateSeed(gate);
+  const bump = (salt: number) => (hash(seed, salt) - 0.5) * 8;
+  ctx.beginPath();
+  ctx.moveTo(left + 2, bottom);
+  ctx.lineTo(left + 4 + bump(1), top + 22);
+  ctx.quadraticCurveTo(left + 2, top + 4, left + 18 + bump(2), top + 1);
+  ctx.quadraticCurveTo(
+    left + width * 0.5,
+    top - 3,
+    left + width - 16 + bump(3),
+    top + 2,
+  );
+  ctx.quadraticCurveTo(left + width - 1, top + 6, left + width - 4, top + 26);
+  ctx.lineTo(left + width - 2 + bump(4), bottom);
+  ctx.closePath();
+  outlined(ctx, ROCK);
+  if (rimPass) return;
+  // A lit face on the left, a shaded one on the right, a crack
+  ctx.save();
+  ctx.clip();
+  ctx.fillStyle = ROCK_LIGHT;
+  ctx.fillRect(left, top, 16, bottom - top);
+  ctx.fillStyle = ROCK_DARK;
+  ctx.fillRect(left + width - 18, top + 8, 18, bottom - top);
+  ctx.strokeStyle = ROCK_DARK;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(left + width * 0.45, top + 6);
+  ctx.lineTo(left + width * 0.55, top + 22);
+  ctx.lineTo(left + width * 0.42, top + 34);
+  ctx.stroke();
+  // Weed along the waterline
+  ctx.fillStyle = WEED;
+  for (let w = 0; w < 6; w++) {
+    const wx = left + 4 + w * 11;
+    ctx.beginPath();
+    ctx.moveTo(wx, WORLD.sea + 4);
+    ctx.lineTo(wx + 5, WORLD.sea - 8 - hash(seed, 10 + w) * 6);
+    ctx.lineTo(wx + 10, WORLD.sea + 4);
+    ctx.fill();
+  }
+  ctx.restore();
+  // Redraw the line over the shading
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = OUTLINE;
+  ctx.stroke();
+};
+
+/** A channel beacon: red and white bands up to a lamp at the gap's floor. */
+const beacon = (
+  ctx: CanvasRenderingContext2D,
+  gate: Gate,
+  scene: SurfScene,
+) => {
+  const width = OBSTACLE_WIDTH.buoy;
+  const left = gate.x - width / 2;
+  const top = WORLD.sea - gate.floor;
+  const bottom = WORLD.height + 10;
+  // The tower, a little narrower at the top
+  ctx.beginPath();
+  ctx.moveTo(left + 2, bottom);
+  ctx.lineTo(left + 6, top + 14);
+  ctx.lineTo(left + width - 6, top + 14);
+  ctx.lineTo(left + width - 2, bottom);
+  ctx.closePath();
+  outlined(ctx, BEACON_WHITE);
+  if (!rimPass) {
+    ctx.save();
+    ctx.clip();
+    ctx.fillStyle = BEACON_RED;
+    for (let y = top + 14; y < bottom; y += 36)
+      ctx.fillRect(left, y, width, 18);
+    ctx.restore();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = OUTLINE;
+    ctx.stroke();
+  }
+  // The lamp housing on top, lit and blinking at night
+  ctx.beginPath();
+  ctx.roundRect(left + 4, top + 2, width - 8, 14, 4);
+  outlined(ctx, BEACON_RED);
+  const blink =
+    !scene.night ||
+    scene.reducedMotion ||
+    Math.floor(scene.now * 1.5) % 2 === 0;
+  ctx.beginPath();
+  ctx.arc(gate.x, top + 2, 6, Math.PI, 0);
+  ctx.closePath();
+  outlined(ctx, blink ? BEACON_LAMP : "#9a8a5a");
+  if (!rimPass && scene.night && blink) {
+    const glow = ctx.createRadialGradient(gate.x, top, 2, gate.x, top, 34);
+    glow.addColorStop(0, "rgba(255, 216, 77, 0.45)");
+    glow.addColorStop(1, "rgba(255, 216, 77, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(gate.x - 34, top - 34, 68, 68);
+  }
+};
+
+/** A jetty piling hanging from the deck down to the gap's ceiling. */
+const piling = (ctx: CanvasRenderingContext2D, gate: Gate) => {
+  const width = OBSTACLE_WIDTH.piling;
+  const left = gate.x - width / 2;
+  const bottom = WORLD.sea - gate.ceiling;
+  // The deck it holds up, across the top of the screen
+  ctx.beginPath();
+  ctx.rect(left - 22, -10, width + 44, 26);
+  outlined(ctx, WOOD);
+  if (!rimPass) {
+    ctx.fillStyle = WOOD_DARK;
+    for (let p = left - 14; p < left + width + 22; p += 18) {
+      ctx.fillRect(p, -10, 2, 26);
+    }
+  }
+  // The post, wet and barnacled at its foot
+  ctx.beginPath();
+  ctx.roundRect(left + 4, 10, width - 8, bottom - 10, [0, 0, 8, 8]);
+  outlined(ctx, WOOD);
+  if (rimPass) return;
+  ctx.save();
+  ctx.clip();
+  ctx.fillStyle = WOOD_DARK;
+  ctx.fillRect(left + 12, 10, 3, bottom);
+  ctx.fillRect(left + width - 17, 10, 2, bottom);
+  ctx.fillStyle = WOOD_WET;
+  ctx.fillRect(left, bottom - 22, width, 22);
+  ctx.fillStyle = BARNACLE;
+  const seed = gateSeed(gate);
+  for (let b = 0; b < 7; b++) {
+    ctx.beginPath();
+    ctx.arc(
+      left + 8 + hash(seed, 30 + b) * (width - 16),
+      bottom - 4 - hash(seed, 40 + b) * 26,
+      2.2,
+      0,
+      Math.PI * 2,
+    );
+    ctx.fill();
+  }
+  ctx.restore();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = OUTLINE;
+  ctx.stroke();
+};
+
+/** One gull, facing Lucas, its wings up or down. */
+const gull = (
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  wingUp: boolean,
+) => {
+  // Wings behind the body
+  ctx.beginPath();
+  if (wingUp) {
+    ctx.moveTo(cx - 4, cy - 2);
+    ctx.quadraticCurveTo(cx + 2, cy - 22, cx + 22, cy - 18);
+    ctx.lineTo(cx + 10, cy - 2);
+  } else {
+    ctx.moveTo(cx - 4, cy + 1);
+    ctx.quadraticCurveTo(cx + 4, cy + 18, cx + 22, cy + 14);
+    ctx.lineTo(cx + 10, cy + 1);
+  }
+  ctx.closePath();
+  outlined(ctx, GULL_WING);
+  if (!rimPass) {
+    ctx.fillStyle = GULL_TIP;
+    ctx.beginPath();
+    ctx.arc(cx + 20, wingUp ? cy - 18 : cy + 14, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // Body and tail
+  ctx.beginPath();
+  ctx.ellipse(cx + 4, cy, 15, 8, 0, 0, Math.PI * 2);
+  outlined(ctx, GULL);
+  ctx.beginPath();
+  ctx.moveTo(cx + 17, cy - 3);
+  ctx.lineTo(cx + 26, cy - 5);
+  ctx.lineTo(cx + 24, cy + 3);
+  ctx.closePath();
+  outlined(ctx, GULL);
+  // Head, eye and beak
+  ctx.beginPath();
+  ctx.arc(cx - 11, cy - 4, 7, 0, Math.PI * 2);
+  outlined(ctx, GULL);
+  if (rimPass) return;
+  ctx.fillStyle = GULL_TIP;
+  ctx.fillRect(cx - 14, cy - 7, 2, 2);
+  ctx.fillStyle = GULL_BEAK;
+  ctx.beginPath();
+  ctx.moveTo(cx - 17, cy - 4);
+  ctx.lineTo(cx - 25, cy - 2);
+  ctx.lineTo(cx - 17, cy);
+  ctx.fill();
+};
+
+/** The flock over the gap, from its ceiling up past the top of the screen. */
+const gulls = (ctx: CanvasRenderingContext2D, gate: Gate, scene: SurfScene) => {
+  const bottom = WORLD.sea - gate.ceiling;
+  const rate = scene.reducedMotion ? 3 : 8;
+  for (let k = 0, y = bottom - 14; y > -20; k++, y -= 38) {
+    const wingUp = Math.floor(scene.now * rate + k * 0.5) % 2 === 0;
+    gull(ctx, gate.x + (k % 2 === 0 ? -2 : 6), y, wingUp);
+  }
+};
+
+/** One gate: what rises from the sea, then what comes down from the sky. */
+const obstacle = (
+  ctx: CanvasRenderingContext2D,
+  gate: Gate,
+  scene: SurfScene,
+) => {
+  if (gate.low === "rock") rock(ctx, gate);
+  else beacon(ctx, gate, scene);
+  if (gate.high === "piling") piling(ctx, gate);
+  else gulls(ctx, gate, scene);
+};
+
+/** Where the board sits in each pose's art, as fractions of the square. */
+const ANCHOR = {
+  ride: { x: 0.5, bottom: 0.9 },
+  wipeout: { x: 0.5, bottom: 0.85 },
+  shaka: { x: 0.5, bottom: 0.97 },
+} as const;
+/** The chibi's drawn size, in world units. */
+const SPRITE = 104;
+
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
+
+/** White spray behind the tail of the board, while he rides the swell. */
+const spray = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  x: number,
+  y: number,
+  scene: SurfScene,
+) => {
+  ctx.fillStyle = coast.foam;
+  for (let i = 0; i < 6; i++) {
+    const phase = scene.reducedMotion ? 0.5 : (scene.now * 2.2 + i / 6) % 1;
+    ctx.globalAlpha = 1 - phase;
+    ctx.beginPath();
+    ctx.arc(
+      x - 6 - phase * 26 - i * 2,
+      y - 4 - Math.sin(phase * Math.PI) * (8 + (i % 3) * 4),
+      2.6 - phase * 1.4,
+      0,
+      Math.PI * 2,
+    );
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+};
+
+/** Rings of foam where he went in. */
+const splash = (
+  ctx: CanvasRenderingContext2D,
+  coast: Coast,
+  x: number,
+  age: number,
+  scene: SurfScene,
+) => {
+  if (scene.reducedMotion) return;
+  ctx.strokeStyle = coast.foam;
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 2; i++) {
+    const t = Math.min(Math.max(age - 0.15 - i * 0.18, 0) / 0.8, 1);
+    if (t <= 0 || t >= 1) continue;
+    ctx.globalAlpha = 1 - t;
+    ctx.beginPath();
+    ctx.ellipse(x, WORLD.sea + 6, 14 + t * 44, 3 + t * 6, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+};
+
+const lucas = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  scene: SurfScene,
+  coast: Coast,
+) => {
+  const { player } = state;
+  const cx = PLAYER.x + PLAYER.width / 2;
+  const bottom = WORLD.sea - player.lift;
+  const crashed = scene.crashAge !== null;
+  const age = scene.crashAge ?? 0;
+
+  // His shadow on the water, smaller as he flies
+  if (!crashed) {
+    const spread = Math.max(0.3, 1 - player.lift / 200);
+    ctx.fillStyle = coast.shadow;
+    ctx.beginPath();
+    ctx.ellipse(cx, WORLD.sea + 3, 30 * spread, 4 * spread, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // The run is over: he floats in the foam, or stands waist-deep with the
+  // board under his arm on a new best
+  const ending = scene.ending ? scene.art[scene.ending] : null;
+  if (
+    crashed &&
+    scene.ending &&
+    ending &&
+    (scene.reducedMotion || age >= END_POSE_AT)
+  ) {
+    const size = scene.ending === "shaka" ? 112 : SPRITE;
+    const sink = scene.ending === "shaka" ? 34 : 30;
+    const bob = scene.reducedMotion ? 0 : Math.sin(scene.now * 2) * 1.5;
+    ctx.drawImage(
+      ending,
+      cx + 14 - ANCHOR[scene.ending].x * size,
+      WORLD.sea + sink + bob - ANCHOR[scene.ending].bottom * size,
+      size,
+      size,
+    );
+    splash(ctx, coast, cx + 14, age, scene);
+    return;
+  }
+
+  if (crashed) {
+    // The wipeout: off the board, tumbling into the sea
+    const art = scene.art.wipeout ?? scene.art.ride ?? scene.art.shaka;
+    if (!art) return;
+    let angle = 0;
+    let dx = 0;
+    let y = bottom;
+    if (!scene.reducedMotion) {
+      const t = easeOut(Math.min(age / 0.6, 1));
+      angle = t * 0.9;
+      dx = t * 14;
+      y = bottom + (WORLD.sea + 30 - bottom) * t;
+    }
+    ctx.save();
+    ctx.translate(cx + dx, y);
+    ctx.rotate(angle);
+    ctx.drawImage(
+      art,
+      -ANCHOR.wipeout.x * SPRITE,
+      -ANCHOR.wipeout.bottom * SPRITE,
+      SPRITE,
+      SPRITE,
+    );
+    ctx.restore();
+    splash(ctx, coast, cx + dx, age, scene);
+    return;
+  }
+
+  const art = scene.art.ride ?? scene.art.shaka;
+  if (!art) return;
+  let angle = 0;
+  let dy = 0;
+  if (player.riding) {
+    // Riding the swell: a gentle rise and fall
+    if (!scene.reducedMotion) dy = Math.sin(scene.now * 3) * 1.5;
+  } else if (!scene.reducedMotion) {
+    // The nose up as he climbs, down as he falls
+    angle = Math.min(
+      0.35,
+      Math.max(-0.3, (-player.velocity / POP_VELOCITY) * 0.28),
+    );
+  }
+  ctx.save();
+  ctx.translate(cx, bottom + dy);
+  ctx.rotate(angle);
+  ctx.drawImage(
+    art,
+    -ANCHOR.ride.x * SPRITE,
+    -ANCHOR.ride.bottom * SPRITE,
+    SPRITE,
+    SPRITE,
+  );
+  ctx.restore();
+  if (player.riding && state.phase === "running") {
+    spray(ctx, coast, cx - SPRITE * 0.32, WORLD.sea, scene);
+  }
+};
+
+/** Little stars round his head while he goes in, as in Ollie. */
+const dazed = (ctx: CanvasRenderingContext2D, scene: SurfScene) => {
+  if (scene.crashAge === null || scene.crashAge > END_POSE_AT) return;
+  const spin = scene.reducedMotion ? 0 : scene.crashAge * 5;
+  const cx = PLAYER.x + PLAYER.width / 2 + 24;
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 3; i++) {
+    const a = spin + (i * Math.PI * 2) / 3;
+    sparklePath(
+      ctx,
+      cx + Math.cos(a) * 20,
+      WORLD.sea - 70 + Math.sin(a) * 6,
+      6,
+    );
+    ctx.fillStyle = SPARKLE_FILL;
+    ctx.fill();
+    ctx.strokeStyle = SPARKLE_LINE;
+    ctx.stroke();
+  }
+};
+
+/** Parallax of each layer, calmer under reduced motion. */
+const PARALLAX = {
+  full: { clouds: 0.04, headlands: 0.08, swells: 0.35 },
+  calm: { clouds: 0, headlands: 0, swells: 0.12 },
+} as const;
+
+/** Draws one frame of the sea. */
+export const drawSurf = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  scene: SurfScene,
+) => {
+  const coast = scene.night ? COAST.night : COAST.day;
+  const parallax = scene.reducedMotion ? PARALLAX.calm : PARALLAX.full;
+  const d = state.distance;
+
+  ctx.save();
+  // A short shake on the crash, never under reduced motion
+  if (scene.crashAge !== null && scene.crashAge < 0.3 && !scene.reducedMotion) {
+    const k = 1 - scene.crashAge / 0.3;
+    ctx.translate(
+      Math.sin(scene.crashAge * 90) * 5 * k,
+      Math.cos(scene.crashAge * 70) * 3 * k,
+    );
+  }
+
+  sky(ctx, coast, scene);
+  if (!scene.night) clouds(ctx, coast, d * parallax.clouds);
+  headlands(ctx, coast, d * parallax.headlands, scene);
+  openSea(ctx, coast, scene);
+  swells(ctx, coast, d * parallax.swells, scene);
+  // A haze over the background, so the gates stand out
+  ctx.fillStyle = coast.haze;
+  ctx.fillRect(0, 0, WORLD.width, WORLD.sea);
+
+  for (const pass of [true, false]) {
+    rimPass = pass;
+    for (const gate of state.obstacles) obstacle(ctx, gate, scene);
+  }
+  rimPass = false;
+  lucas(ctx, state, scene, coast);
+  frontSea(ctx, coast, d, scene);
+  dazed(ctx, scene);
+  ctx.restore();
+};

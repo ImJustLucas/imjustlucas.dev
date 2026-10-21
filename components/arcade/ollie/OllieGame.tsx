@@ -1,48 +1,34 @@
 "use client";
 
-import {
-  type FormEvent,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { Hand, Keyboard, Pause, Play, RotateCcw, Trophy } from "lucide-react";
-
-import { startRunAction, submitRunAction } from "@/app/[locale]/arcade/actions";
+import {
+  type CabinetScreen,
+  Deck,
+  Marquee,
+  NameEntry,
+  pad,
+  type RunResult,
+  ScreenCards,
+  ScreenScore,
+} from "@/components/arcade/CabinetParts";
 import type { ScreenProps } from "@/components/arcade/screen";
+import { useBest, useBoardRun } from "@/components/arcade/use-board-run";
 import { useParisNight } from "@/components/chibi/use-paris-night";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { useSounds } from "@/components/sound/SoundProvider";
 import {
-  TypographyData,
-  TypographyMuted,
-  TypographyTitle,
-} from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { wouldRank } from "@/lib/arcade/board";
-import {
   advance,
-  bestOf,
   createOllie,
   type OllieInput,
   type OllieState,
-  parseBest,
   press,
   release,
   score,
   WORLD,
 } from "@/lib/arcade/ollie";
-import {
-  NAME_MAX_LENGTH,
-  type NameProblem,
-  parseName,
-} from "@/lib/arcade/player-name";
 import { chibiFrames } from "@/lib/chibi";
-import { cn } from "@/lib/utils";
 
 import {
   drawOllie,
@@ -51,25 +37,6 @@ import {
   type OllieEnding,
 } from "./draw";
 
-type Screen = "ready" | "running" | "paused" | "over";
-type Result = { score: number; best: number; newBest: boolean };
-
-/** Where a finished run stands with the leaderboard. */
-type Entry =
-  | { readonly kind: "none" }
-  | { readonly kind: "asking"; readonly problem?: NameProblem }
-  | { readonly kind: "sending" }
-  | { readonly kind: "ranked"; readonly rank: number }
-  | { readonly kind: "missed" };
-
-/** A run handed out by the server, and the presses made in it. */
-type Run = { readonly runId: string; readonly seed: number };
-type FinishedRun = Run & { readonly inputs: ReadonlyArray<OllieInput> };
-
-/** The Admin's field, so typing a name feels like the rest of the client. */
-const INPUT =
-  "h-11 w-full min-w-0 rounded-md border-2 border-seam bg-ground px-3 text-base text-ink transition-colors duration-hover ease-out placeholder:text-ink-muted/75 hover:border-ink-muted/40 aria-[invalid=true]:border-busy-ink";
-
 const BEST_KEY = "imjustlucas:arcade:ollie:best";
 /** Frames run this long after the crash: the fall, then the end pose. */
 const CRASH_SECONDS = END_POSE_AT + 0.1;
@@ -77,24 +44,7 @@ const CRASH_SECONDS = END_POSE_AT + 0.1;
 const RETRY_GUARD_MS = 450;
 const JUMP_KEYS = new Set(["Space", "ArrowUp", "KeyW"]);
 
-const readBest = () => {
-  try {
-    return parseBest(window.localStorage.getItem(BEST_KEY));
-  } catch {
-    return null;
-  }
-};
-
-const writeBest = (best: number) => {
-  try {
-    window.localStorage.setItem(BEST_KEY, String(best));
-  } catch {
-    // Storage refused: the best holds for this visit only
-  }
-};
-
 const newSeed = () => Math.floor(Math.random() * 2 ** 31);
-const pad = (value: number) => String(value).padStart(5, "0");
 
 /**
  * The Ollie cabinet (DESIGN.md, Arcade): the marquee, the screen where the
@@ -104,20 +54,13 @@ const pad = (value: number) => String(value).padStart(5, "0");
  * is one the server handed out: its presses are recorded, and a run that
  * makes the leaderboard is sent back to be replayed there.
  */
-export default function OllieGame({
-  board,
-  player,
-  onBoard,
-  remember,
-}: ScreenProps) {
+export default function OllieGame(props: ScreenProps) {
   const t = useTranslations("Arcade");
   const { play } = useSounds();
   const night = useParisNight();
   const reducedMotion = useReducedMotion();
   const hintId = useId();
   const descriptionId = useId();
-  const nameId = useId();
-  const nameHintId = useId();
 
   const screenRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -133,41 +76,22 @@ export default function OllieGame({
   const crashAt = useRef<number | null>(null);
   const clock = useRef(0);
   const inputs = useRef<OllieInput[]>([]);
-  const nextRun = useRef<Run | null>(null);
-  const activeRun = useRef<Run | null>(null);
-  const finished = useRef<FinishedRun | null>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const entryRef = useRef<HTMLFormElement>(null);
 
-  const [screen, setScreen] = useState<Screen>("ready");
-  const [best, setBest] = useState<number | null>(null);
-  const [result, setResult] = useState<Result | null>(null);
+  const [screen, setScreen] = useState<CabinetScreen>("ready");
+  const [result, setResult] = useState<RunResult | null>(null);
   const [live, setLive] = useState("");
-  const [entry, setEntry] = useState<Entry>({ kind: "none" });
+  const { best, record } = useBest(BEST_KEY);
+  const { entry, begin, end, submitName } = useBoardRun(
+    "ollie",
+    props,
+    setLive,
+  );
 
   // What the frame loop reads without restarting
-  const scene = useRef({ night, reducedMotion, play, best, board, player });
+  const scene = useRef({ night, reducedMotion, play });
   useEffect(() => {
-    scene.current = { night, reducedMotion, play, best, board, player };
-  }, [night, reducedMotion, play, best, board, player]);
-
-  /** Asks the server for the next run, ready before Play is pressed. */
-  const fetchRun = useCallback(() => {
-    startRunAction("ollie")
-      .then((run) => {
-        if (run.kind === "started") nextRun.current = run;
-      })
-      .catch(() => {
-        // Offline or resting: the next run plays off the board
-      });
-  }, []);
-
-  useEffect(fetchRun, [fetchRun]);
-
-  useEffect(() => {
-    const check = () => setBest(readBest());
-    check();
-  }, []);
+    scene.current = { night, reducedMotion, play };
+  }, [night, reducedMotion, play]);
 
   /** Draws the current frame at the canvas's size. */
   const render = useCallback(() => {
@@ -231,74 +155,22 @@ export default function OllieGame({
     render();
   }, [night, reducedMotion, render]);
 
-  /** Sends the finished run under `name`, and shows where it landed. */
-  const send = useCallback(
-    (name: string) => {
-      const run = finished.current;
-      const id = scene.current.player?.id;
-      if (!run || !id) return;
-      setEntry({ kind: "sending" });
-      submitRunAction({
-        runId: run.runId,
-        playerId: id,
-        name,
-        inputs: run.inputs,
-      })
-        .then((sent) => {
-          if (sent.kind === "ranked" || sent.kind === "unranked") {
-            finished.current = null;
-            onBoard(sent.top);
-          }
-          if (sent.kind === "ranked") {
-            setEntry({ kind: "ranked", rank: sent.rank });
-            setLive(t("entry.rankedLive", { rank: sent.rank }));
-            scene.current.play("toggleOn");
-          } else if (sent.kind === "bad-name") {
-            setEntry({ kind: "asking", problem: "blocked" });
-          } else {
-            setEntry({ kind: "missed" });
-          }
-        })
-        .catch(() => setEntry({ kind: "missed" }));
-    },
-    [onBoard, t],
-  );
-
   const finish = useCallback(() => {
     const final = score(game.current);
-    const stored = scene.current.best;
-    const newBest = final > 0 && final > (stored ?? 0);
-    const next = bestOf(stored, final);
-    if (newBest) writeBest(next);
+    const { best, newBest } = record(final);
     ending.current = newBest ? "trophy" : "sleeping";
-    setBest(next);
-    setResult({ score: final, best: next, newBest });
+    setResult({ score: final, best, newBest });
     setScreen("over");
     setLive(
       newBest
         ? t("overBest", { score: final })
-        : t("over", { score: final, best: next }),
+        : t("over", { score: final, best }),
     );
     const { play } = scene.current;
     play("miss");
     if (newBest) window.setTimeout(() => scene.current.play("unlock"), 450);
-
-    // A run good enough for the board goes back to the server, under the
-    // player's name, asked for the first time
-    const run = activeRun.current;
-    activeRun.current = null;
-    const { board, player } = scene.current;
-    if (
-      run &&
-      player &&
-      board?.kind === "board" &&
-      wouldRank(board.top, player.id, final)
-    ) {
-      finished.current = { ...run, inputs: inputs.current };
-      if (player.name) send(player.name);
-      else setEntry({ kind: "asking" });
-    }
-  }, [t, send]);
+    end(final, inputs.current);
+  }, [t, record, end]);
 
   // The frame loop, while a run is on or the fall is still playing
   useEffect(() => {
@@ -357,24 +229,19 @@ export default function OllieGame({
   const start = useCallback(
     (fromButton = false) => {
       // The run the server handed out, or one off the board
-      const run = nextRun.current;
-      nextRun.current = null;
-      activeRun.current = run;
-      game.current = createOllie(run?.seed ?? newSeed());
+      game.current = createOllie(begin() ?? newSeed());
       inputs.current = [];
       crashAt.current = null;
       ending.current = null;
-      fetchRun();
       jump();
       // A press of the button or a key is a hop; a held key or finger flies
       if (fromButton) letGo();
       setResult(null);
-      setEntry({ kind: "none" });
       setScreen("running");
-      setLive(t("started"));
+      setLive(t("cabinets.ollie.started"));
       screenRef.current?.focus({ preventScroll: true });
     },
-    [jump, letGo, fetchRun, t],
+    [jump, letGo, begin, t],
   );
 
   const pause = useCallback(() => {
@@ -449,48 +316,9 @@ export default function OllieGame({
     if (game.current.player.holding) letGo();
   };
 
-  const submitName = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const parsed = parseName(nameRef.current?.value ?? "");
-    if (!parsed.ok) {
-      setEntry({ kind: "asking", problem: parsed.problem });
-      nameRef.current?.focus();
-      return;
-    }
-    remember(parsed.name);
-    send(parsed.name);
-  };
-
-  const asking = entry.kind === "asking" || entry.kind === "sending";
-
-  // On a keyboard, typing goes straight to the name,
-  const askingFirst = entry.kind === "asking" && !entry.problem;
-  // and on a phone, the strip scrolls into view under the screen
-  useEffect(() => {
-    if (!askingFirst) return;
-    entryRef.current?.scrollIntoView({
-      block: "nearest",
-      behavior: scene.current.reducedMotion ? "auto" : "smooth",
-    });
-    if (window.matchMedia("(pointer: fine)").matches) {
-      nameRef.current?.focus({ preventScroll: true });
-    }
-  }, [askingFirst]);
-
   return (
     <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
-      {/* The marquee */}
-      <div className="flex items-baseline justify-between gap-4 px-1">
-        <TypographyTitle as="h2" className="text-[1.375rem]">
-          {t("cabinets.ollie.name")}
-        </TypographyTitle>
-        <TypographyData className="text-ink-muted">
-          {t("best")}{" "}
-          <span className="text-ink">
-            {best === null ? "-----" : pad(best)}
-          </span>
-        </TypographyData>
-      </div>
+      <Marquee cabinet="ollie" best={best} />
 
       {/* The screen */}
       <div
@@ -518,220 +346,42 @@ export default function OllieGame({
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-md shadow-[inset_0_2px_0_rgb(var(--ledge))]"
         />
-
         {/* Score, as the street's own ink */}
-        <span
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute right-3 top-2 font-mono text-data tabular-nums sm:right-4 sm:top-3",
-            night ? "text-[#f6f3ea]" : "text-[#10131f]",
-            // The cards carry the score when the street stands still
-            (screen === "ready" || screen === "over") && "opacity-0",
-          )}
-        >
-          {best !== null && (
-            <span className="opacity-60">
-              {t("best")} {pad(best)}{" "}
-            </span>
-          )}
-          <span ref={scoreRef}>00000</span>
-        </span>
-
-        {screen === "ready" && (
-          <ScreenCard bare>
-            <TypographyData className="hidden text-ink-muted sm:block">
-              {best === null ? (
-                t("firstRun")
-              ) : (
-                <>
-                  {t("best")} <span className="text-ink">{pad(best)}</span>
-                </>
-              )}
-            </TypographyData>
-            <Button
-              variant="play"
-              className="sm:h-[52px] sm:px-6"
-              onClick={() => {
-                play("confirm");
-                start(true);
-              }}
-            >
-              <Play aria-hidden />
-              {t("play")}
-            </Button>
-          </ScreenCard>
-        )}
-
-        {screen === "paused" && (
-          <ScreenCard>
-            <TypographyTitle as="p">{t("paused")}</TypographyTitle>
-            <Button
-              variant="play"
-              className="sm:h-[52px] sm:px-6"
-              onClick={resume}
-            >
-              <Play aria-hidden />
-              {t("resume")}
-            </Button>
-          </ScreenCard>
-        )}
-
-        {screen === "over" && result && (
-          <ScreenCard>
-            <div className="flex flex-col items-center gap-1">
-              <TypographyTitle as="p">
-                {result.newBest ? t("newBest") : t("gameOver")}
-              </TypographyTitle>
-              <TypographyData className="whitespace-nowrap text-ink-muted">
-                {t("score")}{" "}
-                <span className="text-ink">{pad(result.score)}</span>
-                {"  "}
-                {t("best")} <span className="text-ink">{pad(result.best)}</span>
-              </TypographyData>
-              {entry.kind === "ranked" && (
-                <TypographyData className="flex items-center gap-1.5 text-action-ink">
-                  <Trophy aria-hidden className="size-4" />
-                  {t("entry.rank", { rank: entry.rank })}
-                </TypographyData>
-              )}
-              {entry.kind === "missed" && (
-                <TypographyData className="text-ink-muted">
-                  {t("entry.missed")}
-                </TypographyData>
-              )}
-            </div>
-            <Button
-              // While the name is asked, saving is the screen's one action
-              variant={asking ? "default" : "play"}
-              className="sm:h-[52px] sm:px-6"
-              onClick={() => {
-                play("confirm");
-                start(true);
-              }}
-            >
-              <RotateCcw aria-hidden />
-              {t("playAgain")}
-            </Button>
-          </ScreenCard>
-        )}
+        <ScreenScore
+          ref={scoreRef}
+          best={best}
+          hidden={screen === "ready" || screen === "over"}
+          ink={night ? "text-[#f6f3ea]" : "text-[#10131f]"}
+        />
+        <ScreenCards
+          screen={screen}
+          best={best}
+          result={result}
+          entry={entry}
+          onPlay={() => start(true)}
+          onResume={resume}
+        />
       </div>
 
-      {/* A run for the board: the first name, asked once */}
-      {asking && (
-        <form
-          ref={entryRef}
-          onSubmit={submitName}
-          className="flex flex-col gap-3 rounded-md bg-ground p-3 sm:p-4"
-        >
-          <TypographyTitle as="p" className="flex items-center gap-2">
-            <Trophy aria-hidden className="size-5 shrink-0 text-action-ink" />
-            {t("entry.ranks")}
-          </TypographyTitle>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:gap-3">
-            <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-              <label htmlFor={nameId} className="text-label text-ink">
-                {t("entry.label")}
-              </label>
-              <input
-                ref={nameRef}
-                id={nameId}
-                name="name"
-                autoComplete="given-name"
-                maxLength={NAME_MAX_LENGTH + 8}
-                disabled={entry.kind === "sending"}
-                aria-invalid={entry.kind === "asking" && !!entry.problem}
-                aria-describedby={nameHintId}
-                className={INPUT}
-              />
-            </div>
-            <Button
-              type="submit"
-              variant="play"
-              disabled={entry.kind === "sending"}
-              className="shrink-0"
-            >
-              {entry.kind === "sending"
-                ? t("entry.sending")
-                : t("entry.submit")}
-            </Button>
-          </div>
-          <span
-            id={nameHintId}
-            role={
-              entry.kind === "asking" && entry.problem ? "alert" : undefined
-            }
-            className={cn(
-              "text-label",
-              entry.kind === "asking" && entry.problem
-                ? "text-busy-ink"
-                : "text-ink-muted",
-            )}
-          >
-            {entry.kind === "asking" && entry.problem
-              ? t(`entry.problems.${entry.problem}`)
-              : t("entry.hint")}
-          </span>
-        </form>
-      )}
+      <NameEntry
+        entry={entry}
+        onSubmit={submitName}
+        reducedMotion={reducedMotion}
+      />
 
-      {/* The deck */}
-      <div className="flex items-center gap-x-4 gap-y-3 sm:px-1">
-        <TypographyMuted className="flex items-center gap-2">
-          <span id={hintId} className="contents">
-            <Keyboard
-              aria-hidden
-              className="size-4 shrink-0 [@media(pointer:coarse)]:hidden"
-            />
-            <Hand
-              aria-hidden
-              className="hidden size-4 shrink-0 [@media(pointer:coarse)]:inline"
-            />
-            <span className="[@media(pointer:coarse)]:hidden">{t("hint")}</span>
-            <span className="hidden [@media(pointer:coarse)]:inline">
-              {t("hintTouch")}
-            </span>
-          </span>
-        </TypographyMuted>
-        <Button
-          className="ml-auto shrink-0"
-          disabled={screen !== "running" && screen !== "paused"}
-          onClick={screen === "paused" ? resume : pause}
-        >
-          {screen === "paused" ? <Play aria-hidden /> : <Pause aria-hidden />}
-          {screen === "paused" ? t("resume") : t("pause")}
-        </Button>
-      </div>
+      <Deck
+        cabinet="ollie"
+        hintId={hintId}
+        screen={screen}
+        onPause={pause}
+        onResume={resume}
+      />
 
       <span id={descriptionId} className="sr-only">
-        {t("game")}
+        {t("cabinets.ollie.game")}
       </span>
       <div className="sr-only" aria-live="polite">
         {live}
-      </div>
-    </div>
-  );
-}
-
-/** A card over the street: the client's window on the game's screen. */
-function ScreenCard({
-  children,
-  bare = false,
-}: {
-  children: React.ReactNode;
-  /** On phones, the button stands alone on the street, with no card. */
-  bare?: boolean;
-}) {
-  return (
-    // Clear of Lucas, who rides in the left quarter of the street
-    <div className="absolute inset-y-0 left-[27%] right-0 flex items-center justify-center p-3">
-      <div
-        className={cn(
-          "float flex max-w-full flex-col items-center gap-2 rounded-lg border-2 border-seam bg-raised px-3 py-2.5 text-center sm:gap-4 sm:px-6 sm:py-5",
-          bare &&
-            "max-sm:border-0 max-sm:bg-transparent max-sm:p-0 max-sm:shadow-none",
-        )}
-      >
-        {children}
       </div>
     </div>
   );

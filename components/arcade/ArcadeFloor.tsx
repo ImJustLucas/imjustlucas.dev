@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
@@ -42,21 +42,57 @@ const SCREENS: Record<CabinetId, React.ComponentType<ScreenProps> | null> = {
     ssr: false,
     loading: CabinetLoading,
   }),
-  surf: null,
+  surf: dynamic(() => import("./surf/SurfGame"), {
+    ssr: false,
+    loading: CabinetLoading,
+  }),
 };
+
+const isPlayable = (id: string | null): id is CabinetId =>
+  CABINETS.some(
+    (cabinet) => cabinet.id === id && cabinet.status === "playable",
+  );
+
+/** The open cabinet is kept in the address (`?cabinet=surf`), to share it. */
+const CABINET_PARAM = "cabinet";
 
 /**
  * The Arcade floor (DESIGN.md, Arcade): the shelf of cabinets, one per
- * hobby, the playable one open as the screen, and its leaderboard. Cabinets
- * that are `soon` stand on the shelf as silhouettes.
+ * hobby, the chosen playable one open as the screen, and its leaderboard.
+ * Cabinets that are `soon` stand on the shelf as silhouettes.
  */
 export function ArcadeFloor() {
   const t = useTranslations("Arcade");
-  // One playable cabinet for now: it is the one open
-  const selected: CabinetId = "ollie";
+  const { play } = useSounds();
+  const [selected, setSelected] = useState<CabinetId>(CABINETS[0].id);
   const Screen = SCREENS[selected];
   const { player, remember } = usePlayer();
   const [board, setBoard] = useState<Board | null>(null);
+
+  // The cabinet in the address, once mounted (pages are static)
+  useEffect(() => {
+    const open = () => {
+      const asked = new URLSearchParams(window.location.search).get(
+        CABINET_PARAM,
+      );
+      if (isPlayable(asked)) setSelected(asked);
+    };
+    open();
+  }, []);
+
+  const choose = useCallback(
+    (id: CabinetId) => {
+      if (id === selected) return;
+      play("toggleOn");
+      setBoard(null);
+      setSelected(id);
+      const url = new URL(window.location.href);
+      if (id === CABINETS[0].id) url.searchParams.delete(CABINET_PARAM);
+      else url.searchParams.set(CABINET_PARAM, id);
+      window.history.replaceState(window.history.state, "", url);
+    },
+    [selected, play],
+  );
 
   useEffect(() => {
     let current = true;
@@ -83,6 +119,7 @@ export function ArcadeFloor() {
               key={cabinet.id}
               cabinet={cabinet}
               selected={cabinet.id === selected}
+              onChoose={() => choose(cabinet.id)}
             />
           ))}
         </ul>
@@ -93,6 +130,7 @@ export function ArcadeFloor() {
       >
         {Screen && (
           <Screen
+            key={selected}
             board={board}
             player={player}
             onBoard={(top) => setBoard({ kind: "board", top })}
@@ -104,7 +142,7 @@ export function ArcadeFloor() {
         <Leaderboard
           board={board}
           playerId={player?.id ?? null}
-          game={t(`cabinets.${selected}.name`)}
+          cabinet={selected}
         />
       </div>
     </div>
@@ -114,21 +152,17 @@ export function ArcadeFloor() {
 function CabinetTile({
   cabinet,
   selected,
+  onChoose,
 }: {
   cabinet: Cabinet;
   selected: boolean;
+  onChoose: () => void;
 }) {
   const t = useTranslations("Arcade");
   const { play } = useSounds();
   const locked = cabinet.status === "soon";
-  return (
-    <li
-      onPointerEnter={() => play("tick")}
-      className={cn(
-        "tray relative flex items-center gap-3 rounded-lg border-2 bg-raised p-2.5 sm:p-3",
-        selected ? "border-action-ink" : "border-transparent",
-      )}
-    >
+  const face = (
+    <>
       <span className="relative size-14 shrink-0 sm:size-16">
         <span
           aria-hidden
@@ -150,7 +184,7 @@ function CabinetTile({
         ) : (
           <ChibiSprite
             pose={cabinet.pose}
-            alt={t(`cabinets.${cabinet.id}.poseAlt`)}
+            alt=""
             sizes="64px"
             className="size-full"
           />
@@ -162,8 +196,12 @@ function CabinetTile({
           />
         )}
       </span>
-      <span className="flex min-w-0 flex-col gap-1">
-        <TypographyTitle as="h3" className="text-base sm:text-[1.125rem]">
+      <span className="flex min-w-0 flex-col items-start gap-1">
+        <TypographyTitle
+          // A button holds phrasing content only
+          as={locked ? "h3" : "span"}
+          className="text-base sm:text-[1.125rem]"
+        >
           {t(`cabinets.${cabinet.id}.name`)}
         </TypographyTitle>
         <span className="hidden text-label text-ink-muted sm:block">
@@ -180,6 +218,31 @@ function CabinetTile({
           </TypographyTag>
         )}
       </span>
+    </>
+  );
+  const tile =
+    "tray relative flex w-full items-center gap-3 rounded-lg border-2 bg-raised p-2.5 text-left sm:p-3";
+  return (
+    <li onPointerEnter={() => play("tick")} className="flex">
+      {locked ? (
+        <div className={cn(tile, "border-transparent")}>{face}</div>
+      ) : (
+        // A playable cabinet opens on a press; the open one is pressed
+        <button
+          type="button"
+          aria-pressed={selected}
+          onClick={onChoose}
+          className={cn(
+            tile,
+            "outline-none transition-colors duration-hover ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action-ink",
+            selected
+              ? "border-action-ink"
+              : "border-transparent hover:border-seam",
+          )}
+        >
+          {face}
+        </button>
+      )}
     </li>
   );
 }

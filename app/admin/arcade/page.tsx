@@ -11,7 +11,7 @@ import { currentOwnerAccess } from "@/lib/admin/session";
 import { LEADERBOARD_GAMES, LEADERBOARD_SIZE } from "@/lib/arcade/board";
 import { getArcadeBoard } from "@/lib/arcade/server";
 
-const GAME_NAMES = { ollie: "Ollie" } as const;
+const GAME_NAMES = { ollie: "Ollie", surf: "Surf" } as const;
 
 /**
  * The Arcade's leaderboards, as visitors see them: the Owner takes off a
