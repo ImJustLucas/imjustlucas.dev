@@ -562,7 +562,7 @@ In light mode, in either palette, bright rarity and status colours stay as fills
 All three fonts are CSS variables (`--font-display`, `--font-geist-sans`, `--font-geist-mono`) set on `<body>` by every root layout (the Locale segment and the Admin); Unbounded loads Latin and Latin Extended for French.
 
 ### Hierarchy
-- **Display** (Unbounded 700, clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem), 1.05, -0.02em): the banner greeting, the home page's `h1`. Drops to 1.875rem below 640px so "Yoooo, I'm Lucas!" fits beside the 120px chibi. One per page at most.
+- **Display** (Unbounded 700, clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem), 1.05, -0.02em): the banner greeting, the home page's `h1`. Drops to 1.625rem below 640px so "Yoooo, moi c'est Lucas Bellier !" holds in four lines beside the 120px chibi (the greeting carries Lucas's full name, the name he is searched by: docs/seo.md). One per page at most.
 - **Headline** (Unbounded 700, 1.75rem, 1.15, -0.015em): page titles on the other pages, one visible `h1` each, inside the page banner where a page has one.
 - **Title Large** (Unbounded 600, 1.375rem): the player name, achievement names, `h3` in long-form content.
 - **Title** (Unbounded 600, 1.125rem, 1.3): section titles (achievements, inventory, about me, FAQ), item names, the mobile top bar name, the goodbye line.

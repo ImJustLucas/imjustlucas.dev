@@ -1,38 +1,40 @@
 {
   "Metadata": {
-    "siteName": "ImJustLucas",
-    "description": "I'm a software developer based in the heart of Paris, France, with a focus on crafting high-quality websites and applications."
+    "siteName": "Lucas Bellier (ImJustLucas)",
+    "homeTitle": "Lucas Bellier · fullstack developer in Paris (ImJustLucas)",
+    "description": "Lucas Bellier (ImJustLucas), fullstack developer in Paris, France: co-founder of Predi.GG and MasterDevFrance 2025 winner, crafting high-quality websites and applications.",
+    "jobTitle": "Fullstack developer"
   },
   "Routes": {
     "me": {
       "label": "me",
       "title": "who am i?",
-      "description": "Lucas, a French software developer based in Paris, crafting high-quality websites and applications."
+      "description": "Lucas Bellier (ImJustLucas), fullstack developer in Paris, France: co-founder of Predi.GG and MasterDevFrance 2025 winner, crafting high-quality websites and applications."
     },
     "what": {
       "label": "what i've done",
       "title": "what i've done?",
-      "description": "The projects Lucas has built, and the techs he built them with."
+      "description": "The projects Lucas Bellier has built, and the techs he built them with."
     },
     "experiences": {
       "label": "my experiences",
       "title": "my experiences",
-      "description": "Lucas's professional experiences and diplomas."
+      "description": "Lucas Bellier's professional experiences and diplomas."
     },
     "videos": {
       "label": "yt videos",
       "title": "youtube videos",
-      "description": "The latest videos from Lucas's YouTube channel."
+      "description": "The latest videos from Lucas Bellier's YouTube channel, ImJustLucas."
     },
     "contact": {
       "label": "contact",
       "title": "contact me",
-      "description": "How to get in touch with Lucas."
+      "description": "How to get in touch with Lucas Bellier."
     },
     "mdf2025": {
       "label": "MDF 2025",
       "title": "MasterDevFrance 2025",
-      "description": "Lucas won the MasterDevFrance 2025 competition, a national recognition for technical excellence in software development."
+      "description": "Lucas Bellier won the MasterDevFrance 2025 competition, a national recognition for technical excellence in software development."
     }
   },
   "Layout": {
@@ -77,7 +79,7 @@
         "answer": "Definitely coffee. Paris runs on it, after all!"
       }
     },
-    "greeting": "Yoooo, I'm Lucas!",
+    "greeting": "Yoooo, I'm Lucas Bellier!",
     "role": "fullstack dev, co-founder of Predi.GG",
     "currentTeam": "current team",
     "chilling": "just chilling, you know",
