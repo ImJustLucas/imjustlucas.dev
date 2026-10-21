@@ -30,6 +30,7 @@ import { RarityChip } from "@/app/admin/rarity-chip";
 import { RarityField } from "@/app/admin/rarity-field";
 import { TechPicker } from "@/app/admin/techs/tech-picker";
 import { RARITY_STYLE } from "@/components/rarity/rarity-style";
+import { TypographyData, TypographyMuted } from "@/components/typography";
 import { contentBranch } from "@/lib/admin/config";
 import { getProjectsEditor } from "@/lib/admin/server";
 import { formatPeriod } from "@/lib/content/format-period";
@@ -118,13 +119,13 @@ const ProjectFields: React.FC<{
     </FieldGroup>
     <FieldGroup title="Sa page">
       {project ? (
-        <p className="text-label text-ink-muted">
+        <TypographyMuted>
           Adresse{" "}
-          <span className="font-mono text-data text-ink">
+          <TypographyData className="text-ink">
             /what/{project.slug}
-          </span>{" "}
+          </TypographyData>{" "}
           · fixée à la création, pour que les liens partagés marchent toujours
-        </p>
+        </TypographyMuted>
       ) : (
         <AdminField
           name="slug"
