@@ -109,7 +109,7 @@ const WOOD_DARK = "#7f5236";
 const WOOD_WET = "#5e3d2a";
 const BARNACLE = "#e9d8b4";
 const GULL = "#fbfbf7";
-const GULL_WING = "#a9b4bc";
+const GULL_WING = "#8d99a3";
 const GULL_TIP = "#2b2f3a";
 const GULL_BEAK = "#f2b33d";
 const SPARKLE_FILL = "#fffaf0";
@@ -626,39 +626,14 @@ const obstacle = (
 
 /** Where the board sits in each pose's art, as fractions of the square. */
 const ANCHOR = {
-  ride: { x: 0.5, bottom: 0.9 },
-  wipeout: { x: 0.5, bottom: 0.85 },
+  ride: { x: 0.52, bottom: 0.905 },
+  wipeout: { x: 0.55, bottom: 0.88 },
   shaka: { x: 0.5, bottom: 0.97 },
 } as const;
 /** The chibi's drawn size, in world units. */
 const SPRITE = 104;
 
 const easeOut = (t: number) => 1 - (1 - t) ** 3;
-
-/** White spray behind the tail of the board, while he rides the swell. */
-const spray = (
-  ctx: CanvasRenderingContext2D,
-  coast: Coast,
-  x: number,
-  y: number,
-  scene: SurfScene,
-) => {
-  ctx.fillStyle = coast.foam;
-  for (let i = 0; i < 6; i++) {
-    const phase = scene.reducedMotion ? 0.5 : (scene.now * 2.2 + i / 6) % 1;
-    ctx.globalAlpha = 1 - phase;
-    ctx.beginPath();
-    ctx.arc(
-      x - 6 - phase * 26 - i * 2,
-      y - 4 - Math.sin(phase * Math.PI) * (8 + (i % 3) * 4),
-      2.6 - phase * 1.4,
-      0,
-      Math.PI * 2,
-    );
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
-};
 
 /** Rings of foam where he went in. */
 const splash = (
@@ -779,9 +754,6 @@ const lucas = (
     SPRITE,
   );
   ctx.restore();
-  if (player.riding && state.phase === "running") {
-    spray(ctx, coast, cx - SPRITE * 0.32, WORLD.sea, scene);
-  }
 };
 
 /** Little stars round his head while he goes in, as in Ollie. */
@@ -836,9 +808,10 @@ export const drawSurf = (
   headlands(ctx, coast, d * parallax.headlands, scene);
   openSea(ctx, coast, scene);
   swells(ctx, coast, d * parallax.swells, scene);
-  // A haze over the background, so the gates stand out
+  // A haze over the sea behind him, so the gates stand out; the sky keeps
+  // its colour, so the white gulls do too
   ctx.fillStyle = coast.haze;
-  ctx.fillRect(0, 0, WORLD.width, WORLD.sea);
+  ctx.fillRect(0, HORIZON, WORLD.width, WORLD.sea - HORIZON);
 
   for (const pass of [true, false]) {
     rimPass = pass;

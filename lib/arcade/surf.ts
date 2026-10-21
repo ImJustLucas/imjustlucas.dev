@@ -15,7 +15,7 @@ import { random } from "@/lib/arcade/run";
 export const WORLD = { width: 720, height: 405, sea: 336 } as const;
 
 /** Lucas's hitbox, a little smaller than his drawing so near misses count. */
-export const PLAYER = { x: 118, width: 42, height: 52 } as const;
+export const PLAYER = { x: 118, width: 42, height: 66 } as const;
 
 /** One fixed step of the simulation. */
 export const STEP = 1 / 120;
@@ -50,8 +50,8 @@ export const OBSTACLE_WIDTH: Readonly<Record<LowKind | HighKind, number>> = {
 };
 
 /** The gap of the first gate, narrowing as the gates go by, to `MIN_GAP`. */
-export const START_GAP = 160;
-export const MIN_GAP = 132;
+export const START_GAP = 174;
+export const MIN_GAP = 146;
 /** How much each gate passed narrows the next gap. */
 export const GAP_SHRINK = 1.2;
 /** The lowest a gap's floor sits above the sea, and its ceiling under the top. */

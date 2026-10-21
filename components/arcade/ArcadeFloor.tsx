@@ -227,10 +227,10 @@ function CabinetTile({
       {locked ? (
         <div className={cn(tile, "border-transparent")}>{face}</div>
       ) : (
-        // A playable cabinet opens on a press; the open one is pressed
+        // A playable cabinet opens on a press; the open one is current
         <button
           type="button"
-          aria-pressed={selected}
+          aria-current={selected ? "true" : undefined}
           onClick={onChoose}
           className={cn(
             tile,

@@ -271,7 +271,7 @@
         "name": "Surf",
         "tagline": "surfe la houle entre rochers et mouettes",
         "poseAlt": "Lucas avec sa planche de surf",
-        "game": "Surf, un jeu de surf : Lucas surfe la houle, fais-le décoller pour passer chaque trou entre les rochers et bouées en bas et les piliers de jetée et mouettes en haut.",
+        "game": "Surf, un jeu de surf : Lucas surfe la houle, fais-le décoller pour franchir chaque passage entre les rochers et balises en bas et les piliers de jetée et mouettes en haut.",
         "hint": "espace, ↑ ou clic pour décoller, encore pour monter plus haut, échap pour la pause",
         "hintTouch": "tape la mer pour décoller, encore pour monter plus haut",
         "started": "Partie lancée. Décolle avec espace.",

@@ -11,7 +11,7 @@ Scope: `/[locale]/arcade` (Route `arcade`, the sixth menu tab, before contact). 
 
 ## Proof
 
-Only what is true: Lucas skates and surfs (his Hobbies), the chibi poses are his commissioned character. Scores are the visitor's own; the best score lives in the visitor's browser only. No leaderboard, no invented players or ranks.
+Only what is true: Lucas skates and surfs (his Hobbies), the chibi poses are his commissioned character. Scores are the visitor's own; the best score lives in the visitor's browser only. Each game has a top 10 of real visitors under the first name they chose, every score replayed by the server (docs/arcade.md); no invented players or ranks.
 
 ## Direction contract
 
@@ -21,7 +21,7 @@ OWN-WORLD: inherited tray slots, 16px corners, 2px seams, Unbounded titles, Geis
 
 STORY: The visitor sees Lucas on his board in a Paris street, presses Play (or Space), jumps cones and benches, hears each jump and sparkle as a note of the kit, crashes, sees his score against his best (the trophy pose on a new record), and plays again in one press. The surf cabinet promises the next game.
 
-FIRST VIEWPORT: Desktop 1440x900: page title "arcade" and one line in Lucas's voice across the top; under it the cabinet takes about three quarters of the panel width (marquee, then the screen with the start card over the street: game name, the hint, the Play button, the best score; then the deck: hint left, pause right); the shelf stands to its right as a column of cabinet tiles, Ollie selected, Surf locked. Mobile: title and line, the shelf as a row of two tiles, then the cabinet full width; tapping the screen jumps.
+FIRST VIEWPORT: Desktop 1440x900: page title "arcade" and one line in Lucas's voice across the top; under it the cabinet takes about three quarters of the panel width (marquee, then the screen with the start card over the street: game name, the hint, the Play button, the best score; then the deck: hint left, pause right); the shelf stands to its right as a column of cabinet tiles, Ollie open by default, Surf playable beside it (`?cabinet=surf` opens it). Mobile: title and line, the shelf as a row of two tiles, then the cabinet full width; tapping the screen jumps.
 
 FORM: an extension of the home's player profile (inherits seed key 14c08ff6); the game library of a game client, first on the ordered list; no concept round.
 

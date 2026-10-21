@@ -271,7 +271,7 @@
         "name": "Surf",
         "tagline": "ride the swell between rocks and gulls",
         "poseAlt": "Lucas with his surfboard",
-        "game": "Surf, a surf game: Lucas rides the swell, pop him up to fly through each gap between the rocks and buoys below and the jetty pilings and gulls above.",
+        "game": "Surf, a surf game: Lucas rides the swell, pop him up to fly through each gap between the rocks and beacons below and the jetty pilings and gulls above.",
         "hint": "space, ↑ or click to pop up, again to climb higher, esc to pause",
         "hintTouch": "tap the sea to pop up, again to climb higher",
         "started": "Run started. Pop up with space.",
