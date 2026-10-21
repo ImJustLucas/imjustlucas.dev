@@ -5,6 +5,8 @@ import { ThemeProvider } from "next-themes";
 
 import { AdminNoticeProvider } from "@/app/admin/admin-form";
 import { SignInScreen } from "@/app/admin/admin-screens";
+import { AdminShell } from "@/app/admin/admin-shell";
+import { EntryRowsProvider } from "@/app/admin/entry-row";
 import { fontVariables } from "@/app/fonts";
 import { currentOwnerAccess } from "@/lib/admin/session";
 import { PALETTE_SCRIPT } from "@/lib/palette";
@@ -36,13 +38,15 @@ export default async function AdminLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-dvh bg-background p-6">
-            {access.kind === "owner" ? (
-              <AdminNoticeProvider>{children}</AdminNoticeProvider>
-            ) : (
-              <SignInScreen access={access} />
-            )}
-          </main>
+          {access.kind === "owner" ? (
+            <AdminShell login={access.owner.login}>
+              <EntryRowsProvider>
+                <AdminNoticeProvider>{children}</AdminNoticeProvider>
+              </EntryRowsProvider>
+            </AdminShell>
+          ) : (
+            <SignInScreen access={access} />
+          )}
         </ThemeProvider>
       </body>
     </html>

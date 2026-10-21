@@ -1,0 +1,87 @@
+"use client";
+
+import { useTheme } from "next-themes";
+
+import { Check, Moon, Sun } from "lucide-react";
+
+import { usePalette } from "@/components/palette/use-palette";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { PALETTE_SWATCH, PALETTES } from "@/lib/palette";
+import fr from "@/messages/fr.json";
+
+const MODES = ["dark", "light", "system"] as const;
+
+const itemClass =
+  "flex h-10 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-label text-ink focus:bg-seam";
+
+/**
+ * The Admin's theme menu: the site's theme menu in French, without its
+ * notes (the Admin plays no sound). Mode and palette are the visitor's own,
+ * shared with the public pages.
+ */
+export function AdminThemeMenu() {
+  const { theme, setTheme } = useTheme();
+  const { palette, setPalette } = usePalette();
+  const t = fr.ThemeSwitch;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="ledge relative inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-raised text-ink">
+        <Sun aria-hidden className="size-5 dark:hidden" />
+        <Moon aria-hidden className="hidden size-5 dark:block" />
+        <span className="sr-only">{t.toggle}</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="start"
+        side="top"
+        className="min-w-48 rounded-lg border-2 border-seam bg-raised p-1.5 shadow-[var(--float)]"
+      >
+        <DropdownMenuLabel className="px-3 pb-1 pt-2 text-tag text-ink-muted">
+          {t.mode}
+        </DropdownMenuLabel>
+        {MODES.map((value) => (
+          <DropdownMenuItem
+            key={value}
+            onClick={() => setTheme(value)}
+            className={itemClass}
+          >
+            {t[value]}
+            {theme === value && (
+              <Check aria-hidden className="size-4 text-action-ink" />
+            )}
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator className="mx-1 my-1.5 h-0.5 bg-seam" />
+        <DropdownMenuLabel className="px-3 pb-1 pt-1 text-tag text-ink-muted">
+          {t.palette}
+        </DropdownMenuLabel>
+        {PALETTES.map((value) => (
+          <DropdownMenuItem
+            key={value}
+            onClick={() => setPalette(value)}
+            className={itemClass}
+          >
+            <span className="flex items-center gap-2.5">
+              <span
+                aria-hidden
+                className="size-3.5 rounded-full"
+                style={{ backgroundColor: PALETTE_SWATCH[value] }}
+              />
+              {t[value]}
+            </span>
+            {palette === value && (
+              <Check aria-hidden className="size-4 text-action-ink" />
+            )}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
