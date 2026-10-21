@@ -54,7 +54,7 @@ describe("the sound kit", () => {
     const notes = TAB_NOTES.map(
       (_, tab) => cueSound("tab", { tab }).plucks[0].note,
     );
-    expect(notes).toEqual(["D4", "E4", "F#4", "A4", "D5"]);
+    expect(notes).toEqual(["D4", "E4", "F#4", "A4", "B4", "D5"]);
     const pitches = notes.map((note) => NOTES[note]);
     expect([...pitches].sort((a, b) => a - b)).toEqual(pitches);
   });
@@ -89,5 +89,13 @@ describe("the sound kit", () => {
     const high = cueSound("boop", { random: 0.999 }).plucks[0];
     expect(low.bend).toBeGreaterThan(0);
     expect(NOTES[high.note]).toBeGreaterThan(NOTES[low.note]);
+  });
+
+  it("hops up, picks a sparkle with a rising pair and climbs at a milestone", () => {
+    expect(cueSound("hop").plucks[0].bend).toBeGreaterThan(0);
+    const pickup = cueSound("pickup").plucks.map((p) => NOTES[p.note]);
+    expect(pickup[1]).toBeGreaterThan(pickup[0]);
+    const milestone = cueSound("milestone").plucks.map((p) => NOTES[p.note]);
+    expect([...milestone].sort((a, b) => a - b)).toEqual(milestone);
   });
 });

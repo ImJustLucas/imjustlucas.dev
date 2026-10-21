@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isNightInParis } from "./paris-time";
+import { isDecemberInParis, isNightInParis } from "./paris-time";
 
 describe("isNightInParis", () => {
   it("is night from 21:00 to 07:00 in Paris in winter (UTC+1)", () => {
@@ -20,5 +20,14 @@ describe("isNightInParis", () => {
   it("is day at noon and night at midnight", () => {
     expect(isNightInParis(new Date("2026-10-20T10:00:00Z"))).toBe(false);
     expect(isNightInParis(new Date("2026-10-20T22:00:00Z"))).toBe(true);
+  });
+});
+
+describe("isDecemberInParis", () => {
+  it("starts and ends December by Paris time, not UTC", () => {
+    expect(isDecemberInParis(new Date("2026-11-30T22:59:00Z"))).toBe(false); // 23:59, Nov 30
+    expect(isDecemberInParis(new Date("2026-11-30T23:00:00Z"))).toBe(true); // 00:00, Dec 1
+    expect(isDecemberInParis(new Date("2026-12-31T22:59:00Z"))).toBe(true); // 23:59, Dec 31
+    expect(isDecemberInParis(new Date("2026-12-31T23:00:00Z"))).toBe(false); // 00:00, Jan 1
   });
 });

@@ -26,6 +26,11 @@
       "title": "vidéos youtube",
       "description": "Les dernières vidéos de la chaîne YouTube de Lucas Bellier, ImJustLucas."
     },
+    "arcade": {
+      "label": "arcade",
+      "title": "arcade",
+      "description": "Ollie, un petit jeu de skate dans une rue de Paris avec le chibi de Lucas, et d'autres bornes en route."
+    },
     "contact": {
       "label": "contact",
       "title": "me contacter",
@@ -85,6 +90,7 @@
     "chilling": "en mode chilling tu connais",
     "chillingAlt": "Lucas affalé dans un pouf mandarine",
     "bannerAlt": "Lucas qui fait coucou, le casque autour du cou",
+    "bannerAltChristmas": "Lucas qui fait coucou avec un bonnet de Noël, le casque autour du cou",
     "boop": "faire boop à Lucas",
     "achievementsTitle": "succès",
     "trophyAlt": "Lucas qui brandit un trophée doré",
@@ -229,5 +235,41 @@
     "rare": "rare",
     "epic": "épique",
     "legendary": "légendaire"
+  },
+  "Arcade": {
+    "line": "mes hobbies, mais en jouable 🛹 d'autres bornes arrivent.",
+    "shelf": "bornes",
+    "nowPlaying": "en jeu",
+    "soon": "bientôt",
+    "cabinets": {
+      "ollie": {
+        "name": "Ollie",
+        "tagline": "skate dans une rue de Paris et saute les plots",
+        "poseAlt": "Lucas sur son skate"
+      },
+      "surf": {
+        "name": "Surf",
+        "tagline": "surfe la houle entre rochers et mouettes",
+        "poseAlt": "Lucas avec sa planche de surf, encore verrouillé"
+      }
+    },
+    "game": "Ollie, un jeu de skate : Lucas descend une rue de Paris, saute les plots, poubelles, bancs et pigeons bas, passe sous les pigeons hauts et ramasse les sparkles.",
+    "loading": "la borne s'allume…",
+    "play": "jouer",
+    "playAgain": "rejouer",
+    "firstRun": "première partie, montre-moi ce que tu vaux",
+    "resume": "reprendre",
+    "pause": "pause",
+    "paused": "en pause",
+    "gameOver": "game over",
+    "newBest": "nouveau record !",
+    "score": "score",
+    "best": "record",
+    "hint": "espace, ↑ ou clic pour sauter, maintiens pour un ollie plus haut, échap pour la pause",
+    "hintTouch": "tape la rue pour sauter, maintiens pour un ollie plus haut",
+    "started": "Partie lancée. Saute avec espace.",
+    "over": "Game over : {score} points. Record : {best}.",
+    "overBest": "Game over : {score} points, nouveau record !",
+    "pausedLive": "En pause."
   }
 }

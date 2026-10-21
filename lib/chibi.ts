@@ -17,7 +17,12 @@ export type ChibiPose =
   | "coding"
   | "coffee"
   | "series"
-  | "music";
+  | "music"
+  | "football"
+  | "tennis"
+  | "ollie"
+  | "christmas"
+  | "santa";
 
 type ChibiArt = {
   readonly day: ReadonlyArray<string>;
@@ -40,6 +45,11 @@ const CHIBI: { readonly [P in ChibiPose]: ChibiArt } = {
   coffee: { day: art("coffee") },
   series: { day: art("series") },
   music: { day: art("music-a", "music-b") },
+  football: { day: art("football") },
+  tennis: { day: art("tennis") },
+  ollie: { day: art("skate-ollie") },
+  christmas: { day: art("banner-noel") },
+  santa: { day: art("santa") },
 };
 
 /** Intrinsic size of every pose file (square). */
@@ -61,4 +71,23 @@ export const BOOP_POSES: ReadonlyArray<ChibiPose> = [
   "coffee",
   "series",
   "music",
+  "football",
+  "tennis",
 ];
+
+/**
+ * The banner's resting pose: in December, by Lucas's time in Paris, he
+ * waves in his Christmas hat.
+ */
+export const bannerPose = (december: boolean): ChibiPose =>
+  december ? "christmas" : "banner";
+
+/** The boop poses of the season: in December the Christmas ones join in. */
+export const boopPoses = (december: boolean): ReadonlyArray<ChibiPose> =>
+  december
+    ? [
+        "christmas",
+        "santa",
+        ...BOOP_POSES.filter((pose) => pose !== bannerPose(false)),
+      ]
+    : BOOP_POSES;

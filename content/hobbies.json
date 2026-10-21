@@ -1,6 +1,8 @@
 [
   { "label": { "en": "surf", "fr": "surf" }, "pose": "surf" },
   { "label": { "en": "skate", "fr": "skate" }, "pose": "skate" },
+  { "label": { "en": "football", "fr": "foot" }, "pose": "football" },
+  { "label": { "en": "tennis", "fr": "tennis" }, "pose": "tennis" },
   { "label": { "en": "playing LoL", "fr": "jouer à LoL" }, "pose": "lol" },
   { "label": { "en": "coding", "fr": "coder" }, "pose": "coding" },
   { "label": { "en": "a good coffee", "fr": "un bon café" }, "pose": "coffee" },
