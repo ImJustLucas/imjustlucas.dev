@@ -287,6 +287,17 @@ components:
     textColor: "{colors.off-white}"
     rounded: "{rounded.full}"
     size: "56px"
+  friend-request:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    rounded: "{rounded.lg}"
+    padding: "24px 28px"
+  status-tag:
+    backgroundColor: "{colors.online}"
+    textColor: "{colors.navy}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
   not-found-slot:
     backgroundColor: "{colors.navy-raised}"
     textColor: "{colors.off-white}"
@@ -302,7 +313,7 @@ components:
 
 **Creative North Star: "The Player Profile"**
 
-The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the inventory of every Project filtered by the loadout of Techs they use, the career path of stops on a track with the diplomas as medals, and the replays. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
+The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the inventory of every Project filtered by the loadout of Techs they use, the career path of stops on a track with the diplomas as medals, and the replays. The contact screen is the client's add-friend screen: one request window to send Lucas a request, with his live status. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
 
 It is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means "this is the thing to press": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.
 
@@ -454,6 +465,7 @@ The client fills the viewport (`100dvh`, no page scroll) inside a 12px frame in 
 - **Banner**: from 768px a two-column grid, the chibi (200 to 260px) on the left spanning greeting, role, current team and actions, with a minimum height of 340px; below 768px the chibi shrinks to 120px beside the greeting and the role, team and actions run full width, the Play button full width below 640px.
 - **Page banner**: a two-column grid, the text beside a chibi column of 96px, 128px from 640px and 160px from 768px; below 640px the Headline takes the full row and the chibi sits beside the line. Padding 16px, 24px from 640px, 20px by 28px from 768px; 48px down to the page's first section.
 - **Page rows**: the career path is one column of stops (a 44px track column, 56px from 640px, with 12px then 20px to the slot, 16px between stops); medals run 3 columns from 768px; the loadout's buttons are one row swiped sideways on phones (bleeding to the slot's edges, the chosen one scrolled into view) and wrap from 640px (8px apart, 12px between lines), above the item grid, which runs 1, 2 (768px) then 3 (1280px) columns; replays run 1, 2 (768px) then 3 (1280px) columns.
+- **Contact window**: the page holds an 880px maximum width under its Headline title (24px below it); from 768px the title and the request window are centred vertically in the panel (a minimum height of the viewport less 80px, the panel's frame and padding, lifted by 6vh of bottom padding). The window is one column below 768px (the chibi at 144px, centred above the details) and a 240px chibi column beside the details from 768px (32px apart, 24px between rows); "right now" sits 48px below it.
 - **Reading text** holds 65ch inside its slot, never the full panel width.
 - **Mobile** (below 768px): a 56px top bar on the ground colour (40px chibi head, name, sound switch, menu button) replaces the sidebar column. The same sidebar, mounted once, becomes a full-width sheet from 68px down, sliding up with Ease Drawer (260ms in, 180ms out), with the player card hidden and the panel `inert` behind it. Escape or widening to 768px closes it. Achievements with more than one slot become a horizontal snap row.
 - **Breakpoints** are Tailwind's: 640, 768 (the client's one structural switch), 1024, 1280.
@@ -490,9 +502,9 @@ Every control is drawn in the client's vocabulary; shadcn and Radix stay as the 
 
 ### Buttons
 - **Shape:** 10px corners, Label type, 16px icons, a 2px action-ink focus ring with a 2px offset.
-- **Play** (primary): the action fill (Off-white), `on-action` label (Navy) in Unbounded 700, 52px tall with 24px side padding, on the action ledge (Electric); plays the confirm chord. One per screen (on home, "Download my resume", with its date in Data beside it; on the 404, "Respawn at home", with the error code under it).
+- **Play** (primary): the action fill (Off-white), `on-action` label (Navy) in Unbounded 700, 52px tall with 24px side padding, on the action ledge (Electric); plays the confirm chord. One per screen (on home, "Download my resume", with its date in Data beside it; on contact, the LinkedIn DM; on the 404, "Respawn at home", with the error code under it).
 - **Ledge** (default): raised fill (Navy Raised), ink label, 44px tall, 16px padding; hover also tints the seam colour at 40%.
-- **Outline:** ground fill (Navy), 2px seam border, on a ledge: the secondary button wherever it sits on a raised surface, so it stays distinct from its background (LinkedIn on the banner, GitHub with its live star count and the external link on item cards).
+- **Outline:** ground fill (Navy), 2px seam border, on a ledge: the secondary button wherever it sits on a raised surface, so it stays distinct from its background (LinkedIn on the banner, GitHub with its live star count and the external link on item cards, Discord and the other platforms on the contact window). The small size is 36px tall with 12px padding.
 - **Icon:** 44px square ledge buttons (sound, Locale, theme, socials, menu) with screen-reader labels.
 - **Ghost / Link:** no ledge; ghost tints the seam colour on hover, link is the action ink and underlined.
 - **Secondary link** (the shared `SECONDARY_LINK` style): inline links in copy and titles (a company name, the subscribe line). The action ink with a 2px `link-line` underline 4px below; in the dark modes the ink, taking the action ink on hover. External ones open in a new tab.
@@ -537,6 +549,11 @@ The Projects page's filter, between its banner and the item grid: a raised slot 
 ### Replay tile (signature)
 A Video as a borderless raised slot with the tray (16px top padding, 20px elsewhere from 640px): a 16:9 thumbnail with 10px corners over a pulsing seam skeleton, zooming to 1.03 over 300ms on hover; on it a 56px play disc (ground fill, 2px seam rim, ink play mark, on a ledge) that rises 8px into view on hover, always visible on touch, and sinks onto its ledge when the thumbnail is pressed. Below, the title in Title clamped to two lines, the date in Data with the "new" tag on the latest Video, and an outline "Watch now!" button with the YouTube mark pushed to the bottom. The thumbnail is the same link for the mouse, hidden from keyboards and screen readers; the tile ticks on hover. **Empty:** one raised slot with the chilling pose on its stage disc, the empty line and a subscribe secondary link.
 
+### Friend request (signature)
+The contact screen's window: a raised slot with a 2px seam border and the tray, 16px corners, padding 16px, 24px from 640px, 24px by 28px from 768px. **Left:** the waving banner pose on its ground stage disc, the disc ringed 4px in Lucas's live status colour (Online, Away, Busy, Common offline, the seam colour while connecting; the ring eases over 300ms with Ease Out when the status changes), and under it the status tag: Tag type, full radius, 2px by 10px, the status colour as fill with `on-bright` text (ink on the seam fill while connecting). The tag is the only place the window states the status; the pose is not a button here. **Right**, centred against the chibi from 768px: "ImJustLucas" in Title Large over the role line in muted Label; the LinkedIn DM as the screen's one Play button (full width below 640px, its label allowed to wrap, 52px at least) with the reply promise in muted Label beside it from 1024px and under it below; the outline "Add me on Discord" button linking to his Discord profile; then a 2px seam rule (20px above the row) and "also on" in muted Label with GitHub, YouTube and Instagram as small outline buttons, 8px apart, wrapping. **Sent:** pressing Play plays the confirm chord, opens LinkedIn in a new tab and swaps the mark to a check and the label to "Request sent!" for 2.4 seconds, the swap instant (no motion to reduce) and announced in a polite screen-reader live region. The outline buttons play the press note. **Right now:** below the window, "right now" in Title over a borderless raised slot with the tray at the friends panel's fixed 76px height (12px padding) holding the same presence card in every state, so the window never moves when Lucas starts or stops a game.
+
+**Platform marks** are lucide line icons; a mark lucide does not draw (Discord) is redrawn as a 1.75px-stroke outline with round joins so it sits with them, never a filled brand logo beside line icons.
+
 ### Not found (the 404)
 The client's "wiped out" screen, where the voice gets the room the audit asked for. Both 404s draw the same `NotFoundSlot` (`components/not-found`): a raised slot with a 2px seam border and the tray, at most 34rem wide and centred in its panel, holding the sleeping pose on its ground stage disc (160px, 208px from 640px), the Headline as the page's `h1` ("Wiped out!", "Lessivé !"), one line in the muted ink at the page banner's size ("total flat spell… so I took a nap 😴"), then the screen's one Play button with a house icon, "Respawn at home" ("Réapparaître à l'accueil"), and the error code in muted Data under it. Padding 20px with 28px at the bottom; from 640px, 24px at the top, 40px at the sides and 36px at the bottom. The pose is not a button and the slot has no cue; Play plays confirm.
 - **Locale 404** (`app/[locale]/page-not-found`): in the shell, in its Locale, centred in the content panel's height. Below 640px Play takes the full width and shows only the verb ("Respawn", "Réapparaître"); the destination stays in its accessible name. The status stays 404 (`proxy.ts` rewrites with it).
@@ -545,6 +562,7 @@ The client's "wiped out" screen, where the voice gets the room the audit asked f
 ### Chips and tags
 - **Rarity tag:** rarity fill, `on-bright` text (Navy in electric, Night in plum), Tag type, full radius, 2px by 8px.
 - **Tech chip:** the Tech's own colour as fill and 2px border with computed ink, or an outline (see The Computed Ink Rule); Tag type, full radius, 2px by 10px.
+- **Status tag:** the friend request's status tag (see above), the live tag in every status colour.
 - **Live tag:** Online fill, `on-bright` text; the "current team" tag on an ongoing stop and the "new" tag on the latest Video are drawn the same. **WIP tag:** 2px seam outline, ink text; the contract type tag is drawn the same.
 
 ### Accordion (FAQ)

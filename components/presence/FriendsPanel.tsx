@@ -45,7 +45,8 @@ export function FriendsPanel() {
   );
 }
 
-function PresenceCard({ presence }: { presence: Presence }) {
+/** What Lucas is doing right now, as the row inside a presence slot. */
+export function PresenceCard({ presence }: { presence: Presence }) {
   switch (presence.kind) {
     case "playing":
       return <Playing presence={presence} />;

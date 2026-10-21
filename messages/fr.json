@@ -177,7 +177,14 @@
     "showingAll": "{count, plural, one {# projet} other {les # projets}}"
   },
   "Contact": {
-    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible."
+    "dm": "Envoie-moi un MP sur LinkedIn",
+    "reply": "Je réponds aussi vite que possible",
+    "sent": "Demande envoyée !",
+    "sentAnnounced": "Demande envoyée : LinkedIn s'est ouvert dans un nouvel onglet.",
+    "discord": "Ajoute-moi sur Discord",
+    "alsoOn": "aussi sur",
+    "rightNow": "en ce moment",
+    "chibiAlt": "Lucas qui fait coucou"
   },
   "Mdf2025": {
     "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",
