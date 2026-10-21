@@ -7,8 +7,21 @@
     },
     "image": "/images/projects/predi.png",
     "wip": true,
-    "period": { "start": "2025", "end": "ongoing" },
-    "techs": [],
+    "period": {
+      "start": "2025",
+      "end": "ongoing"
+    },
+    "techs": [
+      "typescript",
+      "react",
+      "shadcn-ui",
+      "tailwind-css",
+      "zod",
+      "nestjs",
+      "postgresql",
+      "docker",
+      "claude-code"
+    ],
     "externalLink": "https://predi.gg",
     "openSource": false,
     "rarity": "epic",
@@ -22,8 +35,14 @@
     },
     "image": "/images/projects/qotum.png",
     "wip": true,
-    "period": { "start": "2024", "end": "ongoing" },
-    "techs": ["nextjs", "nestjs"],
+    "period": {
+      "start": "2024",
+      "end": "ongoing"
+    },
+    "techs": [
+      "nextjs",
+      "nestjs"
+    ],
     "openSource": false,
     "rarity": "rare",
     "featured": 2
@@ -36,8 +55,14 @@
     },
     "image": "/images/projects/tricks.png",
     "wip": false,
-    "period": { "start": "2021", "end": "2023" },
-    "techs": ["nuxtjs", "strapi"],
+    "period": {
+      "start": "2021",
+      "end": "2023"
+    },
+    "techs": [
+      "nuxtjs",
+      "strapi"
+    ],
     "externalLink": "https://tonytrancard.fr/projects_side/thetricksnetwork",
     "openSource": false,
     "rarity": "rare",
@@ -51,8 +76,15 @@
     },
     "image": "/images/projects/next-13-boilerplate.png",
     "wip": false,
-    "period": { "start": "2023-11", "end": "2023-11" },
-    "techs": ["react", "nextjs", "styled-components"],
+    "period": {
+      "start": "2023-11",
+      "end": "2023-11"
+    },
+    "techs": [
+      "react",
+      "nextjs",
+      "styled-components"
+    ],
     "externalLink": "https://next-13-boilerplate.imjustlucas.dev/",
     "repository": "https://github.com/ImJustLucas/Next-13-Boilerplate",
     "openSource": true,
@@ -66,8 +98,15 @@
     },
     "image": "/images/projects/bun-elysia-boilerplate.png",
     "wip": false,
-    "period": { "start": "2024-05", "end": "2024-05" },
-    "techs": ["bun", "elysiajs", "typescript"],
+    "period": {
+      "start": "2024-05",
+      "end": "2024-05"
+    },
+    "techs": [
+      "bun",
+      "elysiajs",
+      "typescript"
+    ],
     "repository": "https://github.com/ImJustLucas/bun-elysia-boilerplate",
     "openSource": true,
     "rarity": "common"
