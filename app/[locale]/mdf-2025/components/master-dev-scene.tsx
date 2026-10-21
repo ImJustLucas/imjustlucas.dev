@@ -100,13 +100,15 @@ const LENS_FOV = 45;
  * object on every render, which would undo the lens below.
  */
 const CAMERA = { fov: LENS_FOV, position: [0, 0, 8] } as const;
-/** Half the width to keep in view at the cheque in a wide well: it spans about 57%, its stage in view below it. */
-const WIDE_HALF_FRAME = 5.2;
+/** The camera looks at the middle of the cheque and its stage together. */
+const TARGET: [number, number, number] = [0, -0.6, 0];
+/** Half the width to keep in view at the cheque in a wide well: it spans about 60%. */
+const WIDE_HALF_FRAME = 4.5;
 /** Half the width to keep in view in a narrow (phone) well, with a margin. */
 const NARROW_HALF_FRAME = 3.6;
 
 /**
- * Frames the cheque as the item on show: in a wide well it spans about 57%
+ * Frames the cheque as the item on show: in a wide well it spans about 60%
  * of the width, in a narrow (phone) one it fits across with a margin.
  */
 const Lens = () => {
@@ -327,14 +329,16 @@ const Coins = ({
   );
 };
 
-/** The legendary gold (DESIGN.md, Rarity). */
+/** The legendary gold (DESIGN.md, Rarity), and its deep variant for light grounds. */
 const LEGENDARY = "#ffd84d";
+const LEGENDARY_DEEP = "#8a6200";
 
 /**
  * The cheque's stage, as the chibi and the achievement art stand on theirs:
- * a raised disc under it, with the legendary rim as its top band.
+ * a raised disc under it, with the legendary rim as its top band (the deep
+ * gold by day, as rarity lines are on light surfaces).
  */
-const Stage = ({ color }: { color: string }) => (
+const Stage = ({ color, rim }: { color: string; rim: string }) => (
   <group position={[0, -1.72, 0]}>
     <mesh>
       <cylinderGeometry args={[1.8, 1.9, 0.16, 64]} />
@@ -342,8 +346,8 @@ const Stage = ({ color }: { color: string }) => (
       <meshBasicMaterial color={color} toneMapped={false} />
     </mesh>
     <mesh position={[0, 0.085, 0]} rotation={[Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[1.8, 0.02, 8, 96]} />
-      <meshBasicMaterial color={LEGENDARY} toneMapped={false} />
+      <torusGeometry args={[1.8, 0.03, 8, 96]} />
+      <meshBasicMaterial color={rim} toneMapped={false} />
     </mesh>
   </group>
 );
@@ -455,16 +459,8 @@ const Scene = ({
         />
       )}
 
-      {/* A soft legendary key light, so the rarity reaches the item itself */}
-      <pointLight
-        position={[-3, 2.5, 4]}
-        intensity={day ? 4 : 6}
-        distance={12}
-        color={LEGENDARY}
-      />
-
       <Certificate position={[0, 0, 0]} still={still} />
-      <Stage color={stageColor} />
+      <Stage color={stageColor} rim={day ? LEGENDARY_DEEP : LEGENDARY} />
 
       <Coins count={15} still={still} />
 
@@ -482,6 +478,7 @@ const Scene = ({
       ))}
 
       <OrbitControls
+        target={TARGET}
         enablePan={false}
         enableZoom={false}
         minDistance={8}
