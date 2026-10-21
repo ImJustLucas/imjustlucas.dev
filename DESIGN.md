@@ -319,6 +319,113 @@ components:
     backgroundColor: "{colors.navy}"
     rounded: "{rounded.md}"
     height: "clamp(360px, calc(100dvh - 420px), 600px)"
+  admin-sidebar-compact:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    rounded: "{rounded.xl}"
+    padding: "16px"
+    width: "272px"
+  admin-editor-banner:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.headline}"
+    rounded: "{rounded.lg}"
+    padding: "20px 28px"
+  admin-entry-row:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    rounded: "{rounded.lg}"
+    padding: "12px 20px"
+  admin-new-entry-row:
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.lg}"
+    padding: "12px 20px"
+  admin-input:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.body}"
+    rounded: "{rounded.md}"
+    padding: "0 12px"
+    height: "44px"
+  admin-rarity-chip:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    padding: "0 14px"
+    height: "44px"
+  admin-tech-chip:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    padding: "0 12px"
+    height: "36px"
+  admin-ongoing-chip-on:
+    backgroundColor: "{colors.online}"
+    textColor: "{colors.navy}"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    padding: "0 14px"
+    height: "44px"
+  admin-switch-track:
+    backgroundColor: "{colors.navy-seam}"
+    rounded: "{rounded.full}"
+    width: "40px"
+    height: "24px"
+  admin-save:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "0 20px"
+    height: "44px"
+  admin-save-changed:
+    backgroundColor: "{colors.off-white}"
+    textColor: "{colors.navy}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "0 20px"
+    height: "44px"
+  admin-delete:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.busy}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "0 16px"
+    height: "44px"
+  admin-step:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "0 12px"
+    height: "36px"
+  admin-notice:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.lg}"
+    padding: "10px 8px 10px 12px"
+  admin-refusal:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    padding: "10px 12px"
+  admin-todo-disc:
+    backgroundColor: "{colors.away}"
+    textColor: "{colors.navy}"
+    rounded: "{rounded.full}"
+    size: "32px"
+  admin-sign-in:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.headline}"
+    rounded: "{rounded.lg}"
+    padding: "20px 40px 36px"
+    width: "30rem"
 ---
 
 # Design System: ImJustLucas
@@ -412,6 +519,7 @@ Discord's presence vocabulary, used for the status ring, the presence dots and t
 - **Online** (#5fe08a, deep #1d7a45): online ring, the breathing dot, the equaliser bars, the live tag fill.
 - **Away** (#ffb02e): idle ring and dot. **Busy** (#ff5d73, deep #c0233d): do-not-disturb ring and dot. Offline uses **Common** (its label in Common's ink); connecting uses the seam colour.
 - **Busy Deep** in light and **Busy** in dark are also the destructive and error colour.
+- **In the Admin**, Online also means published (the published notice's disc and border, the "en cours" chip and tag) and Away means something to fix: the to-do discs, the warning tags, the unpublished dot and the conflict callout. Away has no deep variant, so it stays a fill, a dot or a 2px frame.
 
 ### Neutral, electric (the default palette)
 - **Navy Frame** (#05081c): the window frame around sidebar and panel in dark, carrying the sparkles, and the ledge under raised and ground controls.
@@ -437,7 +545,7 @@ In light mode, in either palette, bright rarity and status colours stay as fills
 ### Named Rules
 **The Palette Owns the Shell Rule.** The frame, sidebar and panel are the palette's own frame, ground and raised colours (Navy Frame, Navy and Navy Raised in electric dark; Night, Plum and Velvet in plum dark), always through the role tokens. Never fall back to a neutral grey surface with colourful accents; the colour is the room, not the furniture.
 
-**The One Action Rule.** An action fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus selection; the action ink draws focus. A second action-filled button in the panel means one of them is wrong. A component never names Tangerine, Electric or Off-white directly for this role; it uses `action`, `action-ledge`, `action-ink` and `on-action`, so both palettes follow. Secondary links use the action ink as their text in light; in electric dark they stay ink with an Electric underline and take the action ink on hover.
+**The One Action Rule.** An action fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus selection; the action ink draws focus. A second action-filled button in the panel means one of them is wrong. In the Admin a save button takes the action fill only while its form holds unpublished changes, so a lit button always has something to publish. A component never names Tangerine, Electric or Off-white directly for this role; it uses `action`, `action-ledge`, `action-ink` and `on-action`, so both palettes follow. Secondary links use the action ink as their text in light; in electric dark they stay ink with an Electric underline and take the action ink on hover.
 
 **The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its 2px frame, 4px top band and tag (and the filled sparkle on legendary). Never use the rarity hues for headings, backgrounds or decoration. Inside the legendary item's own showcase the scene is the item, so the cheque's stage rim (its top band in 3D) and the coins are Legendary, the rim Legendary Deep by day.
 
@@ -496,12 +604,12 @@ Depth is tonal first (frame, then ground, then raised: Navy Frame, Navy, Navy Ra
 - **Tab Ledge** (`0 3px 0 rgb(var(--action-ledge))`): under the sliding active-tab fill, which travels with it.
 - **Tray** (`inset 0 1px 0 rgb(246 243 234 / 0.07)` in electric dark, `inset 0 1px 0 rgb(255 241 230 / 0.08)` in plum dark, `inset 0 1px 0 rgb(255 255 255 / 0.9)` in both light modes): the top highlight inside the player card, banner, slots, item cards, accordion rows and presence card.
 - **Well** (`inset 0 2px 0 rgb(var(--ledge))`): the showcase well on the reward screen (its lip drawn over the canvas), the tray's inverse: a ledge-coloured lip along its top edge, so it reads as pressed into the slot. Never on anything pressable.
-- **Float** (`0 24px 48px -12px rgb(2 4 16 / 0.6)` in electric dark, `rgb(16 19 31 / 0.22)` in electric light, `rgb(12 4 22 / 0.6)` in plum dark, `rgb(42 21 64 / 0.28)` in plum light): the mobile sheet and menus.
+- **Float** (`0 24px 48px -12px rgb(2 4 16 / 0.6)` in electric dark, `rgb(16 19 31 / 0.22)` in electric light, `rgb(12 4 22 / 0.6)` in plum dark, `rgb(42 21 64 / 0.28)` in plum light): the mobile sheet, menus and the Admin's published notice.
 
 ### Named Rules
 **The Real Button Rule.** Anything pressable has a ledge and sinks onto it when pressed; anything with a ledge is pressable. Static cards and slots never get one. Ghost and link controls are not raised controls and have none.
 
-**The Float Means On Top Rule.** Blurred shadows belong only to layers above the client (the mobile sheet, menus).
+**The Float Means On Top Rule.** Blurred shadows belong only to layers above the client (the mobile sheet, menus, the Admin's pinned published notice).
 
 ## Shapes
 
@@ -524,7 +632,7 @@ Every control is drawn in the client's vocabulary; shadcn and Radix stay as the 
 - **Icon:** 44px square ledge buttons (sound, Locale, theme, socials, menu) with screen-reader labels.
 - **Ghost / Link:** no ledge; ghost tints the seam colour on hover, link is the action ink and underlined.
 - **Secondary link** (the shared `SECONDARY_LINK` style): inline links in copy and titles (a company name, the subscribe line). The action ink with a 2px `link-line` underline 4px below; in the dark modes the ink, taking the action ink on hover. External ones open in a new tab.
-- **Destructive:** Busy Deep fill with Cream text in light, Busy with `on-bright` text in dark, on a ledge.
+- **Destructive:** Busy Deep fill with Cream text in light, Busy with `on-bright` text in dark, on a ledge. The Admin's delete is the declared exception: a quiet outline in the error ink (see Admin).
 - **States:** hover raises 2px onto a 6px ledge (fine pointers only); press sinks 4px in 80ms and releases in 160ms with Ease Pop; disabled drops the ledge to 50% opacity.
 
 ### Tabs (the menu)
@@ -624,18 +732,61 @@ The **sound switch** is a 44px icon button, the action fill with an `on-action` 
 - **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame. The career path arrives drawn, medals swap faces without turning, chips and thumbnails stay put, and the play disc only fades, and filtered items appear without fading. The unlock banner shows no foil, and the showcase arrives paused with "play" offered.
 
 ### Admin
-The Admin sets the same fonts, modes (dark by default) and the visitor's palette, and inherits the world through the shadcn roles mapped in the stylesheet: the palette's ground and raised surfaces, seam borders, the ledge buttons, Busy or Busy Deep for errors.
+The Owner's screen of the same client (`app/admin/`, French only), built from the same vocabulary in a calmer tone. It sets the same fonts, modes (dark by default) and the visitor's palette, every colour a role as on the site. It plays no sound (no switch, no notes, not even the theme menu's), shows no foil, and the chibi appears only on the home banner, the sign-in and content-unavailable screens, and where the pose is the value: a Hobby's row and the pose picker (the player card keeps its head). Here Online also means published and Away means something to fix.
+
+- **Shell:** the sparkle frame round a ground sidebar and the ground panel, 24px corners, 12px apart, only the panel scrolling. The sidebar is 320px from 1024px and 272px from 768 to 1023px (the gutter's sparkles follow it), 16px padding, 24px between groups: the player card, the tabs, then, pushed to the bottom over a 2px seam rule (16px above), the footer row: the theme menu's 44px icon button, "Voir le site" as an outline ledge button filling the row (a new tab) and the sign-out 44px raised icon button (its label kept as its name; a POST, never a link). **Player card:** a raised slot with the tray (16px padding, 12px on the compact card), the chibi head in a 3px seam ring since the Admin has no live presence (56px, 40px on the compact card), "ImJustLucas" in Title Large (Title on the compact card), an "admin" tag (2px seam outline, muted Tag) and the login in muted Label from 1024px only.
+- **Tabs:** Accueil, Projects, Experiences, Techs, Achievements, Hobbies, Profile, drawn as the client's tabs (44px rows 4px apart, an 18px line icon, the seam colour at 70% on hover, the action fill sliding to the open one on its 3px action ledge over 240ms with Ease In Out, gone when no tab matches), silent. The labels are the domain's names as written, the Owner's vocabulary, not the public menu's lowercase. The **theme menu** is the site's, in French, opening upward from the footer, without its notes.
+- **Mobile** (below 768px): a 56px ground top bar (the 40px head, the name in Title, the "admin" tag, the 44px menu button at the right) and the same sidebar as a sheet from 76px down, without the player card: Float, rising 24px with Ease Drawer (260ms in, 180ms out), the panel `inert` behind it; Escape, a new page or widening to 768px closes it.
+- **Panel:** 16px padding at the top and sides (28px from 768px) and 64px of room at the bottom inside the scroll, so a pinned save footer meets the panel's very edge; content centred at a 56rem maximum.
+
+**Editor banner.** Each editor opens on a compact banner, 32px above its entries: a raised slot with a 2px seam border and the tray (16px padding, 24px from 640px, 20px by 28px from 768px), the editor's name in Headline with the count in muted Data on its baseline ("9 Projects"), one muted Label line at 65ch on how the site shows these entries, and "Ajouter un …" as a 44px outline ledge button with a plus that opens the new-entry row. No chibi. The home's banner is the same slot holding "Admin", the line on where saves go (the branch in Data on a small ground chip) at the page banner's 1.0625rem, and from 640px the coding pose (120px) on its ground stage disc.
+
+**Entry row (signature).** An entry is a raised row with the tray and 16px corners, 12px from the next, that opens in place on its form.
+- **Closed:** a header button at least 64px tall (16px side padding, 20px from 640px; the seam colour at 30% on hover) holding, wrapping, what tells the entry apart: an optional thumb (an Experience's emoji on a 36px ground disc, an Achievement's art on a 40px disc, a Hobby's pose at 44px on its stage disc), the name in Title (Unbounded, truncated), facts in muted Data (a period, a year, "place 2 sur 6"), and tags (the rarity tag; WIP and contract type as 2px seam outlines; "en cours" as the live tag; "sans Tech" as a warning tag, the Away fill with `on-bright` text). While its form holds unpublished changes, an 8px Away dot and "non publié" in muted Tag sit before the chevron (the dot alone below 640px). The chevron (20px, muted) turns over 200ms with Ease In Out. Project and Achievement rows wear a 4px top band in their rarity colour, without the side frame (The Rarity Is Data Rule).
+- **Open:** a 2px seam outline inset round the row, a 2px seam rule under the header, then the form (20px above, 16px at the sides and below, 20px from 640px). The form stays mounted while closed, so changes survive closing, and which rows are open is kept above the editor, so a row stays open across a save.
+- **Address:** a row answers to `#kind-index` (`#project-1`, `#hobby-0`; a Tech by its id, a Resume as `#cv-fr`): arriving on one, or following a link to it, opens it and scrolls it in below the published notice.
+- **Actions:** controls kept in view on the closed header (a Hobby's up and down step buttons) sit in a slot after the toggle, and the chevron stays at the row's right edge, after them.
+
+**New-entry row.** The last row of a list, answering to `#new`: transparent with a dashed 2px seam outline, a 32px seam disc (70%) with a plus, the label in semibold Label and an optional muted hint ("ajouté en dernier"); opened, it fills raised with the tray.
+
+**Danger zone.** Under an entry's form, past a 2px dashed seam rule with 16px either side: "Supprimer publie aussi, après confirmation." in muted Label across from the delete button.
+
+**Techs.** A Tech has two fields, so its rows are short and always open, not rows that open: a raised row with the tray holding the Tech chip as the site draws it over its id in muted Data (a 160px column from 1024px), the name and colour fields with "Publier" in line, and the delete button (up beside the chip on narrower panels, away from "Publier").
+
+**Fields.** A long form is grouped under small titles (muted Tag in Geist with a 2px seam rule running to the right; 24px between groups, 16px within).
+- **Input:** 44px, 10px corners, the ground fill pressed into the raised row, a 2px seam border (the muted ink at 40% on hover) that turns the error colour on a field error, Body size (1rem) so phones never zoom, placeholders in the muted ink at 75%. Text areas start at 96px and grow with their content; selects are the input with a 16px muted chevron; numbers take tabular figures and years are set in Data's mono. The label sits 6px above in Label ink, a hint after "·" in the muted ink; an error sits under its field in the error colour (Label, with a circle-alert icon), and a refused save focuses the first field it names.
+- **Localized text:** one field per Locale, fr then en, side by side from 1024px, each labelled by its Locale code in Data on a small ground chip (the one uppercase string) beside "Français" or "Anglais".
+- **Rarity chips:** four 44px pill radios (commun, rare, épique, légendaire), ground fill with a 2px seam border and a 10px disc in the rarity's colour ringed in the seam; the chosen one takes the rarity as fill and border with `on-bright` text. None is chosen on a new entry.
+- **Tech chips:** 36px pill checkboxes in Tag type, the picked ones first in their display order. Unpicked, a ground outline with a 10px disc in the Tech's colour; picked, drawn as on the site with a check: the Tech's colour as fill and border with the computed ink, or a 2px outline in that colour with the theme's ink (The Computed Ink Rule). The legend counts "3 sur 24" in muted Data, or with none shows an Away dot and "Aucune : le Project sort des filtres".
+- **Pose picker:** the seven poses as radio tiles in a grid (4 columns, 7 from 640px, 4 again from 768 to 1023px): a ground tile with 10px corners and a 2px seam border, the pose (up to 64px) on a raised stage disc and its name in muted Tag; the chosen one takes an action-ink border, ink text and a seam disc.
+- **Period:** start and end side by side from 1024px, each a month select ("Année seule" first) and an 88px year field. The end carries "En cours" as a 44px pill toggle, a ground outline at rest and the Online fill with `on-bright` text when on, which dims the end's date to 40%.
+- **Switch:** a 44px ground row with a 2px seam border (the action ink at 70% when on) holding a 40 by 24px track (the seam colour, the action fill when on) with a 16px knob (the muted ink, `on-action` when on) that slides 16px, then the label and an optional muted hint.
+- **File picker:** for an image, a 16:9 preview (112px wide, 144px from 640px; ground, 2px seam border, top-anchored crop) showing the file in place, then the one picked; beside it a dashed 2px seam area on the ground holding a 36px raised "Choisir" (then "Changer") ledge button and the file: the current path in Data, or the picked name over its size in Data ("1,2 Mo · publié avec le reste"). A file over the upload limit is stopped before it is sent; on an error the border turns solid in the error colour.
+- Every chip, tile and picker shows focus as the usual 2px action-ink ring with a 2px offset.
+
+**Save, delete and step buttons.**
+- **Save:** 44px, 20px padding, semibold Label, 10px corners, on a ledge: an outline (ground fill, 2px seam border) at rest, it takes the action fill on its action ledge with `on-action` text once its form holds changes, so the lit button is the one with something to publish; a spinner and "Publication…" while it runs. On long forms (a Project, an Experience, an Achievement, new or not, and the Profile's links) it sits in a footer pinned to the panel's bottom while the form scrolls: raised, under a 2px seam rule, 12px padding, bleeding to the row's edges, the refusal under the button. Short forms (a Tech, a Hobby, a Resume) keep it in line.
+- **Delete:** a quiet outline in the error ink, never filled: 44px, ground fill, 2px seam border, the label and trash icon in the error colour, on a ledge. It asks before submitting and publishes. A declared Admin exception to the Destructive button: a delete sits beside forms the Owner edits often, so it never outshouts "Publier".
+- **Step:** a 36px ground ledge button without a border, an arrow then its label (the arrow alone below 1024px, the label kept as its name): a Hobby's "Monter" and "Descendre".
+
+**Published notice.** A save that went live is announced at the top of the panel, in flow above the editor (it takes its own room, 16px above the content, and never covers the entry it names) and sticky while the panel scrolls: a raised strip with 16px corners, a 2px Online-ink border at 60% and Float; a 32px Online disc with an `on-bright` check; what went live in semibold ink ("Predi.GG publié.") then "En ligne dans environ une minute." in the muted ink; a 36px ghost close button. It enters with the page change (220ms, 6px rise), is announced as a status, and clears at the next save, the next page or when closed. Rows reached by their address land below it.
+
+**Refusal callout.** A refused save says so under its button: a ground strip with 10px corners and a 2px border, Label ink text that starts "Rien n'a été publié" and says what to do. **Away** (the border at 70%, a triangle on a 20px Away disc with `on-bright` ink) for a conflict, with a 36px outline "Recharger la page" link on a ledge that re-reads the editor; **Busy** (the error ink at 60%, a circle icon) for every other refusal (invalid fields, refused, failed, not owner), with a "Se reconnecter" link on a ledge when the account is not the Owner's. Announced as an alert.
+
+**Home.** After the banner, 40px apart: **À faire** (Title, the count in muted Data) is one raised list with the tray, items parted by 2px seam rules: a 32px Away disc with an `on-bright` line icon, the problem in semibold ink Label, why it matters in muted Label, then 36px outline ledge links with an arrow to where to fix it (a row's address). The items come from the alert rules (`lib/admin/alerts.ts`): a Resume older than six months or older than the newest Experience's start, and a Project with no Tech; two Resumes stale for the same reason are one item with a link per Resume. With nothing to fix, one raised strip with an Online-ink check says so. **Le contenu** indexes the six editors as one raised list (6px padding, 2px seam rules): each a 64px row with the tab's icon in a 40px ground square ringed in the seam, the name in Title, its counts in muted Data ("9 · 3 sur l'accueil", the Resumes' dates), and an arrow that nudges 4px on hover over the seam colour at 40%.
+
+**Sign-in and content unavailable.** **Sign-in** (anyone but the signed-in Owner): the sparkle frame round one ground panel, no sidebar, centring a raised slot with a 2px seam border and the tray (at most 30rem; 20px padding with 28px at the bottom, 40px at the sides and 36px at the bottom from 640px): the coding pose on its ground stage disc (144px, 160px from 640px), "Admin" in Headline, one muted line, the screen's one Play button, "Se connecter avec GitHub" (full width below 640px), and "Retour au site" as a muted link with a 2px seam underline. A signed-in account that is not the Owner's gets the sleeping pose, "Accès refusé", its login in bold ink, and "Se déconnecter" as a ledge button in place of Play. **Content unavailable** (an editor that cannot read the content branch): the same slot inside the panel (at most 36rem), the sleeping pose (128px, 144px from 640px), "Contenu indisponible", the branch in Data, the reason in Data on a ground strip with a 2px border in the error ink at 60%, a muted hint, then "Recharger" (outline) beside "Se déconnecter".
 
 ## Do's and Don'ts
 
 ### Do:
 - **Do** let the palette's own frame, ground and raised colours own the whole shell (Navy Frame #05081c, Navy #0a0f2e and Navy Raised #141c48 by default), through the role tokens rather than fixed colours, so every component works in both palettes and both modes.
-- **Do** keep the action fill to the Play button, the active tab, the sound switch when on and selection, and the action ink to focus, the menu check and link text.
+- **Do** keep the action fill to the Play button, the active tab, the sound switch when on, selection and, in the Admin, a save button whose form has changes, and the action ink to focus, the menu check and link text.
 - **Do** derive every stat from `content/`, the dictionaries or a live source (Lanyard, GitHub, YouTube), and hide a missing number rather than show zero.
 - **Do** compute the ink on Tech colours and use the deep `-ink` variants for coloured text in light.
-- **Do** give every pressable control a ledge, a 44px target and a note from the kit.
+- **Do** give every pressable control a ledge, a 44px target and a note from the kit (the Admin's controls stay silent).
 - **Do** use an outline button (ground fill, 2px seam border) for secondary actions sitting on a raised surface.
-- **Do** keep the sound switch visible on every page and honour reduced motion for both motion and sound.
+- **Do** keep the sound switch visible on every page that plays sound (the Admin plays none) and honour reduced motion for both motion and sound.
 - **Do** write every new string in both Locales and keep the lowercase, casual voice.
 - **Do** open a profile screen with the page banner (Headline, one line, a chibi pose on its stage disc) when it has a pose of its own.
 
