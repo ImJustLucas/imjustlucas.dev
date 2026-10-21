@@ -17,12 +17,19 @@ import {
 } from "@react-three/fiber";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 
-import { Pause, Play } from "lucide-react";
+import {
+  Coins as CoinsIcon,
+  MousePointerClick,
+  Pause,
+  Play,
+} from "lucide-react";
 import * as THREE from "three";
 
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { useSounds } from "@/components/sound/SoundProvider";
+import { TypographyMuted } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { SAMPLES } from "@/lib/sound/kit";
 
@@ -32,7 +39,8 @@ import SceneLoader from "./scene-loader";
 const GoldenShaderMaterial = shaderMaterial(
   {
     time: 0,
-    color: new THREE.Color(0xffd700),
+    // Legendary gold: the coins belong to the legendary item.
+    color: new THREE.Color(0xffd84d),
   },
 
   `
@@ -77,6 +85,37 @@ const CERTIFICATE_CENTER = CERTIFICATE_BOX.getCenter(new THREE.Vector3());
 const FRAMES_PER_SECOND = 60;
 /** The longest step taken at once, so a frame after a tab switch can't teleport coins. */
 const MAX_DELTA = 1 / 20;
+
+/** The lens's vertical field of view in a wide well. */
+const LENS_FOV = 45;
+/** Half the width to keep in view at the cheque, with a margin. */
+const CHEQUE_HALF_WIDTH = 3.6;
+
+/**
+ * Keeps the whole cheque in view: a wide well uses the long lens, a narrow
+ * (phone) one widens the field of view until the cheque fits across it.
+ */
+const Lens = () => {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    if (!(camera as THREE.PerspectiveCamera).isPerspectiveCamera) return;
+    if (!size.width || !size.height) return;
+    const aspect = size.width / size.height;
+    const distance = camera.position.length() || 8;
+    const fitting =
+      2 *
+      THREE.MathUtils.radToDeg(
+        Math.atan(CHEQUE_HALF_WIDTH / distance / aspect),
+      );
+    // Fitting the R3F camera to the canvas is the intended pattern.
+    // eslint-disable-next-line react-hooks/immutability
+    (camera as THREE.PerspectiveCamera).fov = Math.max(LENS_FOV, fitting);
+    camera.updateProjectionMatrix();
+  }, [camera, size]);
+
+  return null;
+};
 
 const CustomCoin = ({
   position = [0, 0, 0],
@@ -246,7 +285,7 @@ const Coins = ({
     const initialCoins = Array.from({ length: count }, () => {
       return {
         position: [
-          (Math.random() - 0.5) * viewport.width * 2,
+          (Math.random() - 0.5) * viewport.width * 1.2,
           Math.random() * 20 + 10,
           (Math.random() - 0.5) * 5,
         ] as [number, number, number],
@@ -276,7 +315,17 @@ const Coins = ({
   );
 };
 
-const Scene = ({ still }: { still: boolean }) => {
+const Scene = ({
+  still,
+  day,
+  throws,
+}: {
+  still: boolean;
+  /** Light mode: the palette's daylight, no stars, no vignette. */
+  day: boolean;
+  /** Counts the presses of the throw button; each one throws a coin. */
+  throws: number;
+}) => {
   const { camera, viewport, pointer } = useThree();
   const { play } = useSounds();
   const [userCoins, setUserCoins] = useState<
@@ -293,17 +342,11 @@ const Scene = ({ still }: { still: boolean }) => {
     camera.position.set(0, 0, 8);
   }, [camera]);
 
-  const handleClick = useCallback(
-    (event: ThreeEvent<MouseEvent>) => {
-      if (still) return;
-      // A drag to orbit the camera, not a throw.
-      if (event.delta > 4) return;
+  /** Throws a coin from the camera towards a point of the certificate's plane. */
+  const throwCoin = useCallback(
+    (targetX: number, targetY: number) => {
       const cameraPosition = camera.position.clone();
-
-      const mouseX = (pointer.x * viewport.width) / 2;
-      const mouseY = (pointer.y * viewport.height) / 2;
-
-      const targetVector = new THREE.Vector3(mouseX, mouseY, 0);
+      const targetVector = new THREE.Vector3(targetX, targetY, 0);
 
       const direction = new THREE.Vector3()
         .subVectors(targetVector, cameraPosition)
@@ -322,8 +365,27 @@ const Scene = ({ still }: { still: boolean }) => {
       ]);
       play("throw");
     },
-    [camera, pointer, viewport, still, play],
+    [camera, play],
   );
+
+  const handleClick = useCallback(
+    (event: ThreeEvent<MouseEvent>) => {
+      if (still) return;
+      // A drag to orbit the camera, not a throw.
+      if (event.delta > 4) return;
+      throwCoin(
+        (pointer.x * viewport.width) / 2,
+        (pointer.y * viewport.height) / 2,
+      );
+    },
+    [pointer, viewport, still, throwCoin],
+  );
+
+  // The throw button (keyboards, screen readers): somewhere on the cheque.
+  useEffect(() => {
+    if (throws === 0) return;
+    throwCoin((Math.random() - 0.5) * 4, (Math.random() - 0.5) * 2);
+  }, [throws, throwCoin]);
 
   // Only a coin the visitor threw makes a sound when it lands.
   const handleImpact = useCallback(
@@ -349,13 +411,15 @@ const Scene = ({ still }: { still: boolean }) => {
       />
 
       <Environment preset="sunset" />
-      <Stars
-        radius={100}
-        depth={50}
-        count={1000}
-        factor={4}
-        speed={still ? 0 : 1}
-      />
+      {!day && (
+        <Stars
+          radius={100}
+          depth={50}
+          count={1000}
+          factor={4}
+          speed={still ? 0 : 1}
+        />
+      )}
 
       <Certificate position={[0, 0, 0]} still={still} />
 
@@ -387,27 +451,48 @@ const Scene = ({ still }: { still: boolean }) => {
 
       <mesh position={[0, 0, 0]} onClick={handleClick}>
         <planeGeometry args={[100, 100]} />
-        <meshBasicMaterial transparent opacity={0} />
+        {/* Invisible to the eye and to depth, so the stars behind it still draw */}
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      <EffectComposer>
-        <Bloom
-          intensity={0.5}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.9}
-        />
-        <Vignette offset={0.5} darkness={0.5} eskil={false} />
-      </EffectComposer>
+      {day ? (
+        // By day only the gold glows: a light ground must not bloom.
+        <EffectComposer>
+          <Bloom
+            intensity={0.35}
+            luminanceThreshold={0.85}
+            luminanceSmoothing={0.2}
+          />
+        </EffectComposer>
+      ) : (
+        <EffectComposer>
+          <Bloom
+            intensity={0.5}
+            luminanceThreshold={0.2}
+            luminanceSmoothing={0.9}
+          />
+          <Vignette offset={0.5} darkness={0.5} eskil={false} />
+        </EffectComposer>
+      )}
     </>
   );
 };
 
+/**
+ * The showcase: the scene in a sunken well (night sky in the dark modes, the
+ * palette's daylight in light), and under it the controls: throw a coin,
+ * the hint, and pause. Still under reduced motion until the visitor plays.
+ */
 export default function MasterDevScene() {
   const t = useTranslations("Mdf2025");
+  const { play } = useSounds();
+  const { resolvedTheme } = useTheme();
   const reducedMotion = useReducedMotion();
   // null until the visitor chooses: still under reduced motion, moving otherwise.
   const [paused, setPaused] = useState<boolean | null>(null);
+  const [throws, setThrows] = useState(0);
   const still = paused ?? reducedMotion;
+  const day = resolvedTheme === "light";
 
   useEffect(() => {
     // Warm the HTTP cache, so the first throw sounds at once.
@@ -416,21 +501,54 @@ export default function MasterDevScene() {
     }
   }, []);
 
+  const togglePause = () => {
+    play(still ? "toggleOn" : "toggleOff");
+    setPaused(!still);
+  };
+
   return (
-    <>
-      <SceneLoader />
-      <Canvas frameloop={still ? "demand" : "always"}>
-        <Scene still={still} />
-      </Canvas>
-      <Button
-        variant="secondary"
-        size="sm"
-        className="absolute bottom-3 right-3 z-10"
-        onClick={() => setPaused(!still)}
-      >
-        {still ? <Play aria-hidden /> : <Pause aria-hidden />}
-        {still ? t("play") : t("pause")}
-      </Button>
-    </>
+    <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
+      <div className="relative h-[clamp(320px,52dvh,420px)] overflow-hidden rounded-md bg-ground sm:h-[clamp(380px,58dvh,600px)]">
+        <SceneLoader />
+        <Canvas
+          // A longer lens than the default, so the cheque fills the well
+          camera={{ fov: LENS_FOV, position: [0, 0, 8] }}
+          frameloop={still ? "demand" : "always"}
+        >
+          <Lens />
+          <Scene still={still} day={day} throws={throws} />
+        </Canvas>
+        {/* The well's lip, drawn over the canvas */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-md shadow-[inset_0_2px_0_rgb(var(--ledge))]"
+        />
+      </div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:px-1">
+        <Button disabled={still} onClick={() => setThrows((n) => n + 1)}>
+          <CoinsIcon aria-hidden />
+          {t("throw")}
+        </Button>
+        <TypographyMuted className="order-last flex basis-full items-center gap-2 sm:order-none sm:basis-auto">
+          <MousePointerClick aria-hidden className="size-4 shrink-0" />
+          {still ? (
+            t("hintStill")
+          ) : (
+            <>
+              <span className="[@media(pointer:coarse)]:hidden">
+                {t("hint")}
+              </span>
+              <span className="hidden [@media(pointer:coarse)]:inline">
+                {t("hintTouch")}
+              </span>
+            </>
+          )}
+        </TypographyMuted>
+        <Button className="ml-auto" onClick={togglePause}>
+          {still ? <Play aria-hidden /> : <Pause aria-hidden />}
+          {still ? t("play") : t("pause")}
+        </Button>
+      </div>
+    </div>
   );
 }

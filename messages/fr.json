@@ -181,11 +181,19 @@
     "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible."
   },
   "Mdf2025": {
-    "winner": "Fier lauréat du concours MasterDevFrance 2025, une reconnaissance nationale de l'excellence technique et de l'innovation en développement logiciel.",
-    "loading": "Chargement...",
-    "loadingScene": "Chargement de la scène : {progress} %",
-    "pause": "Mettre l'animation en pause",
-    "play": "Lancer l'animation"
+    "line": "eh oui, je l'ai gagné 🏆 MasterDevFrance, c'est le concours national d'excellence technique en développement logiciel, et l'édition 2025, c'est la mienne.",
+    "unlocked": "débloqué",
+    "chibiAlt": "Lucas qui brandit un trophée doré",
+    "showcase": "la vitrine du trophée",
+    "throw": "lancer une pièce",
+    "hint": "ou clique sur la scène, glisse pour tourner autour",
+    "hintTouch": "ou touche la scène, glisse pour tourner autour",
+    "hintStill": "en pause, glisse pour tourner autour",
+    "pause": "pause",
+    "play": "jouer",
+    "back": "retour à mon profil",
+    "loading": "chargement…",
+    "loadingScene": "chargement du trophée · {progress} %"
   },
   "NotFound": {
     "title": "Page introuvable",
