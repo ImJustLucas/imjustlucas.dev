@@ -16,7 +16,7 @@ export default function SceneLoader() {
   return (
     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-ground text-ink-muted">
       <div
-        className="size-10 animate-spin rounded-full border-4 border-seam border-t-legendary motion-reduce:animate-none"
+        className="size-10 animate-spin rounded-full border-4 border-seam border-t-ink-muted motion-reduce:animate-none"
         role="status"
         aria-label={t("loading")}
       />
