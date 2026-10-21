@@ -194,7 +194,7 @@
   "NotFound": {
     "title": "Page not found",
     "headline": "Wiped out!",
-    "message": "Total flat spell: this page doesn't exist, or not anymore. Nothing to ride here, so I took a nap 😴",
+    "message": "Not a wave in sight: this page doesn't exist, or not anymore. So I'm taking a nap 😴",
     "play": "Respawn <home>at home</home>",
     "respawn": "Respawn",
     "code": "error 404",
