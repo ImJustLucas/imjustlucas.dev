@@ -25,9 +25,12 @@ import {
 // Star counts are never read from the form: they are not editable.
 const projectFields = (form: FormData) => {
   const image = upload(form, "image");
+  const galleryImage = upload(form, "galleryImage");
   return {
     revision: field(form, "revision"),
     title: field(form, "title"),
+    // Only read on creation: a Project's slug never changes.
+    slug: field(form, "slug"),
     description: localized(form, "description"),
     wip: form.get("wip") !== null,
     period: readPeriod(form, "period"),
@@ -38,6 +41,14 @@ const projectFields = (form: FormData) => {
     rarity: field(form, "rarity"),
     featured: field(form, "featured"),
     ...(image && { image }),
+    role: localized(form, "role"),
+    context: localized(form, "context"),
+    built: localized(form, "built"),
+    outcome: localized(form, "outcome"),
+    gallery: form
+      .getAll("gallery")
+      .filter((path): path is string => typeof path === "string"),
+    ...(galleryImage && { galleryImage }),
   };
 };
 

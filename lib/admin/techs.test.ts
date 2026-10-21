@@ -25,6 +25,7 @@ const react = { id: "react", name: "React", color: "#60a5fa" };
 const docker = { id: "docker", name: "Docker", color: "#2496ed" };
 
 const portfolio = {
+  slug: "portfolio",
   title: "Portfolio",
   description: { en: "This site", fr: "Ce site" },
   wip: false,

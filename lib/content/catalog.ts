@@ -39,6 +39,8 @@ const NEW_VIDEO_AGE = 30 * 24 * 60 * 60 * 1000;
 
 /** A Project as pages render it: its Techs resolved, its links checked. */
 export type ResolvedProject = {
+  /** Its page's last path segment: `/what/<slug>`. */
+  readonly slug: string;
   readonly title: string;
   readonly description: LocalizedText;
   readonly image?: string;
@@ -56,7 +58,18 @@ export type ResolvedProject = {
   readonly rarity: Rarity;
   /** Its place on the home page, 1 first; absent: not featured. */
   readonly featured?: number;
+  /** What Lucas was on it. */
+  readonly role?: LocalizedText;
+  /** Long texts of its page, paragraphs separated by a blank line. */
+  readonly context?: LocalizedText;
+  readonly built?: LocalizedText;
+  readonly outcome?: LocalizedText;
+  /** More screenshots, after the main image; none: empty. */
+  readonly gallery: ReadonlyArray<string>;
 };
+
+/** The texts of a Project that are in every Locale. */
+type ProjectTexts = "description" | "role" | "context" | "built" | "outcome";
 
 /** How many Projects the home page features, at most. */
 const FEATURED_PROJECTS = 3;
@@ -64,9 +77,13 @@ const FEATURED_PROJECTS = 3;
 /** An Experience as pages render it. */
 export type ResolvedExperience = Experience;
 
-/** A Project in one Locale: its description in that Locale. */
-export type ProjectInLocale = Omit<ResolvedProject, "description"> & {
+/** A Project in one Locale: its texts in that Locale. */
+export type ProjectInLocale = Omit<ResolvedProject, ProjectTexts> & {
   readonly description: string;
+  readonly role?: string;
+  readonly context?: string;
+  readonly built?: string;
+  readonly outcome?: string;
 };
 
 /** An Experience in one Locale: its role and description in that Locale. */
@@ -114,6 +131,16 @@ export type CatalogInLocale = {
     ReadonlyArray<ProjectInLocale>,
     CatalogError | GitHubStarsUnavailable
   >;
+  /**
+   * The Project with this slug, for its page (star count read for it only);
+   * none for an unknown slug.
+   */
+  readonly project: (
+    slug: string,
+  ) => Effect.Effect<
+    ProjectInLocale | undefined,
+    CatalogError | GitHubStarsUnavailable
+  >;
   /** Ordered by Period start, most recent first; ongoing first on ties. */
   readonly experiences: Effect.Effect<
     ReadonlyArray<ExperienceInLocale>,
@@ -147,6 +174,8 @@ export class ContentCatalog extends Context.Service<
       ReadonlyArray<ResolvedProject>,
       CatalogError | GitHubStarsUnavailable
     >;
+    /** Every Project's slug, ordered like `projects`; reads no star count. */
+    readonly projectSlugs: Effect.Effect<ReadonlyArray<string>, CatalogError>;
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly experiences: Effect.Effect<
       ReadonlyArray<ResolvedExperience>,
@@ -194,9 +223,7 @@ export class ContentCatalog extends Context.Service<
       ) =>
         Effect.flatMap(load, (content) => {
           const resolve = techResolver(content);
-          const byPeriod = [...content.projects].sort((a, b) =>
-            byStartMostRecentFirst(a.period, b.period),
-          );
+          const byPeriod = projectsByPeriod(content);
           return Effect.forEach(
             select(byPeriod),
             (project) => {
@@ -206,6 +233,7 @@ export class ContentCatalog extends Context.Service<
                 ? project.repository
                 : undefined;
               const resolved: ResolvedProject = {
+                slug: project.slug,
                 title: project.title,
                 description: project.description,
                 ...(project.image && { image: project.image }),
@@ -222,6 +250,11 @@ export class ContentCatalog extends Context.Service<
                 ...(project.featured !== undefined && {
                   featured: project.featured,
                 }),
+                ...(project.role && { role: project.role }),
+                ...(project.context && { context: project.context }),
+                ...(project.built && { built: project.built }),
+                ...(project.outcome && { outcome: project.outcome }),
+                gallery: project.gallery ?? [],
               };
               if (!repository) return Effect.succeed(resolved);
               // No star count shown for a repository GitHub fails to give
@@ -244,6 +277,10 @@ export class ContentCatalog extends Context.Service<
           .filter((project) => project.featured !== undefined)
           .sort((a, b) => a.featured! - b.featured!)
           .slice(0, FEATURED_PROJECTS),
+      );
+
+      const projectSlugs = Effect.map(load, (content) =>
+        projectsByPeriod(content).map((project) => project.slug),
       );
 
       const experiences = Effect.map(load, (content) =>
@@ -274,21 +311,40 @@ export class ContentCatalog extends Context.Service<
 
       return {
         projects,
+        projectSlugs,
         experiences,
         videos,
         profile,
         achievements,
         hobbies,
         inLocale: (locale): CatalogInLocale => {
-          const projectInLocale = (project: ResolvedProject) => ({
+          const projectInLocale = ({
+            description,
+            role,
+            context,
+            built,
+            outcome,
+            ...project
+          }: ResolvedProject): ProjectInLocale => ({
             ...project,
-            description: project.description[locale],
+            description: description[locale],
+            ...(role && { role: role[locale] }),
+            ...(context && { context: context[locale] }),
+            ...(built && { built: built[locale] }),
+            ...(outcome && { outcome: outcome[locale] }),
           });
           return {
             projects: Effect.map(projects, (all) => all.map(projectInLocale)),
             featuredProjects: Effect.map(featuredProjects, (all) =>
               all.map(projectInLocale),
             ),
+            project: (slug) =>
+              Effect.map(
+                resolvedProjects((byPeriod) =>
+                  byPeriod.filter((project) => project.slug === slug),
+                ),
+                ([project]) => project && projectInLocale(project),
+              ),
             experiences: Effect.map(experiences, (all) =>
               all.map((experience) => ({
                 ...experience,
@@ -313,6 +369,12 @@ export class ContentCatalog extends Context.Service<
     }),
   );
 }
+
+/** The stored Projects ordered by Period, most recent first. */
+const projectsByPeriod = (content: Content) =>
+  [...content.projects].sort((a, b) =>
+    byStartMostRecentFirst(a.period, b.period),
+  );
 
 /** Every id exists: `Content` rejects unknown Techs. */
 const techResolver = (content: Content) => {

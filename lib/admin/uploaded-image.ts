@@ -40,7 +40,7 @@ const storedIn = (
 };
 
 /** `Tricks Network` → `tricks-network`; empty when nothing is left. */
-const slug = (title: string) =>
+export const slug = (title: string) =>
   title
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")

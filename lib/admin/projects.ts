@@ -13,17 +13,20 @@ import {
   type Saved,
   type Upload,
 } from "@/lib/admin/admin-action";
-import { projectImage } from "@/lib/admin/uploaded-image";
+import { projectImage, slug } from "@/lib/admin/uploaded-image";
 import type { LocalizedText, Rarity } from "@/lib/content/schema";
 
 /**
- * Admin actions on Projects. Projects have no identifier: they are addressed
- * by their position in the stored document.
+ * Admin actions on Projects. They are addressed by their position in the
+ * stored document; their slug, their page's address, is set once, when the
+ * Project is created, so a shared link keeps working.
  */
 
 /** A Project as the Owner types it (unvalidated). Star counts are not in it. */
 type ProjectFields = {
   readonly title: string;
+  /** Only read on creation. Empty: made from the title. */
+  readonly slug?: string;
   readonly description: LocalizedText;
   readonly wip: boolean;
   readonly period: PeriodInput;
@@ -40,7 +43,43 @@ type ProjectFields = {
   readonly featured: string;
   /** A new image, uploaded: committed with the Project. */
   readonly image?: Upload;
+  /** Its page's texts; both Locales empty: none. */
+  readonly role: LocalizedText;
+  readonly context: LocalizedText;
+  readonly built: LocalizedText;
+  readonly outcome: LocalizedText;
+  /** The gallery images kept, in order. */
+  readonly gallery: ReadonlyArray<string>;
+  /** A new gallery image, uploaded: added after the kept ones. */
+  readonly galleryImage?: Upload;
 };
+
+/**
+ * The images a save gives the Project: its image and its gallery, each new
+ * upload committed alongside (or a field error).
+ */
+const uploads = (input: ProjectFields, current: string | undefined) =>
+  Effect.map(
+    Effect.all([
+      upload(input, current),
+      imageUpload({
+        upload: input.galleryImage,
+        current: undefined,
+        field: "galleryImage",
+        store: (bytes) => projectImage(input.title, bytes),
+      }),
+    ]),
+    ([main, added]) => ({
+      image: main.image,
+      gallery: added.image ? [...input.gallery, added.image] : input.gallery,
+      assets: [...(main.assets ?? []), ...(added.assets ?? [])],
+      fieldErrors: { ...main.fieldErrors, ...added.fieldErrors },
+    }),
+  );
+
+/** An optional text of the page: absent when left empty in both Locales. */
+const optional = (text: LocalizedText) =>
+  text.en === "" && text.fr === "" ? undefined : { en: text.en, fr: text.fr };
 
 /**
  * The image a save gives the Project: the uploaded one, committed alongside
@@ -56,37 +95,63 @@ const upload = (input: ProjectFields, current: string | undefined) =>
 
 /**
  * The Project entry the fields describe, keys in document order. `image` is
- * the asset path of its image, if it has one.
+ * the asset path of its image, if it has one; `gallery` those of its gallery.
  */
-const project = (input: ProjectFields, image: string | undefined) => ({
-  title: input.title,
-  description: { en: input.description.en, fr: input.description.fr },
-  ...(image && { image }),
-  wip: input.wip,
-  period: { start: input.period.start, end: input.period.end },
-  techs: [...input.techs],
-  ...(input.externalLink && { externalLink: input.externalLink }),
-  ...(input.repository && { repository: input.repository }),
-  openSource: input.openSource,
-  // Typed as a Rarity; `saveContent` validates it like every field.
-  rarity: input.rarity as Rarity,
-  // A place that is not a whole number is a field error; NaN stays one.
-  ...(input.featured !== "" && { featured: Number(input.featured) }),
-});
+const project = (
+  input: ProjectFields,
+  slug: string,
+  images: { readonly image?: string; readonly gallery: ReadonlyArray<string> },
+) => {
+  const { image, gallery } = images;
+  const role = optional(input.role);
+  const context = optional(input.context);
+  const built = optional(input.built);
+  const outcome = optional(input.outcome);
+  return {
+    slug,
+    title: input.title,
+    description: { en: input.description.en, fr: input.description.fr },
+    ...(image && { image }),
+    wip: input.wip,
+    period: { start: input.period.start, end: input.period.end },
+    techs: [...input.techs],
+    ...(input.externalLink && { externalLink: input.externalLink }),
+    ...(input.repository && { repository: input.repository }),
+    openSource: input.openSource,
+    // Typed as a Rarity; `saveContent` validates it like every field.
+    rarity: input.rarity as Rarity,
+    // A place that is not a whole number is a field error; NaN stays one.
+    ...(input.featured !== "" && { featured: Number(input.featured) }),
+    ...(role && { role }),
+    ...(context && { context }),
+    ...(built && { built }),
+    ...(outcome && { outcome }),
+    ...(gallery.length > 0 && { gallery: [...gallery] }),
+  };
+};
 
 const projectGone = gone("Ce Project");
 
 export const createProject = (input: Saved & ProjectFields): AdminAction =>
   saveContent(input.revision, (content) =>
-    Effect.map(upload(input, undefined), ({ image, ...uploaded }) => ({
-      kind: "edited",
-      message: commitMessage(`add Project '${input.title}'`),
-      documents: documents(content, {
-        projects: [...content.projects, project(input, image)],
+    Effect.map(
+      uploads(input, undefined),
+      ({ image, gallery, ...uploaded }) => ({
+        kind: "edited",
+        message: commitMessage(`add Project '${input.title}'`),
+        documents: documents(content, {
+          projects: [
+            ...content.projects,
+            project(input, input.slug || slug(input.title) || "project", {
+              image,
+              gallery,
+            }),
+          ],
+        }),
+        entry: ["projects", content.projects.length],
+        ...uploaded,
       }),
-      entry: ["projects", content.projects.length],
-      ...uploaded,
-    })),
+    ),
   );
 
 export const updateProject = (
@@ -96,13 +161,15 @@ export const updateProject = (
     const existing = content.projects[input.index];
     if (!existing) return projectGone;
     return Effect.map(
-      upload(input, existing.image),
-      ({ image, ...uploaded }) => ({
+      uploads(input, existing.image),
+      ({ image, gallery, ...uploaded }) => ({
         kind: "edited",
         message: commitMessage(`update Project '${input.title}'`),
         documents: documents(content, {
           projects: content.projects.map((entry, i) =>
-            i === input.index ? project(input, image) : entry,
+            i === input.index
+              ? project(input, existing.slug, { image, gallery })
+              : entry,
           ),
         }),
         entry: ["projects", input.index],

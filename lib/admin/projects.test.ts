@@ -24,6 +24,7 @@ const typescript = { id: "typescript", name: "TypeScript", color: "#3b82f6" };
 const react = { id: "react", name: "React", color: "#60a5fa" };
 
 const portfolio = {
+  slug: "portfolio",
   title: "Portfolio",
   description: { en: "This site", fr: "Ce site" },
   image: "/images/projects/portfolio.png",
@@ -74,8 +75,19 @@ const admin = (
     };
   });
 
+/** The page's fields of the form, left empty. */
+const NO_TEXT = { en: "", fr: "" };
+const emptyPage = {
+  role: NO_TEXT,
+  context: NO_TEXT,
+  built: NO_TEXT,
+  outcome: NO_TEXT,
+  gallery: [],
+};
+
 /** A Project as the Owner fills the form, without an image upload. */
 const tricks = {
+  slug: "",
   title: "Tricks",
   description: { en: "A social network", fr: "Un réseau social" },
   wip: true,
@@ -86,6 +98,19 @@ const tricks = {
   openSource: false,
   rarity: "rare",
   featured: "",
+  ...emptyPage,
+};
+
+/** `tricks` as stored, once created. */
+const storedTricks = {
+  slug: "tricks",
+  title: "Tricks",
+  description: { en: "A social network", fr: "Un réseau social" },
+  wip: true,
+  period: { start: "2021-09", end: "2023" },
+  techs: ["react", "typescript"],
+  openSource: false,
+  rarity: "rare",
 };
 
 /** The first bytes of a PNG, a JPEG and a WebP file: enough to recognise them. */
@@ -126,16 +151,7 @@ describe("Admin actions on Projects", () => {
       expect(made[0].changes.map((change) => change.path)).toEqual([PROJECTS]);
       expect(yield* projects).toEqual([
         portfolio,
-        {
-          title: "Tricks",
-          description: { en: "A social network", fr: "Un réseau social" },
-          wip: true,
-          period: { start: "2021-09", end: "2023" },
-          techs: ["react", "typescript"],
-          externalLink: "https://tricks.example",
-          openSource: false,
-          rarity: "rare",
-        },
+        { ...storedTricks, externalLink: "https://tricks.example" },
       ]);
     }),
   );
@@ -276,12 +292,7 @@ describe("Admin actions on Projects", () => {
     Effect.gen(function* () {
       const { run, commits, projects } = yield* admin(owner, [
         portfolio,
-        {
-          ...tricks,
-          repository: undefined,
-          externalLink: undefined,
-          featured: undefined,
-        },
+        storedTricks,
       ]);
 
       const result = yield* run(
@@ -298,6 +309,7 @@ describe("Admin actions on Projects", () => {
           openSource: false,
           rarity: "epic",
           featured: "1",
+          ...emptyPage,
         }),
       );
 
@@ -307,6 +319,7 @@ describe("Admin actions on Projects", () => {
       );
       const [edited, untouched] = yield* projects;
       expect(edited).toEqual({
+        slug: "portfolio",
         title: "imjustlucas.dev",
         description: { en: "My portfolio", fr: "Mon portfolio" },
         image: "/images/projects/portfolio.png",
@@ -561,6 +574,164 @@ describe("Admin actions on Projects", () => {
   );
 });
 
+describe("a Project's page in the Admin", () => {
+  it.effect("a new Project's slug is made from its title when left empty", () =>
+    Effect.gen(function* () {
+      const { run, projects } = yield* admin(owner);
+
+      yield* run(
+        createProject({
+          revision: "memory-0",
+          ...tricks,
+          title: "Tricks Network",
+        }),
+      );
+      yield* run(
+        createProject({ revision: "memory-1", ...tricks, slug: "tricks-app" }),
+      );
+
+      const [, made, typed] = yield* projects;
+      expect(made.slug).toBe("tricks-network");
+      expect(typed.slug).toBe("tricks-app");
+    }),
+  );
+
+  it.effect("editing a Project keeps its slug, so its link keeps working", () =>
+    Effect.gen(function* () {
+      const { run, projects } = yield* admin(owner);
+
+      yield* run(
+        updateProject({
+          revision: "memory-0",
+          index: 0,
+          ...tricks,
+          slug: "something-else",
+        }),
+      );
+
+      expect((yield* projects)[0].slug).toBe("portfolio");
+    }),
+  );
+
+  it.effect("a slug another Project has, or a malformed one, is refused", () =>
+    Effect.gen(function* () {
+      const { run, commits } = yield* admin(owner);
+
+      const taken = yield* run(
+        createProject({ revision: "memory-0", ...tricks, slug: "portfolio" }),
+      );
+      const malformed = yield* run(
+        createProject({ revision: "memory-0", ...tricks, slug: "Tricks!" }),
+      );
+
+      expect(taken).toEqual({
+        kind: "invalid",
+        fieldErrors: { slug: expect.stringContaining("portfolio") },
+      });
+      expect(malformed).toMatchObject({
+        kind: "invalid",
+        fieldErrors: { slug: expect.any(String) },
+      });
+      expect(yield* commits).toEqual([]);
+    }),
+  );
+
+  it.effect(
+    "saves the page's texts, leaving out those empty in both Locales",
+    () =>
+      Effect.gen(function* () {
+        const { run, projects } = yield* admin(owner);
+
+        yield* run(
+          createProject({
+            revision: "memory-0",
+            ...tricks,
+            role: { en: "Co-founder", fr: "Cofondateur" },
+            outcome: { en: "Many users", fr: "Plein d'utilisateurs" },
+          }),
+        );
+
+        const [, saved] = yield* projects;
+        expect(saved.role).toEqual({ en: "Co-founder", fr: "Cofondateur" });
+        expect(saved.outcome).toEqual({
+          en: "Many users",
+          fr: "Plein d'utilisateurs",
+        });
+        expect(saved).not.toHaveProperty("context");
+        expect(saved).not.toHaveProperty("built");
+      }),
+  );
+
+  it.effect("a page text in one Locale only gives a field error", () =>
+    Effect.gen(function* () {
+      const { run, commits } = yield* admin(owner);
+
+      const result = yield* run(
+        createProject({
+          revision: "memory-0",
+          ...tricks,
+          context: { en: "Why it exists", fr: "" },
+        }),
+      );
+
+      expect(result).toEqual({
+        kind: "invalid",
+        fieldErrors: { "context.fr": "Traduction manquante" },
+      });
+      expect(yield* commits).toEqual([]);
+    }),
+  );
+
+  it.effect(
+    "keeps the gallery images left checked, in order, then adds the uploaded one",
+    () =>
+      Effect.gen(function* () {
+        const { run, commits, projects } = yield* admin(owner, [
+          {
+            ...portfolio,
+            gallery: [
+              "/images/projects/a.png",
+              "/images/projects/b.png",
+              "/images/projects/c.png",
+            ],
+          },
+        ]);
+
+        yield* run(
+          updateProject({
+            revision: "memory-0",
+            index: 0,
+            ...tricks,
+            gallery: ["/images/projects/a.png", "/images/projects/c.png"],
+            galleryImage: uploaded(PNG),
+          }),
+        );
+
+        const [, asset] = (yield* commits)[0].changes;
+        expect(asset.path).toMatch(
+          /^public\/images\/projects\/tricks-[0-9a-f]{8}\.png$/,
+        );
+        expect((yield* projects)[0].gallery).toEqual([
+          "/images/projects/a.png",
+          "/images/projects/c.png",
+          asset.path.slice("public".length),
+        ]);
+      }),
+  );
+
+  it.effect("a Project whose gallery is emptied has none", () =>
+    Effect.gen(function* () {
+      const { run, projects } = yield* admin(owner, [
+        { ...portfolio, gallery: ["/images/projects/a.png"] },
+      ]);
+
+      yield* run(updateProject({ revision: "memory-0", index: 0, ...tricks }));
+
+      expect((yield* projects)[0]).not.toHaveProperty("gallery");
+    }),
+  );
+});
+
 describe("the Projects editor", () => {
   it.effect(
     "opens on the Projects in display order, each with its position",
@@ -568,6 +739,7 @@ describe("the Projects editor", () => {
       Effect.gen(function* () {
         const older = {
           ...portfolio,
+          slug: "older",
           title: "Older",
           period: { start: "2019", end: "2020" },
         };
