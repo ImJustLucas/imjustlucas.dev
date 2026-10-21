@@ -1,7 +1,14 @@
 /* eslint-disable react/no-unknown-property */
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import {
   Environment,
   OrbitControls,
@@ -86,19 +93,21 @@ const FRAMES_PER_SECOND = 60;
 /** The longest step taken at once, so a frame after a tab switch can't teleport coins. */
 const MAX_DELTA = 1 / 20;
 
-/** The lens's vertical field of view in a wide well. */
+/** The starting field of view, until the lens fits it to the well. */
 const LENS_FOV = 45;
 /**
  * The camera's starting options, made once: R3F re-applies a new options
  * object on every render, which would undo the lens below.
  */
 const CAMERA = { fov: LENS_FOV, position: [0, 0, 8] } as const;
-/** Half the width to keep in view at the cheque, with a margin. */
-const CHEQUE_HALF_WIDTH = 3.6;
+/** Half the width to keep in view at the cheque in a wide well: it spans about 57%, its stage in view below it. */
+const WIDE_HALF_FRAME = 5.2;
+/** Half the width to keep in view in a narrow (phone) well, with a margin. */
+const NARROW_HALF_FRAME = 3.6;
 
 /**
- * Keeps the whole cheque in view: a wide well uses the long lens, a narrow
- * (phone) one widens the field of view until the cheque fits across it.
+ * Frames the cheque as the item on show: in a wide well it spans about 57%
+ * of the width, in a narrow (phone) one it fits across with a margin.
  */
 const Lens = () => {
   const { camera, size } = useThree();
@@ -108,14 +117,12 @@ const Lens = () => {
     if (!size.width || !size.height) return;
     const aspect = size.width / size.height;
     const distance = camera.position.length() || 8;
-    const fitting =
-      2 *
-      THREE.MathUtils.radToDeg(
-        Math.atan(CHEQUE_HALF_WIDTH / distance / aspect),
-      );
+    const halfFrame = aspect >= 1.4 ? WIDE_HALF_FRAME : NARROW_HALF_FRAME;
+    const fov =
+      2 * THREE.MathUtils.radToDeg(Math.atan(halfFrame / distance / aspect));
     // Fitting the R3F camera to the canvas is the intended pattern.
     // eslint-disable-next-line react-hooks/immutability
-    (camera as THREE.PerspectiveCamera).fov = Math.max(LENS_FOV, fitting);
+    (camera as THREE.PerspectiveCamera).fov = fov;
     camera.updateProjectionMatrix();
   }, [camera, size]);
 
@@ -320,18 +327,42 @@ const Coins = ({
   );
 };
 
+/** The legendary gold (DESIGN.md, Rarity). */
+const LEGENDARY = "#ffd84d";
+
+/**
+ * The cheque's stage, as the chibi and the achievement art stand on theirs:
+ * a raised disc under it, with the legendary rim as its top band.
+ */
+const Stage = ({ color }: { color: string }) => (
+  <group position={[0, -1.72, 0]}>
+    <mesh>
+      <cylinderGeometry args={[1.8, 1.9, 0.16, 64]} />
+      {/* Flat, like the stage discs of the page: the palette's own colour, unlit */}
+      <meshBasicMaterial color={color} toneMapped={false} />
+    </mesh>
+    <mesh position={[0, 0.085, 0]} rotation={[Math.PI / 2, 0, 0]}>
+      <torusGeometry args={[1.8, 0.02, 8, 96]} />
+      <meshBasicMaterial color={LEGENDARY} toneMapped={false} />
+    </mesh>
+  </group>
+);
+
 const Scene = ({
   still,
   day,
+  stageColor,
   throws,
 }: {
   still: boolean;
+  /** The palette's raised colour, for the stage. */
+  stageColor: string;
   /** Light mode: the palette's daylight, no stars, no vignette. */
   day: boolean;
   /** Counts the presses of the throw button; each one throws a coin. */
   throws: number;
 }) => {
-  const { camera, viewport, pointer } = useThree();
+  const { camera } = useThree();
   const { play } = useSounds();
   const [userCoins, setUserCoins] = useState<
     {
@@ -378,12 +409,10 @@ const Scene = ({
       if (still) return;
       // A drag to orbit the camera, not a throw.
       if (event.delta > 4) return;
-      throwCoin(
-        (pointer.x * viewport.width) / 2,
-        (pointer.y * viewport.height) / 2,
-      );
+      // Where the pointer meets the plane of the cheque.
+      throwCoin(event.point.x, event.point.y);
     },
-    [pointer, viewport, still, throwCoin],
+    [still, throwCoin],
   );
 
   // The throw button (keyboards, screen readers): somewhere on the cheque.
@@ -426,7 +455,16 @@ const Scene = ({
         />
       )}
 
+      {/* A soft legendary key light, so the rarity reaches the item itself */}
+      <pointLight
+        position={[-3, 2.5, 4]}
+        intensity={day ? 4 : 6}
+        distance={12}
+        color={LEGENDARY}
+      />
+
       <Certificate position={[0, 0, 0]} still={still} />
+      <Stage color={stageColor} />
 
       <Coins count={15} still={still} />
 
@@ -483,6 +521,26 @@ const Scene = ({
   );
 };
 
+const readRaised = () =>
+  `rgb(${getComputedStyle(document.documentElement)
+    .getPropertyValue("--raised")
+    .trim()
+    .split(/\s+/)
+    .join(",")})`;
+
+const subscribeToTheme = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class", "data-palette"],
+  });
+  return () => observer.disconnect();
+};
+
+/** The palette's raised colour in the current mode, following changes. */
+const useRaisedColor = () =>
+  useSyncExternalStore(subscribeToTheme, readRaised, () => "rgb(20,28,72)");
+
 /**
  * The showcase: the scene in a sunken well (night sky in the dark modes, the
  * palette's daylight in light), and under it the controls: throw a coin,
@@ -498,6 +556,7 @@ export default function MasterDevScene() {
   const [throws, setThrows] = useState(0);
   const still = paused ?? reducedMotion;
   const day = resolvedTheme === "light";
+  const stageColor = useRaisedColor();
 
   useEffect(() => {
     // Warm the HTTP cache, so the first throw sounds at once.
@@ -513,15 +572,16 @@ export default function MasterDevScene() {
 
   return (
     <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
-      <div className="relative h-[clamp(320px,52dvh,420px)] overflow-hidden rounded-md bg-ground sm:h-[clamp(380px,58dvh,600px)]">
+      <div className="relative h-[clamp(240px,36dvh,300px)] overflow-hidden rounded-md bg-ground sm:h-[clamp(360px,calc(100dvh-420px),600px)]">
         <SceneLoader />
-        <Canvas
-          // A longer lens than the default, so the cheque fills the well
-          camera={CAMERA}
-          frameloop={still ? "demand" : "always"}
-        >
+        <Canvas camera={CAMERA} frameloop={still ? "demand" : "always"}>
           <Lens />
-          <Scene still={still} day={day} throws={throws} />
+          <Scene
+            still={still}
+            day={day}
+            stageColor={stageColor}
+            throws={throws}
+          />
         </Canvas>
         {/* The well's lip, drawn over the canvas */}
         <span

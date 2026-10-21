@@ -44,7 +44,7 @@ export async function UnlockBanner({ year }: { year: number }) {
           </TypographyHeadline>
           <div className="flex flex-wrap items-center gap-2">
             <RarityTag rarity="legendary" />
-            <TypographyTag className="inline-flex items-center gap-1 rounded-full border-2 border-seam px-2 text-ink">
+            <TypographyTag className="inline-flex items-center gap-1 rounded-full bg-online px-2 py-0.5 text-on-bright">
               <Check aria-hidden className="size-3" strokeWidth={3} />
               {t("unlocked")}
             </TypographyTag>
