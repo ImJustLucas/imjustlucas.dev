@@ -28,6 +28,10 @@ _Avoid_: Trophy, award, badge
 Something Lucas does outside work, shown on the home page with the chibi avatar pose that depicts it.
 _Avoid_: Interest, pastime
 
+**Cabinet**:
+One game of the Arcade, the page where Lucas's Hobbies become playable: playable, or standing on the shelf as "soon" until its game exists. Ollie (skate) is the first.
+_Avoid_: Game card, level, minigame
+
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".
 _Avoid_: Date (for a span), duration

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
@@ -6,7 +6,7 @@ import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { TypographyHeadline, TypographyP } from "@/components/typography";
 import type { Route } from "@/config/routes";
 import { localeAlternates } from "@/i18n/alternates";
-import { routing } from "@/i18n/routing";
+import { type Locale, routing } from "@/i18n/routing";
 import type { ChibiPose } from "@/lib/chibi";
 
 /** The page title of a Route in the current Locale, at the top of its page. */
@@ -63,25 +63,65 @@ export async function PageBanner({
   );
 }
 
+/** Open Graph locale of each Locale. */
+export const OPEN_GRAPH_LOCALES: Record<Locale, string> = {
+  en: "en_US",
+  fr: "fr_FR",
+};
+
 /**
  * Builds a page's `generateMetadata` from its Route: title and description in
- * the page's Locale, and its URL in every Locale.
+ * the page's Locale, its URL in every Locale, and the same for link previews
+ * (the preview image is `app/[locale]/opengraph-image.tsx`). The home's title
+ * leads with the Owner's real name, the query it must rank for (docs/seo.md).
  * `export const generateMetadata = routeMetadata(ROUTES.what);`
  */
 export function routeMetadata(
   route: Route,
-): (props: { params: Promise<{ locale: string }> }) => Promise<Metadata> {
-  return async ({ params }) => {
+): (
+  props: { params: Promise<{ locale: string }> },
+  parent: ResolvingMetadata,
+) => Promise<Metadata> {
+  return async ({ params }, parent) => {
     const { locale: param } = await params;
     const locale = hasLocale(routing.locales, param)
       ? param
       : routing.defaultLocale;
     const t = await getTranslations({ locale });
 
+    const siteName = t("Metadata.siteName");
+    const title =
+      route.path === "/"
+        ? t("Metadata.homeTitle")
+        : `${t(`Routes.${route.messageKey}.title`)} · ${siteName}`;
+    const description = t(`Routes.${route.messageKey}.description`);
+    const alternates = localeAlternates(route.path, locale);
+    // A page's `openGraph` and `twitter` replace its Locale's whole, so they
+    // carry on the Locale's preview image (`opengraph-image.tsx`).
+    const inherited = await parent;
+
     return {
-      title: `${t(`Routes.${route.messageKey}.title`)} · ${t("Metadata.siteName")}`,
-      description: t(`Routes.${route.messageKey}.description`),
-      alternates: localeAlternates(route.path, locale),
+      title,
+      description,
+      alternates,
+      openGraph: {
+        type: "website",
+        siteName,
+        title,
+        description,
+        url: alternates.canonical,
+        images: inherited.openGraph?.images,
+        locale: OPEN_GRAPH_LOCALES[locale],
+        alternateLocale: routing.locales
+          .filter((other) => other !== locale)
+          .map((other) => OPEN_GRAPH_LOCALES[other]),
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: inherited.twitter?.images,
+      },
     };
   };
 }

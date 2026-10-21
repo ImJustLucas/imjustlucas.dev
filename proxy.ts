@@ -26,6 +26,12 @@ const PAGE_PATHS = new Set<string>([
 ]);
 
 /**
+ * Files Next generates under a Locale, served as they are: the link preview
+ * image (`app/[locale]/opengraph-image.tsx`), whose URL has no extension.
+ */
+const LOCALE_FILES = new Set<string>(["/opengraph-image"]);
+
+/**
  * The Locale of a path under a Locale that is no page, e.g. `/fr/xyz`.
  * `notFound()` in a page renders its 404 in the browser only (Next serves an
  * empty error shell), so unknown paths are rewritten to the Locale's
@@ -35,7 +41,7 @@ const unknownUnderLocale = (pathname: string) => {
   const [, locale, ...rest] = pathname.split("/");
   if (!hasLocale(routing.locales, locale)) return undefined;
   const path = `/${rest.join("/")}`;
-  return PAGE_PATHS.has(path) ? undefined : locale;
+  return PAGE_PATHS.has(path) || LOCALE_FILES.has(path) ? undefined : locale;
 };
 
 export default function proxy(request: NextRequest) {

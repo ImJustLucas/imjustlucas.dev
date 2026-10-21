@@ -17,6 +17,8 @@ const POSES: ReadonlyArray<readonly [HobbyPose, string]> = [
   ["coffee", "café"],
   ["series", "série"],
   ["music", "musique"],
+  ["football", "foot"],
+  ["tennis", "tennis"],
 ];
 
 /**
@@ -36,7 +38,7 @@ export const PoseField: React.FC<{ defaultValue?: HobbyPose }> = ({
       <legend className="mb-1.5">
         <FieldLabel label="Pose" />
       </legend>
-      <div className="grid grid-cols-4 gap-2 sm:grid-cols-7 md:max-lg:grid-cols-4">
+      <div className="grid grid-cols-5 gap-2 sm:grid-cols-9 md:max-lg:grid-cols-5">
         {POSES.map(([pose, label]) => (
           <label
             key={pose}

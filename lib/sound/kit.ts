@@ -78,14 +78,24 @@ export type Cue =
   | "boop"
   | "miss"
   | "throw"
-  | "clink";
+  | "clink"
+  | "hop"
+  | "pickup"
+  | "milestone";
 
 /**
  * Each menu tab plays its own degree, in menu order, so walking down the
  * menu plays a rising scale: me D4, what i've done E4, my experiences F#4,
- * yt videos A4, contact D5.
+ * yt videos A4, arcade B4, contact D5.
  */
-export const TAB_NOTES: ReadonlyArray<Note> = ["D4", "E4", "F#4", "A4", "D5"];
+export const TAB_NOTES: ReadonlyArray<Note> = [
+  "D4",
+  "E4",
+  "F#4",
+  "A4",
+  "B4",
+  "D5",
+];
 
 const BOOP_NOTES: ReadonlyArray<Note> = ["D5", "E5", "F#5", "A5", "B5"];
 
@@ -157,6 +167,20 @@ export const cueSound = (cue: Cue, options: CueOptions = {}): CueSound => {
       return {
         plucks: [pluck(highDegree(options.random), 0.01, 0.3, 0.4)],
         samples: [{ sample: "impact", at: 0, gain: 0.7 }],
+      };
+    case "hop":
+      return { plucks: [{ ...pluck("D5", 0, 0.4, 0.3), bend: 2 }] };
+    case "pickup":
+      return {
+        plucks: [pluck("F#5", 0, 0.4, 0.35), pluck("A5", 0.06, 0.45, 0.5)],
+      };
+    case "milestone":
+      return {
+        plucks: [
+          pluck("A4", 0, 0.45, 0.5),
+          pluck("D5", 0.06, 0.45, 0.5),
+          pluck("F#5", 0.12, 0.5, 0.7),
+        ],
       };
   }
 };

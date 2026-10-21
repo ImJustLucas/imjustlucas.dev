@@ -186,6 +186,8 @@ export const HobbyPose = Schema.Literals([
   "coffee",
   "series",
   "music",
+  "football",
+  "tennis",
 ]);
 export type HobbyPose = typeof HobbyPose.Type;
 

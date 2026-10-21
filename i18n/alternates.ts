@@ -1,7 +1,7 @@
 import { type Locale, routing } from "./routing";
 
 /** The URL path of `path` (without Locale prefix) in `locale`. */
-function localizedPath(path: string, locale: Locale): string {
+export function localizedPath(path: string, locale: Locale): string {
   return path === "/" ? `/${locale}` : `/${locale}${path}`;
 }
 

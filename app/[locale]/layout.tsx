@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { fontVariables } from "@/app/fonts";
 import { PresenceProvider } from "@/components/presence/PresenceProvider";
 import { SoundProvider } from "@/components/sound/SoundProvider";
+import { OWNER_NAME, SITE_URL } from "@/config/site";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
 import { getProfile } from "@/lib/content/server";
@@ -33,9 +34,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
-    metadataBase: new URL("https://imjustlucas.dev"),
+    metadataBase: SITE_URL,
     title: t("siteName"),
     description: t("description"),
+    applicationName: t("siteName"),
+    authors: [{ name: OWNER_NAME, url: SITE_URL }],
+    creator: OWNER_NAME,
   };
 }
 
