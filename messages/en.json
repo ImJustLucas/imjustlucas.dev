@@ -6,17 +6,17 @@
   "Routes": {
     "me": {
       "label": "me",
-      "title": "Who am i?",
+      "title": "who am i?",
       "description": "Lucas, a French software developer based in Paris, crafting high-quality websites and applications."
     },
     "what": {
       "label": "what i've done",
-      "title": "What i've done ?",
+      "title": "what i've done?",
       "description": "The projects Lucas has built, and the techs he built them with."
     },
     "experiences": {
       "label": "my experiences",
-      "title": "My experiences",
+      "title": "my experiences",
       "description": "Lucas's professional experiences and diplomas."
     },
     "videos": {
@@ -26,7 +26,7 @@
     },
     "contact": {
       "label": "contact",
-      "title": "Contact me",
+      "title": "contact me",
       "description": "How to get in touch with Lucas."
     },
     "mdf2025": {
@@ -37,10 +37,11 @@
   },
   "Layout": {
     "avatarAlt": "ImJustLucas head avatar",
+    "skipToContent": "Skip to content",
     "madeBy": "Made with 💖 by ImJustLucas"
   },
   "ThemeSwitch": {
-    "toggle": "Toggle theme",
+    "toggle": "Theme and palette",
     "light": "light",
     "dark": "dark",
     "system": "system",
@@ -57,7 +58,7 @@
   },
   "Home": {
     "intro": "Yoooo, I'm <bold>Lucas</bold>! <br></br>A french software developer based in the heart of Paris, France, with a focus on crafting high-quality websites and applications.",
-    "creativeMindsetTitle": "Creative Mindset",
+    "creativeMindsetTitle": "creative mindset",
     "creativeMindset": "I love tackling projects with a creative approach. My process usually starts with a good brainstorming session, lots of inspiration-hunting, and diving deep into the latest tech tools. Whether it's building from scratch or refining an existing idea, I aim to create with both quality and originality in mind.",
     "downloadResume": "Download my resume",
     "resumeLastUpdated": "updated {date, date, medium}",
@@ -100,7 +101,7 @@
       "work-study": "Work-study contract",
       "internship": "Internship"
     },
-    "professionalTitle": "Professional Experiences",
+    "professionalTitle": "professional experiences",
     "diplomasTitle": "Diplomas",
     "diplomas": {
       "diploma": "Diploma",
@@ -127,7 +128,7 @@
     "intro": "Fresh from my YouTube channel 🎬",
     "chibiAlt": "Lucas laughing at a series under a blanket, popcorn in his lap",
     "emptyAlt": "Lucas lounging in a tangerine beanbag",
-    "watchTitle": "Watch “{title}” on YouTube"
+    "watchTitle": "Watch now: “{title}” on YouTube"
   },
   "Sidebar": {
     "openMenu": "Open menu",
@@ -158,6 +159,11 @@
       "idle": "brb, coffee run ☕",
       "dnd": "in the zone, do not disturb",
       "offline": "zzz… back soon"
+    },
+    "announce": {
+      "playing": "Lucas is now playing {name}",
+      "listening": "Lucas is now listening to {song} by {artist}",
+      "status": "Lucas is now {status}"
     }
   },
   "Projects": {
@@ -179,8 +185,8 @@
   "Contact": {
     "dm": "Send me a DM on LinkedIn",
     "reply": "I'll reply as fast as I can",
-    "sent": "Request sent!",
-    "sentAnnounced": "Request sent: LinkedIn opened in a new tab.",
+    "opened": "LinkedIn's open, say hi 👋",
+    "openedAnnounced": "LinkedIn opened in a new tab, say hi there.",
     "discord": "Add me on Discord",
     "alsoOn": "also on",
     "rightNow": "right now",

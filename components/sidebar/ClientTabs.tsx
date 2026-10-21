@@ -26,8 +26,11 @@ const TAB_ICONS: Partial<Record<RouteMessageKey, LucideIcon>> = {
   contact: MessageCircleHeart,
 };
 
-/** One tab row: 44px, with a 4px gap, so the fill slides by 48px a tab. */
-const TAB_STEP = 48;
+/**
+ * One tab row: 2.75rem (44px), with a 0.25rem gap, so the fill slides by
+ * 3rem a tab, in rem so it stays on its tab at any default font size.
+ */
+const TAB_STEP_REM = 3;
 
 /**
  * The client tabs: the menu, generated from `MENU_ROUTES`. The action
@@ -54,7 +57,7 @@ export function ClientTabs() {
             active < 0 && "opacity-0",
           )}
           style={{
-            transform: `translateY(${Math.max(active, 0) * TAB_STEP}px)`,
+            transform: `translateY(${Math.max(active, 0) * TAB_STEP_REM}rem)`,
           }}
         />
         {MENU_ROUTES.map((route, index) => {

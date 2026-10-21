@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
@@ -10,6 +10,7 @@ import { TypographyData, TypographyTag } from "@/components/typography";
 import { cn } from "@/lib/utils";
 
 import { formatElapsed } from "./format-elapsed";
+import { presenceActivity } from "./presence-activity";
 import { usePresence } from "./PresenceProvider";
 import type { Presence } from "./select-presence";
 import { STATUS_DOT } from "./status-style";
@@ -35,13 +36,60 @@ export function FriendsPanel() {
           </TypographyTag>
         )}
       </div>
-      <div
-        aria-live="polite"
-        className="tray flex h-[76px] items-center gap-3 overflow-hidden rounded-lg bg-raised p-3"
-      >
+      <div className="tray flex h-[76px] items-center gap-3 overflow-hidden rounded-lg bg-raised p-3">
         <PresenceCard presence={presence} />
       </div>
+      <PresenceAnnouncer presence={presence} />
     </section>
+  );
+}
+
+/** How long a new activity must hold before it is announced. */
+const SETTLE_MS = 2000;
+
+/**
+ * Says aloud, politely, when Lucas starts or stops a game, starts listening
+ * or changes status, once the change has held for a moment. The first state
+ * after connecting is not announced, nor the elapsed time or the track.
+ */
+function PresenceAnnouncer({ presence }: { presence: Presence }) {
+  const t = useTranslations("Presence");
+  const [message, setMessage] = useState("");
+  const announced = useRef<string | null>(null);
+  const activity = presenceActivity(presence);
+  const text = (() => {
+    switch (presence.kind) {
+      case "playing":
+        return t("announce.playing", { name: presence.name });
+      case "listening":
+        return t("announce.listening", {
+          song: presence.song,
+          artist: presence.artist,
+        });
+      case "status":
+        return t("announce.status", { status: t(`status.${presence.status}`) });
+      case "connecting":
+        return "";
+    }
+  })();
+
+  useEffect(() => {
+    if (activity === null || activity === announced.current) return;
+    if (announced.current === null) {
+      announced.current = activity;
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      announced.current = activity;
+      setMessage(text);
+    }, SETTLE_MS);
+    return () => window.clearTimeout(timer);
+  }, [activity, text]);
+
+  return (
+    <span role="status" className="sr-only">
+      {message}
+    </span>
   );
 }
 
@@ -233,7 +281,7 @@ function Status({
           className="-my-1 size-14 shrink-0"
         />
       ) : (
-        <ChibiHead size={44} className="mx-0.5" />
+        <ChibiHead size={44} decorative className="mx-0.5" />
       )}
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-1.5">

@@ -84,6 +84,25 @@ export function ProjectInventory({ loadout, items }: ProjectInventoryProps) {
       ?.querySelector("[aria-pressed=true]")
       ?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }, [chosen]);
+  // Its edges fade where more buttons are hidden, so the row reads as one
+  // to swipe (`.scroll-fade`, phones only).
+  useEffect(() => {
+    const row = group.current;
+    if (!row) return;
+    const mark = () => {
+      const hidden = row.scrollWidth - row.clientWidth;
+      row.dataset.moreStart = String(row.scrollLeft > 1);
+      row.dataset.moreEnd = String(hidden - row.scrollLeft > 1);
+    };
+    mark();
+    row.addEventListener("scroll", mark, { passive: true });
+    const resize = new ResizeObserver(mark);
+    resize.observe(row);
+    return () => {
+      row.removeEventListener("scroll", mark);
+      resize.disconnect();
+    };
+  }, []);
 
   const chosenName = loadout.find((entry) => entry.tech.id === chosen)?.tech
     .name;
@@ -110,9 +129,10 @@ export function ProjectInventory({ loadout, items }: ProjectInventoryProps) {
           ref={group}
           role="group"
           aria-label={t("filter")}
-          // One row swiped sideways on phones, wrapping rows from 640px; the
-          // padding keeps the ledges and focus rings inside the scroller.
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 pt-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:gap-y-3 sm:overflow-visible sm:p-0 [&>*>button]:shrink-0"
+          // One row swiped sideways on phones, snapping to its buttons, wrapping
+          // rows from 640px; the padding keeps the ledges and focus rings
+          // inside the scroller.
+          className="scroll-fade -mx-4 flex snap-x snap-proximity scroll-px-4 gap-2 overflow-x-auto px-4 pb-2 pt-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:gap-y-3 sm:overflow-visible sm:p-0 [&>*>button]:shrink-0 [&>*>button]:snap-start"
         >
           <LoadoutButton pressed={chosen === null} onPress={() => choose(null)}>
             {t("all")}

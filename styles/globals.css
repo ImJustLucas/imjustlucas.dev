@@ -16,6 +16,18 @@
  * The fixed palette (night, cream, tangerine, electric, rarity, status)
  * never changes.
  */
+/* The edge fades of `.scroll-fade`, registered so they can transition */
+@property --fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
 @layer base {
   :root {
     /* Fixed palette */
@@ -26,6 +38,7 @@
     --electric: 47 107 255;
     --off-white: 246 243 234;
     --legendary: 255 216 77;
+    --legendary-ledge: 138 98 0;
     --epic: 180 124 255;
     --rare: 70 194 255;
     --common: 185 169 204;
@@ -374,11 +387,37 @@
       color var(--dur-hover) var(--ease-out),
       filter var(--dur-hover) var(--ease-out);
   }
+  /*
+   * A row swiped sideways on phones (the loadout): each edge fades over
+   * 2.5rem while buttons hide past it, set by `data-more-start` and
+   * `data-more-end`, so the row never looks complete when it is not.
+   */
+  @media (max-width: 639.98px) {
+    .scroll-fade {
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--fade-start),
+        #000 calc(100% - var(--fade-end)),
+        transparent
+      );
+      transition:
+        --fade-start var(--dur-hover) var(--ease-out),
+        --fade-end var(--dur-hover) var(--ease-out);
+    }
+    .scroll-fade[data-more-start="true"] {
+      --fade-start: 2.5rem;
+    }
+    .scroll-fade[data-more-end="true"] {
+      --fade-end: 2.5rem;
+    }
+  }
+
   .ledge-action {
     --ledge: var(--action-ledge);
   }
   .ledge-legendary {
-    --ledge: 138 98 0;
+    --ledge: var(--legendary-ledge);
   }
   @media (hover: hover) {
     .ledge:hover {
