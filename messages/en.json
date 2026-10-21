@@ -177,7 +177,14 @@
     "showingAll": "{count, plural, one {# project} other {all # projects}}"
   },
   "Contact": {
-    "intro": "If you want to contact me, you can do so via my <linkedin>LinkedIn</linkedin> DMs, I will respond as quickly as possible."
+    "dm": "Send me a DM on LinkedIn",
+    "reply": "I'll reply as fast as I can",
+    "sent": "Request sent!",
+    "sentAnnounced": "Request sent: LinkedIn opened in a new tab.",
+    "discord": "Add me on Discord",
+    "alsoOn": "also on",
+    "rightNow": "right now",
+    "chibiAlt": "Lucas waving hello"
   },
   "Mdf2025": {
     "winner": "Proud winner of the MasterDevFrance 2025 competition - a national recognition for technical excellence and innovation in software development.",
