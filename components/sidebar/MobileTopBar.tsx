@@ -52,7 +52,7 @@ export function MobileTopBar() {
       <Link
         href="/"
         onClick={() => closeMenu()}
-        className="flex min-w-0 flex-1 items-center gap-3 rounded-md"
+        className="flex min-h-11 min-w-0 flex-1 items-center gap-3 rounded-md"
       >
         <ChibiHead size={40} />
         <TypographyTitle as="span" className="truncate">

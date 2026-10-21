@@ -42,7 +42,7 @@ export default async function MasterDevFrance2025Page() {
           href={ROUTES.me.path}
           className={cn(
             SECONDARY_LINK,
-            "group inline-flex items-center gap-2 self-start text-label",
+            "group inline-flex min-h-11 items-center gap-2 self-start text-label",
           )}
         >
           <ArrowLeft

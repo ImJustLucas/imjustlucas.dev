@@ -6,17 +6,17 @@
   "Routes": {
     "me": {
       "label": "moi",
-      "title": "Qui suis-je ?",
+      "title": "qui suis-je ?",
       "description": "Lucas, développeur logiciel français basé à Paris, qui conçoit des sites et des applications de qualité."
     },
     "what": {
       "label": "ce que j'ai fait",
-      "title": "Ce que j'ai fait",
+      "title": "ce que j'ai fait",
       "description": "Les projets de Lucas, et les technos avec lesquelles il les a construits."
     },
     "experiences": {
       "label": "mes expériences",
-      "title": "Mes expériences",
+      "title": "mes expériences",
       "description": "Les expériences professionnelles et les diplômes de Lucas."
     },
     "videos": {
@@ -26,7 +26,7 @@
     },
     "contact": {
       "label": "contact",
-      "title": "Me contacter",
+      "title": "me contacter",
       "description": "Comment entrer en contact avec Lucas."
     },
     "mdf2025": {
@@ -37,10 +37,11 @@
   },
   "Layout": {
     "avatarAlt": "Avatar d'ImJustLucas",
+    "skipToContent": "Aller au contenu",
     "madeBy": "Fait avec 💖 par ImJustLucas"
   },
   "ThemeSwitch": {
-    "toggle": "Changer de thème",
+    "toggle": "Thème et palette",
     "light": "clair",
     "dark": "sombre",
     "system": "système",
@@ -57,7 +58,7 @@
   },
   "Home": {
     "intro": "Yoooo, moi c'est <bold>Lucas</bold> ! <br></br>Développeur logiciel français en plein cœur de Paris, je conçois des sites et des applications de qualité.",
-    "creativeMindsetTitle": "Esprit créatif",
+    "creativeMindsetTitle": "esprit créatif",
     "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
     "downloadResume": "Télécharger mon CV",
     "resumeLastUpdated": "mis à jour le {date, date, medium}",
@@ -100,7 +101,7 @@
       "work-study": "Alternance",
       "internship": "Stage"
     },
-    "professionalTitle": "Expériences professionnelles",
+    "professionalTitle": "expériences professionnelles",
     "diplomasTitle": "Diplômes",
     "diplomas": {
       "diploma": "Diplôme",
@@ -122,8 +123,8 @@
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",
-    "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Gardez un œil sur cette page 🤓",
-    "subscribe": "Psst, vous pouvez vous abonner à ma chaîne <link>ici</link>",
+    "empty": "Cette section est un peu vide pour le moment. Je prévois de commencer à faire des vidéos sur le développement logiciel, le lifestyle, la vie en général et d'autres sujets qui m'intéressent. Garde un œil sur cette page 🤓",
+    "subscribe": "Psst, tu peux t'abonner à ma chaîne <link>ici</link>",
     "intro": "Tout droit sortis de ma chaîne YouTube 🎬",
     "chibiAlt": "Lucas qui rit devant une série sous un plaid, du pop-corn sur les genoux",
     "emptyAlt": "Lucas affalé dans un pouf mandarine",
@@ -158,6 +159,11 @@
       "idle": "je reviens, pause café ☕",
       "dnd": "dans ma bulle, ne pas déranger",
       "offline": "zzz… je reviens vite"
+    },
+    "announce": {
+      "playing": "Lucas joue maintenant à {name}",
+      "listening": "Lucas écoute maintenant {song} de {artist}",
+      "status": "Lucas est maintenant {status}"
     }
   },
   "Projects": {
@@ -179,8 +185,8 @@
   "Contact": {
     "dm": "Envoie-moi un MP sur LinkedIn",
     "reply": "Je réponds aussi vite que possible",
-    "sent": "Demande envoyée !",
-    "sentAnnounced": "Demande envoyée : LinkedIn s'est ouvert dans un nouvel onglet.",
+    "opened": "LinkedIn est ouvert, dis-moi salut 👋",
+    "openedAnnounced": "LinkedIn s'est ouvert dans un nouvel onglet, dis-moi salut là-bas.",
     "discord": "Ajoute-moi sur Discord",
     "alsoOn": "aussi sur",
     "rightNow": "en ce moment",

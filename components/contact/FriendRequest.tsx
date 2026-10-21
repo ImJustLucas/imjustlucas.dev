@@ -16,8 +16,8 @@ import { Button } from "@/components/ui/button";
 import type { Profile } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
-/** How long the Play button shows the request as sent. */
-const SENT_FOR_MS = 2400;
+/** How long the Play button says LinkedIn is open. */
+const OPENED_FOR_MS = 2400;
 
 type FriendRequestProps = {
   links: Profile["links"];
@@ -35,13 +35,14 @@ export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
   const tSidebar = useTranslations("Sidebar");
   const { presence, status } = usePresence();
   const { play } = useSounds();
-  const [sent, setSent] = useState(false);
+  // Nothing is sent from here: the button only opens LinkedIn, and says so.
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
-    if (!sent) return;
-    const timer = window.setTimeout(() => setSent(false), SENT_FOR_MS);
+    if (!opened) return;
+    const timer = window.setTimeout(() => setOpened(false), OPENED_FOR_MS);
     return () => window.clearTimeout(timer);
-  }, [sent]);
+  }, [opened]);
 
   const others = [
     { icon: Github, href: links.github, label: "GitHub" },
@@ -113,15 +114,15 @@ export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
                   rel="noopener noreferrer"
                   onClick={() => {
                     play("confirm");
-                    setSent(true);
+                    setOpened(true);
                   }}
                 >
-                  {sent ? (
+                  {opened ? (
                     <Check aria-hidden className="!size-5" />
                   ) : (
                     <Linkedin aria-hidden className="!size-5" />
                   )}
-                  {sent ? t("sent") : t("dm")}
+                  {opened ? t("opened") : t("dm")}
                 </a>
               </Button>
               <span className="pl-1 text-label text-ink-muted">
@@ -141,9 +142,9 @@ export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
               </Button>
             </SoundOnPress>
           </div>
-          {/* The request, once sent, said aloud */}
+          {/* LinkedIn, once opened, said aloud */}
           <span aria-live="polite" className="sr-only">
-            {sent ? t("sentAnnounced") : ""}
+            {opened ? t("openedAnnounced") : ""}
           </span>
 
           <div className="flex flex-col gap-3 border-t-2 border-seam pt-5 sm:flex-row sm:items-center sm:gap-4">
@@ -154,7 +155,7 @@ export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
               {others.map(({ icon: Icon, href, label }) => (
                 <li key={label}>
                   <SoundOnPress>
-                    <Button asChild variant="outline" size="sm">
+                    <Button asChild variant="outline" className="px-3">
                       <a href={href} target="_blank" rel="noopener noreferrer">
                         <Icon aria-hidden />
                         {label}

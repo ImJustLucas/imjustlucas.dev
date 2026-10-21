@@ -13,10 +13,13 @@ import { cn } from "@/lib/utils";
  */
 export function ChibiHead({
   size,
+  decorative = false,
   className,
 }: {
   /** Head diameter in pixels, inside the 3px ring. */
   size: number;
+  /** Next to text that already states the status, as in the presence card. */
+  decorative?: boolean;
   className?: string;
 }) {
   const { status } = usePresence();
@@ -31,17 +34,18 @@ export function ChibiHead({
         className,
       )}
       style={{ width: size, height: size }}
-      title={t(`status.${status}`)}
+      title={decorative ? undefined : t(`status.${status}`)}
+      aria-hidden={decorative || undefined}
     >
       <Image
         src="/images/chibi-avatar-64x64.png"
-        alt={tLayout("avatarAlt")}
+        alt={decorative ? "" : tLayout("avatarAlt")}
         width={64}
         height={64}
         className="size-full rounded-full object-cover"
         priority
       />
-      <span className="sr-only">{t(`status.${status}`)}</span>
+      {!decorative && <span className="sr-only">{t(`status.${status}`)}</span>}
     </span>
   );
 }

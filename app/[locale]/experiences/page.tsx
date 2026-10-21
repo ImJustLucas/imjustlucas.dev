@@ -139,7 +139,8 @@ async function Stop({
                 rel="noopener noreferrer"
                 className={cn(
                   SECONDARY_LINK,
-                  "decoration-[3px] underline-offset-[6px]",
+                  // The padding grows the target past 44px without moving the line
+                  "py-2.5 decoration-[3px] underline-offset-[6px]",
                 )}
               >
                 {experience.company}
