@@ -206,7 +206,7 @@ Why `!important`: the `zoom-in-95`/`slide-in-from-*` utilities are emitted as `d
 
 # 002 — Make the MDF 2025 coin physics frame-rate independent and allocation-free
 
-- **Status**: TODO
+- **Status**: DONE (2026-10-21)
 - **Commit**: b7c1179
 - **Severity**: HIGH
 - **Category**: Performance / Physicality
@@ -355,7 +355,7 @@ useFrame((state, delta) => {
 
 # 003 — Give the MDF 2025 scene a pause control, reduced-motion support, and user-initiated sound only
 
-- **Status**: TODO
+- **Status**: DONE (2026-10-21)
 - **Commit**: b7c1179
 - **Severity**: HIGH
 - **Category**: Accessibility
@@ -512,7 +512,7 @@ Message dictionaries:
 
 # 004 — Fix the MDF 2025 scene's camera far-plane bug, drag-throws, coin spawn point, and wasted shadows
 
-- **Status**: TODO
+- **Status**: DONE (2026-10-21)
 - **Commit**: b7c1179
 - **Severity**: MEDIUM (far plane) / LOW (the rest)
 - **Category**: Correctness / Interaction / Performance
@@ -1228,9 +1228,9 @@ Values: entrance 200ms, `translateY(0.25rem)` → 0 (`slide-in-from-bottom-1`) p
 | # | Plan | Severity | Depends on | Files | Status |
 | --- | --- | --- | --- | --- | --- |
 | 001 | Motion tokens, hover gating, reduced-motion baseline | MEDIUM (foundation) | — | `styles/globals.css`, `tailwind.config.ts` | TODO |
-| 002 | MDF 2025: frame-rate independent physics, no allocations | HIGH | — | `master-dev-scene.tsx` | TODO |
-| 003 | MDF 2025: pause, reduced motion, user-initiated sound | HIGH | 002 | `master-dev-scene.tsx`, `certificate.tsx`, `lib/use-prefers-reduced-motion.ts`, `messages/*.json` | TODO |
-| 004 | MDF 2025: far plane, drag ≠ throw, spawn, shadows | MEDIUM/LOW | 002, 003 | `master-dev-scene.tsx` | TODO |
+| 002 | MDF 2025: frame-rate independent physics, no allocations | HIGH | — | `master-dev-scene.tsx` | DONE |
+| 003 | MDF 2025: pause, reduced motion, user-initiated sound | HIGH | 002 | `master-dev-scene.tsx`, `certificate.tsx`, `messages/*.json` (reuses `components/motion/use-reduced-motion.ts`; sounds through the kit) | DONE |
+| 004 | MDF 2025: far plane, drag ≠ throw, spawn, shadows | MEDIUM/LOW | 002, 003 | `master-dev-scene.tsx` | DONE |
 | 005 | Project/Video cards: working hover | MEDIUM | 001 | `ProjectCard.tsx`, `VideoCard.tsx` | TODO |
 | 006 | Menu item: hover/press/focus | MEDIUM | 001 | `MenuItem.tsx` | TODO |
 | 007 | Mobile menu: fade, single blur, icon crossfade | MEDIUM | 001 | `Sidebar.tsx`, `ClientLayout.tsx` | TODO |
