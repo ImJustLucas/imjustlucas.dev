@@ -6,6 +6,7 @@ import { AdminAccess, type AdminAction } from "@/lib/admin/admin-action";
 import { contentRepository, ownerGithubId } from "@/lib/admin/config";
 import { openExperiencesEditor } from "@/lib/admin/experiences";
 import { openHobbiesEditor } from "@/lib/admin/hobbies";
+import { openOverview } from "@/lib/admin/overview";
 import { openProfileEditor } from "@/lib/admin/profile";
 import { openProjectsEditor } from "@/lib/admin/projects";
 import { sessionIdentities } from "@/lib/admin/session";
@@ -62,3 +63,9 @@ export const getAchievementsEditor = () => run(openAchievementsEditor);
 
 /** Reads the Hobbies editor's content from the content branch, with its revision. */
 export const getHobbiesEditor = () => run(openHobbiesEditor);
+
+/**
+ * Reads the Admin home's overview of the content branch (counts, Resume
+ * dates, alerts) for `today` (`YYYY-MM-DD`, Europe/Paris).
+ */
+export const getOverview = (today: string) => run(openOverview(today));

@@ -1,10 +1,23 @@
-import Link from "next/link";
+import { Star } from "lucide-react";
 
-import { AdminField, AdminForm, LocalizedField } from "@/app/admin/admin-form";
 import {
-  ContentUnavailableScreen,
-  SignOutButton,
-} from "@/app/admin/admin-screens";
+  AdminField,
+  AdminForm,
+  FieldGroup,
+  FlagField,
+  LocalizedField,
+} from "@/app/admin/admin-form";
+import { ContentUnavailableScreen } from "@/app/admin/admin-screens";
+import {
+  DangerZone,
+  EditorPage,
+  EntryFact,
+  EntryList,
+  EntryName,
+  EntryTag,
+  NewEntryRow,
+} from "@/app/admin/editor-frame";
+import { EntryRow } from "@/app/admin/entry-row";
 import { FileField } from "@/app/admin/file-field";
 import { PeriodField } from "@/app/admin/period-field";
 import {
@@ -12,13 +25,10 @@ import {
   deleteProjectAction,
   updateProjectAction,
 } from "@/app/admin/projects/actions";
+import { RarityChip } from "@/app/admin/rarity-chip";
 import { RarityField } from "@/app/admin/rarity-field";
 import { TechPicker } from "@/app/admin/techs/tech-picker";
-import {
-  TypographyH2,
-  TypographyH3,
-  TypographyMuted,
-} from "@/components/typography";
+import { RARITY_STYLE } from "@/components/rarity/rarity-style";
 import { contentBranch } from "@/lib/admin/config";
 import { getProjectsEditor } from "@/lib/admin/server";
 import { formatPeriod } from "@/lib/content/format-period";
@@ -30,81 +40,100 @@ type Editor = Extract<
 >;
 type StoredProject = Editor["projects"][number]["project"];
 
-const Flag: React.FC<{
-  name: string;
-  label: string;
-  defaultChecked?: boolean;
-}> = ({ name, label, defaultChecked }) => (
-  <label className="flex items-center gap-2 text-sm">
-    <input type="checkbox" name={name} defaultChecked={defaultChecked} />
-    {label}
-  </label>
-);
-
 /** Star counts come from GitHub: they have no field here. */
 const ProjectFields: React.FC<{
   techs: ReadonlyArray<Tech>;
   project?: StoredProject;
 }> = ({ techs, project }) => (
   <>
-    <AdminField
-      name="title"
-      label="Titre"
-      defaultValue={project?.title}
-      placeholder="Predi.GG"
-    />
-    <LocalizedField
-      name="description"
-      label="Description"
-      defaultValue={project?.description}
-    />
-    <PeriodField name="period" defaultValue={project?.period} />
-    <TechPicker techs={techs} selected={project?.techs} />
-    <div className="grid gap-3 sm:grid-cols-2">
+    <FieldGroup title="L'objet">
+      <AdminField
+        name="title"
+        label="Titre"
+        defaultValue={project?.title}
+        placeholder="Predi.GG"
+      />
+      <LocalizedField
+        name="description"
+        label="Description"
+        multiline
+        defaultValue={project?.description}
+      />
       <RarityField defaultValue={project?.rarity} />
-      {/* Left empty, the Project is not on the home page. */}
-      <AdminField
-        name="featured"
-        label="Place sur l'accueil (facultatif, 1 en premier)"
-        type="number"
-        min={1}
-        defaultValue={project?.featured?.toString()}
-        placeholder="Pas sur l'accueil"
+    </FieldGroup>
+    <FieldGroup title="Quand et avec quoi">
+      <PeriodField name="period" defaultValue={project?.period} />
+      <TechPicker techs={techs} selected={project?.techs} />
+    </FieldGroup>
+    <FieldGroup title="Sur le site">
+      <div className="grid gap-4 lg:grid-cols-2">
+        {/* Left empty, the Project is not on the home page. */}
+        <AdminField
+          name="featured"
+          label="Place sur l'accueil"
+          hint="facultatif, 1 en premier"
+          type="number"
+          min={1}
+          defaultValue={project?.featured?.toString()}
+          placeholder="Pas sur l'accueil"
+        />
+        <div className="hidden lg:block" />
+        <AdminField
+          name="externalLink"
+          label="Lien du site"
+          hint="facultatif"
+          defaultValue={project?.externalLink}
+          placeholder="https://predi.gg"
+        />
+        <AdminField
+          name="repository"
+          label="Dépôt GitHub"
+          hint="facultatif"
+          defaultValue={project?.repository}
+          placeholder="https://github.com/ImJustLucas/imjustlucas.dev"
+        />
+      </div>
+      <div className="grid gap-3 lg:grid-cols-2">
+        <FlagField
+          name="openSource"
+          label="Open source"
+          hint="Affiche le bouton GitHub"
+          defaultChecked={project?.openSource}
+        />
+        <FlagField
+          name="wip"
+          label="En cours de développement"
+          hint="Affiche le tag WIP"
+          defaultChecked={project?.wip}
+        />
+      </div>
+      {/* Left empty, the Project keeps its image. */}
+      <FileField
+        name="image"
+        kind="image"
+        label={project?.image ? "Remplacer l'image" : "Image"}
+        current={project?.image}
       />
-    </div>
-    <div className="grid gap-3 sm:grid-cols-2">
-      <AdminField
-        name="externalLink"
-        label="Lien du site (facultatif)"
-        defaultValue={project?.externalLink}
-        placeholder="https://predi.gg"
-      />
-      <AdminField
-        name="repository"
-        label="Dépôt GitHub (facultatif)"
-        defaultValue={project?.repository}
-        placeholder="https://github.com/ImJustLucas/imjustlucas.dev"
-      />
-    </div>
-    <div className="flex flex-wrap gap-x-6 gap-y-2">
-      <Flag
-        name="openSource"
-        label="Open source (affiche le bouton GitHub)"
-        defaultChecked={project?.openSource}
-      />
-      <Flag
-        name="wip"
-        label="En cours de développement (WIP)"
-        defaultChecked={project?.wip}
-      />
-    </div>
-    {/* Left empty, the Project keeps its image. */}
-    <FileField
-      name="image"
-      kind="image"
-      label={project?.image ? "Remplacer l'image" : "Image"}
-      current={project?.image}
-    />
+    </FieldGroup>
+  </>
+);
+
+/** What tells a Project apart in its closed row. */
+const ProjectSummary: React.FC<{ project: StoredProject }> = ({ project }) => (
+  <>
+    <EntryName>{project.title}</EntryName>
+    <RarityChip rarity={project.rarity} />
+    <EntryFact>{formatPeriod(project.period, "fr")}</EntryFact>
+    {project.wip && <EntryTag>WIP</EntryTag>}
+    {project.featured !== undefined && (
+      <EntryTag>
+        <Star aria-hidden className="size-3" />
+        accueil {project.featured}
+      </EntryTag>
+    )}
+    {project.techs.length === 0 && (
+      <EntryTag tone="warning">sans Tech</EntryTag>
+    )}
   </>
 );
 
@@ -122,70 +151,58 @@ export default async function ProjectsEditorPage() {
   const { revision, techs, projects } = editor;
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-10 pb-24">
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <Link href="/admin" className="text-sm text-muted-foreground">
-            ← Admin
-          </Link>
-          <TypographyH2>Projects</TypographyH2>
-        </div>
-        <SignOutButton />
-      </header>
-
-      <section className="flex flex-col gap-4">
-        <TypographyMuted>
-          Le site les affiche du plus récent au plus ancien, d&apos;après leur
-          période. L&apos;accueil montre les trois premiers d&apos;après leur
-          place sur l&apos;accueil. Le nombre d&apos;étoiles vient de GitHub.
-        </TypographyMuted>
-        <ul className="flex flex-col gap-3">
-          {projects.map(({ index, project }) => (
-            // Projects are addressed by position: keyed by revision too, so
-            // a deletion never leaves a form on another Project.
-            <li
-              key={`${revision}-${index}`}
-              className="flex flex-col gap-3 rounded-lg border p-4"
+    <EditorPage
+      title="Projects"
+      count={`${projects.length} Projects`}
+      addLabel="Ajouter un Project"
+      intro="Le site les affiche du plus récent au plus ancien, d'après leur période. L'accueil montre les trois premiers d'après leur place sur l'accueil. Le nombre d'étoiles vient de GitHub."
+    >
+      <EntryList>
+        {projects.map(({ index, project }) => (
+          // Projects are addressed by position: keyed by revision too, so
+          // a deletion never leaves a form on another Project.
+          <EntryRow
+            key={`${revision}-${index}`}
+            id={`project-${index}`}
+            summary={<ProjectSummary project={project} />}
+            band={RARITY_STYLE[project.rarity].frame}
+          >
+            <AdminForm
+              action={updateProjectAction}
+              revision={revision}
+              submitLabel="Publier"
+              published={`${project.title} publié`}
             >
-              <div>
-                <TypographyH3>{project.title}</TypographyH3>
-                <TypographyMuted>
-                  {formatPeriod(project.period, "fr")}
-                </TypographyMuted>
-              </div>
-              <AdminForm
-                action={updateProjectAction}
-                revision={revision}
-                submitLabel="Enregistrer"
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-                <ProjectFields techs={techs} project={project} />
-              </AdminForm>
+              <input type="hidden" name="index" value={index} readOnly />
+              <ProjectFields techs={techs} project={project} />
+            </AdminForm>
+            <DangerZone>
               <AdminForm
                 action={deleteProjectAction}
                 revision={revision}
-                submitLabel="Supprimer"
+                submitLabel="Supprimer ce Project"
+                published={`${project.title} supprimé`}
+                pendingLabel="Suppression…"
                 confirmation={`Supprimer le Project ${project.title} ?`}
-                destructive
+                tone="delete"
               >
                 <input type="hidden" name="index" value={index} readOnly />
               </AdminForm>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-lg border border-dashed p-4">
-          <TypographyMuted>Nouveau Project</TypographyMuted>
+            </DangerZone>
+          </EntryRow>
+        ))}
+        <NewEntryRow label="Nouveau Project">
           <AdminForm
             action={createProjectAction}
             revision={revision}
-            submitLabel="Ajouter"
+            submitLabel="Ajouter et publier"
+            published="Project ajouté"
             resetOnSave
-            className="mt-3"
           >
             <ProjectFields techs={techs} />
           </AdminForm>
-        </div>
-      </section>
-    </div>
+        </NewEntryRow>
+      </EntryList>
+    </EditorPage>
   );
 }

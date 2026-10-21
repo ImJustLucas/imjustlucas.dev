@@ -1,22 +1,28 @@
-import Link from "next/link";
-
 import {
   createAchievementAction,
   deleteAchievementAction,
   updateAchievementAction,
 } from "@/app/admin/achievements/actions";
-import { AdminField, AdminForm, LocalizedField } from "@/app/admin/admin-form";
 import {
-  ContentUnavailableScreen,
-  SignOutButton,
-} from "@/app/admin/admin-screens";
+  AdminField,
+  AdminForm,
+  FieldGroup,
+  LocalizedField,
+} from "@/app/admin/admin-form";
+import { ContentUnavailableScreen } from "@/app/admin/admin-screens";
+import {
+  DangerZone,
+  EditorPage,
+  EntryFact,
+  EntryList,
+  EntryName,
+  NewEntryRow,
+} from "@/app/admin/editor-frame";
+import { EntryRow } from "@/app/admin/entry-row";
 import { FileField } from "@/app/admin/file-field";
+import { RarityChip } from "@/app/admin/rarity-chip";
 import { RarityField } from "@/app/admin/rarity-field";
-import {
-  TypographyH2,
-  TypographyH3,
-  TypographyMuted,
-} from "@/components/typography";
+import { RARITY_STYLE } from "@/components/rarity/rarity-style";
 import { contentBranch } from "@/lib/admin/config";
 import { getAchievementsEditor } from "@/lib/admin/server";
 import type { Achievement } from "@/lib/content/types";
@@ -25,37 +31,63 @@ const AchievementFields: React.FC<{ achievement?: Achievement }> = ({
   achievement,
 }) => (
   <>
-    <LocalizedField name="name" label="Nom" defaultValue={achievement?.name} />
-    <LocalizedField
-      name="description"
-      label="Description"
-      defaultValue={achievement?.description}
-    />
-    <div className="grid gap-3 sm:grid-cols-3">
-      <AdminField
-        name="year"
-        label="Année"
-        type="number"
-        min={2000}
-        defaultValue={achievement?.year.toString()}
-        placeholder="2025"
+    <FieldGroup title="Le succès">
+      <LocalizedField
+        name="name"
+        label="Nom"
+        defaultValue={achievement?.name}
+      />
+      <LocalizedField
+        name="description"
+        label="Description"
+        multiline
+        defaultValue={achievement?.description}
       />
       <RarityField defaultValue={achievement?.rarity} />
-      <AdminField
-        name="link"
-        label="Lien (page du site ou URL)"
-        defaultValue={achievement?.link}
-        placeholder="/mdf-2025"
+    </FieldGroup>
+    <FieldGroup title="Sur le site">
+      <div className="grid gap-4 sm:grid-cols-[9rem_1fr]">
+        <AdminField
+          name="year"
+          label="Année"
+          type="number"
+          min={2000}
+          defaultValue={achievement?.year.toString()}
+          placeholder="2025"
+        />
+        <AdminField
+          name="link"
+          label="Lien"
+          hint="page du site ou URL"
+          defaultValue={achievement?.link}
+          placeholder="/mdf-2025"
+        />
+      </div>
+      {/* Left empty, the Achievement keeps its art. */}
+      <FileField
+        name="art"
+        kind="image"
+        label={achievement ? "Remplacer l'illustration" : "Illustration"}
+        current={achievement?.art}
+        required={!achievement}
       />
-    </div>
-    {/* Left empty, the Achievement keeps its art. */}
-    <FileField
-      name="art"
-      kind="image"
-      label={achievement ? "Remplacer l'illustration" : "Illustration"}
-      current={achievement?.art}
-      required={!achievement}
-    />
+    </FieldGroup>
+  </>
+);
+
+/** What tells an Achievement apart in its closed row. */
+const AchievementSummary: React.FC<{ achievement: Achievement }> = ({
+  achievement,
+}) => (
+  <>
+    <span className="inline-flex size-10 shrink-0 overflow-hidden rounded-full bg-ground ring-2 ring-seam">
+      {/* A site path, at icon size: no optimisation needed */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={achievement.art} alt="" className="size-full object-contain" />
+    </span>
+    <EntryName>{achievement.name.fr}</EntryName>
+    <RarityChip rarity={achievement.rarity} />
+    <EntryFact>{achievement.year}</EntryFact>
   </>
 );
 
@@ -73,67 +105,58 @@ export default async function AchievementsEditorPage() {
   const { revision, achievements } = editor;
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-10 pb-24">
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <Link href="/admin" className="text-sm text-muted-foreground">
-            ← Admin
-          </Link>
-          <TypographyH2>Achievements</TypographyH2>
-        </div>
-        <SignOutButton />
-      </header>
-
-      <section className="flex flex-col gap-4">
-        <TypographyMuted>
-          L&apos;accueil les affiche dans cet ordre. Un lien vers une page du
-          site s&apos;écrit sans la langue, par exemple /mdf-2025.
-        </TypographyMuted>
-        <ul className="flex flex-col gap-3">
-          {achievements.map((achievement, index) => (
-            // Achievements are addressed by position: keyed by revision too,
-            // so a deletion never leaves a form on another Achievement.
-            <li
-              key={`${revision}-${index}`}
-              className="flex flex-col gap-3 rounded-lg border p-4"
+    <EditorPage
+      title="Achievements"
+      count={`${achievements.length} Achievements`}
+      addLabel="Ajouter un Achievement"
+      intro="L'accueil les affiche dans cet ordre. Un lien vers une page du site s'écrit sans la langue, par exemple /mdf-2025."
+    >
+      <EntryList>
+        {achievements.map((achievement, index) => (
+          // Achievements are addressed by position: keyed by revision too,
+          // so a deletion never leaves a form on another Achievement.
+          <EntryRow
+            key={`${revision}-${index}`}
+            id={`achievement-${index}`}
+            summary={<AchievementSummary achievement={achievement} />}
+            band={RARITY_STYLE[achievement.rarity].frame}
+          >
+            <AdminForm
+              action={updateAchievementAction}
+              revision={revision}
+              submitLabel="Publier"
+              published={`${achievement.name.fr} publié`}
             >
-              <div>
-                <TypographyH3>{achievement.name.fr}</TypographyH3>
-                <TypographyMuted>{achievement.year}</TypographyMuted>
-              </div>
-              <AdminForm
-                action={updateAchievementAction}
-                revision={revision}
-                submitLabel="Enregistrer"
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-                <AchievementFields achievement={achievement} />
-              </AdminForm>
+              <input type="hidden" name="index" value={index} readOnly />
+              <AchievementFields achievement={achievement} />
+            </AdminForm>
+            <DangerZone>
               <AdminForm
                 action={deleteAchievementAction}
                 revision={revision}
-                submitLabel="Supprimer"
+                submitLabel="Supprimer cet Achievement"
+                published={`${achievement.name.fr} supprimé`}
+                pendingLabel="Suppression…"
                 confirmation={`Supprimer l'Achievement ${achievement.name.fr} ?`}
-                destructive
+                tone="delete"
               >
                 <input type="hidden" name="index" value={index} readOnly />
               </AdminForm>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-lg border border-dashed p-4">
-          <TypographyMuted>Nouvel Achievement</TypographyMuted>
+            </DangerZone>
+          </EntryRow>
+        ))}
+        <NewEntryRow label="Nouvel Achievement">
           <AdminForm
             action={createAchievementAction}
             revision={revision}
-            submitLabel="Ajouter"
+            submitLabel="Ajouter et publier"
+            published="Achievement ajouté"
             resetOnSave
-            className="mt-3"
           >
             <AchievementFields />
           </AdminForm>
-        </div>
-      </section>
-    </div>
+        </NewEntryRow>
+      </EntryList>
+    </EditorPage>
   );
 }

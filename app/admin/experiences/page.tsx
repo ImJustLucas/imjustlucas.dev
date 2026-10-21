@@ -1,26 +1,29 @@
-import Link from "next/link";
+import { Briefcase } from "lucide-react";
 
 import {
   AdminField,
   AdminForm,
+  FieldGroup,
   LocalizedField,
   SelectField,
 } from "@/app/admin/admin-form";
+import { ContentUnavailableScreen } from "@/app/admin/admin-screens";
 import {
-  ContentUnavailableScreen,
-  SignOutButton,
-} from "@/app/admin/admin-screens";
+  DangerZone,
+  EditorPage,
+  EntryFact,
+  EntryList,
+  EntryName,
+  EntryTag,
+  NewEntryRow,
+} from "@/app/admin/editor-frame";
+import { EntryRow } from "@/app/admin/entry-row";
 import {
   createExperienceAction,
   deleteExperienceAction,
   updateExperienceAction,
 } from "@/app/admin/experiences/actions";
 import { PeriodField } from "@/app/admin/period-field";
-import {
-  TypographyH2,
-  TypographyH3,
-  TypographyMuted,
-} from "@/components/typography";
 import { contentBranch } from "@/lib/admin/config";
 import { getExperiencesEditor } from "@/lib/admin/server";
 import { formatPeriod } from "@/lib/content/format-period";
@@ -41,41 +44,82 @@ const ExperienceFields: React.FC<{ experience?: StoredExperience }> = ({
   experience,
 }) => (
   <>
-    <div className="grid gap-3 sm:grid-cols-2">
-      <AdminField
-        name="company"
-        label="Entreprise"
-        defaultValue={experience?.company}
-        placeholder="Favikon"
+    <FieldGroup title="Le poste">
+      <div className="grid gap-4 sm:grid-cols-[1fr_9rem]">
+        <AdminField
+          name="company"
+          label="Entreprise"
+          defaultValue={experience?.company}
+          placeholder="Favikon"
+        />
+        <AdminField
+          name="emoji"
+          label="Emoji"
+          hint="facultatif"
+          defaultValue={experience?.emoji}
+          placeholder="💜"
+        />
+      </div>
+      <LocalizedField
+        name="role"
+        label="Poste"
+        defaultValue={experience?.role}
       />
-      <AdminField
-        name="link"
-        label="Lien"
-        defaultValue={experience?.link}
-        placeholder="https://favikon.com"
+      <div className="grid gap-4 lg:grid-cols-2">
+        <SelectField
+          name="contractType"
+          label="Type de contrat"
+          options={CONTRACT_TYPES}
+          defaultValue={experience?.contractType}
+        />
+        <AdminField
+          name="link"
+          label="Lien"
+          defaultValue={experience?.link}
+          placeholder="https://favikon.com"
+        />
+      </div>
+    </FieldGroup>
+    <FieldGroup title="Quand">
+      <PeriodField name="period" defaultValue={experience?.period} />
+    </FieldGroup>
+    <FieldGroup title="Ce que j'y fais">
+      <LocalizedField
+        name="description"
+        label="Description"
+        multiline
+        defaultValue={experience?.description}
       />
-    </div>
-    <LocalizedField name="role" label="Poste" defaultValue={experience?.role} />
-    <div className="grid gap-3 sm:grid-cols-2">
-      <SelectField
-        name="contractType"
-        label="Type de contrat"
-        options={CONTRACT_TYPES}
-        defaultValue={experience?.contractType}
-      />
-      <AdminField
-        name="emoji"
-        label="Emoji, avant l'entreprise sur l'accueil (facultatif)"
-        defaultValue={experience?.emoji}
-        placeholder="💜"
-      />
-    </div>
-    <LocalizedField
-      name="description"
-      label="Description"
-      defaultValue={experience?.description}
-    />
-    <PeriodField name="period" defaultValue={experience?.period} />
+    </FieldGroup>
+  </>
+);
+
+/** What tells an Experience apart in its closed row. */
+const ExperienceSummary: React.FC<{ experience: StoredExperience }> = ({
+  experience,
+}) => (
+  <>
+    <span
+      aria-hidden
+      className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-ground text-lg ring-2 ring-seam"
+    >
+      {experience.emoji ?? <Briefcase className="size-4 text-ink-muted" />}
+    </span>
+    <span className="flex min-w-0 flex-col">
+      <EntryName>{experience.company}</EntryName>
+      <span className="truncate text-label text-ink-muted">
+        {experience.role.fr}
+      </span>
+    </span>
+    <span className="flex flex-wrap items-center gap-2">
+      <EntryFact>{formatPeriod(experience.period, "fr")}</EntryFact>
+      {experience.period.end === "ongoing" && (
+        <EntryTag tone="live">en cours</EntryTag>
+      )}
+      <EntryTag>
+        {fr.Experiences.contractTypes[experience.contractType]}
+      </EntryTag>
+    </span>
   </>
 );
 
@@ -93,71 +137,57 @@ export default async function ExperiencesEditorPage() {
   const { revision, experiences } = editor;
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-10 pb-24">
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <Link href="/admin" className="text-sm text-muted-foreground">
-            ← Admin
-          </Link>
-          <TypographyH2>Experiences</TypographyH2>
-        </div>
-        <SignOutButton />
-      </header>
-
-      <section className="flex flex-col gap-4">
-        <TypographyMuted>
-          Le site les affiche de la plus récente à la plus ancienne,
-          d&apos;après leur période.
-        </TypographyMuted>
-        <ul className="flex flex-col gap-3">
-          {experiences.map(({ index, experience }) => (
-            // Experiences are addressed by position: keyed by revision too,
-            // so a deletion never leaves a form on another Experience.
-            <li
-              key={`${revision}-${index}`}
-              className="flex flex-col gap-3 rounded-lg border p-4"
+    <EditorPage
+      title="Experiences"
+      count={`${experiences.length} Experiences`}
+      addLabel="Ajouter une Experience"
+      intro="Le site les affiche de la plus récente à la plus ancienne, d'après leur période. Celles en cours forment l'équipe actuelle de l'accueil."
+    >
+      <EntryList>
+        {experiences.map(({ index, experience }) => (
+          // Experiences are addressed by position: keyed by revision too,
+          // so a deletion never leaves a form on another Experience.
+          <EntryRow
+            key={`${revision}-${index}`}
+            id={`experience-${index}`}
+            summary={<ExperienceSummary experience={experience} />}
+          >
+            <AdminForm
+              action={updateExperienceAction}
+              revision={revision}
+              submitLabel="Publier"
+              published={`${experience.company} publiée`}
             >
-              <div>
-                <TypographyH3>
-                  {experience.company} · {experience.role.fr}
-                </TypographyH3>
-                <TypographyMuted>
-                  {formatPeriod(experience.period, "fr")}
-                </TypographyMuted>
-              </div>
-              <AdminForm
-                action={updateExperienceAction}
-                revision={revision}
-                submitLabel="Enregistrer"
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-                <ExperienceFields experience={experience} />
-              </AdminForm>
+              <input type="hidden" name="index" value={index} readOnly />
+              <ExperienceFields experience={experience} />
+            </AdminForm>
+            <DangerZone>
               <AdminForm
                 action={deleteExperienceAction}
                 revision={revision}
-                submitLabel="Supprimer"
+                submitLabel="Supprimer cette Experience"
+                published={`${experience.company} supprimée`}
+                pendingLabel="Suppression…"
                 confirmation={`Supprimer l'Experience ${experience.company} (${experience.role.fr}) ?`}
-                destructive
+                tone="delete"
               >
                 <input type="hidden" name="index" value={index} readOnly />
               </AdminForm>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-lg border border-dashed p-4">
-          <TypographyMuted>Nouvelle Experience</TypographyMuted>
+            </DangerZone>
+          </EntryRow>
+        ))}
+        <NewEntryRow label="Nouvelle Experience">
           <AdminForm
             action={createExperienceAction}
             revision={revision}
-            submitLabel="Ajouter"
+            submitLabel="Ajouter et publier"
+            published="Experience ajoutée"
             resetOnSave
-            className="mt-3"
           >
             <ExperienceFields />
           </AdminForm>
-        </div>
-      </section>
-    </div>
+        </NewEntryRow>
+      </EntryList>
+    </EditorPage>
   );
 }

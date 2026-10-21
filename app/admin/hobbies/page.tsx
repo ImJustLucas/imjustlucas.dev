@@ -1,41 +1,34 @@
-import Link from "next/link";
+import Image from "next/image";
 
-import { AdminForm, LocalizedField, SelectField } from "@/app/admin/admin-form";
+import { ArrowDown, ArrowUp } from "lucide-react";
+
+import { AdminForm, LocalizedField } from "@/app/admin/admin-form";
+import { ContentUnavailableScreen } from "@/app/admin/admin-screens";
 import {
-  ContentUnavailableScreen,
-  SignOutButton,
-} from "@/app/admin/admin-screens";
+  DangerZone,
+  EditorPage,
+  EntryFact,
+  EntryList,
+  EntryName,
+  NewEntryRow,
+} from "@/app/admin/editor-frame";
+import { EntryRow } from "@/app/admin/entry-row";
 import {
   createHobbyAction,
   deleteHobbyAction,
   moveHobbyAction,
   updateHobbyAction,
 } from "@/app/admin/hobbies/actions";
-import { TypographyH2, TypographyMuted } from "@/components/typography";
+import { PoseField } from "@/app/admin/hobbies/pose-field";
 import { contentBranch } from "@/lib/admin/config";
 import { getHobbiesEditor } from "@/lib/admin/server";
-import type { Hobby, HobbyPose } from "@/lib/content/types";
-
-/** The poses of Lucas's chibi avatar, labelled in French. */
-const POSES: ReadonlyArray<readonly [HobbyPose, string]> = [
-  ["surf", "surf"],
-  ["skate", "skate"],
-  ["lol", "LoL"],
-  ["coding", "code"],
-  ["coffee", "café"],
-  ["series", "série"],
-  ["music", "musique"],
-];
+import { chibiFrames } from "@/lib/chibi";
+import type { Hobby } from "@/lib/content/types";
 
 const HobbyFields: React.FC<{ hobby?: Hobby }> = ({ hobby }) => (
   <>
     <LocalizedField name="label" label="Libellé" defaultValue={hobby?.label} />
-    <SelectField
-      name="pose"
-      label="Pose"
-      options={POSES}
-      defaultValue={hobby?.pose}
-    />
+    <PoseField defaultValue={hobby?.pose} />
   </>
 );
 
@@ -47,14 +40,24 @@ const MoveButton: React.FC<{
   <AdminForm
     action={moveHobbyAction}
     revision={revision}
-    submitLabel={direction === "up" ? "↑ Monter" : "↓ Descendre"}
+    submitLabel={direction === "up" ? "Monter" : "Descendre"}
+    published="Ordre publié"
+    pendingLabel="Déplacement…"
+    icon={
+      direction === "up" ? <ArrowUp aria-hidden /> : <ArrowDown aria-hidden />
+    }
+    tone="step"
   >
     <input type="hidden" name="index" value={index} readOnly />
     <input type="hidden" name="direction" value={direction} readOnly />
   </AdminForm>
 );
 
-/** The Owner edits Hobbies, as they are on the content branch. */
+/**
+ * The Owner edits Hobbies, as they are on the content branch, in the home
+ * page's order: each row moves up or down from its closed header and opens
+ * on its label and pose.
+ */
 export default async function HobbiesEditorPage() {
   const editor = await getHobbiesEditor();
   if (editor.kind === "unavailable")
@@ -68,39 +71,45 @@ export default async function HobbiesEditorPage() {
   const { revision, hobbies } = editor;
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-10 pb-24">
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <Link href="/admin" className="text-sm text-muted-foreground">
-            ← Admin
-          </Link>
-          <TypographyH2>Hobbies</TypographyH2>
-        </div>
-        <SignOutButton />
-      </header>
-
-      <section className="flex flex-col gap-4">
-        <TypographyMuted>
-          L&apos;accueil les affiche dans cet ordre, chacun avec sa pose de
-          l&apos;avatar.
-        </TypographyMuted>
-        <ul className="flex flex-col gap-3">
-          {hobbies.map((hobby, index) => (
-            // Hobbies are addressed by position: keyed by revision too, so a
-            // move or a deletion never leaves a form on another Hobby.
-            <li
-              key={`${revision}-${index}`}
-              className="flex flex-col gap-3 rounded-lg border p-4"
-            >
-              <AdminForm
-                action={updateHobbyAction}
-                revision={revision}
-                submitLabel="Enregistrer"
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-                <HobbyFields hobby={hobby} />
-              </AdminForm>
-              <div className="flex flex-wrap gap-3">
+    <EditorPage
+      title="Hobbies"
+      count={`${hobbies.length} Hobbies`}
+      addLabel="Ajouter un Hobby"
+      intro="L'accueil les affiche dans cet ordre, chacun avec sa pose de l'avatar."
+    >
+      <EntryList>
+        {hobbies.map((hobby, index) => (
+          // Hobbies are addressed by position: keyed by revision too, so a
+          // move or a deletion never leaves a form on another Hobby.
+          <EntryRow
+            key={`${revision}-${index}`}
+            id={`hobby-${index}`}
+            summary={
+              <>
+                <span className="relative size-11 shrink-0">
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-[6%] bottom-[4%] top-[14%] rounded-full bg-ground"
+                  />
+                  <Image
+                    src={chibiFrames(hobby.pose)[0]}
+                    alt=""
+                    width={96}
+                    height={96}
+                    sizes="44px"
+                    // Seven small files, shared by every row: no pop-in
+                    loading="eager"
+                    className="relative size-full object-contain"
+                  />
+                </span>
+                <EntryName>{hobby.label.fr}</EntryName>
+                <EntryFact>
+                  place {index + 1} sur {hobbies.length}
+                </EntryFact>
+              </>
+            }
+            actions={
+              <>
                 {index > 0 && (
                   <MoveButton
                     revision={revision}
@@ -115,32 +124,47 @@ export default async function HobbiesEditorPage() {
                     direction="down"
                   />
                 )}
-                <AdminForm
-                  action={deleteHobbyAction}
-                  revision={revision}
-                  submitLabel="Supprimer"
-                  confirmation={`Supprimer le Hobby ${hobby.label.fr} ?`}
-                  destructive
-                >
-                  <input type="hidden" name="index" value={index} readOnly />
-                </AdminForm>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-lg border border-dashed p-4">
-          <TypographyMuted>Nouveau Hobby (ajouté en dernier)</TypographyMuted>
+              </>
+            }
+          >
+            <AdminForm
+              action={updateHobbyAction}
+              revision={revision}
+              submitLabel="Publier"
+              published={`${hobby.label.fr} publié`}
+              inline
+            >
+              <input type="hidden" name="index" value={index} readOnly />
+              <HobbyFields hobby={hobby} />
+            </AdminForm>
+            <DangerZone>
+              <AdminForm
+                action={deleteHobbyAction}
+                revision={revision}
+                submitLabel="Supprimer ce Hobby"
+                pendingLabel="Suppression…"
+                published={`${hobby.label.fr} supprimé`}
+                confirmation={`Supprimer le Hobby ${hobby.label.fr} ?`}
+                tone="delete"
+              >
+                <input type="hidden" name="index" value={index} readOnly />
+              </AdminForm>
+            </DangerZone>
+          </EntryRow>
+        ))}
+        <NewEntryRow label="Nouveau Hobby" hint="ajouté en dernier">
           <AdminForm
             action={createHobbyAction}
             revision={revision}
-            submitLabel="Ajouter"
+            submitLabel="Ajouter et publier"
+            published="Hobby ajouté"
             resetOnSave
-            className="mt-3"
+            inline
           >
             <HobbyFields />
           </AdminForm>
-        </div>
-      </section>
-    </div>
+        </NewEntryRow>
+      </EntryList>
+    </EditorPage>
   );
 }
