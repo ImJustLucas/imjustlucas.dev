@@ -63,7 +63,8 @@ describe("unknown pages under a Locale", () => {
   it.each([
     ["/fr/xyz", "/fr/page-not-found"],
     ["/en/xyz", "/en/page-not-found"],
-    ["/en/what/predi-gg", "/en/page-not-found"],
+    ["/en/what/no-such-project", "/en/page-not-found"],
+    ["/fr/what/predi-gg/more", "/fr/page-not-found"],
     ["/fr/page-not-found", "/fr/page-not-found"],
   ])("%s is served as its Locale's 404 page", async (path, page) => {
     const response = await visit(path, "en");
@@ -71,8 +72,8 @@ describe("unknown pages under a Locale", () => {
     expect(rewrite(response)).toBe(`https://imjustlucas.dev${page}`);
   });
 
-  it.each(["/en", "/fr/what", "/en/mdf-2025"])(
-    "%s, a Route, is served as it is",
+  it.each(["/en", "/fr/what", "/en/mdf-2025", "/fr/what/predi-gg"])(
+    "%s, a Route or a Project's page, is served as it is",
     async (path) => {
       const response = await visit(path, "en");
       expect(response.status).toBe(200);

@@ -182,6 +182,21 @@
     "showing": "{count, plural, one {# project} other {# projects}} of {total} built with {tech}",
     "showingAll": "{count, plural, one {# project} other {all # projects}}"
   },
+  "ProjectPage": {
+    "back": "back to the inventory",
+    "close": "Close {title}",
+    "holderAlt": "Lucas coding on a laptop, sitting cross-legged",
+    "holder": "Lucas",
+    "stillOn": "still building it 🛠️",
+    "context": "the context",
+    "built": "what i built",
+    "outcome": "the outcome",
+    "visit": "visit the site",
+    "screenshot": "Screenshot of {title}",
+    "screenshotNumber": "Screenshot {number} of {total}",
+    "showScreenshot": "Show screenshot {number}",
+    "screenshots": "Screenshots of {title}"
+  },
   "Contact": {
     "dm": "Send me a DM on LinkedIn",
     "reply": "I'll reply as fast as I can",

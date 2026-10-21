@@ -14,6 +14,8 @@ import {
   TypographyTitle,
 } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { projectPath } from "@/config/routes";
+import { Link } from "@/i18n/navigation";
 import { formatPeriod } from "@/lib/content/format-period";
 import type { ProjectInLocale } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
@@ -29,7 +31,9 @@ type ProjectCardProps = {
 /**
  * An item card: a Project framed by its rarity (2px frame, 4px top band,
  * tag), its screenshot, what it is, its Tech loadout as chips, and its
- * links, with the live GitHub star count when there is one.
+ * links, with the live GitHub star count when there is one. The whole card
+ * opens the Project's page (its title is the link, stretched over the
+ * card); on the inventory, as a window over it.
  */
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
@@ -44,7 +48,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     <SoundOnPress cue={null} tick>
       <article
         className={cn(
-          "tray relative flex h-full flex-col overflow-hidden rounded-lg border-2 bg-raised",
+          "tray group relative flex h-full flex-col overflow-hidden rounded-lg border-2 bg-raised",
           rarity.frame,
         )}
       >
@@ -57,7 +61,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 alt=""
                 fill
                 sizes={imageSizes}
-                className="object-cover object-top"
+                className="object-cover object-top transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
             ) : (
               <span className="flex h-full flex-col items-center justify-center gap-2 text-ink-muted">
@@ -69,7 +73,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
           <div className="flex items-start justify-between gap-3">
             <TypographyTitle as={headingLevel} className="min-w-0">
-              {project.title}
+              <SoundOnPress cue="toggleOn">
+                <Link
+                  href={projectPath(project.slug)}
+                  className="rounded-sm decoration-2 underline-offset-4 after:absolute after:inset-0 after:rounded-[14px] group-hover:underline focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-action-ink"
+                >
+                  {project.title}
+                </Link>
+              </SoundOnPress>
             </TypographyTitle>
             <RarityTag rarity={project.rarity} className="mt-0.5 shrink-0" />
           </div>
@@ -100,7 +111,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           )}
 
           {(project.repository || project.externalLink) && (
-            <div className="mt-auto flex items-center gap-2 pt-2">
+            // Above the stretched link to the Project's page
+            <div className="relative z-10 mt-auto flex items-center gap-2 pt-2">
               {project.repository && (
                 <SoundOnPress>
                   <Button asChild variant="outline">
