@@ -17,7 +17,6 @@ const visit = (path: string) =>
 describe("legacy unprefixed URLs", () => {
   it.each([
     ["/what", "/en/what"],
-    ["/how", "/en/how"],
     ["/experiences", "/en/experiences"],
     ["/videos", "/en/videos"],
     ["/contact", "/en/contact"],
@@ -32,6 +31,20 @@ describe("legacy unprefixed URLs", () => {
     const response = await visit("/what/predi-gg");
     expect(getRedirectUrl(response)).toBe(
       "https://imjustlucas.dev/en/what/predi-gg",
+    );
+  });
+});
+
+describe("retired Routes", () => {
+  it.each([
+    ["/en/how", "/en/what"],
+    ["/fr/how", "/fr/what"],
+    ["/how", "/en/what"],
+  ])("redirect %s permanently to %s", async (retired, successor) => {
+    const response = await visit(retired);
+    expect(response.status).toBe(308);
+    expect(getRedirectUrl(response)).toBe(
+      `https://imjustlucas.dev${successor}`,
     );
   });
 });

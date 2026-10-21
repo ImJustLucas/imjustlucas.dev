@@ -54,7 +54,7 @@ describe("the sound kit", () => {
     const notes = TAB_NOTES.map(
       (_, tab) => cueSound("tab", { tab }).plucks[0].note,
     );
-    expect(notes).toEqual(["D4", "E4", "F#4", "A4", "B4", "D5"]);
+    expect(notes).toEqual(["D4", "E4", "F#4", "A4", "D5"]);
     const pitches = notes.map((note) => NOTES[note]);
     expect([...pitches].sort((a, b) => a - b)).toEqual(pitches);
   });

@@ -1,29 +1,21 @@
 import Link from "next/link";
 
-import { AdminField, AdminForm, LocalizedField } from "@/app/admin/admin-form";
+import { AdminField, AdminForm } from "@/app/admin/admin-form";
 import {
   ContentUnavailableScreen,
   SignOutButton,
 } from "@/app/admin/admin-screens";
 import {
   createTechAction,
-  createTechCategoryAction,
   deleteTechAction,
-  deleteTechCategoryAction,
   updateTechAction,
-  updateTechCategoryAction,
 } from "@/app/admin/techs/actions";
-import { TechPicker } from "@/app/admin/techs/tech-picker";
 import { TechBadge } from "@/components/tech/TechBadge";
-import {
-  TypographyH2,
-  TypographyH3,
-  TypographyMuted,
-} from "@/components/typography";
+import { TypographyH2, TypographyMuted } from "@/components/typography";
 import { contentBranch } from "@/lib/admin/config";
 import { getTechsEditor } from "@/lib/admin/server";
 
-/** The Owner edits Techs and Tech categories, as they are on the content branch. */
+/** The Owner edits Techs, as they are on the content branch. */
 export default async function TechsEditorPage() {
   const editor = await getTechsEditor();
   if (editor.kind === "unavailable")
@@ -34,7 +26,7 @@ export default async function TechsEditorPage() {
       />
     );
   if (editor.kind !== "owner") return null;
-  const { revision, techs, techCategories } = editor;
+  const { revision, techs } = editor;
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-10 pb-24">
@@ -43,13 +35,12 @@ export default async function TechsEditorPage() {
           <Link href="/admin" className="text-sm text-muted-foreground">
             ← Admin
           </Link>
-          <TypographyH2>Techs et Tech categories</TypographyH2>
+          <TypographyH2>Techs</TypographyH2>
         </div>
         <SignOutButton />
       </header>
 
       <section className="flex flex-col gap-4">
-        <TypographyH3>Techs</TypographyH3>
         <ul className="flex flex-col gap-3">
           {techs.map((tech) => (
             <li
@@ -115,62 +106,6 @@ export default async function TechsEditorPage() {
                 defaultValue="#000000"
               />
             </div>
-          </AdminForm>
-        </div>
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <TypographyH3>Tech categories</TypographyH3>
-        <ul className="flex flex-col gap-3">
-          {techCategories.map((category, index) => (
-            // Tech categories are addressed by position: keyed by revision
-            // too, so a deletion never leaves a form on another category.
-            <li
-              key={`${revision}-${index}`}
-              className="flex flex-col gap-3 rounded-lg border p-4"
-            >
-              <AdminForm
-                action={updateTechCategoryAction}
-                revision={revision}
-                submitLabel="Enregistrer"
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-                <LocalizedField
-                  name="name"
-                  label="Nom"
-                  defaultValue={category.name}
-                />
-                <LocalizedField
-                  name="description"
-                  label="Description"
-                  defaultValue={category.description}
-                />
-                <TechPicker techs={techs} selected={category.techs} />
-              </AdminForm>
-              <AdminForm
-                action={deleteTechCategoryAction}
-                revision={revision}
-                submitLabel="Supprimer"
-                confirmation={`Supprimer la Tech category ${category.name.fr} ?`}
-                destructive
-              >
-                <input type="hidden" name="index" value={index} readOnly />
-              </AdminForm>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-lg border border-dashed p-4">
-          <TypographyMuted>Nouvelle Tech category</TypographyMuted>
-          <AdminForm
-            action={createTechCategoryAction}
-            revision={revision}
-            submitLabel="Ajouter"
-            resetOnSave
-            className="mt-3"
-          >
-            <LocalizedField name="name" label="Nom" />
-            <LocalizedField name="description" label="Description" />
-            <TechPicker techs={techs} />
           </AdminForm>
         </div>
       </section>

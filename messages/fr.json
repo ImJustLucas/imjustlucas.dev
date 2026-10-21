@@ -12,12 +12,7 @@
     "what": {
       "label": "ce que j'ai fait",
       "title": "Ce que j'ai fait",
-      "description": "Les projets de Lucas, des projets perso aux projets pro."
-    },
-    "how": {
-      "label": "comment je fais",
-      "title": "Comment je crée mes apps ?",
-      "description": "Les langages, frameworks et outils que Lucas utilise pour créer ses apps."
+      "description": "Les projets de Lucas, et les technos avec lesquelles il les a construits."
     },
     "experiences": {
       "label": "mes expériences",
@@ -170,15 +165,26 @@
     "open": "Ouvrir {title}",
     "github": "GitHub",
     "stars": "{count, plural, one {# étoile} other {# étoiles}} sur GitHub",
-    "noImage": "Pas encore de capture"
-  },
-  "How": {
-    "intro": "Mon loadout : tout ce avec quoi je construis, rangé par usage 🛠️",
+    "noImage": "Pas encore de capture",
+    "intro": "Tout ce que j'ai construit, et le loadout avec lequel je l'ai fait. Choisis une techno pour voir où je l'ai utilisée 🛠️",
     "chibiAlt": "Lucas qui code sur un portable, assis en tailleur",
-    "items": "{count, plural, one {# objet} other {# objets}}"
+    "loadout": "loadout",
+    "techs": "{count, plural, one {# techno} other {# technos}}",
+    "filter": "Filtrer les projets par techno",
+    "all": "tout",
+    "techStat": "{count, plural, one {# projet} other {# projets}} · depuis {since, number, ::group-off}",
+    "showing": "{count, plural, one {# projet} other {# projets}} sur {total} avec {tech}",
+    "showingAll": "{count, plural, one {# projet} other {les # projets}}"
   },
   "Contact": {
-    "intro": "Si vous voulez me contacter, vous pouvez m'écrire en MP sur <linkedin>LinkedIn</linkedin>, je vous répondrai aussi vite que possible."
+    "dm": "Envoie-moi un MP sur LinkedIn",
+    "reply": "Je réponds aussi vite que possible",
+    "sent": "Demande envoyée !",
+    "sentAnnounced": "Demande envoyée : LinkedIn s'est ouvert dans un nouvel onglet.",
+    "discord": "Ajoute-moi sur Discord",
+    "alsoOn": "aussi sur",
+    "rightNow": "en ce moment",
+    "chibiAlt": "Lucas qui fait coucou"
   },
   "Mdf2025": {
     "line": "eh oui, je l'ai gagné 🏆 MasterDevFrance, c'est le concours national d'excellence technique en développement logiciel, et l'édition 2025, c'est la mienne.",
@@ -197,8 +203,12 @@
   },
   "NotFound": {
     "title": "Page introuvable",
-    "message": "Cette page n'existe pas, ou plus.",
-    "home": "Retour à l'accueil"
+    "headline": "Lessivé !",
+    "message": "Pas une vague à l'horizon : cette page n'existe pas, ou plus. Du coup, je fais la sieste 😴",
+    "play": "Réapparaître <home>à l'accueil</home>",
+    "respawn": "Réapparaître",
+    "code": "erreur 404",
+    "chibiAlt": "Lucas endormi sur un coussin prune"
   },
   "Sound": {
     "label": "son",

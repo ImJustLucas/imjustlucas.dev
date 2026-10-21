@@ -14,7 +14,7 @@ export const LocalizedText = Schema.Struct({
 });
 export type LocalizedText = typeof LocalizedText.Type;
 
-/** Stable identifier of a Tech, referenced by Projects and Tech categories. */
+/** Stable identifier of a Tech, referenced by Projects. */
 export const TechId = Schema.String.check(
   Schema.isPattern(/^[a-z0-9]+(-[a-z0-9]+)*$/, {
     message: "Expected a lowercase kebab-case identifier",
@@ -35,14 +35,6 @@ export const Tech = Schema.Struct({
   color: Color,
 });
 export type Tech = typeof Tech.Type;
-
-export const TechCategory = Schema.Struct({
-  name: LocalizedText,
-  description: LocalizedText,
-  /** Techs in display order. */
-  techs: Schema.Array(TechId),
-});
-export type TechCategory = typeof TechCategory.Type;
 
 const HTTP_URL = /^https?:\/\/\S+$/;
 
@@ -289,7 +281,6 @@ export type Profile = typeof Profile.Type;
  */
 export const Content = Schema.Struct({
   techs: Schema.Array(Tech),
-  techCategories: Schema.Array(TechCategory),
   projects: Schema.Array(Project),
   experiences: Schema.Array(Experience),
   profile: Profile,
@@ -310,27 +301,19 @@ export const Content = Schema.Struct({
         },
       ];
     });
-    const unknownIn = (
-      kind: "techCategories" | "projects",
-      documents: ReadonlyArray<{ readonly techs: ReadonlyArray<string> }>,
-    ) =>
-      documents.flatMap((document, i) =>
-        document.techs.flatMap((id, j) =>
-          seen.has(id)
-            ? []
-            : [
-                {
-                  path: [kind, i, "techs", j],
-                  issue: `Unknown Tech identifier: ${id}`,
-                },
-              ],
-        ),
-      );
-    return [
-      ...duplicates,
-      ...unknownIn("techCategories", content.techCategories),
-      ...unknownIn("projects", content.projects),
-    ];
+    const unknown = content.projects.flatMap((project, i) =>
+      project.techs.flatMap((id, j) =>
+        seen.has(id)
+          ? []
+          : [
+              {
+                path: ["projects", i, "techs", j],
+                issue: `Unknown Tech identifier: ${id}`,
+              },
+            ],
+      ),
+    );
+    return [...duplicates, ...unknown];
   }),
 );
 export type Content = typeof Content.Type;
@@ -338,7 +321,6 @@ export type Content = typeof Content.Type;
 /** Where each content document lives in the content repository. */
 export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   techs: "content/techs.json",
-  techCategories: "content/tech-categories.json",
   projects: "content/projects.json",
   experiences: "content/experiences.json",
   profile: "content/profile.json",

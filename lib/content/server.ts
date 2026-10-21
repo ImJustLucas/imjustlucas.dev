@@ -49,10 +49,6 @@ const fromCatalog = <A, E>(
     }).pipe(Effect.provideService(PageGeneration, pageGeneration())),
   );
 
-/** Tech categories, their names and descriptions in the Locale. */
-export const getTechCategories = (locale: Locale) =>
-  fromCatalog((catalog) => catalog.inLocale(locale).techCategories);
-
 /**
  * Projects, their descriptions in the Locale, with live star counts, omitted
  * on a cold build when GitHub fails. The page declares
