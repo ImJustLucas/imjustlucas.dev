@@ -88,6 +88,11 @@ const MAX_DELTA = 1 / 20;
 
 /** The lens's vertical field of view in a wide well. */
 const LENS_FOV = 45;
+/**
+ * The camera's starting options, made once: R3F re-applies a new options
+ * object on every render, which would undo the lens below.
+ */
+const CAMERA = { fov: LENS_FOV, position: [0, 0, 8] } as const;
 /** Half the width to keep in view at the cheque, with a margin. */
 const CHEQUE_HALF_WIDTH = 3.6;
 
@@ -512,7 +517,7 @@ export default function MasterDevScene() {
         <SceneLoader />
         <Canvas
           // A longer lens than the default, so the cheque fills the well
-          camera={{ fov: LENS_FOV, position: [0, 0, 8] }}
+          camera={CAMERA}
           frameloop={still ? "demand" : "always"}
         >
           <Lens />
