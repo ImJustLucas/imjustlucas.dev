@@ -193,8 +193,12 @@
   },
   "NotFound": {
     "title": "Page not found",
-    "message": "This page does not exist, or no longer does.",
-    "home": "Back to the home page"
+    "headline": "Wiped out!",
+    "message": "Not a wave in sight: this page doesn't exist, or not anymore. So I'm taking a nap 😴",
+    "play": "Respawn <home>at home</home>",
+    "respawn": "Respawn",
+    "code": "error 404",
+    "chibiAlt": "Lucas asleep on a plum cushion"
   },
   "Sound": {
     "label": "sound",
