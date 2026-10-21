@@ -25,6 +25,10 @@ An Experience's contract type is an identifier (`entrepreneurship`, `permanent`,
 
 - **Rarity** (`common`, `rare`, `epic`, `legendary`) is required on every Project and Achievement: what kind of thing it is, set by the Owner, never a quality score. Its label is an interface string, like a contract type.
 - A Project's optional `featured` is its place on the home page (a whole number from 1, 1 first); without it the Project is not featured. `getFeaturedProjects` returns at most 3.
+
+## Project pages
+
+Every Project has a `slug` (lowercase kebab-case, e.g. `predi-gg`), the address of its page `/what/<slug>` (docs/routing.md); `Content` rejects a slug two Projects share. Its page reads well from the card's fields alone; the Owner can add, all optional: `role` (Localized, one line: who Lucas was on it), `context`, `built` and `outcome` (Localized long texts, paragraphs separated by a blank line) and `gallery` (Project images after the main one, in order, same asset rule as `image`). The catalog resolves them like the rest (`gallery` is empty when absent); `inLocale(locale).project(slug)` returns one Project in a Locale with its star count read for it only, none for an unknown slug, and `projectSlugs` every slug in Period order without reading stars. Pages call `getProject(locale, slug)` and `getProjectSlugs()`.
 - An Achievement (`achievements.json`) has a Localized `name` and `description`, a `year` (2000 to 2100), a Rarity, a `link` (a page of the site without Locale matching `^/[a-z0-9-]*(/[a-z0-9-]+)*$`, e.g. `/mdf-2025`, or an http(s) URL; pages localise a site path through the Routes) and its `art` (see asset paths above). `content.test.ts` checks every art file exists.
 - A Hobby (`hobbies.json`) has a Localized `label` and a `pose` among `surf`, `skate`, `lol`, `coding`, `coffee`, `series`, `music`, the chibi avatar pose the home page shows with it; the stored order is the public order.
 

@@ -195,6 +195,11 @@ components:
     textColor: "{colors.off-white}"
     rounded: "{rounded.lg}"
     padding: "{spacing.card}"
+  inspect-screen:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    rounded: "{rounded.lg}"
+    padding: "28px"
   achievement-slot:
     backgroundColor: "{colors.navy-raised}"
     textColor: "{colors.off-white}"
@@ -653,7 +658,10 @@ A raised slot with a 2px seam border and the tray: the full-body chibi on its st
 40px tall, full radius, ground fill with a 2px seam border, the Experience's emoji then the company in Label; the role is read to assistive tech only.
 
 ### Item card (Projects)
-Raised card, 16px corners, 2px frame and 4px top band in the item's rarity colour, the tray. A 16:9 screenshot (10px corners, top-anchored crop, a placeholder icon and label when missing), the name in Title with the rarity tag beside it, the period in Data with a WIP tag, three lines of description in the muted ink, the Tech loadout as chips, and a footer of outline buttons. Padding 16px, 20px from 640px. Hovering plays the tick; heights follow content within an aligned grid.
+Raised card, 16px corners, 2px frame and 4px top band in the item's rarity colour, the tray. A 16:9 screenshot (10px corners, top-anchored crop, a placeholder icon and label when missing), the name in Title with the rarity tag beside it, the period in Data with a WIP tag, three lines of description in the muted ink, the Tech loadout as chips, and a footer of outline buttons. Padding 16px, 20px from 640px. Hovering plays the tick and zooms the screenshot to 1.03 over 300ms (Ease Out; none under reduced motion); heights follow content within an aligned grid. The name is the link to the Project's page, stretched over the whole card (its focus ring drawn 4px inside the frame); the footer's buttons sit above it. Pressing it plays toggle on.
+
+### Inspect screen (signature)
+A Project's page, and the same content as a window over the inventory: the item card grown into the screen a game opens when you inspect an item. The same frame (2px rarity frame, 4px top band, tray, 16px corners), padding 16px, 24px from 640px, 28px from 1024px. Across the top the name in Headline (the page's `h1`; `h2` in the window) with the rarity tag, WIP tag and Period in Data under it, and, in the window, the 44px outline close button at the right. Then from 1024px two columns, 3fr and 2fr, 32px apart (stacked below, 24px apart): the viewer, a 16:9 screen (10px corners, top-anchored crop, the card's placeholder when there is no image) with, when there are several images, a wrapping strip of 16:9 thumbnails (80px, 96px from 640px, 10px corners, 2px seam frame at 70% opacity, the one shown framed in the action ink at full opacity; hover ticks, a press plays press and crossfades the screen); and the stats: the full description in the muted ink at 1.0625rem, the holder row (the coding chibi at 64px on its ground stage disc, "Lucas" in Title, the role in muted Label, or "still building it" for a WIP Project with no role), the loadout (the "loadout" Tag over the Tech chips), and the actions pushed to the bottom: "visit the site" as the action fill with an external-link icon (Label, not the Play type; plays confirm) and the outline GitHub button with its live star count. Under a 2px seam, the lore, only the sections the Owner wrote (context, what I built, outcome): from 1024px a 13rem column for the Title and the paragraphs beside it at 65ch, 32px between sections. The page puts a secondary "back to the inventory" link with a left arrow 24px above the screen. The window is a modal dialog over the client dimmed by the frame colour at 75%: from 768px centred, 1080px at most, 24px from the viewport's edges, with Float; below, a sheet from 12px under the top, its top corners 24px, sliding up. It opens with toggle on (from the card) and closes with toggle off, through history.
 
 ### Achievement slot (signature)
 A link slot: rarity frame and top band, the achievement art in a circular stage (128px in the wide slot), the rarity tag and year in Data, the name in Title Large, a description in the muted ink and an arrow that nudges 4px on hover. The legendary slot also stands on the Legendary Ledge, carries the filled sparkle and the foil, and plays the unlock (arpeggio, then the coin) on click, holding navigation for about half a second so it is heard.
@@ -706,11 +714,11 @@ A pose's drawn frames alternate in steps (200ms each), never tweened, only while
 
 ### Sound kit and switch
 One synthesized instrument (a soft plucked kalimba tine) in D major pentatonic, master gain 0.22, joined by two recorded sounds for the coins: the coin and its impact, fetched once on first use (the reward screen warms them on load).
-- **Tick** (B5, very quiet): hover on tabs, item cards, achievement slots, hobbies, career slots, medal slots, loadout buttons and replay tiles; fine pointers only, at most one every 60ms.
+- **Tick** (B5, very quiet): hover on tabs, item cards, inspect screen thumbnails, achievement slots, hobbies, career slots, medal slots, loadout buttons and replay tiles; fine pointers only, at most one every 60ms.
 - **Press** (A4): secondary controls without a cue of their own (ledge and outline buttons, socials, the theme trigger, non-legendary achievements, secondary links, the replay thumbnail).
 - **Tab:** the tab's own degree (D4, E4, F#4, A4, D5 in menu order).
-- **Confirm** (D4 and A4, then D5): the Play button.
-- **Toggle on / off** (A4 to D5 / D5 to A4): the menu sheet, the accordion, turning a medal, choosing a mode or a palette, the Locale switch, the sound switch turning on, playing / pausing the showcase.
+- **Confirm** (D4 and A4, then D5): the Play button, and "visit the site" on an inspect screen.
+- **Toggle on / off** (A4 to D5 / D5 to A4): opening an item card's inspect window and closing it, the menu sheet, the accordion, turning a medal, choosing a mode or a palette, the Locale switch, the sound switch turning on, playing / pausing the showcase.
 - **Unlock** (D4 F#4 A4 D5, then the recorded coin): the legendary achievement.
 - **Boop** (a random high degree with a 2-semitone upward bend): the banner chibi.
 - **Throw** (the recorded coin): throwing a coin in the showcase, by click, tap or the throw button.
@@ -724,6 +732,7 @@ The **sound switch** is a 44px icon button, the action fill with an `on-action` 
 - **Ease In Out** (`cubic-bezier(0.77, 0, 0.175, 1)`): the tab fill, the accordion chevron, ambient loops.
 - **Ease Drawer** (`cubic-bezier(0.32, 0.72, 0, 1)`): the mobile sheet.
 - **Page change:** a 220ms fade with a 6px rise.
+- **Inspect window:** from 768px it rises 12px from 0.98 scale and fades in over 220ms with Ease Out; below, the sheet slides up over 260ms with Ease Drawer; the dimmed client fades in over 150ms. Reduced motion: it only fades.
 - **Career arrival:** each stop disc pops on (from 0.5 scale and transparent, 320ms, Ease Pop) 160ms after the one above it, and the track segment below it draws down (scaleY from its top, 160ms, Ease In Out) 120ms after its disc, so the line reaches each stop as it lands.
 - **Medal turn:** 600ms rotateY with Ease Out, 600px perspective.
 - **Replay hover:** the thumbnail zooms to 1.03 over 300ms and the play disc fades and rises over 150ms, both Ease Out.
