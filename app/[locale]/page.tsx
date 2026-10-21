@@ -34,6 +34,7 @@ import type {
   ExperienceInLocale,
   Rarity,
 } from "@/lib/content/types";
+import { homeStructuredData, jsonLdScript } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
 
 // Live GitHub star counts on the featured Projects: regenerated every 24
@@ -55,16 +56,25 @@ const RARITY_RANK: Record<Rarity, number> = {
 /** The player profile: banner, achievements, inventory, about, FAQ, goodbye. */
 export default async function Home() {
   const locale = await getLocale();
-  const [t, resume, profile, experiences, achievements, featured, hobbies] =
-    await Promise.all([
-      getTranslations("Home"),
-      getResume(locale),
-      getProfile(),
-      getExperiences(locale),
-      getAchievements(locale),
-      getFeaturedProjects(locale),
-      getHobbies(locale),
-    ]);
+  const [
+    t,
+    tMetadata,
+    resume,
+    profile,
+    experiences,
+    achievements,
+    featured,
+    hobbies,
+  ] = await Promise.all([
+    getTranslations("Home"),
+    getTranslations("Metadata"),
+    getResume(locale),
+    getProfile(),
+    getExperiences(locale),
+    getAchievements(locale),
+    getFeaturedProjects(locale),
+    getHobbies(locale),
+  ]);
 
   const team = experiences
     .filter((experience) => experience.period.end === "ongoing")
@@ -74,8 +84,20 @@ export default async function Home() {
     .sort((a, b) => RARITY_RANK[b.rarity] - RARITY_RANK[a.rarity])
     .slice(0, 3);
 
+  // Who Lucas is, for search engines: his names, role and social profiles
+  const structuredData = homeStructuredData({
+    locale,
+    profile,
+    jobTitle: tMetadata("jobTitle"),
+    description: tMetadata("description"),
+  });
+
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-section">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }}
+      />
       {/* Banner */}
       <section
         aria-labelledby="greeting"
@@ -93,7 +115,7 @@ export default async function Home() {
 
           <TypographyDisplay
             id="greeting"
-            className="min-w-0 self-center max-sm:text-[1.875rem] md:self-end md:pt-4"
+            className="min-w-0 self-center max-sm:text-[1.625rem] md:self-end md:pt-4"
           >
             {t("greeting")}
           </TypographyDisplay>
