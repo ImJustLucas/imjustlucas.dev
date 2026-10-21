@@ -28,6 +28,7 @@ export const ROUTES = {
     inMenu: true,
   },
   videos: { path: "/videos", messageKey: "videos", inMenu: true },
+  arcade: { path: "/arcade", messageKey: "arcade", inMenu: true },
   contact: { path: "/contact", messageKey: "contact", inMenu: true },
   mdf2025: { path: "/mdf-2025", messageKey: "mdf2025", inMenu: false },
 } as const satisfies Record<string, Route>;

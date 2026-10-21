@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T18:00:00+00:00",
+  "generatedAt": "2026-10-21T21:00:00+00:00",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
@@ -842,27 +842,27 @@
       {
         "name": "well",
         "value": "inset 0 2px 0 rgb(var(--ledge))",
-        "purpose": "The showcase well on the reward screen (drawn over the canvas); the tray's inverse, a ledge-coloured lip along its top edge. Never on anything pressable."
+        "purpose": "The showcase well on the reward screen and the Arcade's cabinet screen (drawn over the canvas in both); the tray's inverse, a ledge-coloured lip along its top edge. Never on anything pressable."
       },
       {
         "name": "float-electric-dark",
         "value": "0 24px 48px -12px rgb(2 4 16 / 0.6)",
-        "purpose": "Mobile sheet and menus, electric dark."
+        "purpose": "Mobile sheet, menus and the Arcade's screen cards, electric dark."
       },
       {
         "name": "float-electric-light",
         "value": "0 24px 48px -12px rgb(16 19 31 / 0.22)",
-        "purpose": "Mobile sheet and menus, electric light."
+        "purpose": "Mobile sheet, menus and the Arcade's screen cards, electric light."
       },
       {
         "name": "float-plum-dark",
         "value": "0 24px 48px -12px rgb(12 4 22 / 0.6)",
-        "purpose": "Mobile sheet and menus, plum dark."
+        "purpose": "Mobile sheet, menus and the Arcade's screen cards, plum dark."
       },
       {
         "name": "float-plum-light",
         "value": "0 24px 48px -12px rgb(42 21 64 / 0.28)",
-        "purpose": "Mobile sheet and menus, plum light."
+        "purpose": "Mobile sheet, menus and the Arcade's screen cards, plum light."
       }
     ],
     "motion": [
@@ -965,6 +965,16 @@
         "name": "showcase-pace",
         "value": "step = min(delta, 1/20s) x 60",
         "purpose": "Coin physics, spin, shimmer and the cheque's bob are scaled per 60fps frame and capped, so the showcase runs at the same pace at any frame rate. Paused (and on arrival under reduced motion) everything holds and the canvas renders on demand; orbiting still works."
+      },
+      {
+        "name": "arcade-step",
+        "value": "fixed steps of 1/120s; a frame counts for 0.25s at most",
+        "purpose": "The Arcade's run keeps its pace at any frame rate and never leaps after a stall; a hidden tab or a blurred window pauses it. Parallax: clouds 0.05, skyline 0.12, façades 0.45 (0, 0 and 0.15 under reduced motion)."
+      },
+      {
+        "name": "arcade-jump-crash",
+        "value": "jump: skate pose to ollie pose with a small tilt; crash: tumble 0.55s ease-out cubic, shake 0.3s fading, end pose from 0.6s",
+        "purpose": "The one place the chibi moves as a sprite: inside the game screen. The end pose is sleeping, or trophy on a new best. Under reduced motion: no tumble, no shake (the end pose at once), sparkles do not bob, stars hold."
       }
     ],
     "breakpoints": [
@@ -993,19 +1003,23 @@
         "tick": "B5, very quiet, hover, fine pointers only, max one per 60ms",
         "press": "A4, secondary controls without their own cue",
         "tab": "D4 E4 F#4 A4 B4 D5 in menu order",
-        "confirm": "D4+A4 then D5, the Play button",
-        "toggleOn": "A4 to D5 (also choosing a mode or a palette), also playing the showcase",
-        "toggleOff": "D5 to A4, also pausing the showcase",
-        "unlock": "D4 F#4 A4 D5 then coin.mp3, legendary achievement",
+        "confirm": "D4+A4 then D5, the Play button, and the Arcade's play and play again",
+        "toggleOn": "A4 to D5 (also choosing a mode or a palette), also playing the showcase and resuming a run in the Arcade",
+        "toggleOff": "D5 to A4, also pausing the showcase and pausing a run in the Arcade",
+        "unlock": "D4 F#4 A4 D5 then coin.mp3, legendary achievement, and a new best in the Arcade (450ms after the miss)",
         "boop": "random D5-B5 with a 2-semitone bend, banner chibi",
-        "miss": "A3 to F#3, errors (defined, not yet wired)",
+        "miss": "A3 to F#3, the crash in the Arcade; defined for errors",
         "throw": "coin.mp3, throwing a coin in the MDF 2025 showcase (click, tap or the throw button)",
-        "clink": "impact.mp3 then a quiet random D5-B5, a thrown coin landing on the cheque; at most once per coin every 500ms; ambient coins are silent"
+        "clink": "impact.mp3 then a quiet random D5-B5, a thrown coin landing on the cheque; at most once per coin every 500ms; ambient coins are silent",
+        "hop": "D5 with a 2-semitone bend, the jump in the Arcade",
+        "pickup": "F#5 then A5, a sparkle picked up in the Arcade",
+        "milestone": "A4 D5 F#5, every 100 points in the Arcade"
       },
       "samples": {
         "coin": "/sounds/coin.mp3",
         "impact": "/sounds/impact.mp3"
-      }
+      },
+      "arcade": "The Arcade's cues sound only during play, after the visitor's own press starts a run, and through the same switch."
     },
     "sparkle": {
       "path": "M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z",
@@ -1183,6 +1197,102 @@
         "on-bright": "#0b2b35",
         "link-line": "#16766d"
       }
+    },
+    "gameScreens": {
+      "ollie": {
+        "source": "components/arcade/ollie/draw.ts",
+        "rule": "The game screen never takes the site palette, and the chrome around it always does. Day or night follows Lucas's time in Paris (21:00 to 07:00).",
+        "day": {
+          "skyTop": "#9fd3f2",
+          "skyLow": "#ffe8c8",
+          "sun": "#fff4cf",
+          "cloud": "rgba(255, 255, 255, 0.85)",
+          "far": "#a9bdd2",
+          "farShade": "#97adc5",
+          "stone": [
+            "#f1e2c4",
+            "#ecd9b6",
+            "#f4e8d0"
+          ],
+          "stoneLine": "#d9c39d",
+          "window": "#7f9fbe",
+          "zinc": "#8095ad",
+          "zincDark": "#687c94",
+          "iron": "#2b2f3a",
+          "shop": "#3a3340",
+          "shopGlass": "#a9c6dc",
+          "walk": "#ddd5c6",
+          "walkLine": "#c8bfad",
+          "curb": "#b3a995",
+          "shadow": "rgba(43, 47, 58, 0.18)",
+          "scoreInk": "#10131f"
+        },
+        "night": {
+          "skyTop": "#070d26",
+          "skyLow": "#28305c",
+          "moon": "#fff1c9",
+          "stars": "#fff6e0",
+          "far": "#18213f",
+          "farShade": "#141b35",
+          "stone": [
+            "#2c3354",
+            "#283050",
+            "#30385a"
+          ],
+          "stoneLine": "#222944",
+          "window": "#1a2038",
+          "windowLit": "#ffcf6b",
+          "zinc": "#1e2643",
+          "zincDark": "#161c34",
+          "iron": "#0d1022",
+          "shop": "#1a1a2c",
+          "shopGlass": "#ffd98a",
+          "walk": "#3a3f5e",
+          "walkLine": "#30354f",
+          "curb": "#292e48",
+          "lampGlow": "rgba(255, 207, 107, 0.28)",
+          "shadow": "rgba(0, 0, 0, 0.3)",
+          "scoreInk": "#f6f3ea"
+        },
+        "awnings": {
+          "tomato": "#d4513f",
+          "bottle-green": "#2f6b4f",
+          "navy": "#2b3a6e",
+          "mustard": "#d9a23b"
+        },
+        "outline": {
+          "value": "#4a1f24",
+          "displayName": "Chibi Maroon",
+          "purpose": "2px line round the street furniture, the chibi art's maroon."
+        },
+        "cone": {
+          "body": "#ff8a3d",
+          "band": "#fff6ea",
+          "base": "#3a3340"
+        },
+        "bin": {
+          "hoop": "#2f7a46",
+          "bagDay": "#d6e6da",
+          "bagNight": "#7f9a8a"
+        },
+        "bench": {
+          "slats": "#2e5a3c",
+          "legs": "#2b2f3a"
+        },
+        "pigeon": {
+          "body": "#9aa1b6",
+          "head": "#8a91a8",
+          "tail": "#7c8399",
+          "wing": "#b4bacb",
+          "neck": "#5fb3a1",
+          "beak": "#e8a55a"
+        },
+        "sparkle": {
+          "fill": "#fffaf0",
+          "stroke": "#2f6bff",
+          "strokeWidth": "2.5"
+        }
+      }
     }
   },
   "components": [
@@ -1190,7 +1300,7 @@
       "name": "Play Button",
       "kind": "button",
       "refersTo": "button-play",
-      "description": "The one primary action per screen, e.g. Download my resume: the action fill (Off-white, Navy label) on the action ledge (Electric); plays the confirm chord.",
+      "description": "The one primary action per screen, e.g. Download my resume: the action fill (Off-white, Navy label) on the action ledge (Electric); plays the confirm chord; on the Arcade, play, resume and play again on the screen's cards.",
       "html": "<button class=\"ds-btn-play\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 15V3\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/></svg>Download my resume</button>",
       "css": ".ds-btn-play { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; background:#f6f3ea; color:#0a0f2e; box-shadow:0 4px 0 #2f6bff; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1), background-color 150ms cubic-bezier(0.23,1,0.32,1); height:52px; padding:0 24px; border:none; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:700; line-height:1; } .ds-btn-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #2f6bff; } .ds-btn-play:active { transform:translateY(4px); box-shadow:0 0 0 #2f6bff; filter:brightness(0.94); transition-duration:80ms; } .ds-btn-play:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
     },
@@ -1417,11 +1527,25 @@
       "description": "The home's \"À faire\": one raised list, each item an Away disc with a line icon, the problem, why it matters, and outline ledge links to where to fix it.",
       "html": "<ul class=\"ds-td\"><li><span class=\"ds-td-disc\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"/><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"/></svg></span><span class=\"ds-td-body\"><b>Les deux CV ont plus de six mois</b><span>Français du 7 avril 2026, anglais du 7 avril 2026. Ce sont eux que le bouton de l'accueil télécharge.</span><span class=\"ds-td-acts\"><a class=\"ds-td-a\" href=\"#\">CV français<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a><a class=\"ds-td-a\" href=\"#\">CV anglais<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></span></span></li></ul>",
       "css": ".ds-td { list-style:none; margin:0; max-width:640px; padding:0 20px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); } .ds-td li { display:flex; align-items:flex-start; gap:16px; padding:16px 0; } .ds-td li + li { border-top:2px solid #2a3a7a; } .ds-td-disc { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; flex-shrink:0; border-radius:9999px; background:#ffb02e; color:#0a0f2e; } .ds-td-body { display:flex; flex-direction:column; gap:2px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; color:#aab6e6; } .ds-td-body b { font-weight:600; color:#f6f3ea; } .ds-td-acts { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; } .ds-td-a { display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px; border-radius:10px; border:2px solid #2a3a7a; background:#0a0f2e; color:#f6f3ea; font-weight:500; text-decoration:none; box-shadow:0 4px 0 #05081c; transition: transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-td-a:hover { transform:translateY(-2px); box-shadow:0 6px 0 #05081c; } .ds-td-a:active { transform:translateY(4px); box-shadow:0 0 0 #05081c; filter:brightness(0.94); transition-duration:80ms; } .ds-td-a:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; }"
+    },
+    {
+      "name": "Arcade Cabinet",
+      "kind": "custom",
+      "description": "The open game: a raised slot with the tray holding the marquee (name in Title Large, best in Data), the screen as a sunken ground well (10px corners, the Well lip over the canvas, 16:9 from 640px, 3:2 on phones) with a raised screen card (2px seam border, 16px corners, Float) in its right 73% holding the Play button, and the deck (hint, pause ledge button).",
+      "html": "<section class=\"ds-cab\"><div class=\"ds-cab-marquee\"><h3 class=\"ds-cab-name\">Ollie</h3><span class=\"ds-cab-data\">best <b>00420</b></span></div><div class=\"ds-cab-screen\" tabindex=\"0\"><span class=\"ds-cab-street\"></span><span class=\"ds-cab-lip\"></span><div class=\"ds-cab-slot\"><div class=\"ds-cab-card\"><span class=\"ds-cab-data\">best <b>00420</b></span><button class=\"ds-cab-play\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"6 3 20 12 6 21 6 3\"/></svg>play</button></div></div></div><div class=\"ds-cab-deck\"><span class=\"ds-cab-hint\">space, ↑ or click to jump, esc to pause</span><button class=\"ds-cab-btn\" disabled>pause</button></div></section>",
+      "css": ".ds-cab { display:flex; flex-direction:column; gap:16px; padding:16px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-cab-marquee { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:0 4px; } .ds-cab-name { margin:0; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.375rem; font-weight:600; line-height:1.25; } .ds-cab-data { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; font-weight:500; font-variant-numeric:tabular-nums; color:#aab6e6; } .ds-cab-data b { font-weight:500; color:#f6f3ea; } .ds-cab-screen { position:relative; aspect-ratio:16/9; overflow:hidden; border-radius:10px; background:#0a0f2e; outline:none; } .ds-cab-screen:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-cab-street { position:absolute; inset:0; background:linear-gradient(#9fd3f2, #ffe8c8 62%, #f1e2c4 62%, #f1e2c4 87%, #ddd5c6 87%); } .ds-cab-lip { position:absolute; inset:0; border-radius:10px; box-shadow:inset 0 2px 0 #05081c; pointer-events:none; } .ds-cab-slot { position:absolute; top:0; bottom:0; left:27%; right:0; display:flex; align-items:center; justify-content:center; padding:12px; } .ds-cab-card { display:flex; flex-direction:column; align-items:center; gap:16px; padding:20px 24px; background:#141c48; border:2px solid #2a3a7a; border-radius:16px; box-shadow:0 24px 48px -12px rgb(2 4 16 / 0.6); text-align:center; } .ds-cab-play { display:inline-flex; align-items:center; gap:8px; height:52px; padding:0 24px; border:none; border-radius:10px; background:#f6f3ea; color:#0a0f2e; font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.0625rem; font-weight:700; line-height:1; box-shadow:0 4px 0 #2f6bff; cursor:pointer; transition:transform 160ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 160ms cubic-bezier(0.34,1.56,0.64,1); } .ds-cab-play:hover { transform:translateY(-2px); box-shadow:0 6px 0 #2f6bff; } .ds-cab-play:active { transform:translateY(4px); box-shadow:0 0 0 #2f6bff; filter:brightness(0.94); transition-duration:80ms; } .ds-cab-play:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-cab-deck { display:flex; align-items:center; gap:12px 16px; padding:0 4px; } .ds-cab-hint { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; color:#aab6e6; } .ds-cab-btn { margin-left:auto; height:44px; padding:0 16px; border:none; border-radius:10px; background:#141c48; color:#f6f3ea; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; box-shadow:0 4px 0 #05081c; cursor:pointer; } .ds-cab-btn:disabled { opacity:0.5; cursor:default; }"
+    },
+    {
+      "name": "Cabinet Tile",
+      "kind": "card",
+      "description": "A cabinet on the Arcade's shelf: a raised tray tile with the pose on its ground stage disc, the name in Title and the tagline in muted Label; the open one is ringed 2px in the action ink with a playing tag on Online, a locked one shows a seam silhouette, a lock badge and a soon tag on seam.",
+      "html": "<ul class=\"ds-ct-shelf\"><li class=\"ds-ct ds-ct-on\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Ollie</span><span class=\"ds-ct-line\">skate down a Paris street</span><span class=\"ds-ct-tag ds-ct-playing\">playing</span></span></li><li class=\"ds-ct\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span><span class=\"ds-ct-ghost\"></span><span class=\"ds-ct-lock\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/></svg></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Surf</span><span class=\"ds-ct-line\">ride the swell</span><span class=\"ds-ct-tag ds-ct-soon\">soon</span></span></li></ul>",
+      "css": ".ds-ct-shelf { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; margin:0; padding:0; list-style:none; max-width:540px; } .ds-ct { position:relative; display:flex; align-items:center; gap:12px; padding:12px; background:#141c48; border:2px solid transparent; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-ct-on { border-color:#6f97ff; } .ds-ct-pose { position:relative; flex-shrink:0; width:64px; height:64px; } .ds-ct-disc { position:absolute; left:6%; right:6%; top:14%; bottom:4%; border-radius:9999px; background:#0a0f2e; } .ds-ct-ghost { position:absolute; left:28%; right:28%; top:10%; bottom:8%; border-radius:40% 40% 30% 30%; background:#2a3a7a; } .ds-ct-lock { position:absolute; right:0; bottom:0; display:flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:9999px; background:#0a0f2e; color:#aab6e6; } .ds-ct-text { display:flex; min-width:0; flex-direction:column; gap:4px; } .ds-ct-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-ct-line { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; color:#aab6e6; } .ds-ct-tag { width:fit-content; padding:2px 8px; border-radius:9999px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; line-height:1rem; letter-spacing:0.02em; white-space:nowrap; } .ds-ct-playing { background:#5fe08a; color:#0a0f2e; } .ds-ct-soon { background:#2a3a7a; color:#f6f3ea; }"
     }
   ],
   "narrative": {
     "northStar": "The Player Profile",
-    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means \"this is the thing to press\": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a glowing neon accent (electric blue is a solid ledge and an underline here, never a glow), hextech gold trim (gold belongs to the legendary rarity alone), and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
+    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The arcade is the client's game library: a shelf of cabinets, one per hobby, beside the open one, Ollie, where the visitor skates Lucas down a Paris street. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means \"this is the thing to press\": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a glowing neon accent (electric blue is a solid ledge and an underline here, never a glow), hextech gold trim (gold belongs to the legendary rarity alone), and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
     "keyCharacteristics": [
       "Two-zone client inside a 12px frame: a 320px sidebar beside a rounded profile panel, both on the palette's ground, the panel the only part that scrolls.",
       "Two palettes, each with a dark and a light mode, all through the same role tokens: \"electric\" (the default; navy night in dark, off-white daytime in light) and \"plum\" (the plum and tangerine client). Dark is the default mode.",
@@ -1429,7 +1553,8 @@
       "Rarity colours (common, rare, epic, legendary) frame content by its rarity field, never decoration.",
       "Chunky pressable controls on a solid ledge; raised slots and cards with soft 16px corners and a moulded-tray highlight.",
       "A one-instrument kalimba kit in D major pentatonic, on by default, behind an always-visible switch.",
-      "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye.",
+      "The chibi is the mascot: stepped-frame poses on the banner, in the hobbies, the presence card and the goodbye; only inside the Arcade's game screen does he ride, jump and tumble.",
+      "The Arcade's game screen keeps a palette of its own, a Paris street by day or by night; the chrome round it keeps the site's.",
       "The other profile screens open on a page banner and keep the game's objects: the career path of stops on a track, diplomas as medals that turn like coins, the loadout's bags of Techs in sunken wells, and replay tiles; the legendary achievement's own page is the reward screen of its unlock: an unlock banner, then the cheque on its stage in a showcase where the visitor throws coins."
     ],
     "rules": [
@@ -1454,6 +1579,11 @@
         "section": "colors"
       },
       {
+        "name": "The Screen Keeps Its Own Palette Rule",
+        "body": "The game screen never takes the site palette, and the chrome around it always does. Inside the canvas every colour is the street's own (see The game screen), switched only by Paris day and night; the cabinet, its marquee and deck, the shelf's tiles and the cards standing over the screen are role tokens like every other slot.",
+        "section": "colors"
+      },
+      {
         "name": "The Copy Keeps Its Case Rule",
         "body": "Type is set in the case the copy is written in. Unbounded is never forced to uppercase; the lowercase menu labels and casual voice are binding. The one uppercase string is the two-letter Locale code, in Data.",
         "section": "typography"
@@ -1470,7 +1600,7 @@
       },
       {
         "name": "The Float Means On Top Rule",
-        "body": "Blurred shadows belong only to layers above the client (the mobile sheet, menus, the Admin's pinned published notice).",
+        "body": "Blurred shadows belong only to layers above the client (the mobile sheet, menus, the Admin's pinned published notice) and to the cards that stand over the Arcade's game screen.",
         "section": "elevation"
       }
     ],
@@ -1482,7 +1612,8 @@
       "**Do** give every pressable control a ledge, a 44px target and a note from the kit (the Admin's controls stay silent).",
       "**Do** use an outline button (ground fill, 2px seam border) for secondary actions sitting on a raised surface.",
       "**Do** keep the sound switch visible on every page that plays sound (the Admin plays none) and honour reduced motion for both motion and sound.",
-      "**Do** write every new string in both Locales and keep the lowercase, casual voice."
+      "**Do** write every new string in both Locales and keep the lowercase, casual voice.",
+      "**Do** keep a game screen in its own palette and everything round it in the role tokens (The Screen Keeps Its Own Palette Rule)."
     ],
     "donts": [
       "**Don't** invent game stats: no level, rank, XP, KDA, win rate or achievement Lucas did not earn.",
@@ -1492,7 +1623,7 @@
       "**Don't** go back to neutral zinc surfaces with colour only from content.",
       "**Don't** play sound automatically, on hover for touch pointers, from presence updates, or anywhere the visitor cannot silence it.",
       "**Don't** put blur or soft shadows on anything that does not float above the client.",
-      "**Don't** let the chibi hop, slide or tween; its movement lives in its drawn frames.",
+      "**Don't** let the chibi hop, slide or tween; its movement lives in its drawn frames. The Arcade's game screen is the one exception (see Chibi sprites).",
       "**Don't** make the presence card disappear or change height; it always shows a state."
     ]
   }

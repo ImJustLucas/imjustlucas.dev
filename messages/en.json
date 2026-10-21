@@ -24,6 +24,11 @@
       "title": "youtube videos",
       "description": "The latest videos from Lucas's YouTube channel."
     },
+    "arcade": {
+      "label": "arcade",
+      "title": "arcade",
+      "description": "Ollie, a little skate game in a Paris street starring Lucas's chibi, and more cabinets on the way."
+    },
     "contact": {
       "label": "contact",
       "title": "contact me",
@@ -228,5 +233,41 @@
     "rare": "rare",
     "epic": "epic",
     "legendary": "legendary"
+  },
+  "Arcade": {
+    "line": "my hobbies, but playable 🛹 more cabinets are on the way.",
+    "shelf": "cabinets",
+    "nowPlaying": "playing",
+    "soon": "soon",
+    "cabinets": {
+      "ollie": {
+        "name": "Ollie",
+        "tagline": "skate down a Paris street and jump the cones",
+        "poseAlt": "Lucas on his skateboard"
+      },
+      "surf": {
+        "name": "Surf",
+        "tagline": "ride the swell between rocks and gulls",
+        "poseAlt": "Lucas with his surfboard, still locked"
+      }
+    },
+    "game": "Ollie, a skate game: Lucas rolls down a Paris street, jump the cones, bins, benches and low pigeons, skate under the high ones, and pick up sparkles.",
+    "loading": "loading the cabinet…",
+    "play": "play",
+    "playAgain": "play again",
+    "firstRun": "first run, show me what you've got",
+    "resume": "resume",
+    "pause": "pause",
+    "paused": "paused",
+    "gameOver": "game over",
+    "newBest": "new best!",
+    "score": "score",
+    "best": "best",
+    "hint": "space, ↑ or click to jump, hold for a higher ollie, esc to pause",
+    "hintTouch": "tap the street to jump, hold for a higher ollie",
+    "started": "Run started. Jump with space.",
+    "over": "Game over: {score} points. Best: {best}.",
+    "overBest": "Game over: {score} points, a new best!",
+    "pausedLive": "Paused."
   }
 }

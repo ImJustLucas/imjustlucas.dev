@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import {
   Backpack,
   Clapperboard,
+  Gamepad2,
   History,
   type LucideIcon,
   MessageCircleHeart,
@@ -23,6 +24,7 @@ const TAB_ICONS: Partial<Record<RouteMessageKey, LucideIcon>> = {
   what: Backpack,
   experiences: History,
   videos: Clapperboard,
+  arcade: Gamepad2,
   contact: MessageCircleHeart,
 };
 
