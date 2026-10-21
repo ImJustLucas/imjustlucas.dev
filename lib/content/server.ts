@@ -66,6 +66,18 @@ export const getProjects = (locale: Locale) =>
 export const getFeaturedProjects = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).featuredProjects);
 
+/**
+ * The Project with this slug, its texts in the Locale, with its live star
+ * count like `getProjects`, so its page revalidates the same way; none for
+ * an unknown slug.
+ */
+export const getProject = (locale: Locale, slug: string) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).project(slug));
+
+/** Every Project's slug, for the Project pages' static params. */
+export const getProjectSlugs = () =>
+  fromCatalog((catalog) => catalog.projectSlugs);
+
 /** Experiences, their roles and descriptions in the Locale. */
 export const getExperiences = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).experiences);

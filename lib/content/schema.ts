@@ -98,7 +98,18 @@ const Place = Schema.Number.check(
   ),
 );
 
+/**
+ * Stable identifier of a Project: its page's last path segment, e.g.
+ * `predi-gg` for `/what/predi-gg`.
+ */
+export const ProjectSlug = Schema.String.check(
+  Schema.isPattern(/^[a-z0-9]+(-[a-z0-9]+)*$/, {
+    message: "Expected a lowercase kebab-case identifier",
+  }),
+);
+
 export const Project = Schema.Struct({
+  slug: ProjectSlug,
   /** Not translated: a proper noun. */
   title: Schema.NonEmptyString,
   description: LocalizedText,
@@ -118,6 +129,20 @@ export const Project = Schema.Struct({
    * not featured.
    */
   featured: Schema.optionalKey(Place),
+  /*
+   * The Project's own page. Every field is optional: the page reads well with
+   * none of them. Long texts are paragraphs separated by a blank line.
+   */
+  /** What Lucas was on it, e.g. "Founder and lead developer". */
+  role: Schema.optionalKey(LocalizedText),
+  /** Why it exists: the context or problem. */
+  context: Schema.optionalKey(LocalizedText),
+  /** What Lucas built. */
+  built: Schema.optionalKey(LocalizedText),
+  /** Where it got: users, results, what was learnt. */
+  outcome: Schema.optionalKey(LocalizedText),
+  /** More screenshots, after the main image, in order. */
+  gallery: Schema.optionalKey(Schema.Array(ProjectImagePath)),
 });
 export type Project = typeof Project.Type;
 
@@ -279,7 +304,8 @@ export type Profile = typeof Profile.Type;
 
 /**
  * Every content document, keyed by kind, with the rules that span documents:
- * a Tech is defined once, and every referenced Tech exists.
+ * a Tech is defined once, every referenced Tech exists, and a Project slug
+ * names one Project only.
  */
 export const Content = Schema.Struct({
   techs: Schema.Array(Tech),
@@ -315,7 +341,20 @@ export const Content = Schema.Struct({
             ],
       ),
     );
-    return [...duplicates, ...unknown];
+    const slugs = new Set<string>();
+    const sharedSlugs = content.projects.flatMap((project, i) => {
+      if (!slugs.has(project.slug)) {
+        slugs.add(project.slug);
+        return [];
+      }
+      return [
+        {
+          path: ["projects", i, "slug"],
+          issue: `Project slug used more than once: ${project.slug}`,
+        },
+      ];
+    });
+    return [...duplicates, ...unknown, ...sharedSlugs];
   }),
 );
 export type Content = typeof Content.Type;

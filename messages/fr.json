@@ -190,6 +190,21 @@
     "showing": "{count, plural, one {# projet} other {# projets}} sur {total} avec {tech}",
     "showingAll": "{count, plural, one {# projet} other {les # projets}}"
   },
+  "ProjectPage": {
+    "back": "retour à l'inventaire",
+    "close": "Fermer {title}",
+    "holder": "Lucas",
+    "stillOn": "toujours en train de le construire 🛠️",
+    "context": "le contexte",
+    "built": "ce que j'ai construit",
+    "outcome": "le résultat",
+    "visit": "voir le site",
+    "screenshot": "Capture de {title}",
+    "screenshotNumber": "Capture {number} sur {total}",
+    "showScreenshot": "Afficher la capture {number}",
+    "screenshots": "Captures de {title}",
+    "newTab": " (s'ouvre dans un nouvel onglet)"
+  },
   "Contact": {
     "dm": "Envoie-moi un MP sur LinkedIn",
     "reply": "Je réponds aussi vite que possible",

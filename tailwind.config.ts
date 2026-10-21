@@ -185,6 +185,19 @@ const config: Config = {
           from: { opacity: "0", transform: "scale(0.5)" },
           to: { opacity: "1", transform: "scale(1)" },
         },
+        // A Project's inspect window: it rises over the inventory (twice the
+        // page rise, none under reduced motion), or slides up as a sheet
+        "window-in": {
+          from: {
+            opacity: "0",
+            transform: "translateY(calc(var(--rise) * 2)) scale(0.98)",
+          },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "sheet-in": {
+          from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s var(--ease-out)",
@@ -197,6 +210,8 @@ const config: Config = {
         skeleton: "skeleton 1.6s var(--ease-in-out) infinite",
         "track-draw": "track-draw 160ms var(--ease-in-out) both",
         "stop-pop": "stop-pop 320ms var(--ease-pop) both",
+        "window-in": "window-in var(--dur-page) var(--ease-out) both",
+        "sheet-in": "sheet-in var(--dur-sheet-in) var(--ease-drawer) both",
       },
     },
   },

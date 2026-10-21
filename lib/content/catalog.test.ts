@@ -62,6 +62,7 @@ describe("the Tech registry", () => {
             techs: [typescript, react, docker],
             projects: [
               {
+                slug: "portfolio",
                 title: "Portfolio",
                 description: text("A portfolio", "Un portfolio"),
                 wip: false,
@@ -120,6 +121,7 @@ describe("the Tech registry", () => {
 });
 
 const project = (title: string, period: unknown, rest: object = {}) => ({
+  slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
   title,
   description: text(`${title} in English`, `${title} en français`),
   wip: false,
@@ -216,6 +218,7 @@ describe("ContentCatalog.projects", () => {
         const [qotum] = yield* (yield* ContentCatalog).projects;
 
         expect(qotum).toEqual({
+          slug: "qotum",
           title: "Qotum",
           description: text("Qotum in English", "Qotum en français"),
           image: "/images/projects/qotum.png",
@@ -225,6 +228,7 @@ describe("ContentCatalog.projects", () => {
           externalLink: "https://qotum.com",
           rarity: "rare",
           featured: 2,
+          gallery: [],
         });
       }).pipe(
         Effect.provide(

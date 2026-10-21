@@ -64,7 +64,10 @@ export async function PageBanner({
 }
 
 /** Open Graph locale of each Locale. */
-const OPEN_GRAPH_LOCALES: Record<Locale, string> = { en: "en_US", fr: "fr_FR" };
+export const OPEN_GRAPH_LOCALES: Record<Locale, string> = {
+  en: "en_US",
+  fr: "fr_FR",
+};
 
 /**
  * Builds a page's `generateMetadata` from its Route: title and description in

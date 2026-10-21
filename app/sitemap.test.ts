@@ -1,16 +1,20 @@
 import { describe, expect, it } from "vitest";
 
 import { ROUTES } from "@/config/routes";
+import projects from "@/content/projects.json";
 
 import robots from "./robots";
 import sitemap from "./sitemap";
 
-describe("the sitemap", () => {
-  const entries = sitemap();
+describe("the sitemap", async () => {
+  const entries = await sitemap();
   const urls = entries.map((entry) => entry.url);
 
-  it("lists every Route in every Locale, on the served host", () => {
-    expect(entries).toHaveLength(Object.keys(ROUTES).length * 2);
+  it("lists every Route and every Project's page in every Locale, on the served host", () => {
+    expect(entries).toHaveLength(
+      (Object.keys(ROUTES).length + projects.length) * 2,
+    );
+    expect(urls).toContain("https://www.imjustlucas.dev/fr/what/predi-gg");
     expect(urls).toContain("https://www.imjustlucas.dev/en");
     expect(urls).toContain("https://www.imjustlucas.dev/fr/what");
   });

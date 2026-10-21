@@ -34,6 +34,13 @@ export const ROUTES = {
 } as const satisfies Record<string, Route>;
 
 /**
+ * The page of a Project, under the Projects Route: `/what/<slug>`. Not a
+ * Route (no menu entry, no texts under `Routes`: its texts are the Project's
+ * own). `proxy.ts` serves the slugs of `content/projects.json` only.
+ */
+export const projectPath = (slug: string) => `${ROUTES.what.path}/${slug}`;
+
+/**
  * Paths of retired Routes, each sent permanently to the Route that took over
  * its content, in every Locale and unprefixed.
  */

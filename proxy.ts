@@ -2,7 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { hasLocale } from "next-intl";
 import createMiddleware from "next-intl/middleware";
 
-import { ROUTES } from "./config/routes";
+import { projectPath, ROUTES } from "./config/routes";
+import projects from "./content/projects.json";
 import { routing } from "./i18n/routing";
 
 /**
@@ -15,9 +16,14 @@ const localeRouting = createMiddleware(routing);
 /** Where a Locale's 404 page is generated (`app/[locale]/page-not-found`). */
 export const NOT_FOUND_PAGE = "/page-not-found";
 
-const ROUTE_PATHS = new Set<string>(
-  Object.values(ROUTES).map((route) => route.path),
-);
+/**
+ * Every page under a Locale: the Routes and the page of each Project. The
+ * content is read at build time: every Admin save is a commit, so a deploy.
+ */
+const PAGE_PATHS = new Set<string>([
+  ...Object.values(ROUTES).map((route) => route.path),
+  ...projects.map((project) => projectPath(project.slug)),
+]);
 
 /**
  * Files Next generates under a Locale, served as they are: the link preview
@@ -26,7 +32,7 @@ const ROUTE_PATHS = new Set<string>(
 const LOCALE_FILES = new Set<string>(["/opengraph-image"]);
 
 /**
- * The Locale of a path under a Locale that is no Route, e.g. `/fr/xyz`.
+ * The Locale of a path under a Locale that is no page, e.g. `/fr/xyz`.
  * `notFound()` in a page renders its 404 in the browser only (Next serves an
  * empty error shell), so unknown paths are rewritten to the Locale's
  * statically generated 404 page instead, fully rendered in that Locale.
@@ -35,7 +41,7 @@ const unknownUnderLocale = (pathname: string) => {
   const [, locale, ...rest] = pathname.split("/");
   if (!hasLocale(routing.locales, locale)) return undefined;
   const path = `/${rest.join("/")}`;
-  return ROUTE_PATHS.has(path) || LOCALE_FILES.has(path) ? undefined : locale;
+  return PAGE_PATHS.has(path) || LOCALE_FILES.has(path) ? undefined : locale;
 };
 
 export default function proxy(request: NextRequest) {

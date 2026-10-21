@@ -25,10 +25,12 @@ import {
   deleteProjectAction,
   updateProjectAction,
 } from "@/app/admin/projects/actions";
+import { GalleryField } from "@/app/admin/projects/gallery-field";
 import { RarityChip } from "@/app/admin/rarity-chip";
 import { RarityField } from "@/app/admin/rarity-field";
 import { TechPicker } from "@/app/admin/techs/tech-picker";
 import { RARITY_STYLE } from "@/components/rarity/rarity-style";
+import { TypographyData, TypographyMuted } from "@/components/typography";
 import { contentBranch } from "@/lib/admin/config";
 import { getProjectsEditor } from "@/lib/admin/server";
 import { formatPeriod } from "@/lib/content/format-period";
@@ -114,6 +116,57 @@ const ProjectFields: React.FC<{
         label={project?.image ? "Remplacer l'image" : "Image"}
         current={project?.image}
       />
+    </FieldGroup>
+    <FieldGroup title="Sa page">
+      {project ? (
+        <TypographyMuted>
+          Adresse{" "}
+          <TypographyData className="text-ink">
+            /what/{project.slug}
+          </TypographyData>{" "}
+          · fixée à la création, pour que les liens partagés marchent toujours
+        </TypographyMuted>
+      ) : (
+        <AdminField
+          name="slug"
+          label="Adresse de sa page"
+          hint="facultatif, tirée du titre si vide, fixée ensuite"
+          placeholder="predi-gg"
+        />
+      )}
+      {/* Every text is optional: the page reads well with only the card's. */}
+      <LocalizedField
+        name="role"
+        label="Mon rôle"
+        hint="facultatif"
+        defaultValue={project?.role}
+        placeholder={{
+          fr: "Fondateur et développeur",
+          en: "Founder and developer",
+        }}
+      />
+      <LocalizedField
+        name="context"
+        label="Le contexte"
+        hint="facultatif · pourquoi il existe, le problème · une ligne vide entre deux paragraphes"
+        multiline
+        defaultValue={project?.context}
+      />
+      <LocalizedField
+        name="built"
+        label="Ce que j'ai construit"
+        hint="facultatif"
+        multiline
+        defaultValue={project?.built}
+      />
+      <LocalizedField
+        name="outcome"
+        label="Le résultat"
+        hint="facultatif · utilisateurs, chiffres, ce que j'en ai appris"
+        multiline
+        defaultValue={project?.outcome}
+      />
+      <GalleryField current={project?.gallery} />
     </FieldGroup>
   </>
 );

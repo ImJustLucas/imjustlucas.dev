@@ -5,8 +5,12 @@ Lucas's personal portfolio site: who he is, what he has built, how he works, and
 ## Content
 
 **Project**:
-A piece of work showcased on the site, optionally backed by a public GitHub repository whose star count is shown alongside it.
+A piece of work showcased on the site, optionally backed by a public GitHub repository whose star count is shown alongside it. Each has its own page, addressed by its slug (`/what/<slug>`), set when the Project is created and never changed.
 _Avoid_: Work, repo
+
+**Project page**:
+A Project's own page, its inspect screen: its screenshots, what it is, who Lucas was on it, its loadout and links, and, when the Owner wrote them, its context, what he built and its outcome. Pressed on the Projects page, it opens as a window over the inventory.
+_Avoid_: Case study, project detail
 
 **Experience**:
 A position or step in Lucas's career, held over a period of time.

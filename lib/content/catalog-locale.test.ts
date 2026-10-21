@@ -46,6 +46,7 @@ const catalogWith = (
   );
 
 const qotum = {
+  slug: "qotum",
   title: "Qotum",
   description: text(
     "The smartest way to respond to your ratings.",
@@ -68,6 +69,7 @@ describe("ContentCatalog.inLocale(locale).projects", () => {
 
       expect(english).toEqual([
         {
+          slug: "qotum",
           title: "Qotum",
           description: "The smartest way to respond to your ratings.",
           wip: true,
@@ -75,12 +77,157 @@ describe("ContentCatalog.inLocale(locale).projects", () => {
           techs: [react],
           rarity: "rare",
           featured: 1,
+          gallery: [],
         },
       ]);
       expect(french.map((p) => [p.title, p.description])).toEqual([
         ["Qotum", "La façon la plus intelligente de répondre à vos avis."],
       ]);
     }).pipe(Effect.provide(catalogWith({ techs: [react], projects: [qotum] }))),
+  );
+});
+
+describe("ContentCatalog.inLocale(locale).project(slug)", () => {
+  const predi = {
+    ...qotum,
+    slug: "predi-gg",
+    title: "Predi.GG",
+    openSource: true,
+    repository: BOILERPLATE,
+    role: text("Founder", "Fondateur"),
+    context: text("Why.\n\nAnd why not.", "Pourquoi.\n\nEt pourquoi pas."),
+    built: text("The app", "L'appli"),
+    outcome: text("Players", "Des joueurs"),
+    gallery: ["/images/projects/predi-1.png", "/images/projects/predi-2.png"],
+  };
+
+  it.effect("returns the Project with that slug, its page in the Locale", () =>
+    Effect.gen(function* () {
+      const catalog = yield* ContentCatalog;
+      const french = yield* catalog.inLocale("fr").project("predi-gg");
+
+      expect(french).toMatchObject({
+        slug: "predi-gg",
+        title: "Predi.GG",
+        description: "La façon la plus intelligente de répondre à vos avis.",
+        role: "Fondateur",
+        context: "Pourquoi.\n\nEt pourquoi pas.",
+        built: "L'appli",
+        outcome: "Des joueurs",
+        gallery: [
+          "/images/projects/predi-1.png",
+          "/images/projects/predi-2.png",
+        ],
+        stars: 7,
+      });
+    }).pipe(
+      Effect.provide(
+        catalogWith(
+          { techs: [react], projects: [qotum, predi] },
+          { [BOILERPLATE]: 7 },
+        ),
+      ),
+    ),
+  );
+
+  it.effect("leaves out the page texts a Project does not have", () =>
+    Effect.gen(function* () {
+      const english = yield* (yield* ContentCatalog)
+        .inLocale("en")
+        .project("qotum");
+
+      expect(english).not.toHaveProperty("role");
+      expect(english).not.toHaveProperty("context");
+      expect(english).not.toHaveProperty("built");
+      expect(english).not.toHaveProperty("outcome");
+      expect(english?.gallery).toEqual([]);
+    }).pipe(Effect.provide(catalogWith({ techs: [react], projects: [qotum] }))),
+  );
+
+  it.effect("returns none for an unknown slug", () =>
+    Effect.gen(function* () {
+      const none = yield* (yield* ContentCatalog)
+        .inLocale("en")
+        .project("nope");
+
+      expect(none).toBeUndefined();
+    }).pipe(Effect.provide(catalogWith({ techs: [react], projects: [qotum] }))),
+  );
+});
+
+describe("ContentCatalog.projectSlugs", () => {
+  it.effect("lists every slug in Period order, reading no star count", () =>
+    Effect.gen(function* () {
+      const slugs = yield* (yield* ContentCatalog).projectSlugs;
+
+      expect(slugs).toEqual(["qotum", "boilerplate"]);
+    }).pipe(
+      Effect.provide(
+        // GitHub fails for every repository: no star count is read.
+        catalogWith({
+          techs: [react],
+          projects: [
+            {
+              ...qotum,
+              slug: "boilerplate",
+              period: { start: "2020", end: "2021" },
+              openSource: true,
+              repository: BOILERPLATE,
+            },
+            qotum,
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails when two Projects share a slug", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projectSlugs);
+
+      expect(error.message).toContain(
+        "content/projects.json at [1].slug: Project slug used more than once: qotum",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          techs: [react],
+          projects: [qotum, { ...qotum, title: "Qotum 2" }],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a slug that is not lowercase kebab-case", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projectSlugs);
+
+      expect(error.message).toContain("content/projects.json at [0].slug");
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          techs: [react],
+          projects: [{ ...qotum, slug: "Qotum!" }],
+        }),
+      ),
+    ),
+  );
+
+  it.effect("fails on a gallery image outside the Project images folder", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).projectSlugs);
+
+      expect(error.message).toContain(
+        "content/projects.json at [0].gallery[0]",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          techs: [react],
+          projects: [{ ...qotum, gallery: ["/images/../secret.png"] }],
+        }),
+      ),
+    ),
   );
 });
 
@@ -91,6 +238,7 @@ const featuredAt = (
   place?: number,
   rest: object = {},
 ) => ({
+  slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
   title,
   description: text(`${title} in English`, `${title} en français`),
   wip: false,
@@ -149,6 +297,7 @@ describe("ContentCatalog.inLocale(locale).featuredProjects", () => {
         .featuredProjects;
 
       expect(featured).toEqual({
+        slug: "boilerplate",
         title: "Boilerplate",
         description: "Boilerplate in English",
         wip: false,
@@ -158,6 +307,7 @@ describe("ContentCatalog.inLocale(locale).featuredProjects", () => {
         stars: 12,
         rarity: "common",
         featured: 1,
+        gallery: [],
       });
     }).pipe(
       Effect.provide(

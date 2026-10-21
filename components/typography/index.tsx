@@ -90,9 +90,9 @@ export const TypographyData: React.FC<
 
 /** Tag: rarity, "live" and "new" tags, chips. */
 export const TypographyTag: React.FC<
-  TypographyProps & { style?: React.CSSProperties }
-> = ({ children, className, style }) => (
-  <span style={style} className={cn("text-tag", className)}>
+  TypographyProps & { style?: React.CSSProperties; id?: string }
+> = ({ children, className, style, id }) => (
+  <span id={id} style={style} className={cn("text-tag", className)}>
     {children}
   </span>
 );

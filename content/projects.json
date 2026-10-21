@@ -1,5 +1,6 @@
 [
   {
+    "slug": "predi-gg",
     "title": "Predi.GG",
     "description": {
       "en": "Predi.GG - Predict, compete, and win. 🔮",
@@ -28,6 +29,7 @@
     "featured": 1
   },
   {
+    "slug": "qotum",
     "title": "Qotum",
     "description": {
       "en": "Qotum - The smartest way to respond to your ratings with AI.",
@@ -48,6 +50,7 @@
     "featured": 2
   },
   {
+    "slug": "tricks",
     "title": "Tricks",
     "description": {
       "en": "Creation of a social network intended for extreme sports on web and mobile platforms 🤙",
@@ -69,6 +72,7 @@
     "featured": 3
   },
   {
+    "slug": "next-13-boilerplate",
     "title": "Next 13 Boilerplate",
     "description": {
       "en": "💙 Magnificent Next.js 13 boilerplate with Pages router, TypeScript, ...",
@@ -91,6 +95,7 @@
     "rarity": "common"
   },
   {
+    "slug": "bun-elysia-boilerplate",
     "title": "Bun Elysia Boilerplate",
     "description": {
       "en": "🩶 Gorgeous Bun-Elysia boilerplate with TypeScript",
