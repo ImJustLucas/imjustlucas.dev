@@ -21,7 +21,7 @@ OWN-WORLD: inherited item card frame (2px rarity frame, 4px top band, tray, 16px
 
 STORY: a recruiter or peer presses a card, sees the item open over the inventory, reads what it is and who Lucas was on it, flips through screenshots, follows the site or GitHub, closes with Escape or back and lands where they were in the loadout. A shared link opens the same screen as a page with a way back to the inventory.
 
-FIRST VIEWPORT: desktop: the window centred over the dimmed inventory (1080px max), viewer left (about 3/5), stats right: title + tags, description, holder row (chibi + role), loadout, actions; lore under the fold. Mobile: a sheet sliding up (Ease Drawer, 260ms) under a 12px gap from the top, same content stacked: viewer, stats, lore.
+FIRST VIEWPORT: desktop: the window centred over the dimmed inventory (1080px max). The title and its tags (rarity, WIP, Period) run across the top with the close button at their right, deliberately moved out of sketch A's stats column: the close button then sits beside the name instead of over the screen, and on phones the name leads before the screenshot. Under it, viewer left (about 3/5), stats right: description, holder row (chibi + role), loadout, actions; lore under the fold. Mobile: a sheet sliding up (Ease Drawer, 260ms) under a 12px gap from the top, same content stacked: title, viewer, stats, lore; the title row with the close button stays pinned at the top of the sheet while it scrolls.
 
 ## States and ranges
 

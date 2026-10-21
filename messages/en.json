@@ -185,7 +185,6 @@
   "ProjectPage": {
     "back": "back to the inventory",
     "close": "Close {title}",
-    "holderAlt": "Lucas coding on a laptop, sitting cross-legged",
     "holder": "Lucas",
     "stillOn": "still building it 🛠️",
     "context": "the context",
@@ -195,7 +194,8 @@
     "screenshot": "Screenshot of {title}",
     "screenshotNumber": "Screenshot {number} of {total}",
     "showScreenshot": "Show screenshot {number}",
-    "screenshots": "Screenshots of {title}"
+    "screenshots": "Screenshots of {title}",
+    "newTab": " (opens in a new tab)"
   },
   "Contact": {
     "dm": "Send me a DM on LinkedIn",

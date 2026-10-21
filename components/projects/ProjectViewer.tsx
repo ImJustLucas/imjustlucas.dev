@@ -27,28 +27,34 @@ export function ProjectViewer({ title, images, sizes }: ProjectViewerProps) {
   const tProjects = useTranslations("Projects");
   const { play } = useSounds();
   const [shown, setShown] = useState(0);
-  const image = images[shown];
 
   return (
     <div className="flex min-w-0 flex-col gap-3">
       <div className="relative aspect-video overflow-hidden rounded-md bg-ground">
-        {image ? (
-          <Image
-            key={image}
-            src={image}
-            alt={
-              images.length > 1
-                ? `${t("screenshot", { title })} · ${t("screenshotNumber", {
-                    number: shown + 1,
-                    total: images.length,
-                  })}`
-                : t("screenshot", { title })
-            }
-            fill
-            priority={shown === 0}
-            sizes={sizes}
-            className="animate-fade-in object-cover object-top"
-          />
+        {images.length > 0 ? (
+          // Every image stacked and loaded, so picking one crossfades
+          images.map((image, i) => (
+            <Image
+              key={image}
+              src={image}
+              alt={
+                images.length > 1
+                  ? `${t("screenshot", { title })} · ${t("screenshotNumber", {
+                      number: i + 1,
+                      total: images.length,
+                    })}`
+                  : t("screenshot", { title })
+              }
+              aria-hidden={i !== shown}
+              fill
+              priority={i === 0}
+              sizes={sizes}
+              className={cn(
+                "object-cover object-top transition-opacity duration-hover ease-out",
+                i === shown ? "opacity-100" : "opacity-0",
+              )}
+            />
+          ))
         ) : (
           <span className="flex h-full flex-col items-center justify-center gap-2 text-ink-muted">
             <FolderCode aria-hidden className="size-12" />

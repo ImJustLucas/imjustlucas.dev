@@ -185,7 +185,6 @@
   "ProjectPage": {
     "back": "retour à l'inventaire",
     "close": "Fermer {title}",
-    "holderAlt": "Lucas qui code sur un portable, assis en tailleur",
     "holder": "Lucas",
     "stillOn": "toujours en train de le construire 🛠️",
     "context": "le contexte",
@@ -195,7 +194,8 @@
     "screenshot": "Capture de {title}",
     "screenshotNumber": "Capture {number} sur {total}",
     "showScreenshot": "Afficher la capture {number}",
-    "screenshots": "Captures de {title}"
+    "screenshots": "Captures de {title}",
+    "newTab": " (s'ouvre dans un nouvel onglet)"
   },
   "Contact": {
     "dm": "Envoie-moi un MP sur LinkedIn",

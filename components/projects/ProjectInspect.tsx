@@ -73,14 +73,21 @@ export function ProjectInspect({
     <article
       aria-labelledby={titleId}
       className={cn(
-        "tray relative flex flex-col overflow-hidden rounded-lg border-2 bg-raised",
+        "tray relative flex flex-col overflow-clip rounded-lg border-2 bg-raised",
         rarity.frame,
         className,
       )}
     >
       <span aria-hidden className={cn("h-1 shrink-0", rarity.band)} />
       <div className="flex flex-col gap-6 p-4 sm:p-6 lg:p-7">
-        <header className="flex items-start gap-4">
+        <header
+          className={cn(
+            "flex items-start gap-4",
+            // In the window, the close button stays in reach on phones
+            closeControl &&
+              "max-md:sticky max-md:top-0 max-md:z-10 max-md:bg-raised max-md:pb-3 max-sm:-mx-4 max-sm:-mt-4 max-sm:px-4 max-sm:pt-4 sm:max-md:-mx-6 sm:max-md:-mt-6 sm:max-md:px-6 sm:max-md:pt-6",
+          )}
+        >
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             <TypographyHeadline
               as={headingLevel}
@@ -123,9 +130,10 @@ export function ProjectInspect({
                   aria-hidden
                   className="absolute inset-x-[6%] bottom-[4%] top-[14%] rounded-full bg-ground"
                 />
+                {/* It illustrates the name beside it */}
                 <ChibiSprite
                   pose="coding"
-                  alt={t("holderAlt")}
+                  alt=""
                   sizes="64px"
                   className="aspect-square w-full"
                 />
@@ -142,10 +150,16 @@ export function ProjectInspect({
 
             {project.techs.length > 0 && (
               <div className="flex flex-col gap-2">
-                <TypographyTag className="text-ink-muted">
+                <TypographyTag
+                  id={`${project.slug}-loadout`}
+                  className="text-ink-muted"
+                >
                   {tProjects("loadout")}
                 </TypographyTag>
-                <ul className="flex flex-wrap gap-1.5">
+                <ul
+                  aria-labelledby={`${project.slug}-loadout`}
+                  className="flex flex-wrap gap-1.5"
+                >
                   {project.techs.map((tech) => (
                     <li key={tech.id}>
                       <TechBadge tech={tech} />
@@ -171,6 +185,7 @@ export function ProjectInspect({
                       >
                         {t("visit")}
                         <ExternalLink aria-hidden />
+                        <span className="sr-only">{t("newTab")}</span>
                       </a>
                     </Button>
                   </SoundOnPress>
@@ -199,6 +214,7 @@ export function ProjectInspect({
                             </span>
                           </>
                         )}
+                        <span className="sr-only">{t("newTab")}</span>
                       </a>
                     </Button>
                   </SoundOnPress>
