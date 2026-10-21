@@ -285,6 +285,29 @@
     "started": "Partie lancée. Saute avec espace.",
     "over": "Game over : {score} points. Record : {best}.",
     "overBest": "Game over : {score} points, nouveau record !",
-    "pausedLive": "En pause."
+    "pausedLive": "En pause.",
+    "board": {
+      "title": "top {size}",
+      "you": "toi",
+      "loading": "chargement du classement…",
+      "empty": "personne au classement pour l'instant, à toi de jouer 🛹",
+      "unavailable": "le classement fait une pause, tes parties comptent quand même pour ton record"
+    },
+    "entry": {
+      "ranks": "tu entres dans le top 10 !",
+      "label": "ton prénom",
+      "hint": "affiché publiquement dans le classement, retenu dans ce navigateur",
+      "submit": "enregistrer mon score",
+      "sending": "enregistrement…",
+      "problems": {
+        "empty": "écris un prénom",
+        "too-long": "16 caractères maximum",
+        "characters": "lettres, chiffres, espaces, ' . et - seulement",
+        "blocked": "choisis un autre prénom"
+      },
+      "rank": "#{rank} au classement",
+      "missed": "ce score n'a pas pu être enregistré",
+      "rankedLive": "Enregistré : tu es numéro {rank} du classement."
+    }
   }
 }

@@ -1,13 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
 import { Lock } from "lucide-react";
 
+import { boardAction } from "@/app/[locale]/arcade/actions";
+import { Leaderboard } from "@/components/arcade/Leaderboard";
+import type { ScreenProps } from "@/components/arcade/screen";
+import { usePlayer } from "@/components/arcade/use-player";
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { TypographyTag, TypographyTitle } from "@/components/typography";
+import type { Board } from "@/lib/arcade/board";
 import { type Cabinet, type CabinetId, CABINETS } from "@/lib/arcade/cabinets";
 import { chibiFrames } from "@/lib/chibi";
 import { cn } from "@/lib/utils";
@@ -31,7 +37,7 @@ function CabinetLoading() {
 }
 
 // Each game is its own chunk, fetched only on the Arcade
-const SCREENS: Record<CabinetId, React.ComponentType | null> = {
+const SCREENS: Record<CabinetId, React.ComponentType<ScreenProps> | null> = {
   ollie: dynamic(() => import("./ollie/OllieGame"), {
     ssr: false,
     loading: CabinetLoading,
@@ -41,18 +47,33 @@ const SCREENS: Record<CabinetId, React.ComponentType | null> = {
 
 /**
  * The Arcade floor (DESIGN.md, Arcade): the shelf of cabinets, one per
- * hobby, and the playable one open as the screen. Cabinets that are `soon`
- * stand on the shelf as silhouettes.
+ * hobby, the playable one open as the screen, and its leaderboard. Cabinets
+ * that are `soon` stand on the shelf as silhouettes.
  */
 export function ArcadeFloor() {
   const t = useTranslations("Arcade");
   // One playable cabinet for now: it is the one open
   const selected: CabinetId = "ollie";
   const Screen = SCREENS[selected];
+  const { player, remember } = usePlayer();
+  const [board, setBoard] = useState<Board | null>(null);
+
+  useEffect(() => {
+    let current = true;
+    boardAction(selected)
+      .catch((): Board => ({ kind: "unavailable" }))
+      .then((loaded) => current && setBoard(loaded));
+    return () => {
+      current = false;
+    };
+  }, [selected]);
 
   return (
-    <div className="grid gap-slot-gap xl:grid-cols-[minmax(0,1fr)_16.5rem] xl:items-start">
-      <section aria-labelledby="arcade-shelf" className="xl:order-2">
+    <div className="grid gap-slot-gap xl:grid-cols-[minmax(0,1fr)_16.5rem] xl:grid-rows-[auto_1fr] xl:items-start">
+      <section
+        aria-labelledby="arcade-shelf"
+        className="xl:col-start-2 xl:row-start-1"
+      >
         <TypographyTitle as="h2" id="arcade-shelf" className="sr-only">
           {t("shelf")}
         </TypographyTitle>
@@ -66,9 +87,26 @@ export function ArcadeFloor() {
           ))}
         </ul>
       </section>
-      <section aria-label={t(`cabinets.${selected}.name`)} className="min-w-0">
-        {Screen && <Screen />}
+      <section
+        aria-label={t(`cabinets.${selected}.name`)}
+        className="min-w-0 xl:col-start-1 xl:row-span-2 xl:row-start-1"
+      >
+        {Screen && (
+          <Screen
+            board={board}
+            player={player}
+            onBoard={(top) => setBoard({ kind: "board", top })}
+            remember={remember}
+          />
+        )}
       </section>
+      <div className="min-w-0 xl:col-start-2 xl:row-start-2">
+        <Leaderboard
+          board={board}
+          playerId={player?.id ?? null}
+          game={t(`cabinets.${selected}.name`)}
+        />
+      </div>
     </div>
   );
 }

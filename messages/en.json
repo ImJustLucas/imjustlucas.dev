@@ -285,6 +285,29 @@
     "started": "Run started. Jump with space.",
     "over": "Game over: {score} points. Best: {best}.",
     "overBest": "Game over: {score} points, a new best!",
-    "pausedLive": "Paused."
+    "pausedLive": "Paused.",
+    "board": {
+      "title": "top {size}",
+      "you": "you",
+      "loading": "loading the leaderboard…",
+      "empty": "nobody on the board yet, your turn 🛹",
+      "unavailable": "the leaderboard is taking a break, your runs still count for your best"
+    },
+    "entry": {
+      "ranks": "you're in the top 10!",
+      "label": "your first name",
+      "hint": "shown publicly on the leaderboard, kept in this browser",
+      "submit": "save my score",
+      "sending": "saving…",
+      "problems": {
+        "empty": "type a first name",
+        "too-long": "16 characters at most",
+        "characters": "letters, digits, spaces, ' . and - only",
+        "blocked": "pick another name"
+      },
+      "rank": "#{rank} on the leaderboard",
+      "missed": "this score couldn't be saved",
+      "rankedLive": "Saved: you're number {rank} on the leaderboard."
+    }
   }
 }

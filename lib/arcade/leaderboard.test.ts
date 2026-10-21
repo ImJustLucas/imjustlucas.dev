@@ -1,0 +1,244 @@
+import { Effect, Random } from "effect";
+import { TestClock } from "effect/testing";
+
+import { LEADERBOARD_SIZE, wouldRank } from "./board";
+import {
+  leaderboard,
+  LIMITS,
+  removeEntry,
+  Scores,
+  startRun,
+  submitRun,
+} from "./leaderboard";
+import { layerInMemory } from "./leaderboard-in-memory";
+import {
+  advance,
+  createOllie,
+  type OllieInput,
+  PLAYER,
+  press,
+  release,
+  score,
+  STEP,
+} from "./ollie";
+
+import { describe, expect, it } from "@effect/vitest";
+
+const LEA = "3f2b1c9e-8d7a-4b6c-9e5f-1a2b3c4d5e6f";
+const TOM = "9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d";
+
+/** Plays a run of `seed` as the cabinet would, jumping `jumps` obstacles. */
+const play = (seed: number, jumps: number) => {
+  const state = createOllie(seed);
+  const inputs: OllieInput[] = [];
+  const input = (pressed: boolean) => {
+    inputs.push({ step: state.steps, press: pressed });
+    if (pressed) press(state);
+    else release(state);
+  };
+  input(true);
+  input(false);
+  let jumped = 0;
+  while (state.phase !== "over") {
+    advance(state, 1 / 60);
+    const near = state.obstacles.find(
+      (o) => o.x > PLAYER.x && o.x - PLAYER.x < 70 && o.kind !== "pigeon",
+    );
+    if (near && state.player.grounded && jumped < jumps) {
+      input(true);
+      jumped += 1;
+    }
+    if (!state.player.grounded && state.player.holding) {
+      if (state.player.velocity < 0) input(false);
+    }
+  }
+  return { inputs, score: score(state), seconds: state.steps * STEP };
+};
+
+/** Starts a run, plays it, waits as long as it lasted, and sends it. */
+const playAndSubmit = (playerId: string, name: string, jumps: number) =>
+  Effect.gen(function* () {
+    const started = yield* startRun("ollie", "1.2.3.4");
+    if (started.kind !== "started") throw new Error("not started");
+    const run = play(started.seed, jumps);
+    yield* TestClock.adjust(`${Math.ceil(run.seconds) + 1} seconds`);
+    const result = yield* submitRun(
+      { runId: started.runId, playerId, name, inputs: run.inputs },
+      `client-${playerId}`,
+    );
+    return { run, result };
+  });
+
+describe("a run sent to the leaderboard", () => {
+  it.effect("is replayed and kept under the player's name", () =>
+    Effect.gen(function* () {
+      const { run, result } = yield* playAndSubmit(LEA, "  Léa ", 3);
+      expect(result).toMatchObject({ kind: "ranked", score: run.score });
+      expect(yield* leaderboard("ollie")).toEqual([
+        { playerId: LEA, name: "Léa", score: run.score },
+      ]);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("ranks players best first and keeps each one's best", () =>
+    Effect.gen(function* () {
+      const first = yield* playAndSubmit(LEA, "Léa", 0);
+      const tom = yield* playAndSubmit(TOM, "Tom", 4);
+      const again = yield* playAndSubmit(LEA, "Léa", 0);
+      const board = yield* leaderboard("ollie");
+      // Each player once, best first, with their best run
+      expect(board.map((entry) => entry.playerId).sort()).toEqual(
+        [LEA, TOM].sort(),
+      );
+      expect(board[0].score).toBeGreaterThanOrEqual(board[1].score);
+      const lea = board.find((entry) => entry.playerId === LEA);
+      expect(lea?.score).toBe(Math.max(first.run.score, again.run.score));
+      expect(board.find((entry) => entry.playerId === TOM)?.score).toBe(
+        tom.run.score,
+      );
+      // A run below the player's best does not rank (one equal to it
+      // reports their place, which that score holds)
+      if (again.run.score < first.run.score) {
+        expect(again.result.kind).toBe("unranked");
+      }
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("arcade")),
+  );
+
+  it.effect("never takes the browser's word for the score", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("ollie", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const { inputs } = play(started.seed, 2);
+      yield* TestClock.adjust("1 hour");
+      const result = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs,
+          score: 99999,
+        },
+        "1.2.3.4",
+      );
+      expect(result).toMatchObject({ kind: "ranked" });
+      expect((yield* leaderboard("ollie"))[0].score).toBeLessThan(99999);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("refuses a run sent faster than it could be played", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("ollie", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const { inputs } = play(started.seed, 3);
+      const result = yield* submitRun(
+        { runId: started.runId, playerId: LEA, name: "Léa", inputs },
+        "1.2.3.4",
+      );
+      expect(result).toEqual({ kind: "refused" });
+      expect(yield* leaderboard("ollie")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("takes a run's result only once", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("ollie", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const { inputs } = play(started.seed, 1);
+      yield* TestClock.adjust("1 hour");
+      const body = { runId: started.runId, playerId: LEA, name: "Léa", inputs };
+      expect((yield* submitRun(body, "1.2.3.4")).kind).toBe("ranked");
+      expect(yield* submitRun(body, "1.2.3.4")).toEqual({ kind: "expired" });
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("refuses presses that do not make a run", () =>
+    Effect.gen(function* () {
+      const started = yield* startRun("ollie", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      const result = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs: [{ step: 10, press: true }],
+        },
+        "1.2.3.4",
+      );
+      expect(result).toEqual({ kind: "refused" });
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("refuses a malformed body, a bad player id and a bad name", () =>
+    Effect.gen(function* () {
+      expect(yield* submitRun("nope", "1.2.3.4")).toEqual({ kind: "refused" });
+      expect(
+        yield* submitRun(
+          { runId: "x", playerId: "me", name: "Léa", inputs: [] },
+          "1.2.3.4",
+        ),
+      ).toEqual({ kind: "refused" });
+      expect(
+        yield* submitRun(
+          { runId: "x", playerId: LEA, name: "<script>", inputs: [] },
+          "1.2.3.4",
+        ),
+      ).toEqual({ kind: "bad-name" });
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("limits how many runs one visitor starts", () =>
+    Effect.gen(function* () {
+      for (let i = 0; i < LIMITS.start.count; i++) {
+        expect((yield* startRun("ollie", "9.9.9.9")).kind).toBe("started");
+      }
+      expect(yield* startRun("ollie", "9.9.9.9")).toEqual({ kind: "limited" });
+      expect((yield* startRun("ollie", "8.8.8.8")).kind).toBe("started");
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+});
+
+describe("the leaderboard", () => {
+  it.effect(`shows the ${LEADERBOARD_SIZE} best players`, () =>
+    Effect.gen(function* () {
+      const scores = yield* Scores;
+      for (let i = 0; i < LEADERBOARD_SIZE + 3; i++) {
+        yield* scores.record("ollie", {
+          playerId: `p${i}`,
+          name: `P${i}`,
+          score: i * 10,
+        });
+      }
+      const board = yield* leaderboard("ollie");
+      expect(board).toHaveLength(LEADERBOARD_SIZE);
+      expect(board[0].score).toBe((LEADERBOARD_SIZE + 2) * 10);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it.effect("loses a player the Owner removes", () =>
+    Effect.gen(function* () {
+      yield* playAndSubmit(LEA, "Léa", 1);
+      yield* removeEntry("ollie", LEA);
+      expect(yield* leaderboard("ollie")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+});
+
+describe("whether a run would rank", () => {
+  const board = Array.from({ length: LEADERBOARD_SIZE }, (_, i) => ({
+    playerId: `p${i}`,
+    name: `P${i}`,
+    score: 100 - i * 5,
+  }));
+
+  it("ranks when the board has room, or when it beats the last", () => {
+    expect(wouldRank([], null, 1)).toBe(true);
+    expect(wouldRank(board, null, 56)).toBe(true);
+    expect(wouldRank(board, null, 55)).toBe(false);
+    expect(wouldRank(board, null, 0)).toBe(false);
+  });
+
+  it("ranks a player already on the board only above their best", () => {
+    expect(wouldRank(board, "p3", 85)).toBe(false);
+    expect(wouldRank(board, "p3", 86)).toBe(true);
+  });
+});

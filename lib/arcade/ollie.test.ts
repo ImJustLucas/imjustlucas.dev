@@ -13,6 +13,7 @@ import {
   MAX_SPEED,
   OBSTACLE_SIZE,
   type OllieEvent,
+  type OllieInput,
   type OllieState,
   parseBest,
   PIGEON_ALTITUDE,
@@ -20,6 +21,7 @@ import {
   press,
   random,
   release,
+  replayOllie,
   score,
   SPARKLE_BONUS,
   START_SPEED,
@@ -279,5 +281,73 @@ describe("the best score", () => {
     expect(parseBest("-3")).toBeNull();
     expect(parseBest("12.5")).toBeNull();
     expect(parseBest("lol")).toBeNull();
+  });
+});
+
+/**
+ * Plays a run as the cabinet does, at an uneven frame rate, jumping whenever
+ * a cone or bin is close, and records every press and release.
+ */
+const playRecorded = (seed: number, frames = 6000) => {
+  const state = createOllie(seed);
+  const inputs: OllieInput[] = [];
+  const input = (pressed: boolean) => {
+    inputs.push({ step: state.steps, press: pressed });
+    if (pressed) press(state);
+    else release(state);
+  };
+  input(true);
+  input(false);
+  for (let i = 0; i < frames && state.phase !== "over"; i++) {
+    advance(state, i % 3 === 0 ? 1 / 30 : 1 / 90);
+    const near = state.obstacles.find(
+      (o) => o.x > PLAYER.x && o.x - PLAYER.x < 70 && o.kind !== "pigeon",
+    );
+    if (near && state.player.grounded) input(true);
+    if (
+      !state.player.grounded &&
+      state.player.velocity < 0 &&
+      state.player.holding
+    ) {
+      input(false);
+    }
+  }
+  return { state, inputs };
+};
+
+describe("a replayed run", () => {
+  it("scores exactly as the run that was played", () => {
+    for (const seed of [1, 42, 2026]) {
+      const { state, inputs } = playRecorded(seed);
+      expect(state.phase).toBe("over");
+      const replay = replayOllie(seed, inputs);
+      expect(replay?.phase).toBe("over");
+      expect(replay && score(replay)).toBe(score(state));
+      expect(replay?.steps).toBe(state.steps);
+    }
+  });
+
+  it("scores differently on another seed", () => {
+    const { state, inputs } = playRecorded(7);
+    const other = replayOllie(8, inputs);
+    expect(other === null || score(other) !== score(state)).toBe(true);
+  });
+
+  it("refuses inputs out of order, or a run that never starts", () => {
+    expect(replayOllie(1, [])).toBeNull();
+    expect(replayOllie(1, [{ step: 5, press: true }])).toBeNull();
+    expect(
+      replayOllie(1, [
+        { step: 0, press: true },
+        { step: 40, press: false },
+        { step: 20, press: true },
+      ]),
+    ).toBeNull();
+  });
+
+  it("ignores what comes after the crash", () => {
+    const { state, inputs } = playRecorded(3);
+    const late = [...inputs, { step: state.steps + 500, press: true }];
+    expect(replayOllie(3, late)?.steps).toBe(state.steps);
   });
 });
