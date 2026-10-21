@@ -305,6 +305,20 @@ components:
     rounded: "{rounded.lg}"
     padding: "24px 40px 36px"
     width: "34rem"
+  unlock-banner:
+    backgroundColor: "{colors.navy-raised}"
+    textColor: "{colors.off-white}"
+    typography: "{typography.headline}"
+    rounded: "{rounded.lg}"
+    padding: "20px 28px"
+  showcase-slot:
+    backgroundColor: "{colors.navy-raised}"
+    rounded: "{rounded.lg}"
+    padding: "16px"
+  showcase-well:
+    backgroundColor: "{colors.navy}"
+    rounded: "{rounded.md}"
+    height: "clamp(360px, calc(100dvh - 420px), 600px)"
 ---
 
 # Design System: ImJustLucas
@@ -313,7 +327,7 @@ components:
 
 **Creative North Star: "The Player Profile"**
 
-The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the inventory of every Project filtered by the loadout of Techs they use, the career path of stops on a track with the diplomas as medals, and the replays. The contact screen is the client's add-friend screen: one request window to send Lucas a request, with his live status. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
+The site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The other profile screens open on a page banner and keep the game's objects: the inventory of every Project filtered by the loadout of Techs they use, the career path of stops on a track with the diplomas as medals, and the replays. The contact screen is the client's add-friend screen: one request window to send Lucas a request, with his live status. The legendary achievement's own page, MasterDevFrance 2025, is the reward screen of its unlock: an unlock banner wearing the item's legendary frame, then the prize cheque standing on its stage in a showcase where the visitor throws coins. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.
 
 It is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means "this is the thing to press": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.
 
@@ -425,7 +439,7 @@ In light mode, in either palette, bright rarity and status colours stay as fills
 
 **The One Action Rule.** An action fill marks the single most important action or state in its zone: the Play button in the panel, the active tab and the sound switch in the chrome, plus selection; the action ink draws focus. A second action-filled button in the panel means one of them is wrong. A component never names Tangerine, Electric or Off-white directly for this role; it uses `action`, `action-ledge`, `action-ink` and `on-action`, so both palettes follow. Secondary links use the action ink as their text in light; in electric dark they stay ink with an Electric underline and take the action ink on hover.
 
-**The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its 2px frame, 4px top band and tag (and the filled sparkle on legendary). Never use the rarity hues for headings, backgrounds or decoration.
+**The Rarity Is Data Rule.** A rarity colour appears only on an item whose rarity field says so, as its 2px frame, 4px top band and tag (and the filled sparkle on legendary). Never use the rarity hues for headings, backgrounds or decoration. Inside the legendary item's own showcase the scene is the item, so the cheque's stage rim (its top band in 3D) and the coins are Legendary, the rim Legendary Deep by day.
 
 **The Computed Ink Rule.** Text on a colour that is not part of the palette (a Tech's own colour) is whichever of Night or Cream contrasts more, computed; if neither reaches 4.5:1, the chip is drawn as a 2px outline in that colour with the theme's ink instead of a fill.
 
@@ -466,6 +480,7 @@ The client fills the viewport (`100dvh`, no page scroll) inside a 12px frame in 
 - **Page banner**: a two-column grid, the text beside a chibi column of 96px, 128px from 640px and 160px from 768px; below 640px the Headline takes the full row and the chibi sits beside the line. Padding 16px, 24px from 640px, 20px by 28px from 768px; 48px down to the page's first section.
 - **Page rows**: the career path is one column of stops (a 44px track column, 56px from 640px, with 12px then 20px to the slot, 16px between stops); medals run 3 columns from 768px; the loadout's buttons are one row swiped sideways on phones (bleeding to the slot's edges, the chosen one scrolled into view) and wrap from 640px (8px apart, 12px between lines), above the item grid, which runs 1, 2 (768px) then 3 (1280px) columns; replays run 1, 2 (768px) then 3 (1280px) columns.
 - **Contact window**: the page holds an 880px maximum width under its Headline title (24px below it); from 768px the title and the request window are centred vertically in the panel (a minimum height of the viewport less 80px, the panel's frame and padding, lifted by 6vh of bottom padding). The window is one column below 768px (the chibi at 144px, centred above the details) and a 240px chibi column beside the details from 768px (32px apart, 24px between rows); "right now" sits 48px below it.
+- **Reward screen** (MasterDevFrance 2025): one column at the 1180px maximum, 48px between the unlock banner, the showcase slot and the back link. The unlock banner keeps the page banner's grid, padding and chibi column. The showcase slot has 12px padding (16px from 640px) with 12px (16px) between the well and its controls row; the well is clamp(240px, 36dvh, 300px) tall below 640px, so the panel still scrolls beside a scene that captures touch, and clamp(360px, 100dvh − 420px, 600px) from 640px, so banner and showcase fill the first view. The controls row wraps: the throw button, the hint, and the pause/play button pushed right; below 640px the hint drops to its own last line.
 - **Reading text** holds 65ch inside its slot, never the full panel width.
 - **Mobile** (below 768px): a 56px top bar on the ground colour (40px chibi head, name, sound switch, menu button) replaces the sidebar column. The same sidebar, mounted once, becomes a full-width sheet from 68px down, sliding up with Ease Drawer (260ms in, 180ms out), with the player card hidden and the panel `inert` behind it. Escape or widening to 768px closes it. Achievements with more than one slot become a horizontal snap row.
 - **Breakpoints** are Tailwind's: 640, 768 (the client's one structural switch), 1024, 1280.
@@ -480,6 +495,7 @@ Depth is tonal first (frame, then ground, then raised: Navy Frame, Navy, Navy Ra
 - **Ledge Pressed** (`0 0 0` with `translateY(4px)` and `brightness(0.94)`): active; the control sits on its ledge.
 - **Tab Ledge** (`0 3px 0 rgb(var(--action-ledge))`): under the sliding active-tab fill, which travels with it.
 - **Tray** (`inset 0 1px 0 rgb(246 243 234 / 0.07)` in electric dark, `inset 0 1px 0 rgb(255 241 230 / 0.08)` in plum dark, `inset 0 1px 0 rgb(255 255 255 / 0.9)` in both light modes): the top highlight inside the player card, banner, slots, item cards, accordion rows and presence card.
+- **Well** (`inset 0 2px 0 rgb(var(--ledge))`): the showcase well on the reward screen (its lip drawn over the canvas), the tray's inverse: a ledge-coloured lip along its top edge, so it reads as pressed into the slot. Never on anything pressable.
 - **Float** (`0 24px 48px -12px rgb(2 4 16 / 0.6)` in electric dark, `rgb(16 19 31 / 0.22)` in electric light, `rgb(12 4 22 / 0.6)` in plum dark, `rgb(42 21 64 / 0.28)` in plum light): the mobile sheet and menus.
 
 ### Named Rules
@@ -489,11 +505,11 @@ Depth is tonal first (frame, then ground, then raised: Navy Frame, Navy, Navy Ra
 
 ## Shapes
 
-Fat, friendly corners from one scale: 24px for the frame's two zones (sidebar, panel, mobile top bar and sheet), 16px for slots, cards, the banner, accordion rows and menus, 10px for buttons, tabs, artwork and screenshots, full circles for the chibi head, the chibi's stage discs, status dots, palette swatches and all chips and tags. Borders are 2px, never hairlines: the seam colour on the banner, outline buttons, team chips, WIP tags and menus; the rarity colour on items. Plain slots (player card, about, hobbies, presence, accordion) are borderless raised surfaces with the tray highlight. Focus is a 2px ring in the action ink with a 2px offset (inset on accordion rows). The new objects keep the scale: stop discs, medals and the play disc are full circles with a 2px seam (or Online) ring, the career track is a 4px rounded line. No angular chamfers, notched corners or clip-path frames.
+Fat, friendly corners from one scale: 24px for the frame's two zones (sidebar, panel, mobile top bar and sheet), 16px for slots, cards, the banner, accordion rows and menus, 10px for buttons, tabs, artwork and screenshots, full circles for the chibi head, the chibi's stage discs, status dots, palette swatches and all chips and tags. Borders are 2px, never hairlines: the seam colour on the banner, outline buttons, team chips, WIP tags and menus; the rarity colour on items. Plain slots (player card, about, hobbies, presence, accordion) are borderless raised surfaces with the tray highlight. Focus is a 2px ring in the action ink with a 2px offset (inset on accordion rows). The new objects keep the scale: stop discs, medals and the play disc are full circles with a 2px seam (or Online) ring, the career track is a 4px rounded line, the showcase well takes 10px corners and the cheque's 3D stage is a round disc. No angular chamfers, notched corners or clip-path frames.
 
 Materials:
 - **The sparkle**: Lucas's hand tattoo, an outlined four-point star with slightly concave sides, the site's one ornament. On the frame it is drawn whole and small (8px and 6px stars, outlined) running along the 12px gutters only, including the gutter between sidebar and panel, at stroke opacity 0.12 in the dark ink on the dark frame (Off-white on Navy Frame, Cream on Night) and 0.08 in the light ink on the light frame (Ink Charcoal on Linen Frame, Plum on Lilac Frame); it is never clipped and never behind text. Filled in Legendary, it marks legendary achievements in their top-right corner.
-- **Legendary foil**: a pale gold light band sweeps across a legendary slot over 900ms with Ease Out, once per session when it first scrolls into view, again on hover and on click; at rest the slot is flat.
+- **Legendary foil**: a pale gold light band sweeps across a legendary slot over 900ms with Ease Out, once per session when it first scrolls into view, again on hover and on click; at rest the slot is flat. On the unlock banner it crosses once on arrival, 200ms after the page, and never on hover.
 - **Chibi art**: the ImJustLucas chibi as transparent square WebP poses (`public/images/chibi/`, registry `lib/chibi.ts`): banner, chilling, sleeping, goodbye, trophy, and the hobbies surf, skate, LoL, coding, coffee, series, music. Every pose keeps the commissioned style, face, hair and eyes, and wears its own outfit (`docs/design/chibi-poses.md`). A pose may have a night outfit, worn by Lucas's time in Paris (`Europe/Paris`, 21:00 to 07:00), never the visitor's clock, mode or palette: the banner (whose night art does not exist yet, so it wears the day one) and the LoL pose in the friends panel; the hobby tiles always show the day LoL pose. Pages render the day art and switch after mount with a 300ms crossfade, with no layout shift. The full-body chibi stands in front of a circular ground-coloured stage disc.
 
 ## Components
@@ -537,6 +553,12 @@ A link slot: rarity frame and top band, the achievement art in a circular stage 
 ### Page banner
 The home banner's smaller cousin at the top of the projects, experiences and videos pages: a raised slot with a 2px seam border and the tray, the page title in Headline, one line in Lucas's voice in the muted ink, and a full-body chibi pose on its ground stage disc (coding for the inventory, coffee for the career, series for the replays). The pose is not a button here and has no cue.
 
+### Unlock banner (signature)
+The page banner of a legendary item's own page (today MasterDevFrance 2025), wearing the item's rarity like its achievement slot: a raised slot with the tray, a 2px Legendary frame and 4px Legendary top band in place of the seam border, and the filled sparkle (24px) in the top-right corner. The Headline is the page title, shrinking with the phone's width below 640px (min(1.75rem, 5.6vw), 32px clear of the sparkle) so one long name never overflows; under it a tag row: the rarity tag, an "unlocked" tag drawn as the live tag with a 12px check, and the year in muted Data. Then Lucas's line in the muted ink and the trophy pose on its ground stage disc, not a button. The foil crosses it once on arrival.
+
+### Showcase (signature)
+The trophy on show, in a borderless raised slot with the tray. **Well:** a sunken ground-coloured well with 10px corners and the Well lip, holding a transparent R3F canvas: in the dark modes a night sky with drifting stars, bloom and a vignette; in light the palette's daylight ground, no stars, no vignette, and a bloom held to the gold. The cheque stands on a 3D stage disc in the palette's raised colour (read live from `--raised`, following palette and mode) with a Legendary rim, a slow bob, and gold coins (Legendary, with a shimmer) falling round it. The lens frames cheque and stage by the well's aspect (about 60% of a wide well, across with a margin on a phone); dragging orbits within limits without zoom or pan, and a click or tap on the scene throws a coin from the camera to that point. **Controls row:** "throw a coin" as a ledge button (the same throw for keyboards and screen readers, disabled while paused), a muted Label hint with a pointer icon (a touch wording on coarse pointers, a paused wording while still), and a pause/play ledge button that plays toggle off / on. **Loading:** over the well in its ground, a spinning seam ring and the progress in Data. A back link to the profile (a secondary link with a left arrow that nudges 4px on hover) closes the page.
+
 ### Career path (signature)
 Experiences as stops on a track, in the Owner's order. **Track:** a 4px rounded seam line running from under each disc to the next, lit Online between two consecutive ongoing stops. **Stop disc:** 44px (56px from 640px), ground fill with a 2px seam ring, the Experience's emoji (a muted briefcase line icon when it has none); an ongoing stop takes an Online ring and a breathing Online dot on a 3px ground rim at its shoulder. Hovering the slot tilts the emoji (-12deg, 1.1 scale, Ease Pop). **Slot:** a borderless raised slot with the tray: the period in Data and the "current team" tag while ongoing, the company in Title Large as a secondary link with an up-right arrow that nudges on hover (opens in a new tab; the slot itself is not a link), the role in ink with the contract type tag, and the description in the muted ink. Hovering ticks.
 
@@ -575,14 +597,16 @@ The theme switch is a 44px icon button (a sun in light, a moon in dark) that ope
 A pose's drawn frames alternate in steps (200ms each), never tweened, only while it plays (hover, a live state), on screen and without reduced motion; otherwise the first frame shows. The chibi itself never hops, slides or scales.
 
 ### Sound kit and switch
-One synthesized instrument (a soft plucked kalimba tine) in D major pentatonic, master gain 0.22.
+One synthesized instrument (a soft plucked kalimba tine) in D major pentatonic, master gain 0.22, joined by two recorded sounds for the coins: the coin and its impact, fetched once on first use (the reward screen warms them on load).
 - **Tick** (B5, very quiet): hover on tabs, item cards, achievement slots, hobbies, career slots, medal slots, loadout buttons and replay tiles; fine pointers only, at most one every 60ms.
 - **Press** (A4): secondary controls without a cue of their own (ledge and outline buttons, socials, the theme trigger, non-legendary achievements, secondary links, the replay thumbnail).
 - **Tab:** the tab's own degree (D4, E4, F#4, A4, D5 in menu order).
 - **Confirm** (D4 and A4, then D5): the Play button.
-- **Toggle on / off** (A4 to D5 / D5 to A4): the menu sheet, the accordion, turning a medal, choosing a mode or a palette, the Locale switch, the sound switch turning on.
+- **Toggle on / off** (A4 to D5 / D5 to A4): the menu sheet, the accordion, turning a medal, choosing a mode or a palette, the Locale switch, the sound switch turning on, playing / pausing the showcase.
 - **Unlock** (D4 F#4 A4 D5, then the recorded coin): the legendary achievement.
 - **Boop** (a random high degree with a 2-semitone upward bend): the banner chibi.
+- **Throw** (the recorded coin): throwing a coin in the showcase, by click, tap or the throw button.
+- **Clink** (the recorded impact, then a quiet random high degree): a thrown coin landing on the cheque, at most once per coin every 500ms, so throwing plays a little tune. Only the visitor's coins sound; the falling ones are silent.
 - **Miss** (A3 to F#3): defined in the kit for errors.
 The **sound switch** is a 44px icon button, the action fill with an `on-action` speaker on the action ledge when on, raised with a struck speaker when off, with a localized label that also says when reduced motion turned sound off. It shows once in the settings row from 768px up and once in the mobile top bar below. Sound is on by default, off by default under reduced motion, stored per visitor in `localStorage`, and never plays before the first interaction or on automatic events.
 
@@ -595,7 +619,9 @@ The **sound switch** is a 44px icon button, the action fill with an `on-action` 
 - **Career arrival:** each stop disc pops on (from 0.5 scale and transparent, 320ms, Ease Pop) 160ms after the one above it, and the track segment below it draws down (scaleY from its top, 160ms, Ease In Out) 120ms after its disc, so the line reaches each stop as it lands.
 - **Medal turn:** 600ms rotateY with Ease Out, 600px perspective.
 - **Replay hover:** the thumbnail zooms to 1.03 over 300ms and the play disc fades and rises over 150ms, both Ease Out.
-- **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame. The career path arrives drawn, medals swap faces without turning, chips and thumbnails stay put, and the play disc only fades, and filtered items appear without fading.
+- **Reward arrival:** the unlock banner's foil crosses once, 900ms with Ease Out after a 200ms delay.
+- **Showcase:** the cheque bobs slowly, coins spin and fall, stars drift. Every step is scaled to a 60fps frame and capped at 1/20s, so coins fall at the same pace at any frame rate and never jump after a tab switch. Pause freezes cheque, coins, shimmer and stars where they are (the canvas renders on demand) and orbiting still works; play resumes from there.
+- **Reduced motion:** press, raise and rise distances become zero (presses change colour only), the sheet fades, the equaliser, breathing dot, skeleton and foil are static, and chibi sprites hold their first frame. The career path arrives drawn, medals swap faces without turning, chips and thumbnails stay put, and the play disc only fades, and filtered items appear without fading. The unlock banner shows no foil, and the showcase arrives paused with "play" offered.
 
 ### Admin
 The Admin sets the same fonts, modes (dark by default) and the visitor's palette, and inherits the world through the shadcn roles mapped in the stylesheet: the palette's ground and raised surfaces, seam borders, the ledge buttons, Busy or Busy Deep for errors.

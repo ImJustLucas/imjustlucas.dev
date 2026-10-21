@@ -3,6 +3,7 @@
  * plucked kalimba tine, in one key, D major pentatonic over two octaves.
  * Plain data, played by `engine.ts`. `press` is the note of secondary
  * controls (ledge buttons, social links) that have no cue of their own.
+ * Two recorded sounds join the tine: the coin and its impact.
  */
 
 /** The loudest the whole kit ever gets. */
@@ -43,11 +44,27 @@ export type Pluck = {
   readonly bend?: number;
 };
 
-/** A cue: plucks, plus the recorded coin for the unlock. */
+/** The recorded sounds of the kit. */
+export const SAMPLES = {
+  coin: "/sounds/coin.mp3",
+  impact: "/sounds/impact.mp3",
+} as const;
+
+export type Sample = keyof typeof SAMPLES;
+
+/** One recorded sound in a cue. */
+export type SamplePlay = {
+  readonly sample: Sample;
+  /** Seconds after the cue starts. */
+  readonly at: number;
+  /** Relative to the master gain, 0 to 1. */
+  readonly gain: number;
+};
+
+/** A cue: plucks, plus recorded sounds for the coins. */
 export type CueSound = {
   readonly plucks: ReadonlyArray<Pluck>;
-  /** Seconds after the cue starts to play `/sounds/coin.mp3`. */
-  readonly coinAt?: number;
+  readonly samples?: ReadonlyArray<SamplePlay>;
 };
 
 export type Cue =
@@ -59,7 +76,9 @@ export type Cue =
   | "toggleOff"
   | "unlock"
   | "boop"
-  | "miss";
+  | "miss"
+  | "throw"
+  | "clink";
 
 /**
  * Each menu tab plays its own degree, in menu order, so walking down the
@@ -80,9 +99,14 @@ const pluck = (note: Note, at = 0, gain = 0.7, decay = 0.9): Pluck => ({
 export type CueOptions = {
   /** The tab's position in the menu, for `tab`. */
   readonly tab?: number;
-  /** A number in [0, 1), picks the boop's degree. */
+  /** A number in [0, 1), picks the degree of the boop and the clink. */
   readonly random?: number;
 };
+
+const highDegree = (random = 0) =>
+  BOOP_NOTES[
+    Math.floor(Math.min(Math.max(random, 0), 0.999) * BOOP_NOTES.length)
+  ];
 
 /** What a cue plays. */
 export const cueSound = (cue: Cue, options: CueOptions = {}): CueSound => {
@@ -115,16 +139,24 @@ export const cueSound = (cue: Cue, options: CueOptions = {}): CueSound => {
           pluck("A4", 0.14, 0.6),
           pluck("D5", 0.21, 0.7, 1.2),
         ],
-        coinAt: 0.32,
+        samples: [{ sample: "coin", at: 0.32, gain: 0.55 }],
       };
-    case "boop": {
-      const random = Math.min(Math.max(options.random ?? 0, 0), 0.999);
-      const note = BOOP_NOTES[Math.floor(random * BOOP_NOTES.length)];
-      return { plucks: [{ ...pluck(note, 0, 0.6, 0.5), bend: 2 }] };
-    }
+    case "boop":
+      return {
+        plucks: [
+          { ...pluck(highDegree(options.random), 0, 0.6, 0.5), bend: 2 },
+        ],
+      };
     case "miss":
       return {
         plucks: [pluck("A3", 0, 0.6, 0.6), pluck("F#3", 0.09, 0.6, 0.8)],
+      };
+    case "throw":
+      return { plucks: [], samples: [{ sample: "coin", at: 0, gain: 0.55 }] };
+    case "clink":
+      return {
+        plucks: [pluck(highDegree(options.random), 0.01, 0.3, 0.4)],
+        samples: [{ sample: "impact", at: 0, gain: 0.7 }],
       };
   }
 };

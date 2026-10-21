@@ -187,9 +187,19 @@
     "chibiAlt": "Lucas waving hello"
   },
   "Mdf2025": {
-    "winner": "Proud winner of the MasterDevFrance 2025 competition - a national recognition for technical excellence and innovation in software development.",
-    "loading": "Loading...",
-    "loadingScene": "Loading scene: {progress}%"
+    "line": "yep, I won it 🏆 MasterDevFrance is the national competition for technical excellence in software development, and the 2025 edition is mine.",
+    "unlocked": "unlocked",
+    "chibiAlt": "Lucas holding up a gold trophy",
+    "showcase": "the trophy showcase",
+    "throw": "throw a coin",
+    "hint": "or click the scene, drag to look around",
+    "hintTouch": "or tap the scene, swipe to look around",
+    "hintStill": "paused, drag to look around",
+    "pause": "pause",
+    "play": "play",
+    "back": "back to my profile",
+    "loading": "loading…",
+    "loadingScene": "loading the trophy · {progress}%"
   },
   "NotFound": {
     "title": "Page not found",
