@@ -17,7 +17,6 @@ const BOILERPLATE = "https://github.com/ImJustLucas/Next-13-Boilerplate";
 const catalogWith = (
   documents: {
     techs?: unknown;
-    techCategories?: unknown;
     projects?: unknown;
     experiences?: unknown;
     profile?: unknown;
@@ -31,9 +30,6 @@ const catalogWith = (
     Layer.provide(
       layerInMemory({
         "content/techs.json": JSON.stringify(documents.techs ?? []),
-        "content/tech-categories.json": JSON.stringify(
-          documents.techCategories ?? [],
-        ),
         "content/projects.json": JSON.stringify(documents.projects ?? []),
         "content/experiences.json": JSON.stringify(documents.experiences ?? []),
         "content/achievements.json": JSON.stringify(
@@ -262,34 +258,6 @@ describe("ContentCatalog.inLocale(locale).hobbies", () => {
           hobbies: [
             { label: text("playing LoL", "jouer à LoL"), pose: "lol" },
             { label: text("surf", "surf"), pose: "surf" },
-          ],
-        }),
-      ),
-    ),
-  );
-});
-
-describe("ContentCatalog.inLocale(locale).techCategories", () => {
-  it.effect("returns each name and description in the Locale", () =>
-    Effect.gen(function* () {
-      const catalog = yield* ContentCatalog;
-
-      expect(yield* catalog.inLocale("fr").techCategories).toEqual([
-        { name: "Outils", description: "Ce que j'utilise", techs: [react] },
-      ]);
-      expect(yield* catalog.inLocale("en").techCategories).toEqual([
-        { name: "Tools", description: "What I use", techs: [react] },
-      ]);
-    }).pipe(
-      Effect.provide(
-        catalogWith({
-          techs: [react],
-          techCategories: [
-            {
-              name: text("Tools", "Outils"),
-              description: text("What I use", "Ce que j'utilise"),
-              techs: ["react"],
-            },
           ],
         }),
       ),

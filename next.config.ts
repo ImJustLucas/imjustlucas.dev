@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { ROUTES } from "./config/routes";
+import { RETIRED_PATHS, ROUTES } from "./config/routes";
 import { routing } from "./i18n/routing";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
@@ -34,13 +34,29 @@ const nextConfig: NextConfig = {
   async redirects() {
     // Legacy unprefixed URLs go permanently to their English equivalent. These
     // run before the proxy, which would otherwise pick a Locale per browser.
-    return Object.values(ROUTES)
+    const legacy = Object.values(ROUTES)
       .filter((route) => route.path !== "/")
       .map((route) => ({
         source: `${route.path}/:path*`,
         destination: `/${routing.defaultLocale}${route.path}/:path*`,
         permanent: true,
       }));
+    // A retired Route's path goes to its successor, in its Locale or, when
+    // unprefixed, in English.
+    const locales = routing.locales.join("|");
+    const retired = Object.entries(RETIRED_PATHS).flatMap(([path, route]) => [
+      {
+        source: `/:locale(${locales})${path}`,
+        destination: `/:locale${route.path}`,
+        permanent: true,
+      },
+      {
+        source: path,
+        destination: `/${routing.defaultLocale}${route.path}`,
+        permanent: true,
+      },
+    ]);
+    return [...retired, ...legacy];
   },
 };
 

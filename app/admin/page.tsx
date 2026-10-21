@@ -23,7 +23,7 @@ export default async function AdminHome() {
       <ul className="list-disc pl-6">
         <li>
           <Link href="/admin/techs" className="underline underline-offset-4">
-            Techs et Tech categories
+            Techs
           </Link>
         </li>
         <li>

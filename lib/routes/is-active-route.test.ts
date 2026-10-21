@@ -17,7 +17,7 @@ describe("isActiveRoute", () => {
   });
 
   it("is not active on another Route's page", () => {
-    expect(isActiveRoute("/what", "/how")).toBe(false);
+    expect(isActiveRoute("/what", "/videos")).toBe(false);
   });
 
   it("is active on the root only for the root Route", () => {

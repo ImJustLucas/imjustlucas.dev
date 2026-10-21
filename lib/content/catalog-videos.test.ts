@@ -24,7 +24,6 @@ const YOUTUBE_CHANNEL_ID = testProfile.youtubeChannelId;
 const contentWithChannel = (youtubeChannelId: string) =>
   layerInMemory({
     "content/techs.json": "[]",
-    "content/tech-categories.json": "[]",
     "content/projects.json": "[]",
     "content/experiences.json": "[]",
     "content/achievements.json": "[]",
