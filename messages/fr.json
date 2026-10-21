@@ -194,7 +194,7 @@
   "NotFound": {
     "title": "Page introuvable",
     "headline": "Lessivé !",
-    "message": "C'est flat total : cette page n'existe pas, ou plus. Rien à surfer, alors je fais la sieste 😴",
+    "message": "Pas une vague à l'horizon : cette page n'existe pas, ou plus. Du coup, je fais la sieste 😴",
     "play": "Réapparaître <home>à l'accueil</home>",
     "respawn": "Réapparaître",
     "code": "erreur 404",
