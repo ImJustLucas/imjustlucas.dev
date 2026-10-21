@@ -65,7 +65,8 @@ const STREET = {
     walkLine: "#c8bfad",
     curb: "#b3a995",
     lampGlow: null,
-    shadow: "rgba(43, 47, 58, 0.18)",
+    shadow: "rgba(43, 47, 58, 0.22)",
+    haze: "rgba(250, 244, 232, 0.5)",
   },
   night: {
     skyTop: "#070d26",
@@ -87,7 +88,8 @@ const STREET = {
     walkLine: "#30354f",
     curb: "#292e48",
     lampGlow: "rgba(255, 207, 107, 0.28)",
-    shadow: "rgba(0, 0, 0, 0.3)",
+    shadow: "rgba(0, 0, 0, 0.35)",
+    haze: "rgba(7, 13, 38, 0.38)",
   },
 } as const;
 
@@ -95,9 +97,11 @@ const STREET = {
 const AWNINGS = ["#d4513f", "#2f6b4f", "#2b3a6e", "#d9a23b"] as const;
 /** The line around the street furniture, the chibi art's maroon. */
 const OUTLINE = "#4a1f24";
+/** The sticker rim around the street furniture. */
+const RIM = "#fffaf0";
 const CONE = "#ff8a3d";
-const BIN = "#2f7a46";
-const BENCH = "#2e5a3c";
+const BIN = "#3fae5c";
+const BENCH = "#c9803f";
 const PIGEON = "#9aa1b6";
 const SPARKLE_FILL = "#fffaf0";
 const SPARKLE_LINE = "#2f6bff";
@@ -363,12 +367,47 @@ const lamps = (
   }
 };
 
+/**
+ * Fills and outlines the current path in the maroon line. Each piece of
+ * furniture is drawn twice: first its light rim alone (`rimPass`), then its
+ * shapes, so it reads like a sticker against the busy façades.
+ */
+let rimPass = false;
+
 const outlined = (ctx: CanvasRenderingContext2D, fill: string) => {
+  ctx.lineJoin = "round";
+  if (rimPass) {
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = RIM;
+    ctx.stroke();
+    return;
+  }
   ctx.fillStyle = fill;
   ctx.fill();
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
   ctx.strokeStyle = OUTLINE;
   ctx.stroke();
+};
+
+/** A soft shadow under a piece of furniture, so it stands on the sidewalk. */
+const footprint = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  width: number,
+  street: Street,
+) => {
+  ctx.fillStyle = street.shadow;
+  ctx.beginPath();
+  ctx.ellipse(
+    x + width / 2,
+    WORLD.ground + 3,
+    width / 2 + 6,
+    5,
+    0,
+    0,
+    Math.PI * 2,
+  );
+  ctx.fill();
 };
 
 const cone = (ctx: CanvasRenderingContext2D, x: number) => {
@@ -392,8 +431,9 @@ const bin = (ctx: CanvasRenderingContext2D, x: number, night: boolean) => {
   const { width, height } = OBSTACLE_SIZE.bin;
   const bottom = WORLD.ground;
   // The pole
-  ctx.fillStyle = BIN;
-  ctx.fillRect(x + width - 8, bottom - height, 5, height);
+  ctx.beginPath();
+  ctx.rect(x + width - 8, bottom - height, 5, height);
+  outlined(ctx, BIN);
   // The see-through bag under its green hoop
   ctx.beginPath();
   ctx.moveTo(x + 3, bottom - height + 12);
@@ -407,7 +447,7 @@ const bin = (ctx: CanvasRenderingContext2D, x: number, night: boolean) => {
   ctx.quadraticCurveTo(x + 2, bottom - 8, x + 3, bottom - height + 12);
   ctx.closePath();
   ctx.globalAlpha = night ? 0.75 : 0.85;
-  outlined(ctx, night ? "#7f9a8a" : "#d6e6da");
+  outlined(ctx, night ? "#7f9a8a" : "#9fbfa8");
   ctx.globalAlpha = 1;
   ctx.beginPath();
   ctx.roundRect(x, bottom - height + 6, width - 2, 8, 4);
@@ -417,18 +457,20 @@ const bin = (ctx: CanvasRenderingContext2D, x: number, night: boolean) => {
 const bench = (ctx: CanvasRenderingContext2D, x: number) => {
   const { width, height } = OBSTACLE_SIZE.bench;
   const bottom = WORLD.ground;
-  ctx.fillStyle = "#2b2f3a";
-  ctx.fillRect(x + 8, bottom - 18, 5, 18);
-  ctx.fillRect(x + width - 13, bottom - 18, 5, 18);
+  ctx.beginPath();
+  ctx.rect(x + 8, bottom - 18, 5, 18);
+  ctx.rect(x + width - 13, bottom - 18, 5, 18);
+  outlined(ctx, "#2b2f3a");
   ctx.beginPath();
   ctx.roundRect(x, bottom - 22, width, 7, 3);
   outlined(ctx, BENCH);
   ctx.beginPath();
   ctx.roundRect(x + 4, bottom - height, width - 8, 7, 3);
   outlined(ctx, BENCH);
-  ctx.fillStyle = "#2b2f3a";
-  ctx.fillRect(x + 12, bottom - height + 6, 3, 12);
-  ctx.fillRect(x + width - 15, bottom - height + 6, 3, 12);
+  ctx.beginPath();
+  ctx.rect(x + 12, bottom - height + 6, 3, 12);
+  ctx.rect(x + width - 15, bottom - height + 6, 3, 12);
+  outlined(ctx, "#2b2f3a");
 };
 
 const pigeon = (
@@ -517,10 +559,12 @@ const sparkle = (
 /** Where the board sits in each pose's art, as fractions of the square. */
 const ANCHOR = {
   roll: { x: 0.525, bottom: 0.962 },
-  air: { x: 0.53, bottom: 0.94 },
+  air: { x: 0.51, bottom: 0.94 },
   sleeping: { x: 0.505, bottom: 0.96 },
   trophy: { x: 0.566, bottom: 0.985 },
 } as const;
+/** How far the mirrored ollie art tips back, nose up (radians). */
+const AIR_TILT = -0.44;
 /** The chibi's drawn size, in world units. */
 const SPRITE = 108;
 
@@ -576,8 +620,12 @@ const lucas = (
     const t = easeOut(Math.min((scene.crashAge ?? 0) / 0.55, 1));
     angle = t * 1.3;
     dx = t * 22;
-  } else if (airborne && !scene.reducedMotion) {
-    angle = -(player.velocity / JUMP_VELOCITY) * 0.12;
+  } else if (airborne) {
+    // The ollie art is mirrored to face his way, then tipped back so the
+    // board's nose points up the road
+    angle =
+      AIR_TILT -
+      (scene.reducedMotion ? 0 : (player.velocity / JUMP_VELOCITY) * 0.12);
   } else if (state.phase === "running" && !scene.reducedMotion) {
     // The wheels on the paving joints
     dy = Math.floor(state.distance / 28) % 2 === 0 ? 0 : -0.8;
@@ -586,6 +634,7 @@ const lucas = (
   ctx.save();
   ctx.translate(cx + dx, bottom + dy);
   ctx.rotate(angle);
+  if (key === "air") ctx.scale(-1, 1);
   ctx.drawImage(
     art,
     -ANCHOR[key].x * SPRITE,
@@ -610,6 +659,35 @@ const lucas = (
       ctx.strokeStyle = SPARKLE_LINE;
       ctx.stroke();
     }
+  }
+};
+
+/** One piece of street furniture (or a pigeon). */
+const furniture = (
+  ctx: CanvasRenderingContext2D,
+  obstacle: Obstacle,
+  scene: OllieScene,
+) => {
+  switch (obstacle.kind) {
+    case "cone":
+      cone(ctx, obstacle.x);
+      break;
+    case "cones":
+      cone(ctx, obstacle.x);
+      cone(
+        ctx,
+        obstacle.x + OBSTACLE_SIZE.cones.width - OBSTACLE_SIZE.cone.width,
+      );
+      break;
+    case "bin":
+      bin(ctx, obstacle.x, scene.night);
+      break;
+    case "bench":
+      bench(ctx, obstacle.x);
+      break;
+    case "pigeon":
+      pigeon(ctx, obstacle, scene);
+      break;
   }
 };
 
@@ -643,35 +721,25 @@ export const drawOllie = (
   if (!scene.night) clouds(ctx, street, d * parallax.clouds);
   skyline(ctx, street, d * parallax.skyline);
   facades(ctx, street, d * parallax.facades, scene.night);
+  lamps(ctx, street, d * parallax.facades);
+  // A haze over the background, so the street furniture stands out
+  ctx.fillStyle = street.haze;
+  ctx.fillRect(0, 0, WORLD.width, WORLD.ground);
   sidewalk(ctx, street, d);
-  lamps(ctx, street, d);
 
   for (const item of state.sparkles) {
     if (!item.taken) sparkle(ctx, item, scene);
   }
   for (const obstacle of state.obstacles) {
-    switch (obstacle.kind) {
-      case "cone":
-        cone(ctx, obstacle.x);
-        break;
-      case "cones":
-        cone(ctx, obstacle.x);
-        cone(
-          ctx,
-          obstacle.x + OBSTACLE_SIZE.cones.width - OBSTACLE_SIZE.cone.width,
-        );
-        break;
-      case "bin":
-        bin(ctx, obstacle.x, scene.night);
-        break;
-      case "bench":
-        bench(ctx, obstacle.x);
-        break;
-      case "pigeon":
-        pigeon(ctx, obstacle, scene);
-        break;
+    if (obstacle.kind !== "pigeon") {
+      footprint(ctx, obstacle.x, OBSTACLE_SIZE[obstacle.kind].width, street);
     }
   }
+  for (const pass of [true, false]) {
+    rimPass = pass;
+    for (const obstacle of state.obstacles) furniture(ctx, obstacle, scene);
+  }
+  rimPass = false;
   lucas(ctx, state, scene, street);
   ctx.restore();
 };

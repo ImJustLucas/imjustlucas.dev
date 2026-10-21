@@ -973,7 +973,7 @@
       },
       {
         "name": "arcade-jump-crash",
-        "value": "jump: skate pose to ollie pose with a small tilt; crash: tumble 0.55s ease-out cubic, shake 0.3s fading, end pose from 0.6s",
+        "value": "jump: skate pose to the mirrored ollie pose, tipped back 0.44 rad, with a small tilt; crash: tumble 0.55s ease-out cubic, shake 0.3s fading, end pose from 0.6s",
         "purpose": "The one place the chibi moves as a sprite: inside the game screen. The end pose is sleeping, or trophy on a new best. Under reduced motion: no tumble, no shake (the end pose at once), sparkles do not bob, stars hold."
       }
     ],
@@ -1224,8 +1224,9 @@
           "walk": "#ddd5c6",
           "walkLine": "#c8bfad",
           "curb": "#b3a995",
-          "shadow": "rgba(43, 47, 58, 0.18)",
-          "scoreInk": "#10131f"
+          "shadow": "rgba(43, 47, 58, 0.22)",
+          "scoreInk": "#10131f",
+          "haze": "rgba(250, 244, 232, 0.5)"
         },
         "night": {
           "skyTop": "#070d26",
@@ -1251,8 +1252,9 @@
           "walkLine": "#30354f",
           "curb": "#292e48",
           "lampGlow": "rgba(255, 207, 107, 0.28)",
-          "shadow": "rgba(0, 0, 0, 0.3)",
-          "scoreInk": "#f6f3ea"
+          "shadow": "rgba(0, 0, 0, 0.35)",
+          "scoreInk": "#f6f3ea",
+          "haze": "rgba(7, 13, 38, 0.38)"
         },
         "awnings": {
           "tomato": "#d4513f",
@@ -1263,7 +1265,7 @@
         "outline": {
           "value": "#4a1f24",
           "displayName": "Chibi Maroon",
-          "purpose": "2px line round the street furniture, the chibi art's maroon."
+          "purpose": "3px line round the street furniture, the chibi art's maroon."
         },
         "cone": {
           "body": "#ff8a3d",
@@ -1271,12 +1273,12 @@
           "base": "#3a3340"
         },
         "bin": {
-          "hoop": "#2f7a46",
-          "bagDay": "#d6e6da",
+          "hoop": "#3fae5c",
+          "bagDay": "#9fbfa8",
           "bagNight": "#7f9a8a"
         },
         "bench": {
-          "slats": "#2e5a3c",
+          "slats": "#c9803f",
           "legs": "#2b2f3a"
         },
         "pigeon": {
@@ -1291,6 +1293,10 @@
           "fill": "#fffaf0",
           "stroke": "#2f6bff",
           "strokeWidth": "2.5"
+        },
+        "rim": {
+          "value": "#fffaf0",
+          "purpose": "8px sticker rim drawn round each piece of furniture and each pigeon before its shapes, over a footprint shadow."
         }
       }
     }
