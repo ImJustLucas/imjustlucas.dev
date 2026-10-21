@@ -24,7 +24,7 @@ Personal portfolio site: Next.js 16 (App Router), React 19, Tailwind CSS, Shadcn
 - **Search** — the site's address (`config/site.ts`, the `www` host), page metadata, structured data, sitemap, `robots.txt` and the link preview image. See `docs/seo.md` before touching any of them.
 - **Admin** — `app/admin/` is the Owner's private space (GitHub sign-in, saves committed to the content branch). See `docs/admin.md` before touching the Admin, its pattern for editors, or its environment variables.
 - **Presence** — `components/presence/` shows the Owner's live Discord activity; the selection rule is the plain `select-presence.ts`.
-- **Arcade** — `app/[locale]/arcade/` is the game library, one Cabinet per Hobby (`lib/arcade/cabinets.ts`). Each game's rules are a plain tested module in `lib/arcade/`; its canvas screen in `components/arcade/` only draws them and loads with `next/dynamic` (`ssr: false`).
+- **Arcade** — `app/[locale]/arcade/` is the game library, one Cabinet per Hobby, with a top 10 per game on Upstash Redis; the server replays every run it ranks. See `docs/arcade.md` before touching a game, the leaderboards or their store.
 - **3D scene** — `app/[locale]/mdf-2025/` is a React Three Fiber scene celebrating a competition win.
 - **UI** — Shadcn/ui components in `components/ui/`; text goes through the primitives of `components/typography/index.tsx`, styled with `className`.
 - **Images** — remote hosts are allowed in `images.remotePatterns` (`next.config.ts`).

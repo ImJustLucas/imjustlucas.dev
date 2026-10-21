@@ -109,6 +109,8 @@ export type OllieState = {
   seed: number;
   /** Time not yet simulated, below one step. */
   lag: number;
+  /** Fixed steps run so far: where a press lands in a recorded run. */
+  steps: number;
   /** What happened during the last `advance`. */
   events: OllieEvent[];
 };
@@ -148,6 +150,7 @@ export const createOllie = (seed: number): OllieState => ({
   untilNext: WORLD.width * 0.9,
   seed: seed | 0,
   lag: 0,
+  steps: 0,
   events: [],
 });
 
@@ -275,6 +278,7 @@ const step = (state: OllieState) => {
   const { player } = state;
   const before = score(state);
 
+  state.steps += 1;
   state.time += dt;
   state.speed = Math.min(MAX_SPEED, state.speed + ACCELERATION * dt);
   const moved = state.speed * dt;
@@ -343,6 +347,39 @@ export const advance = (state: OllieState, elapsed: number) => {
     step(state);
   }
   return state;
+};
+
+/**
+ * A press or release of the jump button, at the step the run had reached:
+ * a run is its seed and these inputs, so the server can replay it.
+ */
+export type OllieInput = { readonly step: number; readonly press: boolean };
+
+/** The longest run a replay plays out: 30 minutes. */
+export const MAX_RUN_STEPS = 30 * 60 * 120;
+
+/**
+ * Plays a run again from its seed and inputs, step for step as the cabinet
+ * played it, and returns the finished run; null when the inputs are out of
+ * order or the run never ends in a crash. Inputs after the crash are ignored.
+ */
+export const replayOllie = (
+  seed: number,
+  inputs: ReadonlyArray<OllieInput>,
+): OllieState | null => {
+  const state = createOllie(seed);
+  let at = 0;
+  for (const input of inputs) {
+    if (!Number.isSafeInteger(input.step) || input.step < at) return null;
+    at = input.step;
+    while (state.phase === "running" && state.steps < input.step) step(state);
+    if (state.phase === "over") break;
+    if (state.steps !== input.step) return null;
+    if (input.press) press(state);
+    else release(state);
+  }
+  while (state.phase === "running" && state.steps < MAX_RUN_STEPS) step(state);
+  return state.phase === "over" ? state : null;
 };
 
 /** The better of a stored best and a finished run. */

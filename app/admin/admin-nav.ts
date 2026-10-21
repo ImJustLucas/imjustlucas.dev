@@ -1,6 +1,7 @@
 import {
   Backpack,
   Cpu,
+  Gamepad2,
   History,
   House,
   type LucideIcon,
@@ -22,6 +23,7 @@ export const ADMIN_TABS: ReadonlyArray<{
   { href: "/admin/achievements", label: "Achievements", icon: Trophy },
   { href: "/admin/hobbies", label: "Hobbies", icon: Palmtree },
   { href: "/admin/profile", label: "Profile", icon: UserRound },
+  { href: "/admin/arcade", label: "Arcade", icon: Gamepad2 },
 ];
 
 /** The tab of `pathname`: the home only at `/admin` itself. */

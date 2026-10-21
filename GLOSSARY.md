@@ -32,6 +32,14 @@ _Avoid_: Interest, pastime
 One game of the Arcade, the page where Lucas's Hobbies become playable: playable, or standing on the shelf as "soon" until its game exists. Ollie (skate) is the first.
 _Avoid_: Game card, level, minigame
 
+**Leaderboard**:
+A Cabinet's top 10: the best players, each once with their best score and the first name they chose. Scores come from runs the server replayed.
+_Avoid_: Ranking, high scores, hall of fame
+
+**Player**:
+A visitor playing in the Arcade, known by an id made in their browser and, once they make a Leaderboard, a first name.
+_Avoid_: User, gamer
+
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".
 _Avoid_: Date (for a span), duration
