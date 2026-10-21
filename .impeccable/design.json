@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T21:00:00+00:00",
+  "generatedAt": "2026-10-21T22:00:00+00:00",
   "title": "Design System: ImJustLucas",
   "extensions": {
     "colorMeta": {
@@ -969,12 +969,17 @@
       {
         "name": "arcade-step",
         "value": "fixed steps of 1/120s; a frame counts for 0.25s at most",
-        "purpose": "The Arcade's run keeps its pace at any frame rate and never leaps after a stall; a hidden tab or a blurred window pauses it. Parallax: clouds 0.05, skyline 0.12, façades 0.45 (0, 0 and 0.15 under reduced motion)."
+        "purpose": "The Arcade's run keeps its pace at any frame rate and never leaps after a stall; a hidden tab or a blurred window pauses it. Parallax in Ollie: clouds 0.05, skyline 0.12, façades 0.45 (0, 0 and 0.15 under reduced motion); in Surf: clouds 0.04, headlands 0.08, swell lines 0.35 (0, 0 and 0.12 under reduced motion)."
       },
       {
         "name": "arcade-jump-crash",
         "value": "jump: skate pose to the mirrored ollie pose, tipped back 0.44 rad, with a small tilt; crash: tumble 0.55s ease-out cubic, shake 0.3s fading, end pose from 0.6s",
         "purpose": "The one place the chibi moves as a sprite: inside the game screen. The end pose is sleeping, or trophy on a new best. Under reduced motion: no tumble, no shake (the end pose at once), sparkles do not bob, stars hold."
+      },
+      {
+        "name": "arcade-surf-pop-wipeout",
+        "value": "ride: rise and fall 1.5 units on the swell; pop: surf-ride pose tilted with the climb and fall (nose up to 0.3 rad, down to 0.35 rad); wipeout: surf-wipeout pose turns 0.9 rad and drops into the sea 0.6s ease-out, shake 0.3s fading, end pose from 0.7s",
+        "purpose": "Surf's chibi on the swell, with spray off the tail and two foam rings where he went in. The end pose floats in the front water: the wipeout, or the surf pose waist-deep on a new best. Under reduced motion: no bob, no tilt, no drop, no shake (the end pose at once); the swell lines drift at 0.12 and stop rolling, spray, foam rings, beam and blinking hold still."
       }
     ],
     "breakpoints": [
@@ -1298,6 +1303,96 @@
           "value": "#fffaf0",
           "purpose": "8px sticker rim drawn round each piece of furniture and each pigeon before its shapes, over a footprint shadow."
         }
+      },
+      "surf": {
+        "source": "components/arcade/surf/draw.ts",
+        "rule": "The game screen never takes the site palette, and the chrome around it always does. The coast carries the sea and sand of the site's \"surf\" palette but stays the same in every site palette and mode; day or night follows Lucas's time in Paris (21:00 to 07:00).",
+        "day": {
+          "skyTop": "#8fd8e6",
+          "skyLow": "#fdf0d5",
+          "sun": "#fff4cf",
+          "sunGlow": "rgba(255, 244, 207, 0.9)",
+          "cloud": "rgba(255, 255, 255, 0.85)",
+          "headland": "#9cc7c9",
+          "headlandShade": "#86b6b8",
+          "beach": "#e9d8b4",
+          "lighthouse": "#fffaf0",
+          "lighthouseBand": "#e2574c",
+          "seaFar": "#5fd0bd",
+          "seaNear": "#1fa3a3",
+          "glitter": "rgba(255, 250, 240, 0.7)",
+          "swell": "#4cc3b3",
+          "swellFoam": "rgba(241, 247, 246, 0.75)",
+          "front": "#127c84",
+          "frontDeep": "#0b5560",
+          "foam": "#f1f7f6",
+          "haze": "rgba(253, 240, 213, 0.32)",
+          "shadow": "rgba(11, 43, 53, 0.22)",
+          "scoreInk": "#0b2b35"
+        },
+        "night": {
+          "skyTop": "#04161a",
+          "skyLow": "#0f3a42",
+          "moon": "#fff1c9",
+          "stars": "#fff6e0",
+          "headland": "#0a2a30",
+          "headlandShade": "#082429",
+          "beach": "#5a5444",
+          "lighthouse": "#cfe3e1",
+          "lighthouseBand": "#a8443c",
+          "lighthouseLamp": "#ffe3a1",
+          "beam": "rgba(255, 227, 161, 0.22)",
+          "seaFar": "#0f3a42",
+          "seaNear": "#082a30",
+          "glitter": "rgba(233, 216, 180, 0.55)",
+          "swell": "#1e5a63",
+          "swellFoam": "rgba(169, 207, 208, 0.45)",
+          "front": "#0a3038",
+          "frontDeep": "#04161a",
+          "foam": "#cfe3e1",
+          "haze": "rgba(4, 22, 26, 0.3)",
+          "shadow": "rgba(0, 0, 0, 0.35)",
+          "scoreInk": "#f3ecdf"
+        },
+        "outline": {
+          "value": "#4a1f24",
+          "displayName": "Chibi Maroon",
+          "purpose": "3px line round every obstacle, shared with Ollie."
+        },
+        "rim": {
+          "value": "#fffaf0",
+          "purpose": "8px sticker rim drawn round each obstacle before its shapes, so it reads against sea and sky alike."
+        },
+        "rock": {
+          "body": "#76707c",
+          "light": "#948e9a",
+          "dark": "#5a5560",
+          "weed": "#3f8f5a"
+        },
+        "beacon": {
+          "body": "#fffaf0",
+          "bands": "#e2574c",
+          "lamp": "#ffd84d",
+          "lampOff": "#9a8a5a",
+          "lampGlow": "rgba(255, 216, 77, 0.45)"
+        },
+        "piling": {
+          "wood": "#a8734a",
+          "grain": "#7f5236",
+          "wet": "#5e3d2a",
+          "barnacle": "#e9d8b4"
+        },
+        "gull": {
+          "body": "#fbfbf7",
+          "wing": "#8d99a3",
+          "tip": "#2b2f3a",
+          "beak": "#f2b33d"
+        },
+        "sparkle": {
+          "fill": "#fffaf0",
+          "stroke": "#1fa3a3",
+          "purpose": "The three tattoo stars circling where he went in after a crash."
+        }
       }
     }
   },
@@ -1552,14 +1647,14 @@
     {
       "name": "Cabinet Tile",
       "kind": "card",
-      "description": "A cabinet on the Arcade's shelf: a raised tray tile with the pose on its ground stage disc, the name in Title and the tagline in muted Label; the open one is ringed 2px in the action ink with a playing tag on Online, a locked one shows a seam silhouette, a lock badge and a soon tag on seam.",
-      "html": "<ul class=\"ds-ct-shelf\"><li class=\"ds-ct ds-ct-on\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Ollie</span><span class=\"ds-ct-line\">skate down a Paris street</span><span class=\"ds-ct-tag ds-ct-playing\">playing</span></span></li><li class=\"ds-ct\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span><span class=\"ds-ct-ghost\"></span><span class=\"ds-ct-lock\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/></svg></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Surf</span><span class=\"ds-ct-line\">ride the swell</span><span class=\"ds-ct-tag ds-ct-soon\">soon</span></span></li></ul>",
-      "css": ".ds-ct-shelf { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; margin:0; padding:0; list-style:none; max-width:540px; } .ds-ct { position:relative; display:flex; align-items:center; gap:12px; padding:12px; background:#141c48; border:2px solid transparent; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-ct-on { border-color:#6f97ff; } .ds-ct-pose { position:relative; flex-shrink:0; width:64px; height:64px; } .ds-ct-disc { position:absolute; left:6%; right:6%; top:14%; bottom:4%; border-radius:9999px; background:#0a0f2e; } .ds-ct-ghost { position:absolute; left:28%; right:28%; top:10%; bottom:8%; border-radius:40% 40% 30% 30%; background:#2a3a7a; } .ds-ct-lock { position:absolute; right:0; bottom:0; display:flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:9999px; background:#0a0f2e; color:#aab6e6; } .ds-ct-text { display:flex; min-width:0; flex-direction:column; gap:4px; } .ds-ct-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-ct-line { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; color:#aab6e6; } .ds-ct-tag { width:fit-content; padding:2px 8px; border-radius:9999px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; line-height:1rem; letter-spacing:0.02em; white-space:nowrap; } .ds-ct-playing { background:#5fe08a; color:#0a0f2e; } .ds-ct-soon { background:#2a3a7a; color:#f6f3ea; }"
+      "description": "A cabinet on the Arcade's shelf: a raised tray tile with the pose on its ground stage disc, the name in Title and the tagline in muted Label; a playable tile is a button (aria-current on the open one) that opens its cabinet (kept in the address as ?cabinet=surf, none for the first), its seam border on hover and the 2px action-ink focus ring; the open one is ringed 2px in the action ink with a playing tag on Online; a locked one is not a button and shows a seam silhouette, a lock badge and a soon tag on seam.",
+      "html": "<ul class=\"ds-ct-shelf\"><li class=\"ds-ct-li\"><button type=\"button\" class=\"ds-ct ds-ct-on\" aria-current=\"true\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Ollie</span><span class=\"ds-ct-line\">skate down a Paris street</span><span class=\"ds-ct-tag ds-ct-playing\">playing</span></span></button></li><li class=\"ds-ct-li\"><button type=\"button\" class=\"ds-ct\"><span class=\"ds-ct-pose\"><span class=\"ds-ct-disc\"></span></span><span class=\"ds-ct-text\"><span class=\"ds-ct-name\">Surf</span><span class=\"ds-ct-line\">ride the swell</span></span></button></li></ul>",
+      "css": ".ds-ct-shelf { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; margin:0; padding:0; list-style:none; max-width:540px; } .ds-ct-li { display:flex; } .ds-ct { position:relative; width:100%; text-align:left; font:inherit; cursor:pointer; outline:none; transition:border-color 150ms ease-out; display:flex; align-items:center; gap:12px; padding:12px; background:#141c48; border:2px solid transparent; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); color:#f6f3ea; } .ds-ct:hover { border-color:#2a3a7a; } .ds-ct-on, .ds-ct-on:hover { border-color:#6f97ff; } .ds-ct:focus-visible { outline:2px solid #6f97ff; outline-offset:2px; } .ds-ct-pose { position:relative; flex-shrink:0; width:64px; height:64px; } .ds-ct-disc { position:absolute; left:6%; right:6%; top:14%; bottom:4%; border-radius:9999px; background:#0a0f2e; } .ds-ct-ghost { position:absolute; left:28%; right:28%; top:10%; bottom:8%; border-radius:40% 40% 30% 30%; background:#2a3a7a; } .ds-ct-lock { position:absolute; right:0; bottom:0; display:flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:9999px; background:#0a0f2e; color:#aab6e6; } .ds-ct-text { display:flex; min-width:0; flex-direction:column; gap:4px; } .ds-ct-name { font-family:Unbounded, Geist, ui-sans-serif, system-ui, sans-serif; font-size:1.125rem; font-weight:600; line-height:1.3; } .ds-ct-line { font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; color:#aab6e6; } .ds-ct-tag { width:fit-content; padding:2px 8px; border-radius:9999px; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.75rem; font-weight:600; line-height:1rem; letter-spacing:0.02em; white-space:nowrap; } .ds-ct-playing { background:#5fe08a; color:#0a0f2e; } .ds-ct-soon { background:#2a3a7a; color:#f6f3ea; }"
     }
   ],
   "narrative": {
     "northStar": "The Player Profile",
-    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The arcade is the client's game library: a shelf of cabinets, one per hobby, beside the open one, Ollie, where the visitor skates Lucas down a Paris street. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means \"this is the thing to press\": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a glowing neon accent (electric blue is a solid ledge and an underline here, never a glow), hextech gold trim (gold belongs to the legendary rarity alone), and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
+    "overview": "**Creative North Star: \"The Player Profile\"**\n\nThe site is Lucas's player profile in a cosy game client. The sidebar is the client chrome: the player card with the chibi head in its live status ring, the tabs (the lowercase menu), the friends panel where his Discord presence lives, the settings row (sound, Locale, theme) and the socials. The content panel is the profile screen: on the home page a banner with who he is and the team he plays for right now, a showcase of real achievements with MasterDevFrance 2025 as the legendary one, an inventory of featured Projects framed by rarity, an about slot beside his hobbies, the FAQ, and a goodbye. The arcade is the client's game library: a shelf of cabinets, one per hobby, beside the open one: Ollie, where the visitor skates Lucas down a Paris street, or Surf, where he rides the swell between rocks and gulls. Every stat on screen is a real fact from `content/` or a live source; the game is the frame, never the claim.\n\nIt is a cosy client, not a competitive one: a deep navy night (or, in the second palette, deep plum), soft fat corners, chunky buttons that sink onto a ledge when pressed, warm off-white text, candy rarity colours, and a single action colour that means \"this is the thing to press\": off-white standing on an electric-blue ledge at night, electric blue by day, tangerine in the plum palette. Pressable things answer with one note of a single instrument, so moving around the site plays a little melody, and one visible switch silences it all.\n\nDensity is relaxed: big slots with generous gaps, one focal object per row. The voice stays as PRODUCT.md binds it (first person, \"Yoooo\", emojis, lowercase menu labels). Anti-references: the previous \"Dev's Desk\" zinc shell (colour only through content, no accent), terminal or IDE costumes, near-black with a glowing neon accent (electric blue is a solid ledge and an underline here, never a glow), hextech gold trim (gold belongs to the legendary rarity alone), and esports HUD aggression (angular chamfers, scanlines, rank emblems).",
     "keyCharacteristics": [
       "Two-zone client inside a 12px frame: a 320px sidebar beside a rounded profile panel, both on the palette's ground, the panel the only part that scrolls.",
       "Two palettes, each with a dark and a light mode, all through the same role tokens: \"electric\" (the default; navy night in dark, off-white daytime in light) and \"plum\" (the plum and tangerine client). Dark is the default mode.",

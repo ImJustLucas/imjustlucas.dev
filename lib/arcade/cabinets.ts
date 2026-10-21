@@ -18,5 +18,5 @@ export type CabinetId = "ollie" | "surf";
 
 export const CABINETS: ReadonlyArray<Cabinet> = [
   { id: "ollie", pose: "skate", status: "playable" },
-  { id: "surf", pose: "surf", status: "soon" },
+  { id: "surf", pose: "surf", status: "playable" },
 ];

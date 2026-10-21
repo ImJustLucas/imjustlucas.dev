@@ -1,3 +1,5 @@
+import { random } from "@/lib/arcade/run";
+
 /**
  * Ollie, the skate cabinet of the Arcade (DESIGN.md, Arcade): Lucas skates
  * down a Paris street and jumps the street furniture, Chrome's offline dino
@@ -113,15 +115,6 @@ export type OllieState = {
   steps: number;
   /** What happened during the last `advance`. */
   events: OllieEvent[];
-};
-
-/** mulberry32: a small, fast, seeded generator; returns [0, 1) and the next seed. */
-export const random = (seed: number): readonly [number, number] => {
-  const next = (seed + 0x6d2b79f5) | 0;
-  let t = next;
-  t = Math.imul(t ^ (t >>> 15), t | 1);
-  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-  return [((t ^ (t >>> 14)) >>> 0) / 4294967296, next];
 };
 
 const draw = (state: OllieState) => {
@@ -380,15 +373,4 @@ export const replayOllie = (
   }
   while (state.phase === "running" && state.steps < MAX_RUN_STEPS) step(state);
   return state.phase === "over" ? state : null;
-};
-
-/** The better of a stored best and a finished run. */
-export const bestOf = (stored: number | null, run: number) =>
-  Math.max(stored ?? 0, run);
-
-/** A stored best score, or null when it is missing or not a score. */
-export const parseBest = (raw: string | null): number | null => {
-  if (raw === null) return null;
-  const value = Number(raw);
-  return Number.isSafeInteger(value) && value >= 0 ? value : null;
 };

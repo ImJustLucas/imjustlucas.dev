@@ -21,6 +21,8 @@ export type ChibiPose =
   | "football"
   | "tennis"
   | "ollie"
+  | "surf-ride"
+  | "surf-wipeout"
   | "christmas"
   | "santa";
 
@@ -48,6 +50,8 @@ const CHIBI: { readonly [P in ChibiPose]: ChibiArt } = {
   football: { day: art("football") },
   tennis: { day: art("tennis") },
   ollie: { day: art("skate-ollie") },
+  "surf-ride": { day: art("surf-ride") },
+  "surf-wipeout": { day: art("surf-wipeout") },
   christmas: { day: art("banner-noel") },
   santa: { day: art("santa") },
 };
