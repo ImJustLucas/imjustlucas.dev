@@ -780,5 +780,37 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/45"
+  },
+  {
+    "version": "2.15",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Quick menu",
+      "fr": "Menu rapide"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A quick menu! Press ⌘K (Ctrl K) or / anywhere, or the search button, and jump to any page, project or game in a few keys ⚡",
+          "fr": "Un menu rapide ! Appuie sur ⌘K (Ctrl K) ou / n'importe où, ou sur le bouton loupe, et file vers n'importe quelle page, projet ou jeu en quelques touches ⚡"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Type in English or in French, it gets you either way: palettes, dark mode, language, sound and my links are in there too",
+          "fr": "Tape en français ou en anglais, il te comprend dans les deux cas : palettes, mode sombre, langue, son et mes liens sont dedans aussi"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A few secrets hide in there. Old-school gamers might know a code or two 🎮👀",
+          "fr": "Quelques secrets s'y cachent. Les vieux gamers connaissent peut-être un code ou deux 🎮👀"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/46"
   }
 ]
