@@ -3,6 +3,7 @@ import { TestClock } from "effect/testing";
 
 import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
+import { GitHubContributions } from "./github-contributions";
 import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
 import { testProfile } from "./test-profile";
@@ -47,6 +48,7 @@ const catalogWithChannel = (
   ContentCatalog.layer.pipe(
     Layer.provide(contentWithChannel(youtubeChannelId)),
     Layer.provide(GitHubStars.layerTest({})),
+    Layer.provide(GitHubContributions.layerTest({})),
     Layer.provide(YouTubeChannel.layerTest(channels)),
   );
 
