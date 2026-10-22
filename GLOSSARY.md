@@ -76,6 +76,10 @@ _Avoid_: Socials, links
 The downloadable PDF of Lucas's CV, one per Locale, each with the date it was last updated.
 _Avoid_: CV
 
+**Recruiter mode**:
+The profile as one sober, printable page for recruiters (`/cv`), outside the client: no sidebar, no sound. Its content is read from the Profile, Experiences, Projects and diplomas; the Resume stays the PDF.
+_Avoid_: CV page, resume page
+
 **Patch**:
 One version of the site in its patch notes: a version (`<season>.<patch>`, an optional hotfix number after), a date, a title and lines tagged new, changed or fixed, in the Owner's voice, optionally linking the pull request that shipped it. The newest Patch's version is the site's current version.
 _Avoid_: Release, changelog entry, update

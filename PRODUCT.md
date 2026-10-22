@@ -33,7 +33,7 @@ Three claims, held equally, with none leading:
 
 ## Operating Context
 
-- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu, and the patch notes (the site's changelog, written like a game's, Season 1 the first portfolio and Season 2 the Player Profile), linked from the current version at the foot of the sidebar.
+- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu, and the patch notes (the site's changelog, written like a game's, Season 1 the first portfolio and Season 2 the Player Profile), linked from the current version at the foot of the sidebar, and the recruiter mode (`/cv`: the profile as one sober, printable page outside the client, linked from the sidebar and the home banner).
 - Every public page exists in both Locales (English default, French) and is statically generated; Projects and Videos regenerate daily.
 - The sidebar menu sits beside a scrollable content panel; on mobile the sidebar becomes an overlay.
 - The Admin (`/admin`) is French only, private, GitHub sign-in for the Owner alone, and works through forms: one save makes one commit on `main`.

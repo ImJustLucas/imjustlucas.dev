@@ -45,6 +45,11 @@
       "label": "notes de version",
       "title": "notes de version",
       "description": "Les nouveautés du site de Lucas Bellier, version par version : les notes de version d'imjustlucas.dev, racontées comme dans un jeu."
+    },
+    "cv": {
+      "label": "mode recruteur",
+      "title": "CV",
+      "description": "Le CV de Lucas Bellier sur une page : développeur fullstack à Paris, ses expériences, projets, compétences, formation et langues, prêt à imprimer."
     }
   },
   "Layout": {
@@ -74,6 +79,7 @@
     "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
     "downloadResume": "Télécharger mon CV",
     "resumeLastUpdated": "mis à jour le {date, date, medium}",
+    "recruiterMode": "mode recruteur",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -149,6 +155,31 @@
     "intro": "Là où j'ai joué jusqu'ici, et les diplômes gagnés en chemin 🎓",
     "chibiAlt": "Lucas qui savoure un mug de café fumant"
   },
+  "Recruiter": {
+    "back": "retour au jeu",
+    "print": "imprimer / enregistrer en PDF",
+    "downloadResume": "CV en PDF",
+    "headline": "Développeur fullstack · cofondateur de Predi.GG",
+    "location": "Paris, France",
+    "availability": "ouvert aux opportunités · Paris ou remote",
+    "summary": "Je conçois des sites et des applications de bout en bout, de la première maquette à la production, surtout en TypeScript avec React, Next.js et Node.js. Lauréat de MasterDevFrance 2025, un concours national d'excellence technique en développement logiciel.",
+    "experienceTitle": "expériences",
+    "projectsTitle": "projets choisis",
+    "allProjects": "tous les projets",
+    "skillsTitle": "compétences",
+    "skillsNote": "tirées de mes projets, les plus utilisées d'abord",
+    "educationTitle": "formation",
+    "languagesTitle": "langues",
+    "languages": {
+      "french": "Français",
+      "frenchLevel": "langue maternelle",
+      "english": "Anglais",
+      "englishLevel": "professionnel"
+    },
+    "linksTitle": "liens",
+    "website": "Site",
+    "liveVersion": "Version en ligne, toujours à jour : {url}"
+  },
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",
@@ -167,7 +198,8 @@
     "settings": "réglages",
     "socials": "réseaux",
     "playerLine": "dev fullstack · paris",
-    "unread": "nouvelle version"
+    "unread": "nouvelle version",
+    "recruiter": "mode recruteur"
   },
   "Presence": {
     "listeningBy": "par {artist}",
@@ -423,6 +455,7 @@
       "contact": "contact message embauche demande d'ami",
       "mdf2025": "masterdevfrance trophée concours victoire légendaire",
       "patchNotes": "notes de version nouveautés mises à jour versions changelog",
+      "cv": "recruteur cv curriculum imprimer pdf embauche une page",
       "project": "projet",
       "game": "jeu jouer arcade",
       "palette": "thème palette couleur",

@@ -448,3 +448,38 @@
     box-shadow: var(--float);
   }
 }
+
+/*
+ * The recruiter mode on paper ("Print / Save as PDF"): A4 on white, in the
+ * electric light inks whatever the visitor's palette and mode, at a type
+ * scale that fits the page on one or two sheets. The rest of the site is
+ * never printed on its own (the client window does not scroll on paper).
+ */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
+  }
+  html {
+    font-size: 11px;
+    /* next-themes' inline dark scheme would paint the page margins */
+    color-scheme: light !important;
+  }
+  html,
+  body {
+    background: #fff;
+  }
+  [data-cv-page] {
+    --frame: 255 255 255;
+    --ground: 255 255 255;
+    --raised: 255 255 255;
+    --seam: 220 214 198;
+    --ink: 16 19 31;
+    --ink-muted: 84 90 110;
+    --action-ink: 16 19 31;
+    --link-line: 220 214 198;
+    --tray: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

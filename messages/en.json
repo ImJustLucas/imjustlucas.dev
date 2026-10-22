@@ -45,6 +45,11 @@
       "label": "patch notes",
       "title": "patch notes",
       "description": "What's new on Lucas Bellier's site, version by version: the patch notes of imjustlucas.dev, written like a game's."
+    },
+    "cv": {
+      "label": "recruiter mode",
+      "title": "resume (CV)",
+      "description": "Lucas Bellier's resume on one page: fullstack developer in Paris, his experience, projects, skills, education and languages, ready to print."
     }
   },
   "Layout": {
@@ -74,6 +79,7 @@
     "creativeMindset": "I love tackling projects with a creative approach. My process usually starts with a good brainstorming session, lots of inspiration-hunting, and diving deep into the latest tech tools. Whether it's building from scratch or refining an existing idea, I aim to create with both quality and originality in mind.",
     "downloadResume": "Download my resume",
     "resumeLastUpdated": "updated {date, date, medium}",
+    "recruiterMode": "recruiter mode",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -149,6 +155,31 @@
     "intro": "Where I've played so far, and the diplomas I earned along the way 🎓",
     "chibiAlt": "Lucas savouring a steaming mug of coffee"
   },
+  "Recruiter": {
+    "back": "back to the game",
+    "print": "print / save as PDF",
+    "downloadResume": "PDF resume",
+    "headline": "Fullstack developer · co-founder of Predi.GG",
+    "location": "Paris, France",
+    "availability": "open to opportunities · Paris or remote",
+    "summary": "I build websites and applications end to end, from the first sketch to production, mostly in TypeScript with React, Next.js and Node.js. Winner of MasterDevFrance 2025, a national competition for technical excellence in software development.",
+    "experienceTitle": "experience",
+    "projectsTitle": "selected projects",
+    "allProjects": "every project",
+    "skillsTitle": "skills",
+    "skillsNote": "from my projects, the most used first",
+    "educationTitle": "education",
+    "languagesTitle": "languages",
+    "languages": {
+      "french": "French",
+      "frenchLevel": "native",
+      "english": "English",
+      "englishLevel": "professional"
+    },
+    "linksTitle": "links",
+    "website": "Website",
+    "liveVersion": "Live version, always up to date: {url}"
+  },
   "Videos": {
     "new": "New",
     "watch": "Watch now!",
@@ -167,7 +198,8 @@
     "settings": "settings",
     "socials": "socials",
     "playerLine": "fullstack dev · paris",
-    "unread": "new version"
+    "unread": "new version",
+    "recruiter": "recruiter mode"
   },
   "Presence": {
     "listeningBy": "by {artist}",
@@ -423,6 +455,7 @@
       "contact": "contact message hire friend request",
       "mdf2025": "masterdevfrance trophy competition win legendary",
       "patchNotes": "patch notes changelog updates what's new versions",
+      "cv": "recruiter resume cv print pdf hire one page",
       "project": "project",
       "game": "game play arcade",
       "palette": "theme palette colour color",

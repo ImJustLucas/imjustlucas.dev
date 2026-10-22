@@ -52,6 +52,7 @@ describe("buildCommands", () => {
         ROUTES.contact,
         ROUTES.mdf2025,
         ROUTES.patchNotes,
+        ROUTES.cv,
       ].map((route) => ({ kind: "navigate", href: route.path })),
     );
     expect(pages.map((c) => c.tab)).toEqual([
@@ -63,8 +64,13 @@ describe("buildCommands", () => {
       5,
       undefined,
       undefined,
+      undefined,
     ]);
-    expect(pages.slice(-2).map((c) => c.cue)).toEqual(["unlock", "press"]);
+    expect(pages.slice(-3).map((c) => c.cue)).toEqual([
+      "unlock",
+      "press",
+      "press",
+    ]);
   });
 
   it("opens every Project's page, with its rarity", () => {
