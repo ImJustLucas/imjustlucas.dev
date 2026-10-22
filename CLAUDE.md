@@ -11,7 +11,7 @@ pnpm lint       # ESLint (eslint.config.mjs)
 pnpm test       # Vitest, every *.test.ts once
 ```
 
-The pre-commit hook (Husky, installed by `pnpm install`) runs `pnpm lint` and `pnpm test`; CI runs lint, test and build on every push.
+The pre-commit hook (Husky, installed by `pnpm install`) runs `pnpm lint` and `pnpm test`; CI runs lint, test and build on every push. Vercel deploys `main` only (`git.deploymentEnabled` in `vercel.json`): pull requests get no preview deployment, so check a change locally with `next dev` or `next build && next start`.
 
 Tests sit next to the module they cover as `*.test.ts` (`vitest.config.ts`: Node environment, `@/` alias, `server-only` aliased to a no-op) and go through public interfaces: plain functions, or Effect services with `@effect/vitest`. React components are not tested.
 
