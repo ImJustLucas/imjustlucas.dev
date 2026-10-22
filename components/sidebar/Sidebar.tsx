@@ -7,6 +7,7 @@ import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { FriendsPanel } from "@/components/presence/FriendsPanel";
 import { QuickMenuButton } from "@/components/quick-menu/QuickMenuTrigger";
+import { RadioSlot } from "@/components/radio/RadioSlot";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { SoundSwitch } from "@/components/sound/SoundSwitch";
 import { ModeToggle } from "@/components/theme-switch";
@@ -60,6 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
       <QuickMenuButton />
       <FriendsPanel />
       <div className="mt-auto flex flex-col gap-4">
+        <RadioSlot />
         <SettingsRow />
         <SocialRow profile={profile} />
         {version && <VersionLink version={version} />}

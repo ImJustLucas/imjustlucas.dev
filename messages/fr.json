@@ -310,6 +310,23 @@
     "off": "son coupé",
     "offReducedMotion": "son coupé (mouvement réduit)"
   },
+  "Radio": {
+    "title": "radio",
+    "idleTitle": "radio lofi cosy",
+    "idleLine": "lance et chill",
+    "album": "la radio d'ImJustLucas",
+    "play": "Lancer la radio",
+    "pause": "Mettre la radio en pause",
+    "next": "Morceau suivant",
+    "volume": "Volume de la musique",
+    "rain": "Pluie",
+    "rainOn": "pluie activée",
+    "rainOff": "pluie coupée",
+    "rainVolume": "Volume de la pluie",
+    "source": "Ce morceau et sa licence CC0 sur le Free Music Archive",
+    "nowPlaying": "en cours de lecture",
+    "openRadio": "{title}, ouvrir la radio"
+  },
   "Rarity": {
     "common": "commun",
     "rare": "rare",
@@ -416,6 +433,7 @@
       "projects": "inventaire",
       "arcade": "arcade",
       "settings": "réglages",
+      "radio": "radio",
       "links": "liens",
       "secrets": "secrets 👀"
     },
@@ -438,7 +456,9 @@
       "linkedin": "linkedin dm message contact",
       "github": "github code dépôts",
       "discord": "discord ami",
-      "resume": "cv pdf télécharger"
+      "resume": "cv pdf télécharger",
+      "radio": "radio lofi musique chill son révisions concentration",
+      "rain": "pluie ambiance cosy météo"
     },
     "commands": {
       "play": "jouer à {name}",
@@ -451,7 +471,12 @@
       "linkedin": "m'écrire sur LinkedIn",
       "github": "mon GitHub",
       "discord": "m'ajouter sur Discord",
-      "resume": "télécharger mon CV"
+      "resume": "télécharger mon CV",
+      "radioPlay": "lancer la radio lofi",
+      "radioPause": "mettre la radio en pause",
+      "radioNext": "morceau suivant à la radio",
+      "rainOn": "faire pleuvoir",
+      "rainOff": "arrêter la pluie"
     },
     "copied": {
       "title": "lien copié 📋",

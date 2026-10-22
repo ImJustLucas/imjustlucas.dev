@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 
 import { fontVariables } from "@/app/fonts";
 import { PresenceProvider } from "@/components/presence/PresenceProvider";
+import { RadioProvider } from "@/components/radio/RadioProvider";
 import { SoundProvider } from "@/components/sound/SoundProvider";
 import { OWNER_NAME, SITE_URL } from "@/config/site";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
@@ -76,17 +77,19 @@ export default async function LocaleLayout({
             <Analytics />
             <SpeedInsights />
             <SoundProvider>
-              <PresenceProvider discordUserId={profile.discordUserId}>
-                <MobileMenuProvider>
-                  <ClientLayout
-                    profile={profile}
-                    version={version}
-                    projects={projects}
-                  >
-                    {children}
-                  </ClientLayout>
-                </MobileMenuProvider>
-              </PresenceProvider>
+              <RadioProvider>
+                <PresenceProvider discordUserId={profile.discordUserId}>
+                  <MobileMenuProvider>
+                    <ClientLayout
+                      profile={profile}
+                      version={version}
+                      projects={projects}
+                    >
+                      {children}
+                    </ClientLayout>
+                  </MobileMenuProvider>
+                </PresenceProvider>
+              </RadioProvider>
             </SoundProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

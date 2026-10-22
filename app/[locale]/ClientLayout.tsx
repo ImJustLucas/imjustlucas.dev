@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl";
 
 import { QuickMenuProvider } from "@/components/quick-menu/QuickMenuProvider";
+import { RadioPill } from "@/components/radio/RadioPill";
+import { useRadio } from "@/components/radio/RadioProvider";
 import { MobileTopBar } from "@/components/sidebar/MobileTopBar";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { buttonVariants } from "@/components/ui/button";
@@ -22,7 +24,7 @@ interface ClientLayoutProps {
 /**
  * The client window: the Night frame with its sparkles, the sidebar (or the
  * mobile top bar and sheet) and the rounded profile panel, the only part
- * that scrolls, and the quick menu over all of it.
+ * that scrolls, the radio's pill on phones and the quick menu over all of it.
  */
 export default function ClientLayout({
   children,
@@ -31,6 +33,7 @@ export default function ClientLayout({
   projects,
 }: ClientLayoutProps) {
   const { isOpen } = useMobileMenu();
+  const { state: radio } = useRadio();
   const t = useTranslations("Layout");
   return (
     <QuickMenuProvider data={{ projects, profile }}>
@@ -55,10 +58,15 @@ export default function ClientLayout({
           id="content"
           tabIndex={-1}
           inert={isOpen}
-          className="min-h-0 flex-1 overflow-y-auto rounded-xl bg-ground p-4 pb-10 md:p-panel focus-visible:outline-none"
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto rounded-xl bg-ground p-4 pb-10 md:p-panel focus-visible:outline-none",
+            // Room under the content for the radio's pill on phones
+            radio.status !== "off" && "max-md:pb-24",
+          )}
         >
           {children}
         </main>
+        <RadioPill />
       </div>
     </QuickMenuProvider>
   );

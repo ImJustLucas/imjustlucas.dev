@@ -122,6 +122,41 @@ describe("buildCommands", () => {
     expect(sound(false)).toBe(en.QuickMenu.commands.unmute);
   });
 
+  it("plays or pauses the radio, moves on once started, and flips the rain", () => {
+    const radio = (on: boolean, started: boolean, rain: boolean) =>
+      buildCommands(
+        input({
+          state: {
+            palette: "electric",
+            mode: "dark",
+            sound: true,
+            radio: { on, started, rain },
+          },
+        }),
+      ).filter((c) => c.section === "radio");
+    expect(radio(false, false, false).map((c) => c.label)).toEqual([
+      en.QuickMenu.commands.radioPlay,
+      en.QuickMenu.commands.rainOn,
+    ]);
+    expect(radio(true, true, true).map((c) => c.label)).toEqual([
+      en.QuickMenu.commands.radioPause,
+      en.QuickMenu.commands.radioNext,
+      en.QuickMenu.commands.rainOff,
+    ]);
+    expect(radio(true, true, true).map((c) => c.action)).toEqual([
+      { kind: "radio", control: "toggle" },
+      { kind: "radio", control: "next" },
+      { kind: "radio", control: "rain" },
+    ]);
+    // Without the radio's state, it is off
+    expect(commands.some((c) => c.id === "radio-toggle")).toBe(true);
+  });
+
+  it("finds the radio by words of both Locales", () => {
+    expect(search("lofi")[0]).toBe("radio-toggle");
+    expect(search("pluie")[0]).toBe("radio-rain");
+  });
+
   it("links to the Profile's places and copies the page's link", () => {
     expect(
       commands.filter((c) => c.section === "links").map((c) => c.action),

@@ -310,6 +310,23 @@
     "off": "sound off",
     "offReducedMotion": "sound off (reduced motion)"
   },
+  "Radio": {
+    "title": "radio",
+    "idleTitle": "cosy lofi radio",
+    "idleLine": "press play, chill",
+    "album": "ImJustLucas radio",
+    "play": "Play the radio",
+    "pause": "Pause the radio",
+    "next": "Next track",
+    "volume": "Music volume",
+    "rain": "Rain",
+    "rainOn": "rain on",
+    "rainOff": "rain off",
+    "rainVolume": "Rain volume",
+    "source": "This track and its CC0 licence on the Free Music Archive",
+    "nowPlaying": "now playing",
+    "openRadio": "{title}, open the radio"
+  },
   "Rarity": {
     "common": "common",
     "rare": "rare",
@@ -416,6 +433,7 @@
       "projects": "inventory",
       "arcade": "arcade",
       "settings": "settings",
+      "radio": "radio",
       "links": "links",
       "secrets": "secrets 👀"
     },
@@ -438,7 +456,9 @@
       "linkedin": "linkedin dm message contact",
       "github": "github code repositories",
       "discord": "discord friend",
-      "resume": "resume cv pdf download"
+      "resume": "resume cv pdf download",
+      "radio": "radio lofi music chill beats study focus",
+      "rain": "rain ambience cosy weather"
     },
     "commands": {
       "play": "play {name}",
@@ -451,7 +471,12 @@
       "linkedin": "message me on LinkedIn",
       "github": "my GitHub",
       "discord": "add me on Discord",
-      "resume": "download my resume"
+      "resume": "download my resume",
+      "radioPlay": "play the lofi radio",
+      "radioPause": "pause the radio",
+      "radioNext": "next track on the radio",
+      "rainOn": "make it rain",
+      "rainOff": "stop the rain"
     },
     "copied": {
       "title": "link copied 📋",

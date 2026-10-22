@@ -9,6 +9,7 @@ import {
   Backpack,
   Check,
   Clapperboard,
+  CloudRain,
   Download,
   Gamepad2,
   Github,
@@ -20,7 +21,10 @@ import {
   MessageCircleHeart,
   Monitor,
   Moon,
+  Pause,
+  Radio,
   ScrollText,
+  SkipForward,
   Sun,
   Trophy,
   UserRound,
@@ -33,6 +37,7 @@ import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { DiscordMark } from "@/components/contact/DiscordMark";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { usePalette } from "@/components/palette/use-palette";
+import { useRadio } from "@/components/radio/RadioProvider";
 import { RarityTag } from "@/components/rarity/RarityTag";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { Sparkle } from "@/components/sparkle";
@@ -73,6 +78,7 @@ import {
   type Secret,
   SECRET_SHOW,
 } from "@/lib/quick-menu/commands";
+import { isOn } from "@/lib/radio/radio";
 import { cn } from "@/lib/utils";
 
 import { Keycap, useModifierKey } from "./QuickMenuTrigger";
@@ -219,6 +225,10 @@ function QuickMenuBody({
   const { theme, setTheme } = useTheme();
   const { palette, setPalette } = usePalette();
   const { state: sound, play, toggle } = useSounds();
+  const radio = useRadio();
+  const radioOn = isOn(radio.state);
+  const radioStarted = radio.state.status !== "off";
+  const rain = radio.state.rain;
   const { closeMenu } = useMobileMenu();
   const reducedMotion = useReducedMotion();
   const modifier = useModifierKey();
@@ -267,9 +277,22 @@ function QuickMenuBody({
           palette,
           mode: theme as Mode | undefined,
           sound: sound.enabled,
+          radio: { on: radioOn, started: radioStarted, rain },
         },
       }),
-    [locale, messages, other, otherLocale, data, palette, theme, sound.enabled],
+    [
+      locale,
+      messages,
+      other,
+      otherLocale,
+      data,
+      palette,
+      theme,
+      sound.enabled,
+      radioOn,
+      radioStarted,
+      rain,
+    ],
   );
   const results = useMemo(
     () => filterCommands(commands, query),
@@ -324,6 +347,11 @@ function QuickMenuBody({
         return;
       case "sound":
         toggle();
+        return;
+      case "radio":
+        if (action.control === "toggle") radio.toggle();
+        else if (action.control === "next") radio.next();
+        else radio.toggleRain();
         return;
       case "copyLink":
         navigator.clipboard
@@ -402,7 +430,11 @@ function QuickMenuBody({
                 onSelect={() => run(command)}
                 onPointerEnter={() => play("tick")}
               >
-                <CommandIcon command={command} sound={sound.enabled} />
+                <CommandIcon
+                  command={command}
+                  sound={sound.enabled}
+                  radioOn={radioOn}
+                />
                 <span className="min-w-0 flex-1 truncate">{command.label}</span>
                 <CommandDetail
                   command={command}
@@ -436,9 +468,11 @@ function QuickMenuBody({
 function CommandIcon({
   command,
   sound,
+  radioOn,
 }: {
   command: QuickCommand;
   sound: boolean;
+  radioOn: boolean;
 }) {
   const { action } = command;
   const className = "size-[18px]";
@@ -472,6 +506,17 @@ function CommandIcon({
       ) : (
         <Volume2 aria-hidden className={className} />
       );
+    case "radio": {
+      const Icon =
+        action.control === "rain"
+          ? CloudRain
+          : action.control === "next"
+            ? SkipForward
+            : radioOn
+              ? Pause
+              : Radio;
+      return <Icon aria-hidden className={className} />;
+    }
     case "copyLink":
       return <Link2 aria-hidden className={className} />;
     case "external": {

@@ -443,6 +443,76 @@
     box-shadow: var(--tray);
   }
 
+  /*
+   * The radio's sliders: a 6px seam groove filled in the muted ink up to a
+   * 16px ink knob ringed in the raised colour, 44px tall so it is easy to
+   * touch. `--fill` is the value as a percentage, set by the component.
+   */
+  .range {
+    appearance: none;
+    height: 44px;
+    background: transparent;
+    cursor: pointer;
+    --fill: 50%;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 9999px;
+    background: linear-gradient(
+      to right,
+      rgb(var(--ink-muted)) var(--fill),
+      rgb(var(--seam)) var(--fill)
+    );
+  }
+  .range::-moz-range-track {
+    height: 6px;
+    border-radius: 9999px;
+    background: rgb(var(--seam));
+  }
+  .range::-moz-range-progress {
+    height: 6px;
+    border-radius: 9999px;
+    background: rgb(var(--ink-muted));
+  }
+  .range::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -5px;
+    border-radius: 9999px;
+    background: rgb(var(--ink));
+    box-shadow: 0 0 0 3px rgb(var(--raised));
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+  .range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: 0;
+    border-radius: 9999px;
+    background: rgb(var(--ink));
+    box-shadow: 0 0 0 3px rgb(var(--raised));
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .range:hover::-webkit-slider-thumb {
+      transform: scale(1.15);
+    }
+  }
+  .range:focus-visible {
+    outline: none;
+  }
+  .range:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid rgb(var(--action-ink));
+    outline-offset: 2px;
+  }
+  .range:focus-visible::-moz-range-thumb {
+    outline: 2px solid rgb(var(--action-ink));
+    outline-offset: 2px;
+  }
+  .range:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
   /* Things that float above the client: menus, tooltips, the mobile sheet. */
   .float {
     box-shadow: var(--float);

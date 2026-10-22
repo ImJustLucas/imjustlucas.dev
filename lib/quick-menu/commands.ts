@@ -21,6 +21,7 @@ export type Section =
   | "projects"
   | "arcade"
   | "settings"
+  | "radio"
   | "links";
 
 export type Mode = "dark" | "light" | "system";
@@ -42,10 +43,14 @@ export type Action =
   | { readonly kind: "mode"; readonly mode: Mode }
   | { readonly kind: "locale"; readonly locale: Locale }
   | { readonly kind: "sound" }
+  | { readonly kind: "radio"; readonly control: RadioControl }
   | { readonly kind: "copyLink" }
   | { readonly kind: "external"; readonly href: string }
   | { readonly kind: "download"; readonly href: string }
   | { readonly kind: "secret"; readonly secret: Secret };
+
+/** What a radio command does (`components/radio`). */
+export type RadioControl = "toggle" | "next" | "rain";
 
 export type Command = {
   /** Unique, stable across Locales. */
@@ -91,6 +96,12 @@ export type CommandsInput = {
     readonly palette: Palette;
     readonly mode: Mode | undefined;
     readonly sound: boolean;
+    /** The radio: whether it plays, has started this visit, and the rain. */
+    readonly radio?: {
+      readonly on: boolean;
+      readonly started: boolean;
+      readonly rain: boolean;
+    };
   };
 };
 
@@ -288,6 +299,52 @@ export const buildCommands = (input: CommandsInput): Command[] => {
     },
   ];
 
+  // The radio plays its own notes, as its slot does
+  const radioState = state.radio ?? { on: false, started: false, rain: false };
+  const radio = (
+    id: RadioControl,
+    label: string,
+    terms: ReadonlyArray<string>,
+  ): Command => ({
+    id: `radio-${id}`,
+    section: "radio",
+    label,
+    terms: [...terms, ...every((t) => t.QuickMenu.keywords.radio)],
+    action: { kind: "radio", control: id },
+    cue: null,
+  });
+  const radioCommands: Command[] = [
+    radio(
+      "toggle",
+      radioState.on
+        ? texts.QuickMenu.commands.radioPause
+        : texts.QuickMenu.commands.radioPlay,
+      [
+        ...every((t) => t.QuickMenu.commands.radioPlay),
+        ...every((t) => t.QuickMenu.commands.radioPause),
+      ],
+    ),
+    // Next only once there is something playing to move on from
+    ...(radioState.started
+      ? [
+          radio("next", texts.QuickMenu.commands.radioNext, [
+            ...every((t) => t.QuickMenu.commands.radioNext),
+          ]),
+        ]
+      : []),
+    radio(
+      "rain",
+      radioState.rain
+        ? texts.QuickMenu.commands.rainOff
+        : texts.QuickMenu.commands.rainOn,
+      [
+        ...every((t) => t.QuickMenu.commands.rainOn),
+        ...every((t) => t.QuickMenu.commands.rainOff),
+        ...every((t) => t.QuickMenu.keywords.rain),
+      ],
+    ),
+  ];
+
   const link = (
     id: "copyLink" | "linkedin" | "github" | "discord" | "resume",
     action: Action,
@@ -312,7 +369,15 @@ export const buildCommands = (input: CommandsInput): Command[] => {
     link("resume", { kind: "download", href: input.links.resume }, "confirm"),
   ];
 
-  return [...secrets, ...pages, ...projects, ...arcade, ...settings, ...links];
+  return [
+    ...secrets,
+    ...pages,
+    ...projects,
+    ...arcade,
+    ...settings,
+    ...radioCommands,
+    ...links,
+  ];
 };
 
 /**

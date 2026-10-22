@@ -1006,11 +1006,11 @@
       "masterGain": 0.22,
       "cues": {
         "tick": "B5, very quiet, hover, fine pointers only, max one per 60ms; also patch rows and the sidebar's version link",
-        "press": "A4, secondary controls without their own cue",
+        "press": "A4, secondary controls without their own cue; also the radio's next track",
         "tab": "D4 E4 F#4 A4 B4 D5 in menu order",
         "confirm": "D4+A4 then D5, the Play button, and the Arcade's play and play again",
-        "toggleOn": "A4 to D5 (also choosing a mode or a palette), also playing the showcase and resuming a run in the Arcade, and opening a patch row",
-        "toggleOff": "D5 to A4, also pausing the showcase and pausing a run in the Arcade, and closing a patch row",
+        "toggleOn": "A4 to D5 (also choosing a mode or a palette), also playing the showcase and resuming a run in the Arcade, and opening a patch row, also playing the radio and turning its rain on",
+        "toggleOff": "D5 to A4, also pausing the showcase and pausing a run in the Arcade, and closing a patch row, also pausing the radio and turning its rain off",
         "unlock": "D4 F#4 A4 D5 then coin.mp3, legendary achievement, and a new best in the Arcade (450ms after the miss)",
         "boop": "random D5-B5 with a 2-semitone bend, banner chibi",
         "miss": "A3 to F#3, the crash in the Arcade; defined for errors",
@@ -1025,7 +1025,8 @@
         "coin": "/sounds/coin.mp3",
         "impact": "/sounds/impact.mp3"
       },
-      "arcade": "The Arcade's cues sound only during play, after the visitor's own press starts a run, and through the same switch."
+      "arcade": "The Arcade's cues sound only during play, after the visitor's own press starts a run, and through the same switch.",
+      "radio": "lofi by HoliznaCC0 (CC0 1.0, Free Music Archive), AAC 96 kb/s in public/radio, fetched on the first press of play; procedural rain (Web Audio); follows the sound switch"
     },
     "sparkle": {
       "path": "M12 1.5C12.9 8.4 15.6 11.1 22.5 12C15.6 12.9 12.9 15.6 12 22.5C11.1 15.6 8.4 12.9 1.5 12C8.4 11.1 11.1 8.4 12 1.5Z",
@@ -1688,6 +1689,14 @@
       "description": "At the sidebar's foot under the social row: a scroll icon, patch notes in Label in the muted ink and the version in Data, then an 8px breathing Online dot until the visitor has opened the patch notes (stored per visitor, never before hydration). A quiet link, no ledge, 44px tall: hover lifts it to the ink and draws the 2px link-line underline; ticks on hover, plays the Patch cue when pressed.",
       "html": "<a class=\"ds-vl\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 12h-5\"/><path d=\"M15 8h-5\"/><path d=\"M19 17V5a2 2 0 0 0-2-2H4\"/><path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"/></svg><span class=\"ds-vl-l\">patch notes</span><span class=\"ds-vl-v\">v2.12</span><span class=\"ds-vl-dot\"></span></a>",
       "css": ".ds-vl { display:inline-flex; align-items:center; gap:8px; height:44px; padding:0 4px; border-radius:10px; color:#aab6e6; text-decoration:none; font-family:Geist, ui-sans-serif, system-ui, sans-serif; font-size:0.875rem; font-weight:500; transition:color 150ms ease-out; } .ds-vl:hover { color:#f6f3ea; } .ds-vl-l { text-decoration:underline 2px transparent; text-underline-offset:4px; } .ds-vl:hover .ds-vl-l { text-decoration-color:#2f6bff; } .ds-vl-v { font-family:'Geist Mono', ui-monospace, SFMono-Regular, monospace; font-size:0.8125rem; font-variant-numeric:tabular-nums; } .ds-vl-dot { width:8px; height:8px; border-radius:9999px; background:#5fe08a; }"
+    },
+    {
+      "name": "Radio",
+      "kind": "custom",
+      "refersTo": "radio",
+      "description": "A cosy lofi radio at the sidebar's foot (and a now-playing pill on phones), mounted once so it plays across pages and never starts by itself. Idle: one compact raised row (music pose on a 44px ground stage disc, 'cosy lofi radio' over muted Data, a 44px outline play button). Started: title, Online-ink equaliser and the artist linking to the track's CC0 page, outline pause and next, a 4px progress bar, then the mixer (music volume, a 44px outline rain switch with aria-pressed, rain volume). Sliders are 44px native ranges with a 6px seam groove filled in the muted ink and a 16px ink knob. Tracks: HoliznaCC0, CC0 1.0; rain made in code. Muting the site pauses it; play while muted turns sound on.",
+      "html": "<section class=\"ds-radio\"><span class=\"ds-rdisc\"></span><span class=\"ds-rtext\"><span class=\"ds-rtitle\">Tokyo Sunset</span><span class=\"ds-rartist\">HoliznaCC0</span></span><button class=\"ds-rbtn\" aria-label=\"Pause the radio\"></button><button class=\"ds-rbtn\" aria-label=\"Next track\"></button></section>",
+      "css": ".ds-radio { width:288px; box-sizing:border-box; display:flex; align-items:center; gap:10px; padding:6px; background:#141c48; border-radius:16px; box-shadow:inset 0 1px 0 rgb(246 243 234 / 0.07); font-family:Geist, ui-sans-serif, system-ui, sans-serif; } .ds-rdisc { width:44px; height:44px; border-radius:9999px; background:#0a0f2e; flex:none; } .ds-rtext { flex:1; min-width:0; display:flex; flex-direction:column; } .ds-rtitle { color:#f6f3ea; font-size:0.875rem; font-weight:500; } .ds-rartist { color:#aab6e6; font-family:'Geist Mono', ui-monospace, monospace; font-size:0.8125rem; text-decoration:underline; text-decoration-color:#2a3a7a; text-decoration-thickness:2px; text-underline-offset:4px; } .ds-rbtn { width:44px; height:44px; flex:none; border-radius:10px; border:2px solid #2a3a7a; background:#0a0f2e; color:#f6f3ea; box-shadow:0 4px 0 #05081c; }"
     }
   ],
   "narrative": {
