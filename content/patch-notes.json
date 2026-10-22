@@ -958,5 +958,23 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/55"
+  },
+  {
+    "version": "2.22",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Who's in the lobby",
+      "fr": "Qui est dans le lobby"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "The friends panel now shows how many players are on the site with you right now, like a game lobby 🎮 (and \"just you\" when it's quiet). No tracking: just an anonymous ping while your tab is open",
+          "fr": "Le panneau amis montre maintenant combien de joueurs sont sur le site avec toi en ce moment, comme un lobby de jeu 🎮 (et « juste toi » quand c'est calme). Aucun pistage : juste un ping anonyme tant que ton onglet est ouvert"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
   }
 ]
