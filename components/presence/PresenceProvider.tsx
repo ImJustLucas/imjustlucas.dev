@@ -6,6 +6,8 @@ import { useLanyard } from "react-use-lanyard";
 import {
   type DiscordStatus,
   type Presence,
+  type PresenceDevice,
+  presenceDevice,
   presenceStatus,
   selectPresence,
 } from "./select-presence";
@@ -16,6 +18,8 @@ const UNREACHABLE_AFTER_MS = 10_000;
 type PresenceContextValue = {
   presence: Presence;
   status: DiscordStatus | "connecting";
+  /** Where he is on Discord, unless offline or connecting. */
+  device?: PresenceDevice;
 };
 
 const PresenceContext = createContext<PresenceContextValue | undefined>(
@@ -24,7 +28,8 @@ const PresenceContext = createContext<PresenceContextValue | undefined>(
 
 /**
  * The one Lanyard connection of the client, shared by the player card, the
- * mobile top bar and the friends panel. Presence never plays a sound.
+ * mobile top bar, the friends panel and the chibi that strikes the pose of
+ * what Lucas is doing. Presence never plays a sound.
  */
 export function PresenceProvider({
   discordUserId,
@@ -49,6 +54,7 @@ export function PresenceProvider({
   const value = {
     presence: selectPresence(status, { unreachable }),
     status: presenceStatus(status, { unreachable }),
+    device: presenceDevice(status),
   };
 
   return (

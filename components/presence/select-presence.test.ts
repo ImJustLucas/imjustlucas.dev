@@ -2,7 +2,11 @@ import type { Activity, LanyardData, Spotify } from "react-use-lanyard";
 
 import { describe, expect, it } from "vitest";
 
-import { presenceStatus, selectPresence } from "./select-presence";
+import {
+  presenceDevice,
+  presenceStatus,
+  selectPresence,
+} from "./select-presence";
 
 const lanyardStatus = (overrides: Partial<LanyardData> = {}): LanyardData => ({
   listening_to_spotify: false,
@@ -77,6 +81,7 @@ describe("selectPresence", () => {
       kind: "listening",
       song: "Midnight City",
       artist: "M83",
+      album: "Hurry Up, We're Dreaming",
       artwork: {
         url: "https://i.scdn.co/image/ab67616d0000b273",
         alt: "Hurry Up, We're Dreaming",
@@ -97,11 +102,12 @@ describe("selectPresence", () => {
   });
 
   it("ignores activities that are not games", () => {
-    const customStatus = game({ type: 4, name: "Custom Status" });
+    const stream = game({ type: 1, name: "Twitch" });
 
-    expect(
-      selectPresence(lanyardStatus({ activities: [customStatus] })),
-    ).toEqual({ kind: "status", status: "online" });
+    expect(selectPresence(lanyardStatus({ activities: [stream] }))).toEqual({
+      kind: "status",
+      status: "online",
+    });
   });
 
   it("shows his status when Lucas neither plays nor listens", () => {
@@ -260,7 +266,297 @@ describe("selectPresence", () => {
         kind: "listening",
         song: "Midnight City",
         artist: "M83",
+        album: "Hurry Up, We're Dreaming",
       });
+    });
+  });
+
+  describe("Spotify", () => {
+    const spotifyId = "48fW6fCNnOvfpBBYwGdRib";
+
+    it("links the track on Spotify and gives its start and end", () => {
+      const presence = selectPresence(
+        lanyardStatus({
+          listening_to_spotify: true,
+          spotify: track({
+            track_id: spotifyId,
+            timestamps: { start: 1000, end: 240_000 },
+          }),
+        }),
+      );
+
+      expect(presence).toMatchObject({
+        kind: "listening",
+        url: `https://open.spotify.com/track/${spotifyId}`,
+        startedAt: 1000,
+        endsAt: 240_000,
+      });
+    });
+
+    it("never links anything that is not a Spotify track id", () => {
+      const presence = selectPresence(
+        lanyardStatus({
+          listening_to_spotify: true,
+          spotify: track({ track_id: "../../evil.example/x" }),
+        }),
+      );
+
+      expect(presence).not.toHaveProperty("url");
+    });
+
+    it("shows no progress when the timestamps make no sense", () => {
+      const presence = selectPresence(
+        lanyardStatus({
+          listening_to_spotify: true,
+          spotify: track({ timestamps: { start: 5000, end: 5000 } }),
+        }),
+      );
+
+      expect(presence).not.toHaveProperty("startedAt");
+      expect(presence).not.toHaveProperty("endsAt");
+    });
+  });
+
+  describe("coding", () => {
+    const vscode = (overrides: Partial<Activity> = {}): Activity =>
+      game({
+        name: "Visual Studio Code",
+        application_id: "383226320970055681",
+        details: "In imjustlucas.dev - 0 problems found",
+        state: "Working on select-presence.ts:42:7",
+        timestamps: { start: 1000, end: 0 },
+        assets: {
+          large_image: "mp:external/lang/https/example.com/typescript.png",
+          large_text: "Editing a TypeScript file",
+          small_image: "mp:external/editor/https/example.com/vscode.png",
+          small_text: "Visual Studio Code",
+        },
+        ...overrides,
+      });
+
+    it("shows Lucas coding, not playing, at his editor", () => {
+      expect(selectPresence(lanyardStatus({ activities: [vscode()] }))).toEqual(
+        {
+          kind: "coding",
+          editor: "Visual Studio Code",
+          language: "TypeScript",
+          project: "imjustlucas.dev",
+          artwork: {
+            url: "https://media.discordapp.net/external/lang/https/example.com/typescript.png",
+            alt: "TypeScript",
+          },
+          badge: {
+            url: "https://media.discordapp.net/external/editor/https/example.com/vscode.png",
+            alt: "Visual Studio Code",
+          },
+          startedAt: 1000,
+        },
+      );
+    });
+
+    it("never keeps the file he is editing", () => {
+      const presence = selectPresence(
+        lanyardStatus({ activities: [vscode()] }),
+      );
+
+      expect(JSON.stringify(presence)).not.toContain("select-presence");
+    });
+
+    it("reads a bare language caption, as the JetBrains plugins send it", () => {
+      const webstorm = vscode({
+        name: "WebStorm",
+        details: "Editing page.tsx",
+        state: "Project: imjustlucas.dev",
+        assets: {
+          large_image: "tsx",
+          large_text: "TypeScript JSX",
+          small_image: "webstorm",
+          small_text: "WebStorm",
+        },
+      });
+
+      expect(
+        selectPresence(lanyardStatus({ activities: [webstorm] })),
+      ).toMatchObject({
+        kind: "coding",
+        editor: "WebStorm",
+        language: "TypeScript JSX",
+        project: "imjustlucas.dev",
+      });
+    });
+
+    it("drops a caption that names a file, the editor or idling", () => {
+      for (const caption of [
+        "Editing page.tsx",
+        "README.md",
+        "Visual Studio Code",
+        "Idling",
+      ]) {
+        const presence = selectPresence(
+          lanyardStatus({
+            activities: [
+              vscode({
+                assets: {
+                  large_image: "x",
+                  large_text: caption,
+                  small_image: "y",
+                  small_text: "Visual Studio Code",
+                },
+              }),
+            ],
+          }),
+        );
+
+        expect(presence).toMatchObject({ kind: "coding" });
+        expect(presence).not.toHaveProperty("language");
+      }
+    });
+
+    it("shows no project when the editor names none", () => {
+      const presence = selectPresence(
+        lanyardStatus({
+          activities: [vscode({ details: "Idling", state: undefined })],
+        }),
+      );
+
+      expect(presence).not.toHaveProperty("project");
+    });
+
+    it("shows a game over his editor", () => {
+      expect(
+        selectPresence(lanyardStatus({ activities: [vscode(), game()] })),
+      ).toMatchObject({ kind: "playing", name: "Valorant" });
+    });
+
+    it("shows his editor over the track he codes to", () => {
+      expect(
+        selectPresence(
+          lanyardStatus({
+            activities: [vscode()],
+            listening_to_spotify: true,
+            spotify: track(),
+          }),
+        ),
+      ).toMatchObject({ kind: "coding" });
+    });
+  });
+
+  it("shows what Lucas is watching", () => {
+    const show = game({ type: 3, name: "Crunchyroll", details: "Frieren" });
+
+    expect(selectPresence(lanyardStatus({ activities: [show] }))).toMatchObject(
+      { kind: "watching", name: "Crunchyroll", details: "Frieren" },
+    );
+  });
+
+  describe("his own line", () => {
+    const customStatus = (overrides: Partial<Activity> = {}): Activity => ({
+      type: 4,
+      id: "custom",
+      name: "Custom Status",
+      state: "shipping the presence card",
+      created_at: 0,
+      ...overrides,
+    });
+
+    it("shows his Discord custom status with its emoji", () => {
+      expect(
+        selectPresence(
+          lanyardStatus({
+            activities: [customStatus({ emoji: { name: "🚀" } })],
+          }),
+        ),
+      ).toEqual({
+        kind: "status",
+        status: "online",
+        message: { text: "shipping the presence card", emoji: "🚀" },
+      });
+    });
+
+    it("draws a custom Discord emoji from Discord's CDN", () => {
+      const presence = selectPresence(
+        lanyardStatus({
+          activities: [
+            customStatus({
+              emoji: { name: "pepe", id: "123456", animated: true },
+            }),
+          ],
+        }),
+      );
+
+      expect(presence).toMatchObject({
+        message: {
+          emojiImage: {
+            url: "https://cdn.discordapp.com/emojis/123456.gif",
+            alt: ":pepe:",
+          },
+        },
+      });
+    });
+
+    it("prefers the site message he set in Lanyard KV, even offline", () => {
+      expect(
+        selectPresence(
+          lanyardStatus({
+            discord_status: "offline",
+            kv: { site_message: "  back   monday 🏄 " },
+            activities: [customStatus()],
+          }),
+        ),
+      ).toEqual({
+        kind: "status",
+        status: "offline",
+        message: { text: "back monday 🏄" },
+      });
+    });
+
+    it("falls back to his custom status when the site message is empty", () => {
+      expect(
+        selectPresence(
+          lanyardStatus({
+            kv: { site_message: "   " },
+            activities: [customStatus()],
+          }),
+        ),
+      ).toMatchObject({ message: { text: "shipping the presence card" } });
+    });
+
+    it("keeps his line to one short line", () => {
+      const presence = selectPresence(
+        lanyardStatus({ kv: { site_message: "a".repeat(500) } }),
+      );
+
+      expect(presence).toMatchObject({ message: { text: "a".repeat(140) } });
+    });
+  });
+
+  describe("presenceDevice", () => {
+    it("names his computer first, then his phone, then a browser", () => {
+      expect(presenceDevice(lanyardStatus())).toBe("desktop");
+      expect(
+        presenceDevice(
+          lanyardStatus({
+            active_on_discord_desktop: false,
+            active_on_discord_mobile: true,
+            active_on_discord_web: true,
+          }),
+        ),
+      ).toBe("mobile");
+      expect(
+        presenceDevice(
+          lanyardStatus({
+            active_on_discord_desktop: false,
+            active_on_discord_web: true,
+          }),
+        ),
+      ).toBe("web");
+    });
+
+    it("names none offline or while connecting", () => {
+      expect(
+        presenceDevice(lanyardStatus({ discord_status: "offline" })),
+      ).toBeUndefined();
+      expect(presenceDevice(undefined)).toBeUndefined();
     });
   });
 });

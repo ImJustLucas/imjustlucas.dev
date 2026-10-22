@@ -6,6 +6,7 @@ import {
   House,
   type LucideIcon,
   Palmtree,
+  Radio,
   ScrollText,
   Trophy,
   UserRound,
@@ -26,6 +27,7 @@ export const ADMIN_TABS: ReadonlyArray<{
   { href: "/admin/profile", label: "Profile", icon: UserRound },
   { href: "/admin/patch-notes", label: "Patch notes", icon: ScrollText },
   { href: "/admin/arcade", label: "Arcade", icon: Gamepad2 },
+  { href: "/admin/presence", label: "Présence", icon: Radio },
 ];
 
 /** The tab of `pathname`: the home only at `/admin` itself. */
