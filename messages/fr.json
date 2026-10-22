@@ -533,5 +533,32 @@
       "busyTitle": "plein de coucous en ce moment",
       "failedTitle": "coucou pas envoyé"
     }
+  },
+  "LoadingTips": {
+    "label": "astuce",
+    "tips": {
+      "quickMenu": "⌘K ouvre le menu rapide sur toutes les pages. sur téléphone, c'est la loupe en haut 🔎",
+      "quickMenuWeird": "tape un truc bizarre dans le menu rapide, on sait jamais 👀",
+      "cheatCodes": "les vieux codes de triche marchent encore par ici. je dis ça, je dis rien 🎮",
+      "sudo": "recruteurs : il y a une façon très sudo de m'embaucher dans le menu rapide 😏",
+      "palettes": "le site existe en 5 palettes. choisis la tienne avec le bouton thème 🎨",
+      "lightMode": "la nuit est par défaut, mais le bouton thème a aussi un mode clair ☀️",
+      "mute": "trop de notes de kalimba ? le bouton haut-parleur coupe tout 🔇",
+      "melody": "chaque bouton joue sa note : cliquer partout joue une petite mélodie 🎶",
+      "leaderboard": "l'arcade garde un top 10 par jeu. ton prénom a une place à prendre 🛹",
+      "cabinets": "deux bornes à l'arcade : du skate dans Paris ou du surf sur la houle 🏄",
+      "patchNotes": "le numéro de version en bas du menu ouvre les patch notes 📜",
+      "addFriend": "la page contact est un écran d'ajout d'ami. ta demande arrive sur mon LinkedIn 🤝",
+      "level": "mon niveau est vrai : chaque contribution GitHub vaut un xp 📈",
+      "presence": "le panneau d'amis est en direct : ce que je joue, code ou écoute, là maintenant 🎧",
+      "liveChibi": "le chibi de mon profil fait comme moi sur Discord, en direct",
+      "language": "le site parle aussi anglais : appuie sur EN à côté du bouton thème 🇬🇧",
+      "trophy": "le trophée doré de mon profil est vrai : j'ai gagné MasterDevFrance 2025 🏆",
+      "coffee": "fun fact : je n'écris pas une ligne de code avant mon premier café ☕",
+      "boards": "le week-end, je suis sur une planche, avec ou sans roues 🏄",
+      "mains": "sur League, je main Vayne et Yunara. oui, ADC. ne juge pas 🏹",
+      "tattoo": "la petite étoile dans les marges du site, c'est le tatouage sur ma main ✨",
+      "humble": "imjustlucas, c'est mon rappel pour rester vrai et humble"
+    }
   }
 }
