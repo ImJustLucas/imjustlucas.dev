@@ -140,6 +140,15 @@ describe("buildCommands", () => {
     ]);
   });
 
+  it("offers to wave at Lucas only when visitors can", () => {
+    expect(ids(commands)).not.toContain("link-poke");
+    const poke = buildCommands(input({ poke: true })).find(
+      (c) => c.id === "link-poke",
+    );
+    expect(poke).toMatchObject({ action: { kind: "poke" }, cue: null });
+    expect(search("coucou", { poke: true })[0]).toBe("link-poke");
+  });
+
   it("labels everything in the visitor's Locale", () => {
     const fr_ = buildCommands(input({ locale: "fr" }));
     expect(fr_.find((c) => c.id === "page-what")?.label).toBe(

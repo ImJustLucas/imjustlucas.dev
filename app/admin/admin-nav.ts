@@ -2,6 +2,7 @@ import {
   Backpack,
   Cpu,
   Gamepad2,
+  Hand,
   History,
   House,
   type LucideIcon,
@@ -28,6 +29,7 @@ export const ADMIN_TABS: ReadonlyArray<{
   { href: "/admin/patch-notes", label: "Patch notes", icon: ScrollText },
   { href: "/admin/arcade", label: "Arcade", icon: Gamepad2 },
   { href: "/admin/presence", label: "Présence", icon: Radio },
+  { href: "/admin/pokes", label: "Coucous", icon: Hand },
 ];
 
 /** The tab of `pathname`: the home only at `/admin` itself. */

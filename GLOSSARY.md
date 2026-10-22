@@ -44,6 +44,10 @@ _Avoid_: User, gamer
 Everyone on the site right now, the visitor included, counted from an anonymous beat each visible tab sends; shown in the friends panel as players "in the lobby". Not a Player (that is the Arcade's), never a visitor's identity.
 _Avoid_: Online users, visitors count, audience
 
+**Poke**:
+A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
+_Avoid_: Message, notification, ping
+
 **Trophy**:
 Something a visitor unlocks by exploring the site (a game played, a secret found, every palette tried), with a Rarity, kept in their own browser and shown on the trophies page. Never Lucas's: his are Achievements.
 _Avoid_: Achievement, badge, quest
