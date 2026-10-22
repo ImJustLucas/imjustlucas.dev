@@ -23,6 +23,7 @@ const catalogWith = (
     profile?: unknown;
     achievements?: unknown;
     hobbies?: unknown;
+    patchNotes?: unknown;
   },
   sources: {
     /** Star count per repository link; GitHub fails for any other. */
@@ -39,6 +40,7 @@ const catalogWith = (
           documents.achievements ?? [],
         ),
         "content/hobbies.json": JSON.stringify(documents.hobbies ?? []),
+        "content/patch-notes.json": JSON.stringify(documents.patchNotes ?? []),
         "content/profile.json": JSON.stringify(
           documents.profile ?? testProfile,
         ),
@@ -109,6 +111,7 @@ describe("the Tech registry", () => {
               "content/experiences.json": "[]",
               "content/achievements.json": "[]",
               "content/hobbies.json": "[]",
+              "content/patch-notes.json": "[]",
               "content/profile.json": JSON.stringify(testProfile),
             }),
           ),
@@ -949,6 +952,105 @@ describe("ContentCatalog.hobbies", () => {
             { label: text("chess", "échecs"), pose: "chess" },
             { label: text("", "surf"), pose: "surf" },
           ],
+        }),
+      ),
+    ),
+  );
+});
+
+describe("ContentCatalog.patchNotes", () => {
+  const patch = (version: string, extra: object = {}) => ({
+    version,
+    date: "2026-10-21",
+    title: text(`patch ${version}`, `patch ${version}`),
+    entries: [{ tag: "new", text: text("a thing", "un truc") }],
+    ...extra,
+  });
+
+  it.effect("returns the Patches by version, newest first, numerically", () =>
+    Effect.gen(function* () {
+      const patchNotes = yield* (yield* ContentCatalog).patchNotes;
+
+      expect(patchNotes.map((p) => p.version)).toEqual([
+        "2.10",
+        "2.9",
+        "2.4.1",
+        "2.4",
+        "1.0",
+      ]);
+      expect(patchNotes[0]).toEqual(
+        patch("2.10", { link: "https://github.com/o/r/pull/43" }),
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          patchNotes: [
+            patch("1.0"),
+            patch("2.4"),
+            patch("2.9"),
+            patch("2.10", { link: "https://github.com/o/r/pull/43" }),
+            patch("2.4.1"),
+          ],
+        }),
+      ),
+    ),
+  );
+
+  it.effect(
+    "fails on a bad version, date, tag or link, no lines, or a missing translation",
+    () =>
+      Effect.gen(function* () {
+        const error = yield* Effect.flip((yield* ContentCatalog).patchNotes);
+        const at = (location: string) =>
+          `content/patch-notes.json at ${location}`;
+
+        expect(error.message).toContain(
+          `${at("[0].version")}: Expected a version (e.g. 2.4 or 2.4.1)`,
+        );
+        expect(error.message).toContain(
+          `${at("[1].date")}: Expected a date (YYYY-MM-DD)`,
+        );
+        expect(error.message).toContain(at("[2].entries[0].tag"));
+        expect(error.message).toContain(
+          `${at("[3].entries")}: Expected at least one line`,
+        );
+        expect(error.message).toContain(
+          `${at("[4].entries[0].text.fr")}: Missing translation`,
+        );
+        expect(error.message).toContain(
+          `${at("[5].link")}: Expected an http(s) URL`,
+        );
+      }).pipe(
+        Effect.provide(
+          catalogWith({
+            patchNotes: [
+              patch("v2"),
+              patch("2.1", { date: "2026-13-01" }),
+              patch("2.2", {
+                entries: [{ tag: "nerfed", text: text("a", "b") }],
+              }),
+              patch("2.3", { entries: [] }),
+              patch("2.4", {
+                entries: [{ tag: "fixed", text: text("a bug", "") }],
+              }),
+              patch("2.5", { link: "github.com/o/r/pull/1" }),
+            ],
+          }),
+        ),
+      ),
+  );
+
+  it.effect("fails on a version two Patches share", () =>
+    Effect.gen(function* () {
+      const error = yield* Effect.flip((yield* ContentCatalog).patchNotes);
+
+      expect(error.message).toContain(
+        "content/patch-notes.json at [2].version: Patch version used more than once: 2.4",
+      );
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          patchNotes: [patch("2.4"), patch("2.5"), patch("2.4")],
         }),
       ),
     ),

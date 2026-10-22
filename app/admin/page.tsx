@@ -119,6 +119,7 @@ export default async function AdminHome() {
     "/admin/achievements": `${counts.achievements}`,
     "/admin/hobbies": `${counts.hobbies}`,
     "/admin/profile": `CV FR ${short(resumes.fr)} · EN ${short(resumes.en)}`,
+    "/admin/patch-notes": `${counts.patchNotes} versions`,
     "/admin/arcade": "classements des bornes",
   };
 

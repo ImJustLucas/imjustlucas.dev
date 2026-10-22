@@ -50,6 +50,7 @@ const admin = (
       "content/experiences.json": "[]",
       [ACHIEVEMENTS]: JSON.stringify(achievements),
       "content/hobbies.json": "[]",
+      "content/patch-notes.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({

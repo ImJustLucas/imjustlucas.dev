@@ -1,0 +1,727 @@
+[
+  {
+    "version": "1.0",
+    "date": "2023-11-13",
+    "title": {
+      "en": "Hello world",
+      "fr": "Hello world"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "My very first portfolio goes live: an avatar, a few lines about me, and that's about it 👋",
+          "fr": "Mon tout premier portfolio est en ligne : un avatar, quelques lignes sur moi, et c'est à peu près tout 👋"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A favicon, so my tab finally looks like something",
+          "fr": "Un favicon, pour que mon onglet ressemble enfin à quelque chose"
+        }
+      }
+    ]
+  },
+  {
+    "version": "1.1",
+    "date": "2024-03-16",
+    "title": {
+      "en": "Say hi",
+      "fr": "Dis bonjour"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A real menu and an \"about me\" card",
+          "fr": "Un vrai menu et une carte « à propos de moi »"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A contact section, guarded by a Sonic gif 🦔",
+          "fr": "Une section contact, gardée par un gif de Sonic 🦔"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The header and footer finally behave on phones 📱",
+          "fr": "Le header et le footer se tiennent enfin sur mobile 📱"
+        }
+      }
+    ]
+  },
+  {
+    "version": "1.2",
+    "date": "2024-10-30",
+    "title": {
+      "en": "The big rebuild",
+      "fr": "La grosse refonte"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Rebuilt from scratch on Next.js and shadcn/ui, with a menu in a sidebar",
+          "fr": "Refait de zéro avec Next.js et shadcn/ui, avec un menu dans une barre latérale"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "My live Discord status in the sidebar: see what I'm playing or listening to 🎧",
+          "fr": "Mon statut Discord en direct dans la barre latérale : tu vois à quoi je joue ou ce que j'écoute 🎧"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Little click sounds on the menu",
+          "fr": "Des petits sons au clic sur le menu"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Dark and light themes 🌗",
+          "fr": "Des thèmes sombre et clair 🌗"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Pages for my projects, my experiences and the techs I build with",
+          "fr": "Des pages pour mes projets, mes expériences et les technos que j'utilise"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A FAQ on the home page",
+          "fr": "Une FAQ sur l'accueil"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/1"
+  },
+  {
+    "version": "1.3",
+    "date": "2024-11-29",
+    "title": {
+      "en": "Now showing: my videos",
+      "fr": "À l'affiche : mes vidéos"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A videos page with my latest YouTube uploads 🎬",
+          "fr": "Une page vidéos avec mes dernières vidéos YouTube 🎬"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A WIP tag for the projects still in the oven",
+          "fr": "Une étiquette WIP pour les projets encore au four"
+        }
+      }
+    ]
+  },
+  {
+    "version": "1.4",
+    "date": "2025-04-02",
+    "title": {
+      "en": "MasterDevFrance 2025",
+      "fr": "MasterDevFrance 2025"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A 3D page to celebrate winning MasterDevFrance 2025 🏆 Go throw coins at the cheque!",
+          "fr": "Une page en 3D pour fêter ma victoire au MasterDevFrance 2025 🏆 Va lancer des pièces sur le chèque !"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Coin sounds, obviously 🪙",
+          "fr": "Des bruits de pièces, évidemment 🪙"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/2"
+  },
+  {
+    "version": "1.5",
+    "date": "2025-05-12",
+    "title": {
+      "en": "Grab my resume",
+      "fr": "Prends mon CV"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A button to download my resume, right on the home page 📄",
+          "fr": "Un bouton pour télécharger mon CV, directement sur l'accueil 📄"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "YouTube and Instagram join the socials in the sidebar",
+          "fr": "YouTube et Instagram rejoignent les réseaux dans la barre latérale"
+        }
+      }
+    ]
+  },
+  {
+    "version": "1.6",
+    "date": "2026-04-15",
+    "title": {
+      "en": "Predi.GG joins the party",
+      "fr": "Predi.GG débarque"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Predi.GG, the startup I co-founded, joins my projects 🔮",
+          "fr": "Predi.GG, la startup que j'ai cofondée, rejoint mes projets 🔮"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Fresh content all over the portfolio",
+          "fr": "Du contenu tout frais un peu partout"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Patched a critical security hole in React Server Components 🔒",
+          "fr": "Corrigé une faille de sécurité critique dans les React Server Components 🔒"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/3"
+  },
+  {
+    "version": "1.7",
+    "date": "2026-10-19",
+    "title": {
+      "en": "Bonjour !",
+      "fr": "Bonjour !"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "The whole site speaks French too, just switch the language 🇫🇷",
+          "fr": "Tout le site parle aussi français, il suffit de changer de langue 🇫🇷"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Live GitHub star counts on my open-source projects ⭐",
+          "fr": "Les étoiles GitHub de mes projets open source, en direct ⭐"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "My videos come straight from my YouTube channel, refreshed every day",
+          "fr": "Mes vidéos arrivent directement de ma chaîne YouTube, mises à jour chaque jour"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Projects and experiences sorted by date, newest first",
+          "fr": "Projets et expériences triés par date, les plus récents d'abord"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Video links that went nowhere",
+          "fr": "Les liens de vidéos qui ne menaient nulle part"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The presence card no longer gets stuck",
+          "fr": "La carte de présence ne reste plus bloquée"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The link button on project cards works again",
+          "fr": "Le bouton de lien des cartes projet remarche"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/22"
+  },
+  {
+    "version": "1.8",
+    "date": "2026-10-20",
+    "title": {
+      "en": "Season finale",
+      "fr": "Fin de saison"
+    },
+    "entries": [
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The site was secretly rendering in Arial. Geist is back where it belongs",
+          "fr": "Le site s'affichait en douce en Arial. Geist est de retour"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The projects page no longer rebuilds itself while it loads",
+          "fr": "La page projets ne se reconstruit plus pendant son chargement"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Readable badges, text you can select again, and a mobile menu that closes with Escape",
+          "fr": "Des badges lisibles, du texte qu'on peut de nouveau sélectionner, et un menu mobile qui se ferme avec Échap"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/26"
+  },
+  {
+    "version": "2.0",
+    "date": "2026-10-20",
+    "title": {
+      "en": "The Player Profile",
+      "fr": "Le Player Profile"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Season 2 is live: the site is now my player profile in a cosy game client 🎮",
+          "fr": "La saison 2 est lancée : le site devient mon profil de joueur, dans un client de jeu tout doux 🎮"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A brand new home: me as a chibi, my achievements on show and my best projects as items framed by rarity",
+          "fr": "Un tout nouvel accueil : moi en chibi, mes succès en vitrine et mes meilleurs projets en objets encadrés par rareté"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "The sidebar becomes the client: a player card with my live status, tabs and a friends panel",
+          "fr": "La barre latérale devient le client : une carte de joueur avec mon statut en direct, des onglets et un panneau d'amis"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Every press plays a kalimba note, and one switch mutes it all 🎵",
+          "fr": "Chaque clic joue une note de kalimba, et un seul bouton coupe tout 🎵"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Five palettes to pick from: electric blue, plum, khaki, sakura and surf 🎨",
+          "fr": "Cinq palettes au choix : bleu électrique, prune, kaki, sakura et surf 🎨"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The contact page drops my old VIE request",
+          "fr": "La page contact oublie ma vieille demande de VIE"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/27"
+  },
+  {
+    "version": "2.1",
+    "date": "2026-10-20",
+    "title": {
+      "en": "Every screen joins in",
+      "fr": "Tous les écrans s'y mettent"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "My experiences become a career path, one stop per job 🛤️",
+          "fr": "Mes expériences deviennent un parcours, une étape par poste 🛤️"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "My diplomas are now medals you can flip 🥇",
+          "fr": "Mes diplômes sont maintenant des médailles qu'on peut retourner 🥇"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Projects, experiences and videos open on a banner with their own chibi pose",
+          "fr": "Projets, expériences et vidéos s'ouvrent sur une bannière avec leur propre pose de chibi"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Videos turn into replays",
+          "fr": "Les vidéos deviennent des replays"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/30"
+  },
+  {
+    "version": "2.2",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Loadout",
+      "fr": "Loadout"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Filter my projects by tech with the loadout: how many projects use each one, and since when",
+          "fr": "Filtre mes projets par techno avec le loadout : combien de projets l'utilisent, et depuis quand"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The how page is gone, its techs moved into the projects",
+          "fr": "La page how disparaît, ses technos passent dans les projets"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/31"
+  },
+  {
+    "version": "2.3",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Friend request",
+      "fr": "Demande d'ami"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Contact becomes an add-friend screen, with my live status 🤝",
+          "fr": "Le contact devient un écran d'ajout d'ami, avec mon statut en direct 🤝"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Add me on Discord in one press",
+          "fr": "Ajoute-moi sur Discord en un clic"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/33"
+  },
+  {
+    "version": "2.4",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Wiped out",
+      "fr": "Lessivé"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Lost? The 404 is now a nap screen, with a button to respawn at home 😴",
+          "fr": "Perdu ? La 404 est maintenant un écran de sieste, avec un bouton pour réapparaître à l'accueil 😴"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/34"
+  },
+  {
+    "version": "2.5",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Legendary reward",
+      "fr": "Récompense légendaire"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The MasterDevFrance 2025 page becomes the reward screen of a legendary achievement ✨",
+          "fr": "La page MasterDevFrance 2025 devient l'écran de récompense d'un succès légendaire ✨"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A pause button for the 3D scene",
+          "fr": "Un bouton pause pour la scène 3D"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Coins fall at the same speed on every screen",
+          "fr": "Les pièces tombent à la même vitesse sur tous les écrans"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "The cheque no longer vanishes when you resize the window",
+          "fr": "Le chèque ne disparaît plus quand on redimensionne la fenêtre"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/35"
+  },
+  {
+    "version": "2.6",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Quality of life",
+      "fr": "Confort de jeu"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A \"skip to content\" link for keyboard players",
+          "fr": "Un lien « aller au contenu » pour les joueurs au clavier"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Screen readers hear when I start a game or a song, not every second of it",
+          "fr": "Les lecteurs d'écran entendent quand je lance un jeu ou une musique, pas chaque seconde"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Copy and touch fixes all over the site, in both languages",
+          "fr": "Des corrections de textes et de tactile partout, dans les deux langues"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/36"
+  },
+  {
+    "version": "2.7",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Find me on Google",
+      "fr": "Trouve-moi sur Google"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Search engines finally know this is Lucas Bellier's site 🔍",
+          "fr": "Les moteurs de recherche savent enfin que c'est le site de Lucas Bellier 🔍"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A preview card with my chibi when you share a link to the site",
+          "fr": "Une carte d'aperçu avec mon chibi quand tu partages un lien du site"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/38"
+  },
+  {
+    "version": "2.8",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Inspect",
+      "fr": "Inspecter"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Every project gets its own page: press a card to inspect it like an item 🔎",
+          "fr": "Chaque projet a sa page : clique sur une carte pour l'inspecter comme un objet 🔎"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Screenshot galleries and the story behind each project",
+          "fr": "Des galeries de captures et l'histoire derrière chaque projet"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/39"
+  },
+  {
+    "version": "2.9",
+    "date": "2026-10-21",
+    "title": {
+      "en": "The Arcade opens",
+      "fr": "L'Arcade ouvre"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A new arcade tab, with a cabinet per hobby 🕹️",
+          "fr": "Un nouvel onglet arcade, avec une borne par hobby 🕹️"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Ollie: skate me down a Paris street, jump the cones and the pigeons 🛹",
+          "fr": "Ollie : fais-moi skater dans une rue de Paris, saute les plots et les pigeons 🛹"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "New chibi poses: football, tennis, and a Christmas outfit all December 🎅",
+          "fr": "De nouvelles poses de chibi : foot, tennis, et une tenue de Noël tout le mois de décembre 🎅"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/40"
+  },
+  {
+    "version": "2.9.1",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Ollie touch-ups",
+      "fr": "Retouches d'Ollie"
+    },
+    "entries": [
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "I finally look down the road when I jump",
+          "fr": "Je regarde enfin la route quand je saute"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Obstacles stand out from the street",
+          "fr": "Les obstacles ressortent mieux de la rue"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/41"
+  },
+  {
+    "version": "2.10",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Leaderboards",
+      "fr": "Classements"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A top 10 for every arcade game 🏆",
+          "fr": "Un top 10 pour chaque jeu de l'arcade 🏆"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Make the board and your first name goes up there",
+          "fr": "Entre dans le classement et ton prénom s'y affiche"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Every score is replayed by the server, so no cheating 😏",
+          "fr": "Chaque score est rejoué par le serveur, donc pas de triche 😏"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/42"
+  },
+  {
+    "version": "2.11",
+    "date": "2026-10-21",
+    "title": {
+      "en": "Surf's up",
+      "fr": "Ça surfe"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Surf, the second cabinet: ride the swell between rocks, beacons and gulls 🏄",
+          "fr": "Surf, la deuxième borne : file sur la houle entre rochers, balises et mouettes 🏄"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Surf gets its own top 10",
+          "fr": "Surf a son propre top 10"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/43"
+  },
+  {
+    "version": "2.12",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Dev diary",
+      "fr": "Journal de bord"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "These patch notes! Every update to the site, told the way a game would tell it 📜",
+          "fr": "Ces notes de version ! Chaque mise à jour du site, racontée comme dans un jeu 📜"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "The current version shows at the bottom of the sidebar, press it to read what's new",
+          "fr": "La version actuelle s'affiche en bas de la barre latérale, clique dessus pour voir les nouveautés"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/47"
+  }
+]

@@ -1,5 +1,6 @@
 import { Schema } from "effect";
 
+import { PATCH_VERSION } from "./patch-version";
 import { Period } from "./period";
 
 /** A translation: a non-empty string, reported as missing otherwise. */
@@ -302,10 +303,45 @@ export const Profile = Schema.Struct({
 );
 export type Profile = typeof Profile.Type;
 
+/** What a Patch's line is: something new, something changed, a fix. */
+export const PatchTag = Schema.Literals(["new", "changed", "fixed"]);
+export type PatchTag = typeof PatchTag.Type;
+
+/** A Patch's version, `<season>.<patch>` or `<season>.<patch>.<hotfix>`. */
+export const PatchVersion = Schema.String.check(
+  Schema.isPattern(PATCH_VERSION, {
+    message: "Expected a version (e.g. 2.4 or 2.4.1)",
+  }),
+);
+
+export const PatchEntry = Schema.Struct({
+  tag: PatchTag,
+  text: LocalizedText,
+});
+export type PatchEntry = typeof PatchEntry.Type;
+
+/**
+ * One version of the site in its patch notes: what shipped, in the Owner's
+ * voice, tagged line by line.
+ */
+export const Patch = Schema.Struct({
+  version: PatchVersion,
+  date: CalendarDate,
+  title: LocalizedText,
+  entries: Schema.Array(PatchEntry).check(
+    Schema.makeFilter((entries) =>
+      entries.length > 0 ? undefined : "Expected at least one line",
+    ),
+  ),
+  /** Where to read more, e.g. the pull request that shipped it. */
+  link: Schema.optionalKey(Url),
+});
+export type Patch = typeof Patch.Type;
+
 /**
  * Every content document, keyed by kind, with the rules that span documents:
- * a Tech is defined once, every referenced Tech exists, and a Project slug
- * names one Project only.
+ * a Tech is defined once, every referenced Tech exists, a Project slug names
+ * one Project only, and a version names one Patch only.
  */
 export const Content = Schema.Struct({
   techs: Schema.Array(Tech),
@@ -314,6 +350,7 @@ export const Content = Schema.Struct({
   profile: Profile,
   achievements: Schema.Array(Achievement),
   hobbies: Schema.Array(Hobby),
+  patchNotes: Schema.Array(Patch),
 }).check(
   Schema.makeFilter((content) => {
     const seen = new Set<string>();
@@ -354,7 +391,20 @@ export const Content = Schema.Struct({
         },
       ];
     });
-    return [...duplicates, ...unknown, ...sharedSlugs];
+    const versions = new Set<string>();
+    const sharedVersions = content.patchNotes.flatMap((patch, i) => {
+      if (!versions.has(patch.version)) {
+        versions.add(patch.version);
+        return [];
+      }
+      return [
+        {
+          path: ["patchNotes", i, "version"],
+          issue: `Patch version used more than once: ${patch.version}`,
+        },
+      ];
+    });
+    return [...duplicates, ...unknown, ...sharedSlugs, ...sharedVersions];
   }),
 );
 export type Content = typeof Content.Type;
@@ -367,4 +417,5 @@ export const DOCUMENT_PATHS: { readonly [K in keyof Content]: string } = {
   profile: "content/profile.json",
   achievements: "content/achievements.json",
   hobbies: "content/hobbies.json",
+  patchNotes: "content/patch-notes.json",
 };

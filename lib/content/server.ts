@@ -93,6 +93,16 @@ export const getAchievements = (locale: Locale) =>
 export const getHobbies = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).hobbies);
 
+/** The site's patch notes, newest version first, their texts in the Locale. */
+export const getPatchNotes = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).patchNotes);
+
+/** The site's current version: the newest Patch's; none without one. */
+export const getCurrentVersion = () =>
+  fromCatalog((catalog) =>
+    Effect.map(catalog.patchNotes, ([latest]) => latest?.version),
+  );
+
 /** Lucas's public identity: social links, channel, Discord account, Resumes. */
 export const getProfile = () => fromCatalog((catalog) => catalog.profile);
 

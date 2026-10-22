@@ -22,6 +22,7 @@ const catalogWith = (
     profile?: unknown;
     achievements?: unknown;
     hobbies?: unknown;
+    patchNotes?: unknown;
   },
   /** Star count per repository link; GitHub fails for any other. */
   stars: Readonly<Record<string, number>> = {},
@@ -36,6 +37,7 @@ const catalogWith = (
           documents.achievements ?? [],
         ),
         "content/hobbies.json": JSON.stringify(documents.hobbies ?? []),
+        "content/patch-notes.json": JSON.stringify(documents.patchNotes ?? []),
         "content/profile.json": JSON.stringify(
           documents.profile ?? testProfile,
         ),
@@ -408,6 +410,67 @@ describe("ContentCatalog.inLocale(locale).hobbies", () => {
           hobbies: [
             { label: text("playing LoL", "jouer à LoL"), pose: "lol" },
             { label: text("surf", "surf"), pose: "surf" },
+          ],
+        }),
+      ),
+    ),
+  );
+});
+
+describe("ContentCatalog.inLocale(locale).patchNotes", () => {
+  it.effect("returns each title and line in the Locale, newest first", () =>
+    Effect.gen(function* () {
+      const catalog = yield* ContentCatalog;
+
+      expect(yield* catalog.inLocale("fr").patchNotes).toEqual([
+        {
+          version: "2.1",
+          date: "2026-10-21",
+          title: "L'Arcade",
+          entries: [
+            { tag: "new", text: "une borne de skate" },
+            { tag: "fixed", text: "le saut" },
+          ],
+          link: "https://github.com/o/r/pull/40",
+        },
+        {
+          version: "2.0",
+          date: "2026-10-20",
+          title: "Le Player Profile",
+          entries: [{ tag: "changed", text: "tout le site" }],
+        },
+      ]);
+      expect(
+        (yield* catalog.inLocale("en").patchNotes).map((p) => p.title),
+      ).toEqual(["The Arcade", "The Player Profile"]);
+    }).pipe(
+      Effect.provide(
+        catalogWith({
+          patchNotes: [
+            {
+              version: "2.0",
+              date: "2026-10-20",
+              title: text("The Player Profile", "Le Player Profile"),
+              entries: [
+                {
+                  tag: "changed",
+                  text: text("the whole site", "tout le site"),
+                },
+              ],
+            },
+            {
+              version: "2.1",
+              date: "2026-10-21",
+              title: text("The Arcade", "L'Arcade"),
+              entries: [
+                {
+                  tag: "new",
+                  text: text("a skate cabinet", "une borne de skate"),
+                },
+                { tag: "fixed", text: text("the jump", "le saut") },
+              ],
+              link: "https://github.com/o/r/pull/40",
+            },
           ],
         }),
       ),

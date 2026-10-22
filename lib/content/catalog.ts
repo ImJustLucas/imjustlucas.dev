@@ -11,6 +11,7 @@ import {
 } from "./errors";
 import { orOnColdBuild } from "./external-source";
 import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
+import { byVersionNewestFirst } from "./patch-version";
 import { byStartMostRecentFirst, type Period } from "./period";
 import { ContentRepository, type Revision } from "./repository";
 import {
@@ -21,6 +22,8 @@ import {
   type Hobby,
   type HobbyPose,
   type LocalizedText,
+  type Patch,
+  type PatchTag,
   type Profile,
   type Project,
   type Rarity,
@@ -113,6 +116,19 @@ export type HobbyInLocale = {
   readonly pose: HobbyPose;
 };
 
+/** A Patch in one Locale: its title and lines in that Locale. */
+export type PatchInLocale = {
+  readonly version: string;
+  /** `YYYY-MM-DD`. */
+  readonly date: string;
+  readonly title: string;
+  readonly entries: ReadonlyArray<{
+    readonly tag: PatchTag;
+    readonly text: string;
+  }>;
+  readonly link?: string;
+};
+
 /**
  * The content of one Locale, as pages render it: every descriptive text in
  * that Locale; proper nouns (titles, Tech names) as they are.
@@ -153,6 +169,11 @@ export type CatalogInLocale = {
   >;
   /** In stored order, the order the Owner gave them. */
   readonly hobbies: Effect.Effect<ReadonlyArray<HobbyInLocale>, CatalogError>;
+  /** By version, newest first. */
+  readonly patchNotes: Effect.Effect<
+    ReadonlyArray<PatchInLocale>,
+    CatalogError
+  >;
   /** The Profile's Resume in this Locale. */
   readonly resume: Effect.Effect<Resume, CatalogError>;
 };
@@ -188,6 +209,8 @@ export class ContentCatalog extends Context.Service<
     >;
     /** In stored order. */
     readonly hobbies: Effect.Effect<ReadonlyArray<Hobby>, CatalogError>;
+    /** By version, newest first. */
+    readonly patchNotes: Effect.Effect<ReadonlyArray<Patch>, CatalogError>;
     /** The Profile's channel's latest Videos, most recent first. */
     readonly videos: Effect.Effect<
       ReadonlyArray<Video>,
@@ -308,6 +331,11 @@ export class ContentCatalog extends Context.Service<
       const profile = Effect.map(load, (content) => content.profile);
       const achievements = Effect.map(load, (content) => content.achievements);
       const hobbies = Effect.map(load, (content) => content.hobbies);
+      const patchNotes = Effect.map(load, (content) =>
+        [...content.patchNotes].sort((a, b) =>
+          byVersionNewestFirst(a.version, b.version),
+        ),
+      );
 
       return {
         projects,
@@ -317,6 +345,7 @@ export class ContentCatalog extends Context.Service<
         profile,
         achievements,
         hobbies,
+        patchNotes,
         inLocale: (locale): CatalogInLocale => {
           const projectInLocale = ({
             description,
@@ -361,6 +390,16 @@ export class ContentCatalog extends Context.Service<
             ),
             hobbies: Effect.map(hobbies, (all) =>
               all.map((hobby) => ({ ...hobby, label: hobby.label[locale] })),
+            ),
+            patchNotes: Effect.map(patchNotes, (all) =>
+              all.map((patch) => ({
+                ...patch,
+                title: patch.title[locale],
+                entries: patch.entries.map((entry) => ({
+                  tag: entry.tag,
+                  text: entry.text[locale],
+                })),
+              })),
             ),
             resume: Effect.map(profile, (profile) => profile.resumes[locale]),
           };
