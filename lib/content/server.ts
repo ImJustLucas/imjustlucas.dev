@@ -123,7 +123,7 @@ export const getVideos = () => fromCatalog((catalog) => catalog.videos);
 /**
  * Lucas's Level, Streak and recent weeks from his GitHub Contributions; none
  * without a `GITHUB_TOKEN` or, on a cold build, when GitHub fails. The home
- * page declares `dynamic = "force-static"` and `revalidate = 3600`, so the
- * Streak follows the day within the hour.
+ * and contact pages declare `dynamic = "force-static"` and
+ * `revalidate = 3600`, so the Streak follows the day within the hour.
  */
 export const getLevel = () => fromCatalog((catalog) => catalog.level);

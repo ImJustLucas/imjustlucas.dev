@@ -780,5 +780,22 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/45"
+  },
+  {
+    "version": "2.17",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Friend request, now with a level",
+      "fr": "Demande d'ami, niveau compris"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "My level now shows next to my name on the contact page, like on a real friend request 🤝",
+          "fr": "Mon niveau s'affiche maintenant à côté de mon nom sur la page contact, comme sur une vraie demande d'ami 🤝"
+        }
+      }
+    ]
   }
 ]
