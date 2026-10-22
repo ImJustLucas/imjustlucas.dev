@@ -11,6 +11,7 @@ import { Leaderboard } from "@/components/arcade/Leaderboard";
 import type { ScreenProps } from "@/components/arcade/screen";
 import { usePlayer } from "@/components/arcade/use-player";
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
+import { LoadingTip } from "@/components/loading-tip/LoadingTip";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { TypographyTag, TypographyTitle } from "@/components/typography";
 import type { Board } from "@/lib/arcade/board";
@@ -23,18 +24,20 @@ import {
 import { chibiFrames } from "@/lib/chibi";
 import { cn } from "@/lib/utils";
 
-/** The cabinet's shape while its game loads: no layout shift. */
+/** The cabinet's shape while its game loads (no layout shift), and a tip. */
 function CabinetLoading() {
   const t = useTranslations("Arcade");
   return (
     <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
       <div className="h-8 px-1" />
-      <div className="relative flex aspect-[3/2] items-center justify-center rounded-md bg-ground sm:aspect-video">
+      {/* On a phone the ring sits a little high, leaving the foot to the tip */}
+      <div className="relative flex aspect-[3/2] items-center justify-center rounded-md bg-ground pb-10 sm:aspect-video sm:pb-0">
         <div
           role="status"
           aria-label={t("loading")}
           className="size-10 animate-spin rounded-full border-4 border-seam border-t-ink-muted motion-reduce:animate-none"
         />
+        <LoadingTip wait="arcade" />
       </div>
       <div className="h-11" />
     </div>
