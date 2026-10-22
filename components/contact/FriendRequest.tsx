@@ -14,7 +14,7 @@ import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { TypographyTag, TypographyTitle } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-import type { Profile } from "@/lib/content/types";
+import type { PlayerLevel, Profile } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
 /** How long the Play button says LinkedIn is open. */
@@ -23,6 +23,8 @@ const OPENED_FOR_MS = 2400;
 type FriendRequestProps = {
   links: Profile["links"];
   discordUserId: Profile["discordUserId"];
+  /** Lucas's Level, shown beside his name; none when GitHub is unread. */
+  level?: Pick<PlayerLevel, "level" | "xp">;
 };
 
 /**
@@ -30,10 +32,15 @@ type FriendRequestProps = {
  * as the one Play action, his Discord profile, the other platforms, and
  * what he is doing right now.
  */
-export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
+export function FriendRequest({
+  links,
+  discordUserId,
+  level,
+}: FriendRequestProps) {
   const t = useTranslations("Contact");
   const tPresence = useTranslations("Presence");
   const tSidebar = useTranslations("Sidebar");
+  const tLevel = useTranslations("Home.level");
   const { presence, status } = usePresence();
   const { play } = useSounds();
   // Nothing is sent from here: the button only opens LinkedIn, and says so.
@@ -89,13 +96,35 @@ export function FriendRequest({ links, discordUserId }: FriendRequestProps) {
 
         <div className="flex min-w-0 flex-col gap-5 md:self-center">
           <div className="flex flex-col gap-1.5">
-            <TypographyTitle
-              as="h2"
-              id="request-name"
-              className="text-[1.375rem] leading-tight"
-            >
-              ImJustLucas
-            </TypographyTitle>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <TypographyTitle
+                as="h2"
+                id="request-name"
+                className="text-[1.375rem] leading-tight"
+              >
+                ImJustLucas
+              </TypographyTitle>
+              {/* His Level, as a friend request shows a player's */}
+              {level && (
+                <span
+                  title={tLevel("rule", { xp: level.xp })}
+                  className="inline-flex h-7 items-center gap-1.5 rounded-full border-2 border-seam bg-ground pl-2.5 pr-3"
+                >
+                  <TypographyTag className="leading-none text-ink-muted">
+                    <span aria-hidden>{tLevel("badge")}</span>
+                    <span className="sr-only">
+                      {tLevel("badgeLabel", { level: level.level })}
+                    </span>
+                  </TypographyTag>
+                  <TypographyTitle
+                    as="span"
+                    className="leading-none tabular-nums"
+                  >
+                    <span aria-hidden>{level.level}</span>
+                  </TypographyTitle>
+                </span>
+              )}
+            </div>
             <span className="text-label text-ink-muted">
               {tSidebar("playerLine")}
             </span>
