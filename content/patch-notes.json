@@ -748,5 +748,37 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/44"
+  },
+  {
+    "version": "2.14",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Speedrun",
+      "fr": "Speedrun"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Every page loads faster, especially on mobile: lighter fonts, and nothing downloaded you don't need ⚡",
+          "fr": "Toutes les pages se chargent plus vite, surtout sur mobile : des polices plus légères, et plus rien de téléchargé pour rien ⚡"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The MasterDevFrance trophy room opens way faster: the page shows up first, the 3D scene right after",
+          "fr": "La salle du trophée MasterDevFrance s'ouvre bien plus vite : la page s'affiche d'abord, la scène 3D juste après"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The cheque is 5× lighter, and looks exactly the same 💸",
+          "fr": "Le chèque est 5× plus léger, et il est exactement pareil 💸"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/45"
   }
 ]

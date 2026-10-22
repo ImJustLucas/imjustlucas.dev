@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import { getAchievements } from "@/lib/content/server";
 import { cn } from "@/lib/utils";
 
-import MasterDevScene from "./components/master-dev-scene";
+import Showcase from "./components/showcase";
 import { UnlockBanner } from "./components/unlock-banner";
 
 export const generateMetadata = routeMetadata(ROUTES.mdf2025);
@@ -34,7 +34,7 @@ export default async function MasterDevFrance2025Page() {
       <UnlockBanner year={achievement?.year ?? 2025} />
 
       <section aria-label={t("showcase")}>
-        <MasterDevScene />
+        <Showcase />
       </section>
 
       <SoundOnPress>
