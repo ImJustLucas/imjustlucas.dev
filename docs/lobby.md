@@ -16,6 +16,7 @@ The Lobby is everyone on the site right now, the visitor included: "5 players in
 
 - **Anonymous**: a visitor is a random UUID made in the browser and kept in `sessionStorage` (`imjustlucas:lobby:session`, so a reload is not a second visitor; in memory when storage is blocked). No IP, no cookie, nothing else is sent or kept, so no consent banner is needed. Each tab counts as one player; a duplicated tab shares its id.
 - **One request**: the beat's answer is the count. The Server Action `lobbyBeatAction` (`app/[locale]/lobby-actions.ts`) calls `beatLobby` (`lib/lobby/server.ts`, the only place the Effect code runs), which answers `lobby` with the count, `refused` for an id that is not a UUID, or `unavailable` (logged) when Upstash cannot be reached.
+- **Trophy**: a beat that counts `CROWD` players or more (5, the visitor included; `isCrowd`) unlocks the visitor's secret, quiet Trophy "not alone" (docs/trophies.md).
 - **Tests**: `lobby.test.ts` runs beats against the in-memory store (`lobby-in-memory.ts`) with the test clock; `rules.test.ts` covers the view and the id.
 
 ## Store

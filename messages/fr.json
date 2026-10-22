@@ -618,6 +618,11 @@
         "how": "tomber sur une page qui n'existe pas",
         "hint": "sortir de la carte"
       },
+      "notAlone": {
+        "name": "pas tout seul",
+        "how": "être dans le lobby avec 4 autres joueurs en même temps",
+        "hint": "ramène des potes"
+      },
       "secretHunter": {
         "name": "chasseur de secrets",
         "how": "trouver les six secrets du menu rapide"

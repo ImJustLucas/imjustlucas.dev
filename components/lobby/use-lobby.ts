@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 
 import { lobbyBeatAction } from "@/app/[locale]/lobby-actions";
-import { HEARTBEAT_MS, type LobbyBeat } from "@/lib/lobby/rules";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
+import { HEARTBEAT_MS, isCrowd, type LobbyBeat } from "@/lib/lobby/rules";
 
 const STORAGE_KEY = "imjustlucas:lobby:session";
 
@@ -42,7 +43,11 @@ export function useLobby(): LobbyBeat | undefined {
     const send = () => {
       sentAt = Date.now();
       lobbyBeatAction(id).then(
-        (answer) => !cancelled && setLast(answer),
+        (answer) => {
+          if (cancelled) return;
+          setLast(answer);
+          if (isCrowd(answer)) unlockTrophy("notAlone");
+        },
         () => !cancelled && setLast({ kind: "unavailable" }),
       );
     };

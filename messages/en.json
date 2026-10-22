@@ -618,6 +618,11 @@
         "how": "land on a page that doesn't exist",
         "hint": "wander off the map"
       },
+      "notAlone": {
+        "name": "not alone",
+        "how": "be in the lobby with 4 other players at once",
+        "hint": "bring some friends"
+      },
       "secretHunter": {
         "name": "secret hunter",
         "how": "find all six secrets of the quick menu"

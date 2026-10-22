@@ -14,6 +14,7 @@ import {
   SunMoon,
   Trophy,
   UserPlus,
+  Users,
   WandSparkles,
   Waves,
 } from "lucide-react";
@@ -36,6 +37,7 @@ export const TROPHY_ICONS: { readonly [T in TrophyId]: LucideIcon } = {
   top10: Crown,
   firstSecret: Sparkles,
   lost: Ghost,
+  notAlone: Users,
   secretHunter: WandSparkles,
   platinum: Trophy,
 };

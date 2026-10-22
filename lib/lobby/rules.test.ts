@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isSessionId, lobbyView } from "./rules";
+import { CROWD, isCrowd, isSessionId, lobbyView } from "./rules";
 
 describe("lobbyView", () => {
   it("hides the counter until a beat answers, and when the store is down", () => {
@@ -28,5 +28,15 @@ describe("isSessionId", () => {
     expect(isSessionId("3F2B1C9E-8D7A-4B6C-9E5F-1A2B3C4D5E6F")).toBe(false);
     expect(isSessionId("1.2.3.4")).toBe(false);
     expect(isSessionId({})).toBe(false);
+  });
+});
+
+describe("isCrowd", () => {
+  it("finds a crowd from five players, the visitor included", () => {
+    expect(CROWD).toBe(5);
+    expect(isCrowd({ kind: "lobby", count: 4 })).toBe(false);
+    expect(isCrowd({ kind: "lobby", count: 5 })).toBe(true);
+    expect(isCrowd({ kind: "lobby", count: 12 })).toBe(true);
+    expect(isCrowd({ kind: "unavailable" })).toBe(false);
   });
 });

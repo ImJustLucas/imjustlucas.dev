@@ -48,6 +48,7 @@ export type TrophyId =
   | "painter"
   | "friendRequest"
   | "seenOnline"
+  | "notAlone"
   | "coinRain"
   | "top10"
   | "firstSecret"
@@ -90,6 +91,7 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
     tally: { of: "secrets", needs: 1 },
   },
   { id: "lost", rarity: "epic", secret: true },
+  { id: "notAlone", rarity: "epic", secret: true, quiet: true },
   { id: "secretHunter", rarity: "legendary", tally: { of: "secrets" } },
   { id: "platinum", rarity: "legendary", everyOther: true },
 ];

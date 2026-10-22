@@ -40,6 +40,7 @@ Where each Trophy unlocks:
 | coinRain | a coin thrown on MasterDevFrance 2025 (`master-dev-scene.tsx`) |
 | firstSecret, secretHunter | a quick menu secret, `countTrophyStep("secrets", …)` in `QuickMenuLayer` and, for the Konami code, `QuickMenuProvider` |
 | lost | the 404 slot (`components/not-found/NotFoundSlot.tsx`) |
+| notAlone | a lobby beat counting `CROWD` (5) players or more, `useLobby` (`components/lobby/use-lobby.ts`, docs/lobby.md) |
 | platinum | the last of the others |
 
 ## Adding a Trophy
@@ -48,7 +49,7 @@ Where each Trophy unlocks:
 2. Its texts under `Trophies.items.<id>` in every dictionary: `name` and `how` (lowercase, Lucas's voice, saying what to do), plus `hint` for a secret one.
 3. Its line icon in `components/trophies/trophy-icons.ts`.
 4. The one-line `unlockTrophy("<id>")` where it happens, and its row in the table above.
-5. The test of `TROPHIES` keeps ids unique; add a test when the rule is new (a new Tally, a new `needs`). Platinum's goal follows the list on its own, and so does the "x/16" count.
+5. The test of `TROPHIES` keeps ids unique; add a test when the rule is new (a new Tally, a new `needs`). Platinum's goal follows the list on its own, and so does the "x/17" count.
 
 Removing a Trophy is the reverse; stored progress for it is dropped on the next read. A Trophy is never invented for something Lucas did: those are Achievements in `content/achievements.json`.
 

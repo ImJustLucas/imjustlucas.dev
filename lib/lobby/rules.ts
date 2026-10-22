@@ -12,6 +12,9 @@ export const HEARTBEAT_MS = 30_000;
 /** How long a beat keeps its visitor in the lobby: two beats, missed once. */
 export const LOBBY_TTL_MS = 60_000;
 
+/** Players in the lobby at once that unlock the "not alone" Trophy. */
+export const CROWD = 5;
+
 /** What a beat answers: everyone in the lobby, the sender included. */
 export type LobbyBeat =
   | { readonly kind: "lobby"; readonly count: number }
@@ -28,6 +31,10 @@ export type LobbyView =
 export const isSessionId = (id: unknown): id is string =>
   typeof id === "string" &&
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id);
+
+/** Whether a beat found a crowd: `CROWD` players or more, the sender included. */
+export const isCrowd = (beat: LobbyBeat): boolean =>
+  beat.kind === "lobby" && beat.count >= CROWD;
 
 /**
  * The lobby as the panel shows it: hidden while no beat has answered or when
