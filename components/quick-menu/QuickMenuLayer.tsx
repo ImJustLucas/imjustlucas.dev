@@ -10,6 +10,7 @@ import {
   Backpack,
   Check,
   Clapperboard,
+  CloudRain,
   Download,
   Gamepad2,
   Github,
@@ -22,7 +23,10 @@ import {
   MessageCircleHeart,
   Monitor,
   Moon,
+  Pause,
+  Radio,
   ScrollText,
+  SkipForward,
   Sun,
   Trophy,
   UserRound,
@@ -36,6 +40,7 @@ import { DiscordMark } from "@/components/contact/DiscordMark";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { usePalette } from "@/components/palette/use-palette";
 import { usePoke } from "@/components/poke/PokeProvider";
+import { useRadio } from "@/components/radio/RadioProvider";
 import { RarityTag } from "@/components/rarity/RarityTag";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { Sparkle } from "@/components/sparkle";
@@ -77,6 +82,7 @@ import {
   type Secret,
   SECRET_SHOW,
 } from "@/lib/quick-menu/commands";
+import { isOn } from "@/lib/radio/radio";
 import { cn } from "@/lib/utils";
 
 import { Keycap, useModifierKey } from "./QuickMenuTrigger";
@@ -224,6 +230,10 @@ function QuickMenuBody({
   const { theme, setTheme } = useTheme();
   const { palette, setPalette } = usePalette();
   const { state: sound, play, toggle } = useSounds();
+  const radio = useRadio();
+  const radioOn = isOn(radio.state);
+  const radioStarted = radio.state.status !== "off";
+  const rain = radio.state.rain;
   const { closeMenu } = useMobileMenu();
   const poke = usePoke();
   const reducedMotion = useReducedMotion();
@@ -274,6 +284,7 @@ function QuickMenuBody({
           palette,
           mode: theme as Mode | undefined,
           sound: sound.enabled,
+          radio: { on: radioOn, started: radioStarted, rain },
         },
       }),
     [
@@ -286,6 +297,9 @@ function QuickMenuBody({
       palette,
       theme,
       sound.enabled,
+      radioOn,
+      radioStarted,
+      rain,
     ],
   );
   const results = useMemo(
@@ -341,6 +355,11 @@ function QuickMenuBody({
         return;
       case "sound":
         toggle();
+        return;
+      case "radio":
+        if (action.control === "toggle") radio.toggle();
+        else if (action.control === "next") radio.next();
+        else radio.toggleRain();
         return;
       case "copyLink":
         navigator.clipboard
@@ -423,7 +442,11 @@ function QuickMenuBody({
                 onSelect={() => run(command)}
                 onPointerEnter={() => play("tick")}
               >
-                <CommandIcon command={command} sound={sound.enabled} />
+                <CommandIcon
+                  command={command}
+                  sound={sound.enabled}
+                  radioOn={radioOn}
+                />
                 <span className="min-w-0 flex-1 truncate">{command.label}</span>
                 <CommandDetail
                   command={command}
@@ -457,9 +480,11 @@ function QuickMenuBody({
 function CommandIcon({
   command,
   sound,
+  radioOn,
 }: {
   command: QuickCommand;
   sound: boolean;
+  radioOn: boolean;
 }) {
   const { action } = command;
   const className = "size-[18px]";
@@ -493,6 +518,17 @@ function CommandIcon({
       ) : (
         <Volume2 aria-hidden className={className} />
       );
+    case "radio": {
+      const Icon =
+        action.control === "rain"
+          ? CloudRain
+          : action.control === "next"
+            ? SkipForward
+            : radioOn
+              ? Pause
+              : Radio;
+      return <Icon aria-hidden className={className} />;
+    }
     case "copyLink":
       return <Link2 aria-hidden className={className} />;
     case "external": {
@@ -602,6 +638,8 @@ function SecretToast({
   onToast: (toast: Toast | null) => void;
 }) {
   const t = useTranslations("QuickMenu");
+  // Above the radio's pill on phones, when it shows
+  const radioStarted = useRadio().state.status !== "off";
   const done = () => onToast(null);
 
   useEffect(() => {
@@ -628,7 +666,10 @@ function SecretToast({
     <div
       role="status"
       onClick={done}
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-sm cursor-pointer items-center gap-3 rounded-lg border-2 border-seam bg-raised p-3 pr-4 text-ink shadow-[var(--float),var(--tray)] motion-safe:animate-window-in motion-reduce:animate-fade-in md:inset-x-auto md:bottom-6 md:right-6"
+      className={cn(
+        "fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-sm cursor-pointer items-center gap-3 rounded-lg border-2 border-seam bg-raised p-3 pr-4 text-ink shadow-[var(--float),var(--tray)] motion-safe:animate-window-in motion-reduce:animate-fade-in md:inset-x-auto md:bottom-6 md:right-6",
+        radioStarted && "max-md:bottom-[5.5rem]",
+      )}
     >
       {text.pose ? (
         <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-ground">

@@ -10,6 +10,7 @@ import { ChibiHead } from "@/components/chibi/ChibiHead";
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { LobbyCounter } from "@/components/lobby/LobbyCounter";
 import { PanelWave } from "@/components/poke/Wave";
+import { Equalizer } from "@/components/sound/Equalizer";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { TypographyData, TypographyTag } from "@/components/typography";
 import { cn } from "@/lib/utils";
@@ -389,7 +390,7 @@ function Listening({
       <span className="min-w-0 flex-1">
         <Line className="text-label text-ink">{presence.song}</Line>
         <span className="flex min-w-0 items-center gap-1.5 text-ink-muted">
-          <Equalizer />
+          <Equalizer className="text-online" />
           <Line className="text-data">
             {t("listeningBy", { artist: presence.artist })}
           </Line>
@@ -454,21 +455,6 @@ function TrackBar({
         className="block h-full origin-left rounded-full bg-online-ink"
         style={{ transform: `scaleX(${progress})` }}
       />
-    </span>
-  );
-}
-
-/** Three bars while Lucas listens; still under reduced motion. */
-function Equalizer() {
-  return (
-    <span aria-hidden className="flex h-3 shrink-0 items-end gap-[2px]">
-      {[0, 0.25, 0.5].map((delay) => (
-        <span
-          key={delay}
-          className="h-full w-[2px] origin-bottom scale-y-50 rounded-full bg-online motion-safe:animate-equalizer"
-          style={{ animationDelay: `${delay}s` }}
-        />
-      ))}
     </span>
   );
 }

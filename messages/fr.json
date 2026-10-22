@@ -341,6 +341,24 @@
     "off": "son coupé",
     "offReducedMotion": "son coupé (mouvement réduit)"
   },
+  "Radio": {
+    "title": "radio",
+    "idleTitle": "radio lofi cosy",
+    "idleLine": "lance et chill",
+    "album": "la radio d'ImJustLucas",
+    "play": "Lancer la radio",
+    "pause": "Mettre la radio en pause",
+    "next": "Morceau suivant",
+    "volume": "Volume de la musique",
+    "rain": "Pluie",
+    "rainOn": "pluie activée",
+    "rainOff": "pluie coupée",
+    "rainVolume": "Volume de la pluie",
+    "source": "sa licence cc0 sur free music archive",
+    "sourceLabel": "{title} de {artist} et sa licence CC0 sur le Free Music Archive (s'ouvre dans un nouvel onglet)",
+    "nowPlaying": "en cours de lecture",
+    "openRadio": "{title}, ouvrir la radio"
+  },
   "Rarity": {
     "common": "commun",
     "rare": "rare",
@@ -447,6 +465,7 @@
       "projects": "inventaire",
       "arcade": "arcade",
       "settings": "réglages",
+      "radio": "radio",
       "links": "liens",
       "secrets": "secrets 👀"
     },
@@ -471,6 +490,8 @@
       "github": "github code dépôts",
       "discord": "discord ami",
       "resume": "cv pdf télécharger",
+      "radio": "radio lofi musique chill son révisions concentration",
+      "rain": "pluie ambiance cosy météo",
       "poke": "coucou salut poke wave hello ping discord emote",
       "trophies": "trophées succès progression débloquer badges"
     },
@@ -486,6 +507,11 @@
       "github": "mon GitHub",
       "discord": "m'ajouter sur Discord",
       "resume": "télécharger mon CV",
+      "radioPlay": "lancer la radio lofi",
+      "radioPause": "mettre la radio en pause",
+      "radioNext": "morceau suivant à la radio",
+      "rainOn": "faire pleuvoir",
+      "rainOff": "arrêter la pluie",
       "poke": "me faire coucou sur Discord"
     },
     "copied": {
@@ -643,6 +669,10 @@
         "name": "quoi de neuf",
         "how": "lire les notes de version"
       },
+      "radio": {
+        "name": "à l'antenne",
+        "how": "écoute un morceau à la radio"
+      },
       "tour": {
         "name": "le tour du client",
         "how": "visiter chaque onglet du menu"
@@ -666,6 +696,10 @@
       "coinRain": {
         "name": "pluie de pièces",
         "how": "lancer une pièce sur mon chèque masterdevfrance"
+      },
+      "rainyDay": {
+        "name": "jour de pluie",
+        "how": "écoute la radio avec la pluie"
       },
       "top10": {
         "name": "top 10",

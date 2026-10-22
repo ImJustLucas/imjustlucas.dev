@@ -13,6 +13,7 @@ import {
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { FriendsPanel } from "@/components/presence/FriendsPanel";
 import { QuickMenuButton } from "@/components/quick-menu/QuickMenuTrigger";
+import { RadioSlot } from "@/components/radio/RadioSlot";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { SoundSwitch } from "@/components/sound/SoundSwitch";
 import { ModeToggle } from "@/components/theme-switch";
@@ -72,6 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
       </div>
       <FriendsPanel />
       <div className="mt-auto flex flex-col gap-4">
+        <RadioSlot />
         <SettingsRow />
         <SocialRow profile={profile} />
         <div className="flex items-center justify-between gap-2">

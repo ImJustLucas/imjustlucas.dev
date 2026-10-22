@@ -44,12 +44,14 @@ export type TrophyId =
   | "bilingual"
   | "dayNight"
   | "whatsNew"
+  | "radio"
   | "tour"
   | "painter"
   | "friendRequest"
   | "waved"
   | "seenOnline"
   | "coinRain"
+  | "rainyDay"
   | "top10"
   | "firstSecret"
   | "lost"
@@ -78,12 +80,14 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
   { id: "bilingual", rarity: "common", tally: { of: "locales" } },
   { id: "dayNight", rarity: "common", tally: { of: "modes" } },
   { id: "whatsNew", rarity: "common" },
+  { id: "radio", rarity: "common" },
   { id: "tour", rarity: "rare", tally: { of: "tabs" } },
   { id: "painter", rarity: "rare", tally: { of: "palettes" } },
   { id: "friendRequest", rarity: "rare" },
   { id: "waved", rarity: "rare" },
   { id: "seenOnline", rarity: "rare", quiet: true },
   { id: "coinRain", rarity: "rare" },
+  { id: "rainyDay", rarity: "rare" },
   { id: "top10", rarity: "epic" },
   {
     id: "firstSecret",

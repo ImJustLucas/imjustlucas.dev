@@ -39,6 +39,7 @@ Where each Trophy unlocks:
 | friendRequest | the add-friend button on Contact (`components/contact/FriendRequest.tsx`) |
 | waved | a Poke that went out to Lucas's Discord (`components/poke/PokeProvider.tsx`, docs/poke.md) |
 | coinRain | a coin thrown on MasterDevFrance 2025 (`master-dev-scene.tsx`) |
+| radio, rainyDay | a radio track actually playing, the second with the rain on (`components/radio/RadioProvider.tsx`) |
 | firstSecret, secretHunter | a quick menu secret, `countTrophyStep("secrets", …)` in `QuickMenuLayer` and, for the Konami code, `QuickMenuProvider` |
 | lost | the 404 slot (`components/not-found/NotFoundSlot.tsx`) |
 | platinum | the last of the others |

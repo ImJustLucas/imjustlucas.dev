@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl";
 
 import { QuickMenuProvider } from "@/components/quick-menu/QuickMenuProvider";
+import { RadioPill } from "@/components/radio/RadioPill";
+import { useRadio } from "@/components/radio/RadioProvider";
 import { MobileTopBar } from "@/components/sidebar/MobileTopBar";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { TrophyLayer } from "@/components/trophies/TrophyLayer";
@@ -25,7 +27,7 @@ interface ClientLayoutProps {
 /**
  * The client window: the Night frame with its sparkles, the sidebar (or the
  * mobile top bar and sheet) and the rounded profile panel, the only part
- * that scrolls, and the quick menu over all of it. The recruiter mode
+ * that scrolls, the radio's pill on phones and the quick menu over all of it. The recruiter mode
  * (`/cv`) steps out of the client: its page alone, scrolling the document.
  */
 export default function ClientLayout({
@@ -35,6 +37,7 @@ export default function ClientLayout({
   projects,
 }: ClientLayoutProps) {
   const { isOpen } = useMobileMenu();
+  const { state: radio } = useRadio();
   const t = useTranslations("Layout");
   const pathname = usePathname();
   if (pathname === ROUTES.cv.path)
@@ -66,10 +69,15 @@ export default function ClientLayout({
           id="content"
           tabIndex={-1}
           inert={isOpen}
-          className="min-h-0 flex-1 overflow-y-auto rounded-xl bg-ground p-4 pb-10 md:p-panel focus-visible:outline-none"
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto rounded-xl bg-ground p-4 pb-10 md:p-panel focus-visible:outline-none",
+            // Room under the content for the radio's pill on phones
+            radio.status !== "off" && "max-md:pb-24",
+          )}
         >
           {children}
         </main>
+        <RadioPill />
       </div>
       <TrophyLayer />
     </QuickMenuProvider>

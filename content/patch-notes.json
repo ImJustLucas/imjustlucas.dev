@@ -935,7 +935,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/53"
   },
   {
-    "version": "2.21",
+    "version": "2.20",
     "date": "2026-10-22",
     "title": {
       "en": "Rarest first",
@@ -960,7 +960,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/55"
   },
   {
-    "version": "2.22",
+    "version": "2.21",
     "date": "2026-10-22",
     "title": {
       "en": "Who's in the lobby",
@@ -978,7 +978,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
   },
   {
-    "version": "2.23",
+    "version": "2.22",
     "date": "2026-10-22",
     "title": {
       "en": "Loading tips",
@@ -1003,7 +1003,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/57"
   },
   {
-    "version": "2.25",
+    "version": "2.23",
     "date": "2026-10-22",
     "title": {
       "en": "Trophy hunt",
@@ -1035,7 +1035,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/58"
   },
   {
-    "version": "2.26",
+    "version": "2.24",
     "date": "2026-10-22",
     "title": {
       "en": "Say hi",
@@ -1067,7 +1067,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/59"
   },
   {
-    "version": "2.27",
+    "version": "2.25",
     "date": "2026-10-22",
     "title": {
       "en": "Recruiter mode",
@@ -1090,5 +1090,51 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/54"
+  },
+  {
+    "version": "2.26",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Lofi on the client",
+      "fr": "Du lofi dans le client"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A cosy lofi radio at the bottom of the menu: press play and it keeps going while you browse 🎧",
+          "fr": "Une radio lofi cosy en bas du menu : lance-la et elle continue pendant que tu te balades 🎧"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Rain on the window if you want it, with its own volume 🌧️",
+          "fr": "De la pluie contre la vitre si tu veux, avec son propre volume 🌧️"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "On your phone, a little now-playing pill, and your keyboard's media keys work too",
+          "fr": "Sur ton téléphone, une petite pastille « en cours de lecture », et les touches média de ton clavier marchent aussi"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Play, pause, skip or make it rain from the quick menu (⌘K)",
+          "fr": "Lance, mets en pause, passe un morceau ou fais pleuvoir depuis le menu rapide (⌘K)"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Two trophies to unlock: put a track on, then listen with the rain 🏆",
+          "fr": "Deux trophées à débloquer : lance un morceau, puis écoute-le sous la pluie 🏆"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/60"
   }
 ]
