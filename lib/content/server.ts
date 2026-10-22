@@ -27,7 +27,7 @@ import "server-only";
 const runtime = ManagedRuntime.make(
   ContentCatalog.layer.pipe(
     Layer.provide(layerLocalFilesystem(process.cwd())),
-    Layer.provide(GitHubStars.layer),
+    Layer.provide(GitHubStars.layer(process.env.GITHUB_TOKEN)),
     Layer.provide(GitHubContributions.layer(process.env.GITHUB_TOKEN)),
     Layer.provide(YouTubeChannel.layer),
   ),
@@ -79,6 +79,13 @@ export const getProject = (locale: Locale, slug: string) =>
 /** Every Project's slug, for the Project pages' static params. */
 export const getProjectSlugs = () =>
   fromCatalog((catalog) => catalog.projectSlugs);
+
+/**
+ * Every Project's slug, title and rarity, for the quick menu in the Locale
+ * layout; reads no star count, so the layout never revalidates.
+ */
+export const getProjectEntries = () =>
+  fromCatalog((catalog) => catalog.projectEntries);
 
 /** Experiences, their roles and descriptions in the Locale. */
 export const getExperiences = (locale: Locale) =>

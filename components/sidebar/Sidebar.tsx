@@ -6,6 +6,7 @@ import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { FriendsPanel } from "@/components/presence/FriendsPanel";
+import { QuickMenuButton } from "@/components/quick-menu/QuickMenuTrigger";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { SoundSwitch } from "@/components/sound/SoundSwitch";
 import { ModeToggle } from "@/components/theme-switch";
@@ -55,6 +56,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
         <PlayerCard />
       </div>
       <ClientTabs />
+      {/* Below 768px the top bar holds the quick menu's button */}
+      <QuickMenuButton />
       <FriendsPanel />
       <div className="mt-auto flex flex-col gap-4">
         <SettingsRow />

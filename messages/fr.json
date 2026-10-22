@@ -351,5 +351,111 @@
     "season": "saison {number}",
     "patches": "{count, plural, one {# patch} other {# patchs}}",
     "empty": "Pas encore de notes de version, la première arrive 🛠️"
+  },
+  "QuickMenu": {
+    "trigger": "menu rapide",
+    "open": "Ouvrir le menu rapide",
+    "title": "menu rapide",
+    "description": "Va sur une page, un projet ou un jeu, ou change un réglage. Tape pour chercher, en français ou en anglais.",
+    "placeholder": "on va où ? page, projet…",
+    "close": "Fermer le menu rapide",
+    "empty": "rien par ici… essaie « projets », « surf » ou « sombre ». ou un secret 👀",
+    "emptyAlt": "Lucas posé sur un pouf",
+    "results": "{count, plural, =0 {aucun résultat} one {# résultat} other {# résultats}}",
+    "hints": {
+      "move": "bouger",
+      "select": "choisir",
+      "close": "fermer"
+    },
+    "current": "actuel",
+    "sections": {
+      "pages": "pages",
+      "projects": "inventaire",
+      "arcade": "arcade",
+      "settings": "réglages",
+      "links": "liens",
+      "secrets": "secrets 👀"
+    },
+    "keywords": {
+      "me": "accueil profil à propos moi faq",
+      "what": "projets portfolio réalisations inventaire",
+      "experiences": "carrière parcours boulot diplômes",
+      "videos": "youtube chaîne vidéos replays",
+      "arcade": "jeux jouer",
+      "contact": "contact message embauche demande d'ami",
+      "mdf2025": "masterdevfrance trophée concours victoire légendaire",
+      "patchNotes": "notes de version nouveautés mises à jour versions changelog",
+      "project": "projet",
+      "game": "jeu jouer arcade",
+      "palette": "thème palette couleur",
+      "mode": "thème mode",
+      "locale": "langue traduire",
+      "sound": "son audio volume musique",
+      "copyLink": "partager url copier lien",
+      "linkedin": "linkedin dm message contact",
+      "github": "github code dépôts",
+      "discord": "discord ami",
+      "resume": "cv pdf télécharger"
+    },
+    "commands": {
+      "play": "jouer à {name}",
+      "palette": "palette {name}",
+      "mode": "mode {name}",
+      "locale": "lire en anglais (english)",
+      "mute": "couper le son",
+      "unmute": "remettre le son",
+      "copyLink": "copier le lien de la page",
+      "linkedin": "m'écrire sur LinkedIn",
+      "github": "mon GitHub",
+      "discord": "m'ajouter sur Discord",
+      "resume": "télécharger mon CV"
+    },
+    "copied": {
+      "title": "lien copié 📋",
+      "line": "vas-y, partage-le à un pote"
+    },
+    "copyFailed": {
+      "title": "impossible de copier le lien",
+      "line": "ton navigateur a dit non, la barre d'adresse marche toujours"
+    },
+    "unlocked": "débloqué",
+    "secrets": {
+      "konami": {
+        "label": "↑ ↑ ↓ ↓ ← → ← → B A",
+        "title": "move secret débloqué !",
+        "line": "le ollie, tout droit sorti de l'arcade 🛹",
+        "alt": "Lucas en plein ollie sur son skate"
+      },
+      "barrelRoll": {
+        "label": "fais un tonneau",
+        "title": "un tonneau ? pas aujourd'hui",
+        "line": "ton système demande moins d'animations, alors je bouge pas 🙃",
+        "alt": "Lucas mort de rire"
+      },
+      "coffee": {
+        "label": "brb, café",
+        "title": "brb, café ☕",
+        "line": "deux minutes, ça infuse",
+        "alt": "Lucas avec un café"
+      },
+      "sleep": {
+        "label": "c'est l'heure de la sieste",
+        "title": "zzz… 😴",
+        "line": "réveille-moi quand le prochain déploiement est vert",
+        "alt": "Lucas endormi sur un coussin"
+      },
+      "gg": {
+        "label": "gg wp",
+        "title": "gg wp 🏆",
+        "line": "merci d'avoir joué à mon profil",
+        "alt": "Lucas brandit un trophée doré"
+      },
+      "hire": {
+        "label": "sudo hire lucas",
+        "title": "permission accordée ✅",
+        "line": "direction l'écran de contact…",
+        "alt": "Lucas fait coucou"
+      }
+    }
   }
 }

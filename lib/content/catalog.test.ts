@@ -555,6 +555,39 @@ describe("ContentCatalog.projects", () => {
   );
 });
 
+describe("ContentCatalog.projectEntries", () => {
+  it.effect(
+    "lists slug, title and rarity in Period order without asking GitHub",
+    () =>
+      Effect.gen(function* () {
+        const entries = yield* (yield* ContentCatalog).projectEntries;
+
+        expect(entries).toEqual([
+          { slug: "predi-gg", title: "Predi.GG", rarity: "epic" },
+          {
+            slug: "next-13-boilerplate",
+            title: "Next 13 Boilerplate",
+            rarity: "common",
+          },
+        ]);
+      }).pipe(
+        Effect.provide(
+          // GitHub knows no repository: reading a star count would fail.
+          catalogWith({
+            projects: [
+              openSource("Next 13 Boilerplate", "2023", NEXT_13),
+              project(
+                "Predi.GG",
+                { start: "2025", end: "ongoing" },
+                { rarity: "epic" },
+              ),
+            ],
+          }),
+        ),
+      ),
+  );
+});
+
 const experience = (company: string, period: unknown, rest: object = {}) => ({
   company,
   role: text("Fullstack Developer", "Développeur Fullstack"),
