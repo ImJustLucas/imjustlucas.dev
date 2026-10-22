@@ -8,6 +8,7 @@ import { Globe, Monitor, Smartphone } from "lucide-react";
 
 import { ChibiHead } from "@/components/chibi/ChibiHead";
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
+import { LobbyCounter } from "@/components/lobby/LobbyCounter";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { TypographyData, TypographyTag } from "@/components/typography";
 import { cn } from "@/lib/utils";
@@ -25,8 +26,9 @@ import { STATUS_DOT } from "./status-style";
 import { trackProgress } from "./track-progress";
 
 /**
- * The friends panel: Lucas's live Discord presence, always shown, in a slot
- * of fixed height so the sidebar never jumps between states.
+ * The friends panel: the lobby (how many visitors are on the site) and
+ * Lucas's live Discord presence, always shown, in a slot of fixed height so
+ * the sidebar never jumps between states.
  */
 export function FriendsPanel() {
   const { presence, status, device } = usePresence();
@@ -46,6 +48,7 @@ export function FriendsPanel() {
           </TypographyTag>
         )}
       </div>
+      <LobbyCounter />
       <div className="tray flex h-[76px] items-center gap-3 overflow-hidden rounded-lg bg-raised p-3">
         <PresenceCard presence={presence} />
       </div>

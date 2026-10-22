@@ -45,6 +45,7 @@ Three claims, held equally, with none leading:
 - Star counts and Videos are never written by hand; when the source is down, the page shows the previous version, or the empty state on a fresh build.
 - The Arcade's leaderboards: a top 10 per game on Upstash Redis (Vercel Marketplace), each score replayed by the server before it is kept; a player's first name is shown publicly and kept in their browser, and the Owner removes a name from the Admin.
 - Live Discord presence through Lanyard: what Lucas is playing, coding (the project and language, never the file), watching or listening to, his own status line (a Lanyard KV site message or his Discord custom status) and the device he is on, derived on each render; the home and contact chibis strike the matching pose.
+- The Lobby: how many visitors are on the site right now ("just you" when alone), from an anonymous id per tab kept in `sessionStorage` (no IP, no cookie), counted on the same Upstash database; hidden when it cannot be reached.
 - Theme: light, dark and system, dark by default.
 - Uploads through the Admin: Project images (PNG, JPEG, WebP, AVIF) and Resume PDFs, 4 MB maximum.
 - The Contact page points to LinkedIn DMs only. The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.

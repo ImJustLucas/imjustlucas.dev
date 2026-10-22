@@ -40,6 +40,10 @@ _Avoid_: Ranking, high scores, hall of fame
 A visitor playing in the Arcade, known by an id made in their browser and, once they make a Leaderboard, a first name.
 _Avoid_: User, gamer
 
+**Lobby**:
+Everyone on the site right now, the visitor included, counted from an anonymous beat each visible tab sends; shown in the friends panel as players "in the lobby". Not a Player (that is the Arcade's), never a visitor's identity.
+_Avoid_: Online users, visitors count, audience
+
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".
 _Avoid_: Date (for a span), duration

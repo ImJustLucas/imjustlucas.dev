@@ -1,5 +1,7 @@
 import { Effect, Layer, Schema } from "effect";
 
+import { type UpstashCommand, upstashPipeline } from "@/lib/upstash";
+
 import { type LeaderboardEntry, type LeaderboardGame } from "./board";
 import {
   OpenRun,
@@ -9,63 +11,22 @@ import {
 } from "./leaderboard";
 
 /**
- * The leaderboards on Upstash Redis (Vercel Marketplace, store
- * `imjustlucas-arcade`), through its REST API, so no client library ships.
- * Keys: `arcade:run:<id>` (an open run, expiring), `arcade:<game>:scores`
- * (a sorted set of player ids by best score), `arcade:<game>:names` (a hash
- * of player id to name) and `arcade:limit:<key>:<window>` (rate limits).
+ * The leaderboards on Upstash Redis (`lib/upstash.ts`). Keys:
+ * `arcade:run:<id>` (an open run, expiring), `arcade:<game>:scores` (a
+ * sorted set of player ids by best score), `arcade:<game>:names` (a hash of
+ * player id to name) and `arcade:limit:<key>:<window>` (rate limits).
  */
-
-type Command = ReadonlyArray<string | number>;
-
-const credentials = () => {
-  const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-  const token =
-    process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
-  return url && token ? { url, token } : undefined;
-};
-
-const Reply = Schema.Union([
-  Schema.Struct({ result: Schema.Unknown }),
-  Schema.Struct({ error: Schema.String }),
-]);
 
 const unavailable = (message: string, cause?: unknown) =>
   new ScoresUnavailable({ message, cause });
 
 /** Sends commands in one round trip and returns their results, in order. */
-const pipeline = (commands: ReadonlyArray<Command>) =>
-  Effect.gen(function* () {
-    const keys = credentials();
-    if (!keys) {
-      return yield* Effect.fail(unavailable("Upstash is not configured"));
-    }
-    const body = yield* Effect.tryPromise({
-      try: async () => {
-        const response = await fetch(`${keys.url}/pipeline`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${keys.token}` },
-          body: JSON.stringify(commands),
-          cache: "no-store",
-        });
-        if (!response.ok)
-          throw new Error(`Upstash answered ${response.status}`);
-        return (await response.json()) as unknown;
-      },
-      catch: (cause) => unavailable("Upstash could not be reached", cause),
-    });
-    const replies = yield* Effect.mapError(
-      Schema.decodeUnknownEffect(Schema.Array(Reply))(body),
-      (cause) => unavailable("Upstash answered something unexpected", cause),
-    );
-    const failed = replies.find((reply) => "error" in reply);
-    if (failed && "error" in failed) {
-      return yield* Effect.fail(unavailable(failed.error));
-    }
-    return replies.map((reply) => ("result" in reply ? reply.result : null));
-  });
+const pipeline = (commands: ReadonlyArray<UpstashCommand>) =>
+  Effect.mapError(upstashPipeline(commands), (error) =>
+    unavailable(error.message, error.cause),
+  );
 
-const one = (command: Command) =>
+const one = (command: UpstashCommand) =>
   Effect.map(pipeline([command]), ([result]) => result);
 
 const scoresKey = (game: LeaderboardGame) => `arcade:${game}:scores`;

@@ -251,6 +251,11 @@
       "sleeping": "Lucas endormi sur un coussin prune"
     }
   },
+  "Lobby": {
+    "players": "<strong>{count}</strong> joueurs dans le lobby",
+    "alone": "juste toi dans le lobby",
+    "hint": "les visiteurs du site en ce moment, comptés sans pistage"
+  },
   "Projects": {
     "wip": "En cours",
     "open": "Ouvrir {title}",

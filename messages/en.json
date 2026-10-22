@@ -251,6 +251,11 @@
       "sleeping": "Lucas asleep on a plum cushion"
     }
   },
+  "Lobby": {
+    "players": "<strong>{count}</strong> players in the lobby",
+    "alone": "just you in the lobby",
+    "hint": "visitors on the site right now, counted without tracking"
+  },
   "Projects": {
     "wip": "WIP",
     "open": "Open {title}",
