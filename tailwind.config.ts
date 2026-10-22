@@ -194,6 +194,14 @@ const config: Config = {
           },
           to: { opacity: "1", transform: "translateY(0) scale(1)" },
         },
+        // A Trophy's toast drops in from the top of the client
+        "toast-drop": {
+          from: {
+            opacity: "0",
+            transform: "translateY(calc(var(--rise) * -2)) scale(0.98)",
+          },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
         "sheet-in": {
           from: { transform: "translateY(100%)" },
           to: { transform: "translateY(0)" },
@@ -213,6 +221,7 @@ const config: Config = {
         "track-draw": "track-draw 160ms var(--ease-in-out) both",
         "stop-pop": "stop-pop 320ms var(--ease-pop) both",
         "window-in": "window-in var(--dur-page) var(--ease-out) both",
+        "toast-drop": "toast-drop var(--dur-page) var(--ease-out) both",
         "sheet-in": "sheet-in var(--dur-sheet-in) var(--ease-drawer) both",
       },
     },

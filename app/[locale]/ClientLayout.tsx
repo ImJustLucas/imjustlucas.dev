@@ -7,6 +7,7 @@ import { RadioPill } from "@/components/radio/RadioPill";
 import { useRadio } from "@/components/radio/RadioProvider";
 import { MobileTopBar } from "@/components/sidebar/MobileTopBar";
 import { Sidebar } from "@/components/sidebar/Sidebar";
+import { TrophyLayer } from "@/components/trophies/TrophyLayer";
 import { buttonVariants } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
 import type { Profile, ProjectEntry } from "@/lib/content/types";
@@ -68,6 +69,7 @@ export default function ClientLayout({
         </main>
         <RadioPill />
       </div>
+      <TrophyLayer />
     </QuickMenuProvider>
   );
 }

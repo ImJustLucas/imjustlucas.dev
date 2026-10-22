@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 import { ClientTabs } from "./ClientTabs";
 import { PlayerCard } from "./PlayerCard";
+import { TrophyCount } from "./TrophyCount";
 import { VersionLink } from "./VersionLink";
 
 type SidebarProps = {
@@ -64,7 +65,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
         <RadioSlot />
         <SettingsRow />
         <SocialRow profile={profile} />
-        {version && <VersionLink version={version} />}
+        <div className="flex items-center justify-between gap-2">
+          {version && <VersionLink version={version} />}
+          <TrophyCount />
+        </div>
       </div>
     </div>
   );

@@ -45,6 +45,11 @@
       "label": "notes de version",
       "title": "notes de version",
       "description": "Les nouveautés du site de Lucas Bellier, version par version : les notes de version d'imjustlucas.dev, racontées comme dans un jeu."
+    },
+    "trophies": {
+      "label": "trophées",
+      "title": "trophées",
+      "description": "Les trophées qu'un visiteur débloque en explorant le site de Lucas Bellier, imjustlucas.dev : jouer à l'arcade, trouver les secrets, essayer chaque palette."
     }
   },
   "Layout": {
@@ -167,7 +172,8 @@
     "settings": "réglages",
     "socials": "réseaux",
     "playerLine": "dev fullstack · paris",
-    "unread": "nouvelle version"
+    "unread": "nouvelle version",
+    "trophies": "trophées : {done} sur {total}"
   },
   "Presence": {
     "listeningBy": "par {artist}",
@@ -459,7 +465,8 @@
       "discord": "discord ami",
       "resume": "cv pdf télécharger",
       "radio": "radio lofi musique chill son révisions concentration",
-      "rain": "pluie ambiance cosy météo"
+      "rain": "pluie ambiance cosy météo",
+      "trophies": "trophées succès progression débloquer badges"
     },
     "commands": {
       "play": "jouer à {name}",
@@ -552,6 +559,99 @@
       "mains": "sur League, je main Vayne et Yunara. oui, ADC. ne juge pas 🏹",
       "tattoo": "la petite étoile dans les marges du site, c'est le tatouage sur ma main ✨",
       "humble": "imjustlucas, c'est mon rappel pour rester vrai et humble"
+    }
+  },
+  "Trophies": {
+    "intro": "ceux-là sont à toi, pas à moi : explore le client et ils se débloquent au fil de ta visite 🏆",
+    "chibiAlt": "Lucas qui brandit un trophée",
+    "summary": {
+      "label": "trophées débloqués",
+      "of": "{done} trophées débloqués sur {total}",
+      "empty": "rien pour l'instant, va fouiner 👀",
+      "latest": "dernier : {name}, <when>{date}</when>",
+      "all": "tous. t'es une légende 👑",
+      "storage": "gardés dans ce navigateur uniquement : rien n'en sort, et un autre navigateur repart de zéro."
+    },
+    "shelf": {
+      "count": "{done} débloqués sur {total}"
+    },
+    "card": {
+      "unlockedOn": "débloqué le {date}",
+      "locked": "verrouillé",
+      "secretName": "???",
+      "progress": "{done} sur {total}"
+    },
+    "toast": {
+      "unlocked": "trophée débloqué",
+      "live": "Trophée débloqué : {name}"
+    },
+    "items": {
+      "inspector": {
+        "name": "inspecteur",
+        "how": "ouvrir la page d'un projet"
+      },
+      "ollie": {
+        "name": "premier ollie",
+        "how": "jouer une partie d'Ollie"
+      },
+      "surf": {
+        "name": "première vague",
+        "how": "jouer une partie de Surf"
+      },
+      "bilingual": {
+        "name": "bilingue",
+        "how": "voir le site en anglais et en français"
+      },
+      "dayNight": {
+        "name": "jour et nuit",
+        "how": "voir le site en clair et en sombre"
+      },
+      "whatsNew": {
+        "name": "quoi de neuf",
+        "how": "lire les notes de version"
+      },
+      "tour": {
+        "name": "le tour du client",
+        "how": "visiter chaque onglet du menu"
+      },
+      "painter": {
+        "name": "peintre",
+        "how": "essayer les cinq palettes"
+      },
+      "friendRequest": {
+        "name": "demande d'ami",
+        "how": "m'envoyer une demande d'ami depuis contact"
+      },
+      "seenOnline": {
+        "name": "vu en ligne",
+        "how": "me croiser en ligne sur discord"
+      },
+      "coinRain": {
+        "name": "pluie de pièces",
+        "how": "lancer une pièce sur mon chèque masterdevfrance"
+      },
+      "top10": {
+        "name": "top 10",
+        "how": "entrer dans le top 10 d'un jeu de l'arcade"
+      },
+      "firstSecret": {
+        "name": "premier secret",
+        "how": "trouver un secret dans le menu rapide",
+        "hint": "certains mots font plus que chercher"
+      },
+      "lost": {
+        "name": "perdu",
+        "how": "tomber sur une page qui n'existe pas",
+        "hint": "sortir de la carte"
+      },
+      "secretHunter": {
+        "name": "chasseur de secrets",
+        "how": "trouver les six secrets du menu rapide"
+      },
+      "platinum": {
+        "name": "platine",
+        "how": "débloquer tous les autres trophées"
+      }
     }
   }
 }

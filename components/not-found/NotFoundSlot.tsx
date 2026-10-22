@@ -1,4 +1,5 @@
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
+import { UnlockTrophy } from "@/components/trophies/UnlockTrophy";
 import {
   TypographyData,
   TypographyHeadline,
@@ -49,6 +50,7 @@ export function NotFoundSlot({
         {action}
         <TypographyData className="text-ink-muted">{code}</TypographyData>
       </div>
+      <UnlockTrophy id="lost" />
     </section>
   );
 }

@@ -1003,6 +1003,38 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/57"
   },
   {
+    "version": "2.25",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Trophy hunt",
+      "fr": "Chasse aux trophées"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Trophies, for you this time: 16 of them to unlock by poking around the site, from your first ollie to the platinum 🏆",
+          "fr": "Des trophées, pour toi cette fois : 16 à débloquer en fouinant sur le site, du premier ollie jusqu'au platine 🏆"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A trophies screen with your progress, shelf by shelf, and two secret ones I won't spoil 👀",
+          "fr": "Un écran des trophées avec ta progression, étagère par étagère, et deux secrets que je ne spoilerai pas 👀"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Each unlock pops up with its little chime, and your count sits at the bottom of the menu",
+          "fr": "Chaque déblocage s'affiche avec son petit carillon, et ton compteur t'attend en bas du menu"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/58"
+  },
+  {
     "version": "2.27",
     "date": "2026-10-22",
     "title": {

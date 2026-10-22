@@ -45,6 +45,11 @@
       "label": "patch notes",
       "title": "patch notes",
       "description": "What's new on Lucas Bellier's site, version by version: the patch notes of imjustlucas.dev, written like a game's."
+    },
+    "trophies": {
+      "label": "trophies",
+      "title": "trophies",
+      "description": "The trophies a visitor unlocks by exploring Lucas Bellier's site, imjustlucas.dev: play the arcade, find the secrets, try every palette."
     }
   },
   "Layout": {
@@ -167,7 +172,8 @@
     "settings": "settings",
     "socials": "socials",
     "playerLine": "fullstack dev · paris",
-    "unread": "new version"
+    "unread": "new version",
+    "trophies": "trophies: {done} of {total}"
   },
   "Presence": {
     "listeningBy": "by {artist}",
@@ -459,7 +465,8 @@
       "discord": "discord friend",
       "resume": "resume cv pdf download",
       "radio": "radio lofi music chill beats study focus",
-      "rain": "rain ambience cosy weather"
+      "rain": "rain ambience cosy weather",
+      "trophies": "trophies achievements progress unlock badges"
     },
     "commands": {
       "play": "play {name}",
@@ -552,6 +559,99 @@
       "mains": "on League I main Vayne and Yunara. yes, ADC. don't judge 🏹",
       "tattoo": "the little star in the site's margins is the tattoo on my hand ✨",
       "humble": "imjustlucas is my reminder to keep it real and stay humble"
+    }
+  },
+  "Trophies": {
+    "intro": "these ones are yours, not mine: explore the client and they unlock as you go 🏆",
+    "chibiAlt": "Lucas holding up a trophy",
+    "summary": {
+      "label": "trophies unlocked",
+      "of": "{done} of {total} trophies unlocked",
+      "empty": "nothing yet, go poke around 👀",
+      "latest": "latest: {name}, <when>{date}</when>",
+      "all": "all of them. you're a legend 👑",
+      "storage": "kept in this browser only: nothing leaves it, and another browser starts from zero."
+    },
+    "shelf": {
+      "count": "{done} of {total} unlocked"
+    },
+    "card": {
+      "unlockedOn": "unlocked {date}",
+      "locked": "locked",
+      "secretName": "???",
+      "progress": "{done} of {total}"
+    },
+    "toast": {
+      "unlocked": "trophy unlocked",
+      "live": "Trophy unlocked: {name}"
+    },
+    "items": {
+      "inspector": {
+        "name": "inspector",
+        "how": "open a project's page"
+      },
+      "ollie": {
+        "name": "first ollie",
+        "how": "play a run of Ollie"
+      },
+      "surf": {
+        "name": "first wave",
+        "how": "play a run of Surf"
+      },
+      "bilingual": {
+        "name": "bilingual",
+        "how": "see the site in english and in french"
+      },
+      "dayNight": {
+        "name": "day and night",
+        "how": "see the site in light and in dark"
+      },
+      "whatsNew": {
+        "name": "what's new",
+        "how": "read the patch notes"
+      },
+      "tour": {
+        "name": "the grand tour",
+        "how": "visit every tab of the menu"
+      },
+      "painter": {
+        "name": "painter",
+        "how": "try all five palettes"
+      },
+      "friendRequest": {
+        "name": "friend request",
+        "how": "send me a friend request from contact"
+      },
+      "seenOnline": {
+        "name": "seen online",
+        "how": "catch me online on discord"
+      },
+      "coinRain": {
+        "name": "coin rain",
+        "how": "throw a coin at my masterdevfrance cheque"
+      },
+      "top10": {
+        "name": "top 10",
+        "how": "make the top 10 of an arcade game"
+      },
+      "firstSecret": {
+        "name": "first secret",
+        "how": "find a secret in the quick menu",
+        "hint": "some words do more than search"
+      },
+      "lost": {
+        "name": "lost",
+        "how": "land on a page that doesn't exist",
+        "hint": "wander off the map"
+      },
+      "secretHunter": {
+        "name": "secret hunter",
+        "how": "find all six secrets of the quick menu"
+      },
+      "platinum": {
+        "name": "platinum",
+        "how": "unlock every other trophy"
+      }
     }
   }
 }

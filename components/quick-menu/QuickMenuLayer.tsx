@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 
 import {
   ArrowUpRight,
+  Award,
   Backpack,
   Check,
   Clapperboard,
@@ -41,6 +42,7 @@ import { useRadio } from "@/components/radio/RadioProvider";
 import { RarityTag } from "@/components/rarity/RarityTag";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { Sparkle } from "@/components/sparkle";
+import { countTrophyStep } from "@/components/trophies/trophy-store";
 import {
   TypographyData,
   TypographyMuted,
@@ -121,6 +123,7 @@ const PAGE_ICONS: Record<string, LucideIcon> = {
   [ROUTES.contact.path]: MessageCircleHeart,
   [ROUTES.mdf2025.path]: Trophy,
   [ROUTES.patchNotes.path]: ScrollText,
+  [ROUTES.trophies.path]: Award,
 };
 
 const CHOSEN_ROW = "[cmdk-item][aria-selected=true]";
@@ -370,6 +373,7 @@ function QuickMenuBody({
         return;
       }
       case "secret":
+        countTrophyStep("secrets", action.secret);
         if (action.secret === "barrelRoll" && !reducedMotion) {
           document
             .querySelector("[data-client-window]")
