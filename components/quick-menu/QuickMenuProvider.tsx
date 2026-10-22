@@ -12,6 +12,7 @@ import {
 import dynamic from "next/dynamic";
 
 import { useSounds } from "@/components/sound/SoundProvider";
+import { countTrophyStep } from "@/components/trophies/trophy-store";
 import { KONAMI, konamiStep } from "@/lib/quick-menu/konami";
 
 import type { QuickMenuData, ShownToast, Toast } from "./QuickMenuLayer";
@@ -91,6 +92,7 @@ export function QuickMenuProvider({
           konami.current = 0;
           play("unlock");
           showToast({ kind: "secret", secret: "konami" });
+          countTrophyStep("secrets", "konami");
         }
       }
 

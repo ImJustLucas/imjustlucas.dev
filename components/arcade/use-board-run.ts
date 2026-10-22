@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { startRunAction, submitRunAction } from "@/app/[locale]/arcade/actions";
 import type { ScreenProps } from "@/components/arcade/screen";
 import { useSounds } from "@/components/sound/SoundProvider";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
 import { type LeaderboardGame, wouldRank } from "@/lib/arcade/board";
 import { type NameProblem, parseName } from "@/lib/arcade/player-name";
 import { bestOf, parseBest } from "@/lib/arcade/run";
@@ -95,6 +96,7 @@ export const useBoardRun = (
             onBoard(sent.top);
           }
           if (sent.kind === "ranked") {
+            unlockTrophy("top10");
             setEntry({ kind: "ranked", rank: sent.rank });
             latest.current.announce(t("entry.rankedLive", { rank: sent.rank }));
             latest.current.play("toggleOn");
@@ -112,6 +114,7 @@ export const useBoardRun = (
   /** The run is over with `points`: sent when it would make the board. */
   const end = useCallback(
     (points: number, inputs: ReadonlyArray<Input>) => {
+      unlockTrophy(game);
       const run = activeRun.current;
       activeRun.current = null;
       const { board, player } = latest.current;
@@ -126,7 +129,7 @@ export const useBoardRun = (
         else setEntry({ kind: "asking" });
       }
     },
-    [send],
+    [game, send],
   );
 
   /** The first name typed: kept and sent, or what is wrong with it. */

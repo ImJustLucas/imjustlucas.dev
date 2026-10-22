@@ -52,6 +52,7 @@ describe("buildCommands", () => {
         ROUTES.contact,
         ROUTES.mdf2025,
         ROUTES.patchNotes,
+        ROUTES.trophies,
         ROUTES.cv,
       ].map((route) => ({ kind: "navigate", href: route.path })),
     );
@@ -65,9 +66,11 @@ describe("buildCommands", () => {
       undefined,
       undefined,
       undefined,
+      undefined,
     ]);
-    expect(pages.slice(-3).map((c) => c.cue)).toEqual([
+    expect(pages.slice(-4).map((c) => c.cue)).toEqual([
       "unlock",
+      "press",
       "press",
       "press",
     ]);

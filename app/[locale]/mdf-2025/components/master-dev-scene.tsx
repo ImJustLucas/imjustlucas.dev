@@ -20,6 +20,7 @@ import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import * as THREE from "three";
 
 import { useSounds } from "@/components/sound/SoundProvider";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
 
 import { Certificate } from "./certificate";
 import SceneLoader from "./scene-loader";
@@ -385,6 +386,7 @@ const Scene = ({
         },
       ]);
       play("throw");
+      unlockTrophy("coinRain");
     },
     [camera, play],
   );
