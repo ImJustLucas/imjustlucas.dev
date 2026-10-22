@@ -27,7 +27,7 @@ import "server-only";
 const runtime = ManagedRuntime.make(
   ContentCatalog.layer.pipe(
     Layer.provide(layerLocalFilesystem(process.cwd())),
-    Layer.provide(GitHubStars.layer),
+    Layer.provide(GitHubStars.layer(process.env.GITHUB_TOKEN)),
     Layer.provide(GitHubContributions.layer(process.env.GITHUB_TOKEN)),
     Layer.provide(YouTubeChannel.layer),
   ),
