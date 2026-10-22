@@ -976,5 +976,43 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
+  },
+  {
+    "version": "2.23",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Lofi on the client",
+      "fr": "Du lofi dans le client"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A cosy lofi radio at the bottom of the menu: press play and it keeps going while you browse 🎧",
+          "fr": "Une radio lofi cosy en bas du menu : lance-la et elle continue pendant que tu te balades 🎧"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Rain on the window if you want it, with its own volume 🌧️",
+          "fr": "De la pluie contre la vitre si tu veux, avec son propre volume 🌧️"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "On your phone, a little now-playing pill, and your keyboard's media keys work too",
+          "fr": "Sur ton téléphone, une petite pastille « en cours de lecture », et les touches média de ton clavier marchent aussi"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Play, pause, skip or make it rain from the quick menu (⌘K)",
+          "fr": "Lance, mets en pause, passe un morceau ou fais pleuvoir depuis le menu rapide (⌘K)"
+        }
+      }
+    ]
   }
 ]

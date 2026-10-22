@@ -30,7 +30,7 @@ export function RadioPill() {
     <div
       role="region"
       aria-label={t("nowPlaying")}
-      className="fixed inset-x-0 bottom-4 z-30 mx-auto flex h-14 w-[min(22rem,calc(100%-2.5rem))] items-center gap-2 rounded-full border-2 border-seam bg-raised p-1.5 shadow-[var(--float),var(--tray)] motion-safe:animate-window-in md:hidden"
+      className="fixed inset-x-0 bottom-4 z-30 mx-auto flex h-14 w-[min(22rem,calc(100%-2.5rem))] items-center gap-2 rounded-full border-2 border-seam bg-raised p-1.5 shadow-[var(--float),var(--tray)] motion-safe:animate-window-in motion-reduce:animate-fade-in md:hidden"
     >
       <button
         type="button"

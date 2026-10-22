@@ -323,7 +323,8 @@
     "rainOn": "rain on",
     "rainOff": "rain off",
     "rainVolume": "Rain volume",
-    "source": "This track and its CC0 licence on the Free Music Archive",
+    "source": "its cc0 licence on free music archive",
+    "sourceLabel": "{title} by {artist} and its CC0 licence on the Free Music Archive (opens in a new tab)",
     "nowPlaying": "now playing",
     "openRadio": "{title}, open the radio"
   },

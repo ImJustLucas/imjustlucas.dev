@@ -44,8 +44,10 @@ export function RadioSlot() {
           />
         </span>
         <span className="min-w-0 flex-1">
+          {/* A new track is announced, never the idle line */}
           <span
             title={started ? track.title : undefined}
+            aria-live={started ? "polite" : undefined}
             className="block truncate text-label text-ink"
           >
             {started ? track.title : t("idleTitle")}
@@ -61,7 +63,11 @@ export function RadioSlot() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={t("source")}
-                  className="rounded-sm underline decoration-seam decoration-2 underline-offset-4 transition-colors duration-hover ease-out hover:text-ink"
+                  aria-label={t("sourceLabel", {
+                    title: track.title,
+                    artist: track.artist,
+                  })}
+                  className="relative rounded-sm underline after:absolute after:inset-x-0 after:-inset-y-1.5 after:content-[''] decoration-seam decoration-2 underline-offset-4 transition-colors duration-hover ease-out hover:text-ink"
                 >
                   {track.artist}
                 </a>

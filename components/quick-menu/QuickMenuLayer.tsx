@@ -624,6 +624,8 @@ function SecretToast({
   onToast: (toast: Toast | null) => void;
 }) {
   const t = useTranslations("QuickMenu");
+  // Above the radio's pill on phones, when it shows
+  const radioStarted = useRadio().state.status !== "off";
   const done = () => onToast(null);
 
   useEffect(() => {
@@ -650,7 +652,10 @@ function SecretToast({
     <div
       role="status"
       onClick={done}
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-sm cursor-pointer items-center gap-3 rounded-lg border-2 border-seam bg-raised p-3 pr-4 text-ink shadow-[var(--float),var(--tray)] motion-safe:animate-window-in motion-reduce:animate-fade-in md:inset-x-auto md:bottom-6 md:right-6"
+      className={cn(
+        "fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-sm cursor-pointer items-center gap-3 rounded-lg border-2 border-seam bg-raised p-3 pr-4 text-ink shadow-[var(--float),var(--tray)] motion-safe:animate-window-in motion-reduce:animate-fade-in md:inset-x-auto md:bottom-6 md:right-6",
+        radioStarted && "max-md:bottom-[5.5rem]",
+      )}
     >
       {text.pose ? (
         <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-ground">
