@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 
 import { ChibiHead } from "@/components/chibi/ChibiHead";
+import { QuickMenuIconButton } from "@/components/quick-menu/QuickMenuTrigger";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { SoundSwitch } from "@/components/sound/SoundSwitch";
 import { TypographyTitle } from "@/components/typography";
@@ -14,7 +15,7 @@ import { Link } from "@/i18n/navigation";
 
 /**
  * The mobile top bar (below 768px): the chibi head in its status ring, the
- * handle, the sound switch and the button of the client sheet. It stays
+ * handle, the quick menu's button, the sound switch and the button of the client sheet. It stays
  * above the sheet, so the same button closes it.
  */
 export function MobileTopBar() {
@@ -48,39 +49,43 @@ export function MobileTopBar() {
   }, [isOpen]);
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-3 rounded-xl bg-ground pl-2 pr-1.5 md:hidden">
+    <header className="flex h-14 shrink-0 items-center gap-2 rounded-xl bg-ground pl-2 pr-1.5 md:hidden">
       <Link
         href="/"
         onClick={() => closeMenu()}
-        className="flex min-h-11 min-w-0 flex-1 items-center gap-3 rounded-md"
+        className="flex min-h-11 min-w-0 flex-1 items-center gap-2 rounded-md"
       >
         <ChibiHead size={40} />
-        <TypographyTitle as="span" className="truncate">
+        <TypographyTitle as="span" className="truncate max-[389px]:text-base">
           ImJustLucas
         </TypographyTitle>
       </Link>
-      <SoundSwitch />
-      {/* First in the tab order before the sheet, so Tab moves into it */}
-      <button
-        ref={toggleRef}
-        type="button"
-        onClick={() => {
-          play(isOpen ? "toggleOff" : "toggleOn");
-          toggleMenu();
-        }}
-        aria-expanded={isOpen}
-        aria-controls="sidebar"
-        className="ledge inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-raised text-ink"
-      >
-        {isOpen ? (
-          <X aria-hidden className="size-5" />
-        ) : (
-          <Menu aria-hidden className="size-5" />
-        )}
-        <span className="sr-only">
-          {isOpen ? t("closeMenu") : t("openMenu")}
-        </span>
-      </button>
+      {/* Three 44px buttons 6px apart: the whole handle fits from 375px */}
+      <div className="flex shrink-0 items-center gap-1.5">
+        <QuickMenuIconButton />
+        <SoundSwitch />
+        {/* First in the tab order before the sheet, so Tab moves into it */}
+        <button
+          ref={toggleRef}
+          type="button"
+          onClick={() => {
+            play(isOpen ? "toggleOff" : "toggleOn");
+            toggleMenu();
+          }}
+          aria-expanded={isOpen}
+          aria-controls="sidebar"
+          className="ledge inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-raised text-ink"
+        >
+          {isOpen ? (
+            <X aria-hidden className="size-5" />
+          ) : (
+            <Menu aria-hidden className="size-5" />
+          )}
+          <span className="sr-only">
+            {isOpen ? t("closeMenu") : t("openMenu")}
+          </span>
+        </button>
+      </div>
     </header>
   );
 }
