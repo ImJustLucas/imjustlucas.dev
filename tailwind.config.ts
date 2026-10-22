@@ -204,6 +204,8 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s var(--ease-out)",
         "page-in": "page-in var(--dur-page) var(--ease-out) both",
         "fade-in": "fade-in 150ms var(--ease-out) both",
+        // The lobby's count: each new number rises in like a page
+        "count-in": "page-in var(--dur-page) var(--ease-out) both",
         equalizer: "equalizer 0.9s var(--ease-in-out) infinite",
         breathe: "breathe 2.4s var(--ease-in-out) infinite",
         foil: "foil var(--dur-unlock) var(--ease-out) both",
