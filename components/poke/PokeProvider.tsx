@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 
 import { pokeReplyAction, sendPokeAction } from "@/app/[locale]/poke-actions";
 import { useSounds } from "@/components/sound/SoundProvider";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
 import type { Emote } from "@/lib/poke/emotes";
 import type { SentPoke } from "@/lib/poke/result";
 import {
@@ -183,6 +184,7 @@ export function PokeProvider({
           }
           if (result.kind === "sent") {
             play("confirm");
+            unlockTrophy("waved");
             setAnnounced(t("sentAnnounced"));
           } else {
             play("miss");

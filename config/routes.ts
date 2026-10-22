@@ -37,6 +37,8 @@ export const ROUTES = {
     messageKey: "patchNotes",
     inMenu: false,
   },
+  // The visitor's own Trophies, linked from the count at the sidebar's foot.
+  trophies: { path: "/trophies", messageKey: "trophies", inMenu: false },
 } as const satisfies Record<string, Route>;
 
 /**

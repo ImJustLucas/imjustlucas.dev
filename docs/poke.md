@@ -19,7 +19,7 @@ The rules are Effect code (ADR-0002) in `lib/poke/poke.ts`, over two services: `
 - **The visitor's browser** keeps its own Poke in `localStorage` (`imjustlucas:poke`, read by `lib/poke/visit.ts`): the buttons show it for the visitor's day, and on each load, while Lucas has not answered and the Poke is less than a week old, the site asks once whether he waved back.
 - **Fail soft:** when Upstash or Discord cannot be reached, nothing is sent, the server logs it, and the keys say so calmly under them; the page never breaks.
 
-`PokeProvider` (`components/poke/`) holds the visitor's wave for the whole client (the contact screen, the friends panel and the quick menu share it), plays the notes and shows the toasts. The Locale layout passes it `pokeEnabled()`: the wave is shown only when the webhook and Upstash are both set, read at build time like the rest of the static pages, so setting the variable takes a redeploy.
+A wave that goes out unlocks the visitor's `waved` Trophy (docs/trophies.md). `PokeProvider` (`components/poke/`) holds the visitor's wave for the whole client (the contact screen, the friends panel and the quick menu share it), plays the notes and shows the toasts. The Locale layout passes it `pokeEnabled()`: the wave is shown only when the webhook and Upstash are both set, read at build time like the rest of the static pages, so setting the variable takes a redeploy.
 
 ## Setting it up
 

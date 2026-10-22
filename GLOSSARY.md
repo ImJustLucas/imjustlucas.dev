@@ -21,8 +21,8 @@ What kind of thing a Project or Achievement is: common (a side project), rare (s
 _Avoid_: Tier, level, score
 
 **Achievement**:
-A distinction Lucas earned, such as a competition won, shown on the home page with its year, Rarity and art.
-_Avoid_: Trophy, award, badge
+A distinction Lucas earned, such as a competition won, shown on the home page with its year, Rarity and art. Lucas's own; a visitor's are Trophies.
+_Avoid_: Trophy (the visitor's), award, badge
 
 **Hobby**:
 Something Lucas does outside work, shown on the home page with the chibi avatar pose that depicts it.
@@ -47,6 +47,14 @@ _Avoid_: Online users, visitors count, audience
 **Poke**:
 A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
 _Avoid_: Message, notification, ping
+
+**Trophy**:
+Something a visitor unlocks by exploring the site (a game played, a secret found, every palette tried), with a Rarity, kept in their own browser and shown on the trophies page. Never Lucas's: his are Achievements.
+_Avoid_: Achievement, badge, quest
+
+**Tally**:
+The steps a Trophy counts, each once, over any number of visits: the menu's tabs, the palettes, the Locales, the modes, the quick menu's secrets.
+_Avoid_: Counter, progress bar
 
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".

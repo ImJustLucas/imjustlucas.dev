@@ -14,6 +14,7 @@ import { usePresence } from "@/components/presence/PresenceProvider";
 import { STATUS_DOT, STATUS_RING } from "@/components/presence/status-style";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { useSounds } from "@/components/sound/SoundProvider";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
 import { TypographyTag, TypographyTitle } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import type { PlayerLevel, Profile } from "@/lib/content/types";
@@ -152,6 +153,7 @@ export function FriendRequest({
                   onClick={() => {
                     play("confirm");
                     setOpened(true);
+                    unlockTrophy("friendRequest");
                   }}
                 >
                   {opened ? (
