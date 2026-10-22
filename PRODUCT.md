@@ -48,7 +48,7 @@ Three claims, held equally, with none leading:
 - The Lobby: how many visitors are on the site right now ("just you" when alone), from an anonymous id per tab kept in `sessionStorage` (no IP, no cookie), counted on the same Upstash database; hidden when it cannot be reached.
 - Theme: light, dark and system, dark by default.
 - Uploads through the Admin: Project images (PNG, JPEG, WebP, AVIF) and Resume PDFs, 4 MB maximum.
-- The Contact page points to LinkedIn DMs only. The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.
+- The Contact page points to LinkedIn DMs as its one action; visitors can also wave at Lucas (an emote from a fixed set, never free text) from it, the friends panel or the quick menu, which reaches his Discord, once a day each, and he may wave back from the Admin (docs/poke.md). The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.
 - **Not binding**: the MDF 2025 Three.js scene may change or go in later work.
 
 ## Brand Commitments

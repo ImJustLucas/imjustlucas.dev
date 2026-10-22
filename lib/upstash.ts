@@ -5,7 +5,7 @@ import "server-only";
 /**
  * Upstash Redis (Vercel Marketplace, store `imjustlucas-arcade`) through its
  * REST API, so no client library ships. Shared by the Arcade's leaderboards
- * and the lobby; each maps `UpstashUnavailable` to its own error.
+ * the lobby and the Pokes; each maps `UpstashUnavailable` to its own error.
  */
 
 export type UpstashCommand = ReadonlyArray<string | number>;
@@ -22,6 +22,9 @@ const credentials = () => {
     process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
   return url && token ? { url, token } : undefined;
 };
+
+/** Whether the store's credentials are set. */
+export const upstashConfigured = () => credentials() !== undefined;
 
 const Reply = Schema.Union([
   Schema.Struct({ result: Schema.Unknown }),

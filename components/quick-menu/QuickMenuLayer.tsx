@@ -12,6 +12,7 @@ import {
   Download,
   Gamepad2,
   Github,
+  Hand,
   History,
   Languages,
   Link2,
@@ -33,6 +34,7 @@ import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { DiscordMark } from "@/components/contact/DiscordMark";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { usePalette } from "@/components/palette/use-palette";
+import { usePoke } from "@/components/poke/PokeProvider";
 import { RarityTag } from "@/components/rarity/RarityTag";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { Sparkle } from "@/components/sparkle";
@@ -220,6 +222,7 @@ function QuickMenuBody({
   const { palette, setPalette } = usePalette();
   const { state: sound, play, toggle } = useSounds();
   const { closeMenu } = useMobileMenu();
+  const poke = usePoke();
   const reducedMotion = useReducedMotion();
   const modifier = useModifierKey();
   const [query, setQuery] = useState("");
@@ -263,13 +266,24 @@ function QuickMenuBody({
           discord: `https://discord.com/users/${data.profile.discordUserId}`,
           resume: data.profile.resumes[locale].asset,
         },
+        poke: poke.enabled,
         state: {
           palette,
           mode: theme as Mode | undefined,
           sound: sound.enabled,
         },
       }),
-    [locale, messages, other, otherLocale, data, palette, theme, sound.enabled],
+    [
+      locale,
+      messages,
+      other,
+      otherLocale,
+      data,
+      poke.enabled,
+      palette,
+      theme,
+      sound.enabled,
+    ],
   );
   const results = useMemo(
     () => filterCommands(commands, query),
@@ -341,6 +355,9 @@ function QuickMenuBody({
         link.click();
         return;
       }
+      case "poke":
+        poke.send("wave", { toast: true });
+        return;
       case "secret":
         if (action.secret === "barrelRoll" && !reducedMotion) {
           document
@@ -483,6 +500,8 @@ function CommandIcon({
     }
     case "download":
       return <Download aria-hidden className={className} />;
+    case "poke":
+      return <Hand aria-hidden className={className} />;
     case "secret":
       return <Sparkle className={className} />;
   }

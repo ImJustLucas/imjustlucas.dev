@@ -7,6 +7,7 @@ import { Check, Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { DiscordMark } from "@/components/contact/DiscordMark";
+import { ContactWave } from "@/components/poke/Wave";
 import { activityPose } from "@/components/presence/activity-pose";
 import { DeviceMark, PresenceCard } from "@/components/presence/FriendsPanel";
 import { usePresence } from "@/components/presence/PresenceProvider";
@@ -202,6 +203,8 @@ export function FriendRequest({
               ))}
             </ul>
           </div>
+
+          <ContactWave />
         </div>
       </section>
 

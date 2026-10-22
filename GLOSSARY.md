@@ -44,6 +44,10 @@ _Avoid_: User, gamer
 Everyone on the site right now, the visitor included, counted from an anonymous beat each visible tab sends; shown in the friends panel as players "in the lobby". Not a Player (that is the Arcade's), never a visitor's identity.
 _Avoid_: Online users, visitors count, audience
 
+**Poke**:
+A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
+_Avoid_: Message, notification, ping
+
 **Period**:
 The span of time a Project or Experience covers: a start and an end, each precise to the month or the year, where the end may be "ongoing".
 _Avoid_: Date (for a span), duration

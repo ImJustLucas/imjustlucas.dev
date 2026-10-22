@@ -438,7 +438,8 @@
       "linkedin": "linkedin dm message contact",
       "github": "github code repositories",
       "discord": "discord friend",
-      "resume": "resume cv pdf download"
+      "resume": "resume cv pdf download",
+      "poke": "poke wave hi hello hey ping discord emote coucou"
     },
     "commands": {
       "play": "play {name}",
@@ -451,7 +452,8 @@
       "linkedin": "message me on LinkedIn",
       "github": "my GitHub",
       "discord": "add me on Discord",
-      "resume": "download my resume"
+      "resume": "download my resume",
+      "poke": "wave at me on Discord"
     },
     "copied": {
       "title": "link copied 📋",
@@ -499,6 +501,37 @@
         "line": "taking you to the contact screen…",
         "alt": "Lucas waving hello"
       }
+    }
+  },
+  "Poke": {
+    "open": "wave at me",
+    "contactLabel": "or just wave",
+    "trayLabel": "pick an emote",
+    "close": "close the emotes",
+    "emotes": {
+      "wave": "hey",
+      "gg": "gg",
+      "fire": "fire",
+      "coffee": "coffee",
+      "surf": "surf's up"
+    },
+    "send": "Wave with {emote}",
+    "sending": "sending…",
+    "sent": "sent! it pops up on my Discord",
+    "sentAnnounced": "Wave sent. Lucas gets it on Discord.",
+    "wavedBack": "I waved back 👋",
+    "limited": "you already waved today, see you tomorrow",
+    "busy": "lots of waves this hour, try again a bit later",
+    "failed": "Discord didn't answer, try again in a moment",
+    "toast": {
+      "wavedBackTitle": "Lucas waved back!",
+      "wavedBackLine": "he got your {emote} on Discord",
+      "wavedBackAlt": "Lucas waving at you",
+      "sentTitle": "wave sent!",
+      "sentLine": "it pops up on my Discord 👋",
+      "limitedTitle": "already waved today",
+      "busyTitle": "lots of waves right now",
+      "failedTitle": "wave not sent"
     }
   }
 }
