@@ -723,5 +723,36 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/47"
+  },
+  {
+    "version": "2.13",
+    "date": "2026-10-22",
+    "title": {
+      "en": "New quests unlocked",
+      "fr": "Nouvelles quêtes débloquées"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Six new projects: BAM Karaoke, TSL, AFT, Kascad, Musy and ia-guidelines 🎤",
+          "fr": "Six nouveaux projets : BAM Karaoke, TSL, AFT, Kascad, Musy et ia-guidelines 🎤"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Every project page now tells the story: my role, the context, what I built and where it got",
+          "fr": "Chaque page projet raconte enfin l'histoire : mon rôle, le contexte, ce que j'ai construit et où ça en est"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Qotum and Tricks show their real dates, and Tricks' dead link is gone",
+          "fr": "Qotum et Tricks affichent leurs vraies dates, et le lien mort de Tricks a disparu"
+        }
+      }
+    ]
   }
 ]
