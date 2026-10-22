@@ -776,7 +776,7 @@ const profileWith = (changes: object) => ({ ...testProfile, ...changes });
 
 describe("ContentCatalog.profile", () => {
   it.effect(
-    "returns the social links, YouTube channel, Discord account and Resumes",
+    "returns the social links, YouTube channel, Discord account, Resumes and recruiter texts",
     () =>
       Effect.gen(function* () {
         const profile = yield* (yield* ContentCatalog).profile;
@@ -794,6 +794,9 @@ describe("ContentCatalog.profile", () => {
             en: { asset: "/pdf/cv-lucas.pdf", lastUpdated: "2025-05-28" },
             fr: { asset: "/pdf/cv-lucas-fr.pdf", lastUpdated: "2025-10-07" },
           },
+          summary: testProfile.summary,
+          availability: testProfile.availability,
+          languages: testProfile.languages,
         });
       }).pipe(Effect.provide(catalogWith({ profile: testProfile }))),
   );

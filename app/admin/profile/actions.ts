@@ -5,12 +5,17 @@ import { hasLocale } from "next-intl";
 import {
   field,
   type FormState,
+  localized,
   publish,
   upload,
 } from "@/app/admin/action-form";
 import { routing } from "@/i18n/routing";
 import type { AdminActionResult } from "@/lib/admin/action-result";
-import { updateProfile, uploadResume } from "@/lib/admin/profile";
+import {
+  updateProfile,
+  updateRecruiter,
+  uploadResume,
+} from "@/lib/admin/profile";
 
 /**
  * The Profile editor's Server Actions (see `app/admin/action-form.ts`). A
@@ -29,6 +34,27 @@ export async function updateProfileAction(_: FormState, form: FormData) {
     },
     youtubeChannelId: field(form, "youtubeChannelId"),
     discordUserId: field(form, "discordUserId"),
+  });
+}
+
+/** The rows a `LanguagesField` posted, in display order. */
+const languages = (form: FormData) => {
+  const rows = [];
+  for (let i = 0; form.has(`languages.${i}.code`); i++)
+    rows.push({
+      code: field(form, `languages.${i}.code`),
+      name: localized(form, `languages.${i}.name`),
+      level: localized(form, `languages.${i}.level`),
+    });
+  return rows;
+};
+
+export async function updateRecruiterAction(_: FormState, form: FormData) {
+  return publish(updateRecruiter, {
+    revision: field(form, "revision"),
+    summary: localized(form, "summary"),
+    availability: localized(form, "availability"),
+    languages: languages(form),
   });
 }
 

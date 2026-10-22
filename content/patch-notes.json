@@ -935,7 +935,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/53"
   },
   {
-    "version": "2.21",
+    "version": "2.20",
     "date": "2026-10-22",
     "title": {
       "en": "Rarest first",
@@ -960,7 +960,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/55"
   },
   {
-    "version": "2.22",
+    "version": "2.21",
     "date": "2026-10-22",
     "title": {
       "en": "Who's in the lobby",
@@ -978,7 +978,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
   },
   {
-    "version": "2.23",
+    "version": "2.22",
     "date": "2026-10-22",
     "title": {
       "en": "Loading tips",
@@ -1003,7 +1003,7 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/57"
   },
   {
-    "version": "2.25",
+    "version": "2.23",
     "date": "2026-10-22",
     "title": {
       "en": "Trophy hunt",
@@ -1035,7 +1035,64 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/58"
   },
   {
-    "version": "2.27",
+    "version": "2.24",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Say hi",
+      "fr": "Fais-moi coucou"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Wave at me: pick an emote on the contact screen, under my friends panel or in the quick menu, and it pops up on my Discord 👋",
+          "fr": "Fais-moi coucou : choisis un emote sur l'écran de contact, sous mon panneau d'amis ou dans le menu rapide, et il s'affiche sur mon Discord 👋"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "I can wave back, and you'll see it next time you drop by 🏄",
+          "fr": "Je peux te répondre d'un coucou, tu le verras à ta prochaine visite 🏄"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A new trophy to unlock: wave at me once 🏆",
+          "fr": "Un nouveau trophée à débloquer : fais-moi coucou une fois 🏆"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/59"
+  },
+  {
+    "version": "2.25",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Recruiter mode",
+      "fr": "Mode recruteur"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Recruiter mode: my whole profile on one calm page, no game, no sound, made for recruiters in a hurry 💼 Find it in the sidebar or on my profile banner",
+          "fr": "Mode recruteur : tout mon profil sur une seule page sobre, sans jeu ni son, pour les recruteurs pressés 💼 Il est dans la barre latérale et sur la bannière de mon profil"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Print it or save it as a PDF: it fits on one A4 sheet, in English or in French 🖨️",
+          "fr": "Imprime-le ou enregistre-le en PDF : il tient sur une feuille A4, en français comme en anglais 🖨️"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/54"
+  },
+  {
+    "version": "2.26",
     "date": "2026-10-22",
     "title": {
       "en": "Lofi on the client",

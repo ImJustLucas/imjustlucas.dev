@@ -50,6 +50,11 @@
       "label": "trophées",
       "title": "trophées",
       "description": "Les trophées qu'un visiteur débloque en explorant le site de Lucas Bellier, imjustlucas.dev : jouer à l'arcade, trouver les secrets, essayer chaque palette."
+    },
+    "cv": {
+      "label": "mode recruteur",
+      "title": "CV",
+      "description": "Le CV de Lucas Bellier sur une page : développeur fullstack à Paris, ses expériences, projets, compétences, formation et langues, prêt à imprimer."
     }
   },
   "Layout": {
@@ -79,6 +84,7 @@
     "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
     "downloadResume": "Télécharger mon CV",
     "resumeLastUpdated": "mis à jour le {date, date, medium}",
+    "recruiterMode": "mode recruteur",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -154,6 +160,24 @@
     "intro": "Là où j'ai joué jusqu'ici, et les diplômes gagnés en chemin 🎓",
     "chibiAlt": "Lucas qui savoure un mug de café fumant"
   },
+  "Recruiter": {
+    "back": "retour au jeu",
+    "print": "imprimer / enregistrer en PDF",
+    "downloadResume": "CV en PDF",
+    "headline": "Développeur fullstack · cofondateur de Predi.GG",
+    "location": "Paris, France",
+    "photoAlt": "Lucas Bellier, souriant, en noir et blanc",
+    "experienceTitle": "expériences",
+    "projectsTitle": "projets choisis",
+    "allProjects": "tous les projets",
+    "skillsTitle": "compétences",
+    "skillsNote": "celles que mes projets utilisent le plus",
+    "educationTitle": "formation",
+    "languagesTitle": "langues",
+    "linksTitle": "liens",
+    "website": "Site",
+    "liveVersion": "Version en ligne, toujours à jour : {url}"
+  },
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",
@@ -173,6 +197,7 @@
     "socials": "réseaux",
     "playerLine": "dev fullstack · paris",
     "unread": "nouvelle version",
+    "recruiter": "mode recruteur",
     "trophies": "trophées : {done} sur {total}"
   },
   "Presence": {
@@ -453,6 +478,7 @@
       "contact": "contact message embauche demande d'ami",
       "mdf2025": "masterdevfrance trophée concours victoire légendaire",
       "patchNotes": "notes de version nouveautés mises à jour versions changelog",
+      "cv": "recruteur cv curriculum imprimer pdf embauche une page",
       "project": "projet",
       "game": "jeu jouer arcade",
       "palette": "thème palette couleur",
@@ -466,6 +492,7 @@
       "resume": "cv pdf télécharger",
       "radio": "radio lofi musique chill son révisions concentration",
       "rain": "pluie ambiance cosy météo",
+      "poke": "coucou salut poke wave hello ping discord emote",
       "trophies": "trophées succès progression débloquer badges"
     },
     "commands": {
@@ -484,7 +511,8 @@
       "radioPause": "mettre la radio en pause",
       "radioNext": "morceau suivant à la radio",
       "rainOn": "faire pleuvoir",
-      "rainOff": "arrêter la pluie"
+      "rainOff": "arrêter la pluie",
+      "poke": "me faire coucou sur Discord"
     },
     "copied": {
       "title": "lien copié 📋",
@@ -532,6 +560,37 @@
         "line": "direction l'écran de contact…",
         "alt": "Lucas fait coucou"
       }
+    }
+  },
+  "Poke": {
+    "open": "fais-moi coucou",
+    "contactLabel": "ou juste un coucou",
+    "trayLabel": "choisis un emote",
+    "close": "fermer les emotes",
+    "emotes": {
+      "wave": "salut",
+      "gg": "gg",
+      "fire": "le feu",
+      "coffee": "un café",
+      "surf": "surf"
+    },
+    "send": "Faire coucou avec {emote}",
+    "sending": "envoi…",
+    "sent": "envoyé ! ça s'affiche sur mon Discord",
+    "sentAnnounced": "Coucou envoyé. Lucas le reçoit sur Discord.",
+    "wavedBack": "je t'ai fait coucou en retour 👋",
+    "limited": "tu m'as déjà fait coucou aujourd'hui, à demain",
+    "busy": "plein de coucous cette heure-ci, réessaie un peu plus tard",
+    "failed": "Discord n'a pas répondu, réessaie dans un instant",
+    "toast": {
+      "wavedBackTitle": "Lucas t'a fait coucou !",
+      "wavedBackLine": "il a bien reçu ton {emote} sur Discord",
+      "wavedBackAlt": "Lucas qui te fait coucou",
+      "sentTitle": "coucou envoyé !",
+      "sentLine": "ça s'affiche sur mon Discord 👋",
+      "limitedTitle": "déjà fait coucou aujourd'hui",
+      "busyTitle": "plein de coucous en ce moment",
+      "failedTitle": "coucou pas envoyé"
     }
   },
   "LoadingTips": {
@@ -625,6 +684,10 @@
       "friendRequest": {
         "name": "demande d'ami",
         "how": "m'envoyer une demande d'ami depuis contact"
+      },
+      "waved": {
+        "name": "coucou toi",
+        "how": "me faire coucou sur discord"
       },
       "seenOnline": {
         "name": "vu en ligne",

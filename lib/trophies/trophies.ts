@@ -48,6 +48,7 @@ export type TrophyId =
   | "tour"
   | "painter"
   | "friendRequest"
+  | "waved"
   | "seenOnline"
   | "coinRain"
   | "rainyDay"
@@ -83,6 +84,7 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
   { id: "tour", rarity: "rare", tally: { of: "tabs" } },
   { id: "painter", rarity: "rare", tally: { of: "palettes" } },
   { id: "friendRequest", rarity: "rare" },
+  { id: "waved", rarity: "rare" },
   { id: "seenOnline", rarity: "rare", quiet: true },
   { id: "coinRain", rarity: "rare" },
   { id: "rainyDay", rarity: "rare" },

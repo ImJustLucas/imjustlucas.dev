@@ -44,6 +44,10 @@ _Avoid_: User, gamer
 Everyone on the site right now, the visitor included, counted from an anonymous beat each visible tab sends; shown in the friends panel as players "in the lobby". Not a Player (that is the Arcade's), never a visitor's identity.
 _Avoid_: Online users, visitors count, audience
 
+**Poke**:
+A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
+_Avoid_: Message, notification, ping
+
 **Trophy**:
 Something a visitor unlocks by exploring the site (a game played, a secret found, every palette tried), with a Rarity, kept in their own browser and shown on the trophies page. Never Lucas's: his are Achievements.
 _Avoid_: Achievement, badge, quest
@@ -81,12 +85,16 @@ A video published on Lucas's YouTube channel, sourced from the channel itself ra
 _Avoid_: YouTubeVideo, clip
 
 **Profile**:
-Lucas's public identity: his social links, his Resume and his Discord account.
+Lucas's public identity: his social links, his Resume, his Discord account, and the summary, availability and languages of the recruiter mode.
 _Avoid_: Socials, links
 
 **Resume**:
 The downloadable PDF of Lucas's CV, one per Locale, each with the date it was last updated.
 _Avoid_: CV
+
+**Recruiter mode**:
+The profile as one sober, printable page for recruiters (`/cv`), outside the client: no sidebar, no sound. Its content is read from the Profile, Experiences, Projects and diplomas, under Lucas's photo rather than the chibi; the Resume stays the PDF.
+_Avoid_: CV page, resume page
 
 **Patch**:
 One version of the site in its patch notes: a version (`<season>.<patch>`, an optional hotfix number after), a date, a title and lines tagged new, changed or fixed, in the Owner's voice, optionally linking the pull request that shipped it. The newest Patch's version is the site's current version.

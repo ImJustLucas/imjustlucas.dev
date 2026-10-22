@@ -7,6 +7,7 @@ export type {
   PatchInLocale,
   ProjectEntry,
   ProjectInLocale,
+  RecruiterInLocale,
   ResolvedExperience,
   ResolvedProject,
   Video,
@@ -26,5 +27,6 @@ export type {
   Profile,
   Rarity,
   Resume,
+  SpokenLanguage,
   Tech,
 } from "./schema";

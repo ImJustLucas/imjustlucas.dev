@@ -368,6 +368,10 @@ const FRENCH: ReadonlyArray<
     (m) => `Un Tech utilise déjà cet identifiant : ${m[1]}`,
   ],
   [
+    /^Expected a language code \(BCP 47\)$/,
+    () => "Code de langue attendu, par exemple fr, en ou pt-BR",
+  ],
+  [
     /^Expected an http\(s\) URL$/,
     () => "Lien attendu, commençant par http:// ou https://",
   ],

@@ -14,18 +14,7 @@ import {
 } from "@/components/typography";
 import { cn } from "@/lib/utils";
 
-/** Diploma names are in the message dictionaries; institutions are proper nouns. */
-const DIPLOMAS = [
-  { key: "master", institution: "IIM", years: "2023 - 2025" },
-  { key: "bachelor", institution: "Need For School", years: "2020 - 2023" },
-  {
-    key: "baccalaureate",
-    institution: "Lycée Galilée, Franqueville St Pierre",
-    years: "2019",
-  },
-] as const;
-
-type Diploma = (typeof DIPLOMAS)[number];
+import { type Diploma, DIPLOMAS } from "./diplomas";
 
 /**
  * The diplomas as medals Lucas earned: a coin lettered with its level, then

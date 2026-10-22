@@ -14,6 +14,7 @@ import {
   Download,
   Gamepad2,
   Github,
+  Hand,
   History,
   Languages,
   Link2,
@@ -38,6 +39,7 @@ import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { DiscordMark } from "@/components/contact/DiscordMark";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { usePalette } from "@/components/palette/use-palette";
+import { usePoke } from "@/components/poke/PokeProvider";
 import { useRadio } from "@/components/radio/RadioProvider";
 import { RarityTag } from "@/components/rarity/RarityTag";
 import { useSounds } from "@/components/sound/SoundProvider";
@@ -233,6 +235,7 @@ function QuickMenuBody({
   const radioStarted = radio.state.status !== "off";
   const rain = radio.state.rain;
   const { closeMenu } = useMobileMenu();
+  const poke = usePoke();
   const reducedMotion = useReducedMotion();
   const modifier = useModifierKey();
   const [query, setQuery] = useState("");
@@ -276,6 +279,7 @@ function QuickMenuBody({
           discord: `https://discord.com/users/${data.profile.discordUserId}`,
           resume: data.profile.resumes[locale].asset,
         },
+        poke: poke.enabled,
         state: {
           palette,
           mode: theme as Mode | undefined,
@@ -289,6 +293,7 @@ function QuickMenuBody({
       other,
       otherLocale,
       data,
+      poke.enabled,
       palette,
       theme,
       sound.enabled,
@@ -372,6 +377,9 @@ function QuickMenuBody({
         link.click();
         return;
       }
+      case "poke":
+        poke.send("wave", { toast: true });
+        return;
       case "secret":
         countTrophyStep("secrets", action.secret);
         if (action.secret === "barrelRoll" && !reducedMotion) {
@@ -532,6 +540,8 @@ function CommandIcon({
     }
     case "download":
       return <Download aria-hidden className={className} />;
+    case "poke":
+      return <Hand aria-hidden className={className} />;
     case "secret":
       return <Sparkle className={className} />;
   }

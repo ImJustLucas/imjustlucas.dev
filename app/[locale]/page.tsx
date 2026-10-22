@@ -1,6 +1,11 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { ArrowRight, Download, Linkedin } from "lucide-react";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Download,
+  Linkedin,
+} from "lucide-react";
 
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { AchievementSlot } from "@/components/home/AchievementSlot";
@@ -166,6 +171,14 @@ export default async function Home() {
                   <Linkedin aria-hidden />
                   LinkedIn
                 </a>
+              </Button>
+            </SoundOnPress>
+            <SoundOnPress>
+              <Button asChild variant="outline">
+                <Link href={ROUTES.cv.path}>
+                  <BriefcaseBusiness aria-hidden />
+                  {t("recruiterMode")}
+                </Link>
               </Button>
             </SoundOnPress>
           </div>

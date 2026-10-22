@@ -47,6 +47,8 @@ export type Action =
   | { readonly kind: "copyLink" }
   | { readonly kind: "external"; readonly href: string }
   | { readonly kind: "download"; readonly href: string }
+  /** Waves at Lucas on Discord, with the hello emote. */
+  | { readonly kind: "poke" }
   | { readonly kind: "secret"; readonly secret: Secret };
 
 /** What a radio command does (`components/radio`). */
@@ -92,6 +94,8 @@ export type CommandsInput = {
     readonly discord: string;
     readonly resume: string;
   };
+  /** Whether visitors can wave at Lucas (DESIGN.md, Wave). */
+  readonly poke?: boolean;
   readonly state: {
     readonly palette: Palette;
     readonly mode: Mode | undefined;
@@ -346,9 +350,9 @@ export const buildCommands = (input: CommandsInput): Command[] => {
   ];
 
   const link = (
-    id: "copyLink" | "linkedin" | "github" | "discord" | "resume",
+    id: "copyLink" | "linkedin" | "github" | "discord" | "poke" | "resume",
     action: Action,
-    cue: Cue,
+    cue: Cue | null,
   ): Command => ({
     id: `link-${id}`,
     section: "links",
@@ -366,6 +370,8 @@ export const buildCommands = (input: CommandsInput): Command[] => {
     link("linkedin", { kind: "external", href: input.links.linkedin }, "press"),
     link("github", { kind: "external", href: input.links.github }, "press"),
     link("discord", { kind: "external", href: input.links.discord }, "press"),
+    // The wave plays its own note once Discord has it
+    ...(input.poke ? [link("poke", { kind: "poke" }, null)] : []),
     link("resume", { kind: "download", href: input.links.resume }, "confirm"),
   ];
 

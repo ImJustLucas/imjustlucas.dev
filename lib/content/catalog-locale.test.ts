@@ -541,3 +541,24 @@ describe("ContentCatalog.inLocale(locale).resume", () => {
     }).pipe(Effect.provide(catalogWith({ profile: testProfile }))),
   );
 });
+
+describe("ContentCatalog.inLocale(locale).recruiter", () => {
+  it.effect("returns the Profile's recruiter texts in the Locale", () =>
+    Effect.gen(function* () {
+      const catalog = yield* ContentCatalog;
+
+      expect(yield* catalog.inLocale("en").recruiter).toEqual({
+        summary: "I build websites.",
+        availability: "open to opportunities",
+        languages: [{ code: "fr", name: "French", level: "native" }],
+      });
+      expect(yield* catalog.inLocale("fr").recruiter).toEqual({
+        summary: "Je fais des sites.",
+        availability: "ouvert aux opportunités",
+        languages: [
+          { code: "fr", name: "Français", level: "langue maternelle" },
+        ],
+      });
+    }).pipe(Effect.provide(catalogWith({ profile: testProfile }))),
+  );
+});

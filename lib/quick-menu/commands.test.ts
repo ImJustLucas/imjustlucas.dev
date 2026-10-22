@@ -53,6 +53,7 @@ describe("buildCommands", () => {
         ROUTES.mdf2025,
         ROUTES.patchNotes,
         ROUTES.trophies,
+        ROUTES.cv,
       ].map((route) => ({ kind: "navigate", href: route.path })),
     );
     expect(pages.map((c) => c.tab)).toEqual([
@@ -65,9 +66,11 @@ describe("buildCommands", () => {
       undefined,
       undefined,
       undefined,
+      undefined,
     ]);
-    expect(pages.slice(-3).map((c) => c.cue)).toEqual([
+    expect(pages.slice(-4).map((c) => c.cue)).toEqual([
       "unlock",
+      "press",
       "press",
       "press",
     ]);
@@ -173,6 +176,15 @@ describe("buildCommands", () => {
       { kind: "external", href: "https://discord.com/users/1" },
       { kind: "download", href: "/pdf/cv-lucas.pdf" },
     ]);
+  });
+
+  it("offers to wave at Lucas only when visitors can", () => {
+    expect(ids(commands)).not.toContain("link-poke");
+    const poke = buildCommands(input({ poke: true })).find(
+      (c) => c.id === "link-poke",
+    );
+    expect(poke).toMatchObject({ action: { kind: "poke" }, cue: null });
+    expect(search("coucou", { poke: true })[0]).toBe("link-poke");
   });
 
   it("labels everything in the visitor's Locale", () => {

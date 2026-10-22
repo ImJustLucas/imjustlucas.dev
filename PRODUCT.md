@@ -33,7 +33,7 @@ Three claims, held equally, with none leading:
 
 ## Operating Context
 
-- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu, and the patch notes (the site's changelog, written like a game's, Season 1 the first portfolio and Season 2 the Player Profile), linked from the current version at the foot of the sidebar.
+- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu, and the patch notes (the site's changelog, written like a game's, Season 1 the first portfolio and Season 2 the Player Profile), linked from the current version at the foot of the sidebar, and the recruiter mode (`/cv`: the profile as one sober, printable page outside the client, linked from the sidebar and the home banner).
 - Every public page exists in both Locales (English default, French) and is statically generated; Projects and Videos regenerate daily.
 - The sidebar menu sits beside a scrollable content panel; on mobile the sidebar becomes an overlay.
 - The Admin (`/admin`) is French only, private, GitHub sign-in for the Owner alone, and works through forms: one save makes one commit on `main`.
@@ -48,7 +48,7 @@ Three claims, held equally, with none leading:
 - The Lobby: how many visitors are on the site right now ("just you" when alone), from an anonymous id per tab kept in `sessionStorage` (no IP, no cookie), counted on the same Upstash database; hidden when it cannot be reached.
 - Theme: light, dark and system, dark by default.
 - Uploads through the Admin: Project images (PNG, JPEG, WebP, AVIF) and Resume PDFs, 4 MB maximum.
-- The Contact page points to LinkedIn DMs only. The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.
+- The Contact page points to LinkedIn DMs as its one action; visitors can also wave at Lucas (an emote from a fixed set, never free text) from it, the friends panel or the quick menu, which reaches his Discord, once a day each, and he may wave back from the Admin (docs/poke.md). The out-of-date VIE request (September 2025) and the note crediting phineas and antoinek for the old design were removed on 2026-10-20.
 - **Not binding**: the MDF 2025 Three.js scene may change or go in later work.
 
 ## Brand Commitments
@@ -56,7 +56,7 @@ Three claims, held equally, with none leading:
 - Name and handle: **ImJustLucas** / imjustlucas, explained in the FAQ as "my reminder to keep it real and stay humble".
 - **Voice (binding)**: casual and playful, first person. Greetings like "Yoooo", emojis in copy and content, lowercase menu labels ("what i've done", "my experiences", "yt videos"). Formal or corporate rewrites would break it.
 - **Live Discord presence (binding)**: the presence card stays part of the site.
-- Avatar: the chibi ImJustLucas head, `public/images/chibi-avatar-64x64.png`, used in the sidebar.
+- Avatar: the chibi ImJustLucas head, `public/images/chibi-avatar-64x64.png`, used in the sidebar. The recruiter mode alone shows Lucas's photo (`public/images/lucas-photo.jpg`, his LinkedIn portrait) instead.
 
 ## Evidence on Hand
 

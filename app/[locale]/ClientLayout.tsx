@@ -9,7 +9,9 @@ import { MobileTopBar } from "@/components/sidebar/MobileTopBar";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { TrophyLayer } from "@/components/trophies/TrophyLayer";
 import { buttonVariants } from "@/components/ui/button";
+import { ROUTES } from "@/config/routes";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import { usePathname } from "@/i18n/navigation";
 import type { Profile, ProjectEntry } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +27,8 @@ interface ClientLayoutProps {
 /**
  * The client window: the Night frame with its sparkles, the sidebar (or the
  * mobile top bar and sheet) and the rounded profile panel, the only part
- * that scrolls, the radio's pill on phones and the quick menu over all of it.
+ * that scrolls, the radio's pill on phones and the quick menu over all of it. The recruiter mode
+ * (`/cv`) steps out of the client: its page alone, scrolling the document.
  */
 export default function ClientLayout({
   children,
@@ -36,6 +39,13 @@ export default function ClientLayout({
   const { isOpen } = useMobileMenu();
   const { state: radio } = useRadio();
   const t = useTranslations("Layout");
+  const pathname = usePathname();
+  if (pathname === ROUTES.cv.path)
+    return (
+      <main id="content" tabIndex={-1} className="focus-visible:outline-none">
+        {children}
+      </main>
+    );
   return (
     <QuickMenuProvider data={{ projects, profile }}>
       <div

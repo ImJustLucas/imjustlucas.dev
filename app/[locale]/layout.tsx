@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 
 import { fontVariables } from "@/app/fonts";
+import { PokeProvider } from "@/components/poke/PokeProvider";
 import { PresenceProvider } from "@/components/presence/PresenceProvider";
 import { RadioProvider } from "@/components/radio/RadioProvider";
 import { SoundProvider } from "@/components/sound/SoundProvider";
@@ -19,6 +20,7 @@ import {
   getProjectEntries,
 } from "@/lib/content/server";
 import { PALETTE_SCRIPT } from "@/lib/palette";
+import { pokeEnabled } from "@/lib/poke/server";
 
 import ClientLayout from "./ClientLayout";
 
@@ -79,15 +81,18 @@ export default async function LocaleLayout({
             <SoundProvider>
               <RadioProvider>
                 <PresenceProvider discordUserId={profile.discordUserId}>
-                  <MobileMenuProvider>
-                    <ClientLayout
-                      profile={profile}
-                      version={version}
-                      projects={projects}
-                    >
-                      {children}
-                    </ClientLayout>
-                  </MobileMenuProvider>
+                  {/* The wave at Lucas, hidden while its webhook is unset */}
+                  <PokeProvider enabled={pokeEnabled()}>
+                    <MobileMenuProvider>
+                      <ClientLayout
+                        profile={profile}
+                        version={version}
+                        projects={projects}
+                      >
+                        {children}
+                      </ClientLayout>
+                    </MobileMenuProvider>
+                  </PokeProvider>
                 </PresenceProvider>
               </RadioProvider>
             </SoundProvider>
