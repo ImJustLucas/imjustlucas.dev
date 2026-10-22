@@ -2,7 +2,7 @@
 import type { Rarity } from "./schema";
 
 /** The orders the inventory offers, the first the default. */
-export const PROJECT_SORTS = ["recent", "rarity", "oldest", "name"] as const;
+export const PROJECT_SORTS = ["rarity", "recent", "oldest", "name"] as const;
 export type ProjectSort = (typeof PROJECT_SORTS)[number];
 
 export const isProjectSort = (value: unknown): value is ProjectSort =>

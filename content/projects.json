@@ -177,6 +177,7 @@
       "en": "All the software behind the BAM karaoke boxes: bookings, back-office and billing 🎤",
       "fr": "Tout le logiciel derrière les box de karaoké BAM : réservations, back-office et facturation 🎤"
     },
+    "image": "/images/projects/bam-karaoke.webp",
     "wip": true,
     "period": {
       "start": "2026-01",
@@ -304,6 +305,7 @@
       "en": "The SaaS that connects riders with their sponsors 🛹",
       "fr": "Le SaaS qui met en relation les riders et leurs sponsors 🛹"
     },
+    "image": "/images/projects/kascad.webp",
     "wip": false,
     "period": {
       "start": "2024-06",
@@ -341,6 +343,7 @@
       "en": "The music game that won the DIGIT prize at the NeedForSchool 2022 hackathon 🎵",
       "fr": "Le jeu musical qui a gagné le prix DIGIT au hackathon NeedForSchool 2022 🎵"
     },
+    "image": "/images/projects/musy.webp",
     "wip": false,
     "period": {
       "start": "2022",

@@ -107,9 +107,11 @@ export function ProjectInventory({ loadout, items }: ProjectInventoryProps) {
   const sheetButton = useRef<HTMLButtonElement>(null);
 
   // A Tech no Project uses, or an unknown order (an old or mistyped link),
-  // falls back to everything, the most recent first.
+  // falls back to everything, the rarest first.
   const chosen = loadout.find((entry) => entry.tech.id === techInUrl) ?? null;
-  const sort: ProjectSort = isProjectSort(sortInUrl) ? sortInUrl : "recent";
+  const sort: ProjectSort = isProjectSort(sortInUrl)
+    ? sortInUrl
+    : PROJECT_SORTS[0];
 
   const choose = (id: string | null) => {
     play(id ? "toggleOn" : "toggleOff");

@@ -933,5 +933,29 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/53"
+  },
+  {
+    "version": "2.21",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Rarest first",
+      "fr": "Les plus rares d'abord"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Projects are now sorted by rarity by default, so the epic ones lead the inventory ✨",
+          "fr": "Les projets sont maintenant triés par rareté par défaut : les épiques ouvrent l'inventaire ✨"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Screenshots for BAM Karaoke, Kascad and Musy",
+          "fr": "Des captures pour BAM Karaoke, Kascad et Musy"
+        }
+      }
+    ]
   }
 ]
