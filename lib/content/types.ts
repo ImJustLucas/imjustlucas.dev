@@ -12,6 +12,7 @@ export type {
 } from "./catalog";
 export type { LoadoutEntry } from "./loadout";
 export type { Period } from "./period";
+export type { ContributionDay, PlayerLevel } from "./player-level";
 export type {
   Achievement,
   ContractType,

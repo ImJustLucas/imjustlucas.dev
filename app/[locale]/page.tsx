@@ -7,6 +7,7 @@ import { AchievementSlot } from "@/components/home/AchievementSlot";
 import { BannerChibi } from "@/components/home/BannerChibi";
 import { Faq } from "@/components/home/Faq";
 import { Hobbies } from "@/components/home/Hobbies";
+import { PlayerLevel } from "@/components/home/PlayerLevel";
 import { routeMetadata } from "@/components/page-header";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
@@ -26,6 +27,7 @@ import {
   getExperiences,
   getFeaturedProjects,
   getHobbies,
+  getLevel,
   getProfile,
   getResume,
 } from "@/lib/content/server";
@@ -37,11 +39,12 @@ import type {
 import { homeStructuredData, jsonLdScript } from "@/lib/seo/structured-data";
 import { cn } from "@/lib/utils";
 
-// Live GitHub star counts on the featured Projects: regenerated every 24
-// hours, and on every deploy. Static, as the uncached GitHub fetch would
-// otherwise make it dynamic.
+// Live GitHub star counts on the featured Projects and Lucas's Level from his
+// Contributions: regenerated every hour, so the Streak follows his day, and
+// on every deploy. Static, as the uncached GitHub fetches would otherwise
+// make it dynamic.
 export const dynamic = "force-static";
-export const revalidate = 86400;
+export const revalidate = 3600;
 
 export const generateMetadata = routeMetadata(ROUTES.me);
 
@@ -53,7 +56,10 @@ const RARITY_RANK: Record<Rarity, number> = {
   common: 0,
 };
 
-/** The player profile: banner, achievements, inventory, about, FAQ, goodbye. */
+/**
+ * The player profile: banner, achievements, inventory, level, about, FAQ,
+ * goodbye.
+ */
 export default async function Home() {
   const locale = await getLocale();
   const [
@@ -65,6 +71,7 @@ export default async function Home() {
     achievements,
     featured,
     hobbies,
+    level,
   ] = await Promise.all([
     getTranslations("Home"),
     getTranslations("Metadata"),
@@ -74,6 +81,7 @@ export default async function Home() {
     getAchievements(locale),
     getFeaturedProjects(locale),
     getHobbies(locale),
+    getLevel(),
   ]);
 
   const team = experiences
@@ -196,6 +204,14 @@ export default async function Home() {
           </ul>
         )}
       </section>
+
+      {/* Level, from GitHub Contributions; hidden without them */}
+      {level && (
+        <section aria-labelledby="level" className="flex flex-col gap-4">
+          <TypographyTitle id="level">{t("level.title")}</TypographyTitle>
+          <PlayerLevel level={level} github={profile.links.github} />
+        </section>
+      )}
 
       {/* About */}
       <section

@@ -40,9 +40,10 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 1. **Banner** (above): greeting, role, current team, Play button, LinkedIn.
 2. **Achievement showcase** (above): achievements are an Admin-editable content type (name per Locale, year, rarity, link, art). Today it holds only MDF 2025, shown as one wide legendary slot linking to `/mdf-2025`; Lucas adds others when he has a win of that level. Never pad the row with lesser items.
 3. **Inventory, featured**: up to three Project item cards chosen and ordered by Lucas in the Admin (a `featured` flag and order on Projects), rarity-framed, with "see the whole inventory" to `/what`. His intended first selection: Predi.GG, his current job (Bam Karaoke, which first needs a Project entry added in the Admin), and others he picks. Nothing on the home page is chosen in code.
-4. **About**: the bio ("Creative Mindset" today) in a 65ch reading slot, beside a "what i do when i'm not shipping" slot of his real hobbies, each a chibi pose with a lowercase label: surf, skate, playing LoL, coding, a coffee, watching a series, listening to music. The list lives in the content (Admin-editable), not in the component.
-5. **FAQ**: the existing questions as Velvet accordion rows with toggle sounds.
-6. Close: a small chibi waving and the contact tab link, so the page ends on Lucas, not on trivia.
+4. **Level**: Lucas's level from his live GitHub contributions (1 contribution = 1 xp, all years; level n to n + 1 costs 100·n xp), the XP bar, his streak in Paris days and the last 20 weeks as a heatmap, linking to his GitHub; absent when GitHub cannot be read. Below the inventory, so the inventory still peeks above the fold.
+5. **About**: the bio ("Creative Mindset" today) in a 65ch reading slot, beside a "what i do when i'm not shipping" slot of his real hobbies, each a chibi pose with a lowercase label: surf, skate, playing LoL, coding, a coffee, watching a series, listening to music. The list lives in the content (Admin-editable), not in the component.
+6. **FAQ**: the existing questions as Velvet accordion rows with toggle sounds.
+7. Close: a small chibi waving and the contact tab link, so the page ends on Lucas, not on trivia.
 
 ## Shell behaviour
 
@@ -91,6 +92,7 @@ Signature interaction: walking down the tabs plays a rising pentatonic scale whi
 
 6. **Role line**: "fullstack dev, co-founder of Predi.GG" / "fullstack dev, cofondateur de Predi.GG", lowercase like the menu, from the dictionaries.
 7. **Palette** (later the same day): orange as the active colour did not suit him; electric blue does. The default palette is "electric": dark mode E (frame #05081c, ground #0a0f2e, raised #141c48, seam #2a3a7a, off-white #f6f3ea text, the action off-white with navy text on an electric-blue #2f6bff ledge, electric blue for link underlines and focus #6f97ff) and light mode F (frame #e8e4d9, ground #f6f3ea, raised #fffdf8, ink #10131f, the action electric blue #1a4fe8 with off-white text on a #0d2fa6 ledge). Plum and tangerine stays as a second palette in the theme menu, stored per visitor.
+8. **Level** (2026-10-22): the home page shows a level from his GitHub contributions, counted over every year since 2020, on the classic RPG curve (level n to n + 1 costs 100·n xp), with his streak and a heatmap of about 20 weeks, on the home page only; the player card stays without level or xp.
 
 ## Chibi art
 
