@@ -2,11 +2,13 @@
 
 import { useTranslations } from "next-intl";
 
+import { LoadingTip } from "@/components/loading-tip/LoadingTip";
 import { TypographyData } from "@/components/typography";
 
 /**
- * The showcase loading: the well's own ground, a ring and the progress.
- * Free of three.js, so it shows while the scene's code loads too.
+ * The showcase loading: the well's own ground, a ring, the progress and a
+ * tip. Free of three.js, so it shows while the scene's code loads too; the
+ * code's loader hands its tip to the assets' one, one tip for the wait.
  */
 export function SceneLoading({ progress }: { progress: number }) {
   const t = useTranslations("Mdf2025");
@@ -20,6 +22,7 @@ export function SceneLoading({ progress }: { progress: number }) {
       <TypographyData>
         {t("loadingScene", { progress: Math.round(progress) })}
       </TypographyData>
+      <LoadingTip wait="mdf-2025" />
     </div>
   );
 }

@@ -88,6 +88,10 @@ _Avoid_: Release, changelog entry, update
 The patches sharing a version's first number: Season 1 is the first portfolio, Season 2 the Player Profile.
 _Avoid_: Major version, era
 
+**Loading tip**:
+One line at the foot of a loading screen while a real wait lasts: a feature of the site to discover, or a small fact about Lucas. Never a reason to make a visitor wait.
+_Avoid_: Hint, tooltip
+
 **Locale**:
 One of the two languages the site is published in: English (the default) or French. Every descriptive text in the content exists in both.
 _Avoid_: Language, lang
