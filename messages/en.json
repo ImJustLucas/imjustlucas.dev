@@ -500,5 +500,32 @@
         "alt": "Lucas waving hello"
       }
     }
+  },
+  "LoadingTips": {
+    "label": "tip",
+    "tips": {
+      "quickMenu": "⌘K opens the quick menu from any page. on a phone, tap the magnifier up top 🔎",
+      "quickMenuWeird": "type something weird in the quick menu, you never know 👀",
+      "cheatCodes": "old-school cheat codes still work around here. just saying 🎮",
+      "sudo": "recruiters: there's a very sudo way to hire me in the quick menu 😏",
+      "palettes": "the site comes in 5 palettes. pick yours with the theme button 🎨",
+      "lightMode": "night is the default, but the theme button has a light mode too ☀️",
+      "mute": "too many kalimba notes? the speaker button mutes everything 🔇",
+      "melody": "every button plays its own note, so clicking around plays a little tune 🎶",
+      "leaderboard": "the arcade keeps a top 10 per game. your first name has a spot waiting 🛹",
+      "cabinets": "two cabinets in the arcade: skate through Paris or surf the swell 🏄",
+      "patchNotes": "the version number at the bottom of the menu opens the patch notes 📜",
+      "addFriend": "the contact page is an add-friend screen. your request lands on my LinkedIn 🤝",
+      "level": "my level is real: every GitHub contribution is one xp 📈",
+      "presence": "the friends panel is live: what I'm playing, coding or listening to, right now 🎧",
+      "liveChibi": "the chibi on my profile copies what I'm doing on Discord, live",
+      "language": "the site speaks French too: hit FR next to the theme button 🇫🇷",
+      "trophy": "the gold trophy on my profile is real: I won MasterDevFrance 2025 🏆",
+      "coffee": "fun fact: I don't write a single line of code before my first coffee ☕",
+      "boards": "on weekends I'm on a board, with or without wheels 🏄",
+      "mains": "on League I main Vayne and Yunara. yes, ADC. don't judge 🏹",
+      "tattoo": "the little star in the site's margins is the tattoo on my hand ✨",
+      "humble": "imjustlucas is my reminder to keep it real and stay humble"
+    }
   }
 }
