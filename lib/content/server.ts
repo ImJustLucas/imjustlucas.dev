@@ -80,6 +80,13 @@ export const getProject = (locale: Locale, slug: string) =>
 export const getProjectSlugs = () =>
   fromCatalog((catalog) => catalog.projectSlugs);
 
+/**
+ * Every Project's slug, title and rarity, for the quick menu in the Locale
+ * layout; reads no star count, so the layout never revalidates.
+ */
+export const getProjectEntries = () =>
+  fromCatalog((catalog) => catalog.projectEntries);
+
 /** Experiences, their roles and descriptions in the Locale. */
 export const getExperiences = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).experiences);

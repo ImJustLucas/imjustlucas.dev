@@ -24,5 +24,19 @@
   { "id": "strapi", "name": "Strapi", "color": "#9333ea" },
   { "id": "styled-components", "name": "Styled Components", "color": "#ec4899" },
   { "id": "bun", "name": "Bun", "color": "#e7e5e4" },
-  { "id": "elysiajs", "name": "Elysia.js", "color": "#38bdf8" }
+  { "id": "elysiajs", "name": "Elysia.js", "color": "#38bdf8" },
+  { "id": "react-native", "name": "React Native", "color": "#0ea5e9" },
+  { "id": "expo", "name": "Expo", "color": "#1e293b" },
+  { "id": "astro", "name": "Astro", "color": "#f97316" },
+  { "id": "vite", "name": "Vite", "color": "#8b5cf6" },
+  { "id": "material-ui", "name": "Material UI", "color": "#0284c7" },
+  { "id": "graphql", "name": "GraphQL", "color": "#ec4899" },
+  { "id": "prisma", "name": "Prisma", "color": "#334155" },
+  { "id": "stripe", "name": "Stripe", "color": "#6366f1" },
+  { "id": "aws", "name": "AWS", "color": "#f59e0b" },
+  { "id": "python", "name": "Python", "color": "#2563eb" },
+  { "id": "payload", "name": "Payload", "color": "#111827" },
+  { "id": "playwright", "name": "Playwright", "color": "#16a34a" },
+  { "id": "vitest", "name": "Vitest", "color": "#84cc16" },
+  { "id": "remotion", "name": "Remotion", "color": "#3b82f6" }
 ]

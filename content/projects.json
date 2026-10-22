@@ -21,12 +21,32 @@
       "nestjs",
       "postgresql",
       "docker",
-      "claude-code"
+      "claude-code",
+      "nextjs",
+      "react-native",
+      "expo",
+      "astro"
     ],
     "externalLink": "https://predi.gg",
     "openSource": false,
     "rarity": "epic",
-    "featured": 1
+    "featured": 1,
+    "role": {
+      "en": "Co-founder",
+      "fr": "Cofondateur"
+    },
+    "context": {
+      "en": "Esports betting means real money and not much fun with friends. We wanted the thrill of calling a match without staking a cent: just your gut, your rank and bragging rights over your friends.",
+      "fr": "Les paris esport, c'est de l'argent réel et peu de fun entre potes. On voulait le frisson du prono sans miser un centime : juste ton flair, ton classement et le droit de chambrer tes amis."
+    },
+    "built": {
+      "en": "The React Native (Expo) mobile app, the NestJS API on PostgreSQL, the Next.js admin panel to run scraping and watch the servers, the match scraping engine and the Astro landing site. The app speaks French, English and Spanish.",
+      "fr": "L'app mobile en React Native (Expo), l'API NestJS sur PostgreSQL, le panel admin en Next.js pour piloter le scraping et surveiller les serveurs, le moteur de scraping des matchs et le site vitrine en Astro. L'app parle français, anglais et espagnol."
+    },
+    "outcome": {
+      "en": "Officially live on the App Store and Google Play 🚀 100% free, League of Legends predictions to start with, leagues with friends, XP and badges.",
+      "fr": "Officiellement lancé sur l'App Store et Google Play 🚀 100 % gratuit, des prédictions sur LoL pour commencer, des ligues entre amis, de l'XP et des badges."
+    }
   },
   {
     "slug": "qotum",
@@ -36,18 +56,31 @@
       "fr": "Qotum - La façon la plus intelligente de répondre à vos avis grâce à l'IA."
     },
     "image": "/images/projects/qotum.png",
-    "wip": true,
+    "wip": false,
     "period": {
-      "start": "2024",
-      "end": "ongoing"
+      "start": "2024-04",
+      "end": "2024-11"
     },
     "techs": [
+      "typescript",
       "nextjs",
       "nestjs"
     ],
     "openSource": false,
     "rarity": "rare",
-    "featured": 2
+    "featured": 2,
+    "role": {
+      "en": "Developer",
+      "fr": "Développeur"
+    },
+    "context": {
+      "en": "An old attempt at a product: replying to customer reviews with AI-written answers, instead of pasting the same reply every time.",
+      "fr": "Une vieille tentative de projet : répondre aux avis clients avec des réponses écrites par l'IA, au lieu de copier-coller la même réponse à chaque fois."
+    },
+    "outcome": {
+      "en": "The project never took off and stopped at the end of 2024.",
+      "fr": "Le projet n'a jamais abouti, il s'est arrêté fin 2024."
+    }
   },
   {
     "slug": "tricks",
@@ -59,17 +92,29 @@
     "image": "/images/projects/tricks.png",
     "wip": false,
     "period": {
-      "start": "2021",
-      "end": "2023"
+      "start": "2021-09",
+      "end": "2023-09"
     },
     "techs": [
       "nuxtjs",
-      "strapi"
+      "strapi",
+      "mongodb"
     ],
-    "externalLink": "https://tonytrancard.fr/projects_side/thetricksnetwork",
     "openSource": false,
-    "rarity": "rare",
-    "featured": 3
+    "rarity": "epic",
+    "featured": 3,
+    "role": {
+      "en": "Lead developer, work-study",
+      "fr": "Lead dev, en alternance"
+    },
+    "context": {
+      "en": "The Tricks Network wanted a social network just for extreme sports, on the web and on mobile 🤙",
+      "fr": "The Tricks Network voulait un réseau social rien que pour les sports extrêmes, sur le web et sur mobile 🤙"
+    },
+    "built": {
+      "en": "The APIs on Strapi and MongoDB and the Nuxt interfaces, from scoping to deployment.",
+      "fr": "Les API sur Strapi et MongoDB et les interfaces en Nuxt, du cadrage au déploiement."
+    }
   },
   {
     "slug": "next-13-boilerplate",
@@ -85,6 +130,7 @@
       "end": "2023-11"
     },
     "techs": [
+      "typescript",
       "react",
       "nextjs",
       "styled-components"
@@ -92,7 +138,11 @@
     "externalLink": "https://next-13-boilerplate.imjustlucas.dev/",
     "repository": "https://github.com/ImJustLucas/Next-13-Boilerplate",
     "openSource": true,
-    "rarity": "common"
+    "rarity": "common",
+    "built": {
+      "en": "A ready-to-code starting point: Pages Router, TypeScript, ESLint, Prettier, Husky and lint-staged, Jest, absolute imports, dayjs, redaxios, Sonner for toasts and Remix Icon.",
+      "fr": "Un point de départ prêt à coder : Pages Router, TypeScript, ESLint, Prettier, Husky et lint-staged, Jest, imports absolus, dayjs, redaxios, Sonner pour les toasts et Remix Icon."
+    }
   },
   {
     "slug": "bun-elysia-boilerplate",
@@ -114,6 +164,244 @@
     ],
     "repository": "https://github.com/ImJustLucas/bun-elysia-boilerplate",
     "openSource": true,
-    "rarity": "common"
+    "rarity": "common",
+    "built": {
+      "en": "A Bun + Elysia API base in TypeScript, with ESLint, to start a clean API in two minutes.",
+      "fr": "Une base d'API Bun + Elysia en TypeScript, avec ESLint, pour démarrer une API propre en deux minutes."
+    }
+  },
+  {
+    "slug": "bam-karaoke",
+    "title": "BAM Karaoke",
+    "description": {
+      "en": "All the software behind the BAM karaoke boxes: bookings, back-office and billing 🎤",
+      "fr": "Tout le logiciel derrière les box de karaoké BAM : réservations, back-office et facturation 🎤"
+    },
+    "wip": true,
+    "period": {
+      "start": "2026-01",
+      "end": "ongoing"
+    },
+    "techs": [
+      "typescript",
+      "react",
+      "vite",
+      "material-ui",
+      "graphql",
+      "nestjs",
+      "postgresql",
+      "prisma",
+      "stripe",
+      "aws",
+      "docker"
+    ],
+    "externalLink": "https://bamkaraoke.com",
+    "openSource": false,
+    "rarity": "rare",
+    "role": {
+      "en": "Fullstack web developer",
+      "fr": "Développeur web fullstack"
+    },
+    "context": {
+      "en": "BAM Karaoke Box runs private karaoke rooms you book for the night, since 2014. Behind every night out there's a booking, a deposit, drinks at the bar, sometimes a quote for a company, and an invoice at the end. All of it runs on in-house tools.",
+      "fr": "BAM Karaoke Box, ce sont des salles de karaoké privées qu'on réserve pour la soirée, depuis 2014. Derrière chaque soirée, il y a une réservation, une caution, des consos au bar, parfois un devis pour une entreprise, et une facture à la fin. Tout ça passe par des outils maison."
+    },
+    "built": {
+      "en": "I mostly work on the back-office, BAM Admin (a React + MUI front, a NestJS API): bookings, orders, quotes, deposits, refunds and credit notes, with a real split between individuals and companies (checked SIREN and SIRET, a complete billing address before anything gets invoiced).\n\nI also built the billing service, a NestJS micro-service sitting in front of Pennylane for both BAM and TSL: a deposit invoice at booking, a credit note and a new invoice when the booking changes, the final invoice after the session. Every document is versioned, so nothing is ever issued twice.\n\nOn the bar side, I rebuild the drinks rung up on Lightspeed and attach them to the right night, even when it runs past midnight 🌙 And a bit of the booking site: early bird, extra time, promo codes.",
+      "fr": "Je bosse surtout sur le back-office, BAM Admin (front React + MUI, API NestJS) : réservations, commandes, devis, cautions, remboursements et avoirs, avec une vraie différence entre particuliers et entreprises (SIREN et SIRET vérifiés, adresse de facturation complète avant de facturer).\n\nJ'ai aussi monté le service de facturation, un micro-service NestJS qui fait la façade devant Pennylane pour BAM et TSL : une facture d'acompte à la réservation, un avoir et une nouvelle facture quand la réservation change, la facture finale après la séance. Chaque document est versionné, donc rien n'est émis deux fois.\n\nCôté bar, je reconstruis les consos encaissées sur Lightspeed pour les rattacher à la bonne soirée, même quand elle finit après minuit 🌙 Et un peu du site de réservation : early bird, temps en plus, codes promo."
+    }
+  },
+  {
+    "slug": "tsl",
+    "title": "TSL",
+    "description": {
+      "en": "The back-office and in-room software of TSL, The Songs Laboratory, BAM's karaoke for venues 🎶",
+      "fr": "Le back-office et le logiciel en salle de TSL, The Songs Laboratory, le karaoké de BAM pour les pros 🎶"
+    },
+    "wip": true,
+    "period": {
+      "start": "2026-01",
+      "end": "ongoing"
+    },
+    "techs": [
+      "typescript",
+      "react",
+      "vite",
+      "tailwind-css",
+      "shadcn-ui",
+      "material-ui",
+      "zod",
+      "nestjs",
+      "postgresql",
+      "prisma",
+      "aws",
+      "python"
+    ],
+    "openSource": false,
+    "rarity": "rare",
+    "role": {
+      "en": "Fullstack web developer",
+      "fr": "Développeur web fullstack"
+    },
+    "context": {
+      "en": "TSL, for The Songs Laboratory, is BAM's karaoke for business customers: the song catalog, the software running in the rooms and the subscriptions of the venues it equips. I work on it alongside BAM Karaoke.",
+      "fr": "TSL, pour The Songs Laboratory, c'est le karaoké de BAM pour les clients pros : le catalogue de chansons, le logiciel qui tourne dans les salles et les abonnements des lieux équipés. J'y bosse en parallèle de BAM Karaoke."
+    },
+    "built": {
+      "en": "The TSL Admin back-office, front and API: business customers, venues, rooms, subscriptions (offers, licences, commissions, cancellations, automatic reminders) and reporting with MRR and its history 📈 On the catalog side: songs, genres, publishers and suppliers.\n\nFor Battles, the mode where karaoke scores your voice, I wired an \"Analyze\" button on a song's page: it runs a Python AWS Lambda that analyses the frequencies syllable by syllable, then tells the back-office in real time when the song is ready to be scored.\n\nIn the in-room software: games shown in a modal (including iframe games, like a quiz) and sound effects on the roulette and end-of-session animations.",
+      "fr": "Le back-office TSL Admin, front et API : entreprises clientes, lieux, salles, abonnements (offres, licences, commissions, résiliations, relances automatiques) et un reporting avec le MRR et son historique 📈 Côté catalogue : chansons, genres, éditeurs et fournisseurs.\n\nPour les Battles, le mode où le karaoké note ta voix, j'ai branché un bouton « Analyser » sur la page d'une chanson : il lance une Lambda AWS en Python qui analyse les fréquences syllabe par syllabe, puis prévient le back-office en temps réel quand la chanson est prête à être notée.\n\nDans le logiciel en salle : des jeux affichés dans une modale (dont des jeux en iframe, comme un quiz) et des effets sonores sur les animations de roulette et de fin de session."
+    }
+  },
+  {
+    "slug": "aft",
+    "title": "AFT",
+    "description": {
+      "en": "The website of the Association du Fresne et du Tilleul, kept up to date by its volunteers, without me 🌳",
+      "fr": "Le site de l'Association du Fresne et du Tilleul, que ses bénévoles mettent à jour sans moi 🌳"
+    },
+    "wip": true,
+    "period": {
+      "start": "2026-10",
+      "end": "ongoing"
+    },
+    "techs": [
+      "typescript",
+      "nextjs",
+      "react",
+      "payload",
+      "postgresql",
+      "tailwind-css",
+      "shadcn-ui",
+      "docker",
+      "playwright",
+      "vitest",
+      "remotion",
+      "claude-code"
+    ],
+    "openSource": false,
+    "rarity": "common",
+    "role": {
+      "en": "Volunteer developer",
+      "fr": "Développeur bénévole"
+    },
+    "context": {
+      "en": "An association in Le Fresne, part of Familles Rurales, with a sports section and a cultural section: activities, weekly slots, instructors and a season that starts over every September. The info changes all the time and nobody on the board is a developer. They needed a site they could keep up to date themselves, without calling me 😅",
+      "fr": "Une association du Fresne, affiliée à Familles Rurales, avec une section sportive et une section culturelle : des activités, des créneaux, des encadrants et une saison qui recommence chaque septembre. Les infos changent tout le temps et personne au bureau n'est développeur. Il leur fallait un site qu'ils puissent tenir à jour eux-mêmes, sans m'appeler 😅"
+    },
+    "built": {
+      "en": "A Next.js 16 site with Payload 3 built in, on Postgres, with an editing interface fully in French. Passwordless sign-in (a link by email), drafts and preview before publishing, and a \"New season\" button that copies last year's whole programme in one click.\n\nThere are also news posts, events with photos resized on upload, PDF documents, the board, a contact form protected from spam without any third-party service, and data export to CSV or JSON. The theme follows the Familles Rurales brand, readable by everyone.\n\nFor the handover, I made a paper help sheet and walkthrough videos built with Remotion 🎬",
+      "fr": "Un site Next.js 16 avec Payload 3 intégré, sur Postgres, et une interface d'édition entièrement en français. Connexion sans mot de passe (un lien par e-mail), brouillons et aperçu avant publication, et un bouton « Nouvelle saison » qui recopie toute la programmation de l'année d'avant en un clic.\n\nIl y a aussi les actualités, les événements avec leurs photos redimensionnées à l'envoi, les documents PDF, le bureau, un formulaire de contact protégé du spam sans service tiers, et l'export des données en CSV ou JSON. Le thème suit la charte Familles Rurales, lisible par tout le monde.\n\nPour la passation, j'ai fait une fiche d'aide papier et des vidéos de présentation montées avec Remotion 🎬"
+    },
+    "outcome": {
+      "en": "Not live yet: going to production is the next step 🚀",
+      "fr": "Pas encore en ligne : la mise en production, c'est la prochaine étape 🚀"
+    }
+  },
+  {
+    "slug": "kascad",
+    "title": "Kascad",
+    "description": {
+      "en": "The SaaS that connects riders with their sponsors 🛹",
+      "fr": "Le SaaS qui met en relation les riders et leurs sponsors 🛹"
+    },
+    "wip": false,
+    "period": {
+      "start": "2024-06",
+      "end": "2025-08"
+    },
+    "techs": [
+      "typescript",
+      "nextjs",
+      "react",
+      "tailwind-css",
+      "zod",
+      "nestjs",
+      "mongodb",
+      "docker"
+    ],
+    "openSource": false,
+    "rarity": "common",
+    "role": {
+      "en": "Fullstack developer, mostly on the API",
+      "fr": "Développeur fullstack, surtout sur l'API"
+    },
+    "context": {
+      "en": "My end-of-studies project at IIM. Finding a sponsor as a rider means DMs, PDFs and a lot of chasing. Kascad wanted to make it simpler on both sides.",
+      "fr": "Mon projet de fin d'études à l'IIM. Trouver un sponsor quand on est rider, c'est des DM, des PDF et beaucoup de relances. Kascad voulait simplifier ça des deux côtés."
+    },
+    "built": {
+      "en": "The NestJS API (on Fastify) with MongoDB, JWT authentication with refresh tokens, file storage on Google Cloud Storage and Zod validation, plus parts of the Next.js client and the sponsors' space.",
+      "fr": "L'API NestJS (sur Fastify) avec MongoDB, l'authentification JWT avec refresh tokens, le stockage des fichiers sur Google Cloud Storage et la validation avec Zod, plus des bouts du client Next.js et de l'espace sponsors."
+    }
+  },
+  {
+    "slug": "musy",
+    "title": "Musy",
+    "description": {
+      "en": "The music game that won the DIGIT prize at the NeedForSchool 2022 hackathon 🎵",
+      "fr": "Le jeu musical qui a gagné le prix DIGIT au hackathon NeedForSchool 2022 🎵"
+    },
+    "wip": false,
+    "period": {
+      "start": "2022",
+      "end": "2023"
+    },
+    "techs": [
+      "typescript",
+      "nuxtjs",
+      "nextjs",
+      "react",
+      "styled-components",
+      "nestjs",
+      "mongodb",
+      "docker"
+    ],
+    "openSource": false,
+    "rarity": "rare",
+    "role": {
+      "en": "President of the Musy association, and developer",
+      "fr": "Président de l'association Musy, et dev"
+    },
+    "context": {
+      "en": "Musy is a music game born at the NeedForSchool 2022 hackathon, where it won the DIGIT prize 🏆 The project then became an association, which I chaired in 2023.",
+      "fr": "Musy, c'est un jeu musical né au hackathon NeedForSchool 2022, où il a gagné le prix DIGIT 🏆 Le projet est ensuite devenu une association, que j'ai présidée en 2023."
+    },
+    "outcome": {
+      "en": "On hold since 2023… but a new version is on its way 👀",
+      "fr": "En pause depuis 2023… mais une nouvelle version se prépare 👀"
+    }
+  },
+  {
+    "slug": "ia-guidelines",
+    "title": "ia-guidelines",
+    "description": {
+      "en": "✨ My code conventions and architecture templates, ready for any AI agent to follow",
+      "fr": "✨ Mes conventions de code et templates d'archi, prêts à faire suivre à n'importe quel agent IA"
+    },
+    "wip": false,
+    "period": {
+      "start": "2026-07",
+      "end": "2026-08"
+    },
+    "techs": [
+      "javascript",
+      "nodejs",
+      "claude-code"
+    ],
+    "repository": "https://github.com/ImJustLucas/ia-guidelines",
+    "openSource": true,
+    "rarity": "common",
+    "role": {
+      "en": "Author",
+      "fr": "Auteur"
+    },
+    "context": {
+      "en": "I kept pasting the same rules into every CLAUDE.md and every Cursor rules file. Might as well keep them in one place.",
+      "fr": "Je recopiais les mêmes règles dans chaque CLAUDE.md et chaque fichier de règles Cursor. Autant les ranger à un seul endroit."
+    },
+    "built": {
+      "en": "A collection of Markdown guidelines (TypeScript conventions, testing, API design, security, accessibility, performance, multi-agent orchestration…) and per-stack templates (NestJS, Hono, React + Vite, Next.js, Expo). A small CLI copies the ones you pick into the project and references them in CLAUDE.md and AGENTS.md, for Claude Code as well as Cursor, Codex or Copilot.",
+      "fr": "Une collection de guidelines en Markdown (conventions TypeScript, tests, design d'API, sécurité, accessibilité, perf, orchestration multi-agents…) et des templates par stack (NestJS, Hono, React + Vite, Next.js, Expo). Un petit CLI copie celles qu'on choisit dans le projet et les référence dans CLAUDE.md et AGENTS.md, pour Claude Code comme pour Cursor, Codex ou Copilot."
+    }
   }
 ]

@@ -782,6 +782,70 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/45"
   },
   {
+    "version": "2.15",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Quick menu",
+      "fr": "Menu rapide"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A quick menu! Press ⌘K (Ctrl K) or / anywhere, or the search button, and jump to any page, project or game in a few keys ⚡",
+          "fr": "Un menu rapide ! Appuie sur ⌘K (Ctrl K) ou / n'importe où, ou sur le bouton loupe, et file vers n'importe quelle page, projet ou jeu en quelques touches ⚡"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Type in English or in French, it gets you either way: palettes, dark mode, language, sound and my links are in there too",
+          "fr": "Tape en français ou en anglais, il te comprend dans les deux cas : palettes, mode sombre, langue, son et mes liens sont dedans aussi"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A few secrets hide in there. Old-school gamers might know a code or two 🎮👀",
+          "fr": "Quelques secrets s'y cachent. Les vieux gamers connaissent peut-être un code ou deux 🎮👀"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/46"
+  },
+  {
+    "version": "2.16",
+    "date": "2026-10-22",
+    "title": {
+      "en": "New quests unlocked",
+      "fr": "Nouvelles quêtes débloquées"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Six new projects: BAM Karaoke, TSL, AFT, Kascad, Musy and ia-guidelines 🎤",
+          "fr": "Six nouveaux projets : BAM Karaoke, TSL, AFT, Kascad, Musy et ia-guidelines 🎤"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Every project page now tells the story: my role, the context, what I built and where it got",
+          "fr": "Chaque page projet raconte enfin l'histoire : mon rôle, le contexte, ce que j'ai construit et où ça en est"
+        }
+      },
+      {
+        "tag": "fixed",
+        "text": {
+          "en": "Qotum and Tricks show their real dates, and Tricks' dead link is gone",
+          "fr": "Qotum et Tricks affichent leurs vraies dates, et le lien mort de Tricks a disparu"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/49"
+  },
+  {
     "version": "2.17",
     "date": "2026-10-22",
     "title": {

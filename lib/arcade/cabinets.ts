@@ -20,3 +20,9 @@ export const CABINETS: ReadonlyArray<Cabinet> = [
   { id: "ollie", pose: "skate", status: "playable" },
   { id: "surf", pose: "surf", status: "playable" },
 ];
+
+/**
+ * Opens a cabinet on the Arcade floor already on screen (the quick menu's
+ * "play" commands): a window event whose `detail` is the `CabinetId`.
+ */
+export const ARCADE_OPEN_EVENT = "arcade:open";
