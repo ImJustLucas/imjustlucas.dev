@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { isProjectSort, sortProjects, techMatches } from "./inventory";
+import {
+  isProjectSort,
+  PROJECT_SORTS,
+  sortProjects,
+  techMatches,
+} from "./inventory";
 import type { Rarity } from "./schema";
 
 const project = (title: string, rarity: Rarity) => ({ title, rarity });
@@ -62,6 +67,12 @@ describe("sortProjects", () => {
     sortProjects(projects, "oldest", "fr");
     sortProjects(projects, "rarity", "fr");
     expect(titles(projects)).toEqual(before);
+  });
+});
+
+describe("PROJECT_SORTS", () => {
+  it("offers rarity first, the default", () => {
+    expect(PROJECT_SORTS).toEqual(["rarity", "recent", "oldest", "name"]);
   });
 });
 
