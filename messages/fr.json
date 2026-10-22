@@ -610,6 +610,10 @@
         "name": "quoi de neuf",
         "how": "lire les notes de version"
       },
+      "radio": {
+        "name": "à l'antenne",
+        "how": "écoute un morceau à la radio"
+      },
       "tour": {
         "name": "le tour du client",
         "how": "visiter chaque onglet du menu"
@@ -629,6 +633,10 @@
       "coinRain": {
         "name": "pluie de pièces",
         "how": "lancer une pièce sur mon chèque masterdevfrance"
+      },
+      "rainyDay": {
+        "name": "jour de pluie",
+        "how": "écoute la radio avec la pluie"
       },
       "top10": {
         "name": "top 10",

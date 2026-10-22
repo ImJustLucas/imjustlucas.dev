@@ -1069,6 +1069,13 @@
           "en": "Play, pause, skip or make it rain from the quick menu (⌘K)",
           "fr": "Lance, mets en pause, passe un morceau ou fais pleuvoir depuis le menu rapide (⌘K)"
         }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Two trophies to unlock: put a track on, then listen with the rain 🏆",
+          "fr": "Deux trophées à débloquer : lance un morceau, puis écoute-le sous la pluie 🏆"
+        }
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/60"

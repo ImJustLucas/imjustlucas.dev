@@ -891,6 +891,7 @@ A cosy lofi radio that keeps playing across pages (`components/radio/`, the stat
 - **Remembered** per visitor in `localStorage` (`imjustlucas.radio`, read after mount, ignored when storage refuses): the music volume, the rain switch and its volume; never whether it was playing.
 - **The operating system** shows the track, the artist, "ImJustLucas radio" and the music pose (Media Session), and its play, pause and next-track keys drive the radio once started.
 - **Quick menu:** a "radio" section after settings: play or pause the lofi radio, next track (once started), make it rain or stop the rain; found by words of both Locales ("lofi", "musique", "pluie").
+- **Trophies:** "on air" (common) unlocks once a track actually plays, "rainy day" (rare) once it plays with the rain on (docs/trophies.md).
 - Switching Locale reloads the layout, so the radio stops there.
 
 ### Motion

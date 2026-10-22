@@ -12,6 +12,7 @@ import {
 import { useTranslations } from "next-intl";
 
 import { useSounds } from "@/components/sound/SoundProvider";
+import { unlockTrophy } from "@/components/trophies/trophy-store";
 import { chibiFrames } from "@/lib/chibi";
 import { RadioEngine } from "@/lib/radio/engine";
 import {
@@ -78,6 +79,9 @@ export function RadioProvider({ children }: { children: React.ReactNode }) {
     if (after === before) return;
     current.current = after;
     setState(after);
+    // Trophies once a track is actually heard, and with the rain on
+    if (after.status === "playing") unlockTrophy("radio");
+    if (after.status === "playing" && after.rain) unlockTrophy("rainyDay");
 
     const audio = engine.current;
     if (audio) {

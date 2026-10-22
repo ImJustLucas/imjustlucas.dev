@@ -610,6 +610,10 @@
         "name": "what's new",
         "how": "read the patch notes"
       },
+      "radio": {
+        "name": "on air",
+        "how": "play a track on the radio"
+      },
       "tour": {
         "name": "the grand tour",
         "how": "visit every tab of the menu"
@@ -629,6 +633,10 @@
       "coinRain": {
         "name": "coin rain",
         "how": "throw a coin at my masterdevfrance cheque"
+      },
+      "rainyDay": {
+        "name": "rainy day",
+        "how": "listen to the radio with the rain on"
       },
       "top10": {
         "name": "top 10",
