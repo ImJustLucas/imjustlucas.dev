@@ -974,6 +974,7 @@
           "fr": "Le panneau amis montre maintenant combien de joueurs sont sur le site avec toi en ce moment, comme un lobby de jeu 🎮 (et « juste toi » quand c'est calme). Aucun pistage : juste un ping anonyme tant que ton onglet est ouvert"
         }
       }
-    ]
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
   }
 ]
