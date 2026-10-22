@@ -33,6 +33,7 @@ Personal portfolio site: Next.js 16 (App Router), React 19, Tailwind CSS, Shadcn
 
 - Path alias `@/` maps to the project root.
 - `"use client"` only on components that use browser APIs, hooks or event handlers; server components are the default.
+- Every pull request a visitor can notice adds its Patch to `content/patch-notes.json` in the same pull request (next free version, link to the pull request); internal-only changes add none. See "Patch notes" in `docs/content.md`.
 
 ## Agent skills
 
