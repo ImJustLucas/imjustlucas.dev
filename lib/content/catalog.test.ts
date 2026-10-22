@@ -2,6 +2,7 @@ import { Effect, Layer } from "effect";
 
 import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
+import { GitHubContributions } from "./github-contributions";
 import { GitHubStars } from "./github-stars";
 import { layerInMemory } from "./repository-in-memory";
 import { testProfile } from "./test-profile";
@@ -47,6 +48,7 @@ const catalogWith = (
       }),
     ),
     Layer.provide(GitHubStars.layerTest(sources.stars ?? {})),
+    Layer.provide(GitHubContributions.layerTest({})),
     Layer.provide(YouTubeChannel.layerTest({})),
   );
 
@@ -116,6 +118,7 @@ describe("the Tech registry", () => {
             }),
           ),
           Layer.provide(GitHubStars.layerTest({})),
+          Layer.provide(GitHubContributions.layerTest({})),
           Layer.provide(YouTubeChannel.layerTest({})),
         ),
       ),

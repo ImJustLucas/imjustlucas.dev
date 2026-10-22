@@ -6,6 +6,7 @@ import type { Locale } from "@/i18n/routing";
 
 import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
+import { GitHubContributions } from "./github-contributions";
 import { GitHubStars } from "./github-stars";
 import { layerLocalFilesystem } from "./repository-local-filesystem";
 import { YouTubeChannel } from "./youtube-channel";
@@ -14,8 +15,8 @@ import "server-only";
 
 /**
  * Entry point for pages (server components). Runs the content catalog over
- * the local content folder and the external sources (GitHub stars, YouTube
- * channel feed), and returns plain data, so React code never imports Effect
+ * the local content folder and the external sources (GitHub stars and
+ * Contributions, YouTube channel feed), and returns plain data, so React code never imports Effect
  * (ADR-0002). A rejection fails the build, or, when a page revalidates, keeps
  * the previous page being served.
  *
@@ -27,6 +28,7 @@ const runtime = ManagedRuntime.make(
   ContentCatalog.layer.pipe(
     Layer.provide(layerLocalFilesystem(process.cwd())),
     Layer.provide(GitHubStars.layer),
+    Layer.provide(GitHubContributions.layer(process.env.GITHUB_TOKEN)),
     Layer.provide(YouTubeChannel.layer),
   ),
 );
@@ -117,3 +119,11 @@ export const getResume = (locale: Locale) =>
  * are not translated.
  */
 export const getVideos = () => fromCatalog((catalog) => catalog.videos);
+
+/**
+ * Lucas's Level, Streak and recent weeks from his GitHub Contributions; none
+ * without a `GITHUB_TOKEN` or, on a cold build, when GitHub fails. The home
+ * page declares `dynamic = "force-static"` and `revalidate = 3600`, so the
+ * Streak follows the day within the hour.
+ */
+export const getLevel = () => fromCatalog((catalog) => catalog.level);

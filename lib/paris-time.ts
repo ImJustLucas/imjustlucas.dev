@@ -22,3 +22,14 @@ const parisMonth = new Intl.DateTimeFormat("en-GB", {
 /** Whether it is December for Lucas, in Paris: the Christmas banner's month. */
 export const isDecemberInParis = (date: Date): boolean =>
   Number(parisMonth.format(date)) === 12;
+
+// en-CA formats a date as YYYY-MM-DD.
+const parisDate = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Paris",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+/** Lucas's calendar day in Paris, as `YYYY-MM-DD`: the Streak's today. */
+export const parisDay = (date: Date): string => parisDate.format(date);

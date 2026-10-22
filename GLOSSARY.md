@@ -52,6 +52,18 @@ _Avoid_: techBadge, technology, stack
 Every Tech the Projects use, each with how many Projects use it and the year the first of them started, derived from the Projects rather than written by hand; it filters the Projects page.
 _Avoid_: Stack, skills, Tech category
 
+**Contribution**:
+One thing GitHub counts on Lucas's account calendar (a commit, a pull request, an issue, a review), sourced from GitHub rather than written by hand.
+_Avoid_: Commit (for any contribution), activity
+
+**Level**:
+Where Lucas stands as a player, earned from his Contributions: one Contribution is one XP, counted since his GitHub account opened, and each Level costs 100 XP more than the one before. Never a Rarity, never a rank.
+_Avoid_: Rank, tier, grade
+
+**Streak**:
+The consecutive days, in Paris, on which Lucas made at least one Contribution, ending today; a today without one yet does not break it until the day ends.
+_Avoid_: Combo, chain
+
 **Video**:
 A video published on Lucas's YouTube channel, sourced from the channel itself rather than written by hand.
 _Avoid_: YouTubeVideo, clip
