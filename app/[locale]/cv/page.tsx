@@ -68,15 +68,13 @@ const shownUrl = (url: string) =>
  */
 export default async function RecruiterMode() {
   const locale = await getLocale();
-  const [t, tMetadata, tDiplomas, tContracts, tLocale, tLayout] =
-    await Promise.all([
-      getTranslations("Recruiter"),
-      getTranslations("Metadata"),
-      getTranslations("Experiences.diplomas"),
-      getTranslations("Experiences.contractTypes"),
-      getTranslations("LocaleSwitcher"),
-      getTranslations("Layout"),
-    ]);
+  const [t, tMetadata, tDiplomas, tContracts, tLocale] = await Promise.all([
+    getTranslations("Recruiter"),
+    getTranslations("Metadata"),
+    getTranslations("Experiences.diplomas"),
+    getTranslations("Experiences.contractTypes"),
+    getTranslations("LocaleSwitcher"),
+  ]);
   const [profile, resume, experiences, projects, featured] = await Promise.all([
     getProfile(),
     getResume(locale),
@@ -165,12 +163,13 @@ export default async function RecruiterMode() {
         <header className="flex flex-col gap-6">
           <div className="flex items-center gap-4 sm:gap-5">
             <Image
-              src="/images/chibi-avatar-64x64.png"
-              alt={tLayout("avatarAlt")}
-              width={64}
-              height={64}
+              src="/images/lucas-photo.jpg"
+              alt={t("photoAlt")}
+              width={400}
+              height={400}
+              sizes="80px"
               priority
-              className="size-14 shrink-0 rounded-full bg-ground ring-2 ring-seam sm:size-16"
+              className="size-16 shrink-0 rounded-full bg-ground object-cover ring-2 ring-seam sm:size-20"
             />
             <div className="flex min-w-0 flex-col gap-1">
               <TypographyHeadline as="h1">{OWNER_NAME}</TypographyHeadline>

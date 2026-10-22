@@ -55,7 +55,7 @@ Three claims, held equally, with none leading:
 - Name and handle: **ImJustLucas** / imjustlucas, explained in the FAQ as "my reminder to keep it real and stay humble".
 - **Voice (binding)**: casual and playful, first person. Greetings like "Yoooo", emojis in copy and content, lowercase menu labels ("what i've done", "my experiences", "yt videos"). Formal or corporate rewrites would break it.
 - **Live Discord presence (binding)**: the presence card stays part of the site.
-- Avatar: the chibi ImJustLucas head, `public/images/chibi-avatar-64x64.png`, used in the sidebar.
+- Avatar: the chibi ImJustLucas head, `public/images/chibi-avatar-64x64.png`, used in the sidebar. The recruiter mode alone shows Lucas's photo (`public/images/lucas-photo.jpg`, his LinkedIn portrait) instead.
 
 ## Evidence on Hand
 

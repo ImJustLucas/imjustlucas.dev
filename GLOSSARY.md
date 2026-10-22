@@ -77,7 +77,7 @@ The downloadable PDF of Lucas's CV, one per Locale, each with the date it was la
 _Avoid_: CV
 
 **Recruiter mode**:
-The profile as one sober, printable page for recruiters (`/cv`), outside the client: no sidebar, no sound. Its content is read from the Profile, Experiences, Projects and diplomas; the Resume stays the PDF.
+The profile as one sober, printable page for recruiters (`/cv`), outside the client: no sidebar, no sound. Its content is read from the Profile, Experiences, Projects and diplomas, under Lucas's photo rather than the chibi; the Resume stays the PDF.
 _Avoid_: CV page, resume page
 
 **Patch**:
