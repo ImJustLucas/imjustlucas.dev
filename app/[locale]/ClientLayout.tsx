@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { QuickMenuProvider } from "@/components/quick-menu/QuickMenuProvider";
 import { MobileTopBar } from "@/components/sidebar/MobileTopBar";
 import { Sidebar } from "@/components/sidebar/Sidebar";
+import { TrophyLayer } from "@/components/trophies/TrophyLayer";
 import { buttonVariants } from "@/components/ui/button";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
 import type { Profile, ProjectEntry } from "@/lib/content/types";
@@ -60,6 +61,7 @@ export default function ClientLayout({
           {children}
         </main>
       </div>
+      <TrophyLayer />
     </QuickMenuProvider>
   );
 }
