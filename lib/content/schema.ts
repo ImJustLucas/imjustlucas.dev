@@ -278,10 +278,30 @@ export const DiscordUserId = Schema.String.check(
 export const youtubeChannelUrl = (channelId: string) =>
   `https://www.youtube.com/channel/${channelId}`;
 
+/** A language's code (BCP 47), e.g. `fr`, `en` or `pt-BR`. */
+export const LanguageCode = Schema.String.check(
+  Schema.isPattern(/^[a-z]{2,3}(-[A-Z]{2})?$/, {
+    message: "Expected a language code (BCP 47)",
+  }),
+);
+
+/**
+ * A language Lucas speaks, as the recruiter mode lists it: its name and his
+ * level in every Locale, and its code for structured data.
+ */
+export const SpokenLanguage = Schema.Struct({
+  code: LanguageCode,
+  name: LocalizedText,
+  level: LocalizedText,
+});
+export type SpokenLanguage = typeof SpokenLanguage.Type;
+
 /**
  * Lucas's public identity, defined once: social links, the YouTube channel
- * the Videos come from, the Discord account Presence follows, and one Resume
- * per Locale. The YouTube link is the channel's own URL, so they can't drift.
+ * the Videos come from, the Discord account Presence follows, one Resume
+ * per Locale, and what the recruiter mode says of him (his summary, his
+ * availability, the languages he speaks). The YouTube link is the channel's
+ * own URL, so they can't drift.
  */
 export const Profile = Schema.Struct({
   links: Schema.Struct({
@@ -293,6 +313,9 @@ export const Profile = Schema.Struct({
   youtubeChannelId: YouTubeChannelId,
   discordUserId: DiscordUserId,
   resumes: Schema.Struct({ en: Resume, fr: Resume }),
+  summary: LocalizedText,
+  availability: LocalizedText,
+  languages: Schema.Array(SpokenLanguage),
 }).check(
   Schema.makeFilter((profile) => {
     const expected = youtubeChannelUrl(profile.youtubeChannelId);

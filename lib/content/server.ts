@@ -120,6 +120,13 @@ export const getResume = (locale: Locale) =>
   fromCatalog((catalog) => catalog.inLocale(locale).resume);
 
 /**
+ * What the recruiter mode says of Lucas, from the Profile: his summary,
+ * availability and the languages he speaks, in the Locale.
+ */
+export const getRecruiter = (locale: Locale) =>
+  fromCatalog((catalog) => catalog.inLocale(locale).recruiter);
+
+/**
  * The Profile's channel's latest Videos, most recent first; none (the page's
  * empty state) when the channel cannot be read on a cold build. The page
  * declares `dynamic = "force-static"` and `revalidate = 86400`. Video titles

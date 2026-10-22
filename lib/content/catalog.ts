@@ -188,6 +188,19 @@ export type CatalogInLocale = {
   >;
   /** The Profile's Resume in this Locale. */
   readonly resume: Effect.Effect<Resume, CatalogError>;
+  /** What the recruiter mode says of Lucas, from the Profile, in this Locale. */
+  readonly recruiter: Effect.Effect<RecruiterInLocale, CatalogError>;
+};
+
+/** The Profile's recruiter texts in one Locale. */
+export type RecruiterInLocale = {
+  readonly summary: string;
+  readonly availability: string;
+  readonly languages: ReadonlyArray<{
+    readonly code: string;
+    readonly name: string;
+    readonly level: string;
+  }>;
 };
 
 export type CatalogError =
@@ -448,6 +461,15 @@ export class ContentCatalog extends Context.Service<
               })),
             ),
             resume: Effect.map(profile, (profile) => profile.resumes[locale]),
+            recruiter: Effect.map(profile, (profile) => ({
+              summary: profile.summary[locale],
+              availability: profile.availability[locale],
+              languages: profile.languages.map((language) => ({
+                code: language.code,
+                name: language.name[locale],
+                level: language.level[locale],
+              })),
+            })),
           };
         },
       };

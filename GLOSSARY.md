@@ -73,7 +73,7 @@ A video published on Lucas's YouTube channel, sourced from the channel itself ra
 _Avoid_: YouTubeVideo, clip
 
 **Profile**:
-Lucas's public identity: his social links, his Resume and his Discord account.
+Lucas's public identity: his social links, his Resume, his Discord account, and the summary, availability and languages of the recruiter mode.
 _Avoid_: Socials, links
 
 **Resume**:

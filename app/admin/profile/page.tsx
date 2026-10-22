@@ -1,13 +1,20 @@
 import { FileText } from "lucide-react";
 
-import { AdminField, AdminForm, FieldGroup } from "@/app/admin/admin-form";
+import {
+  AdminField,
+  AdminForm,
+  FieldGroup,
+  LocalizedField,
+} from "@/app/admin/admin-form";
 import { ContentUnavailableScreen } from "@/app/admin/admin-screens";
 import { EditorPage, EntryTag } from "@/app/admin/editor-frame";
 import { FileField } from "@/app/admin/file-field";
 import {
   updateProfileAction,
+  updateRecruiterAction,
   uploadResumeAction,
 } from "@/app/admin/profile/actions";
+import { LanguagesField } from "@/app/admin/profile/languages-field";
 import {
   TypographyData,
   TypographyMuted,
@@ -60,7 +67,7 @@ export default async function ProfileEditorPage() {
   return (
     <EditorPage
       title="Profile"
-      intro="Les liens de la barre latérale et de la page contact, les comptes que le site lit en direct, et les CV que le bouton de l'accueil télécharge."
+      intro="Les liens de la barre latérale et de la page contact, les comptes que le site lit en direct, les CV que le bouton de l'accueil télécharge, et ce que dit le mode recruteur."
     >
       <section
         id="cv"
@@ -182,6 +189,49 @@ export default async function ProfileEditorPage() {
               />
             </div>
           </FieldGroup>
+        </AdminForm>
+      </section>
+
+      <section
+        id="recruiter"
+        aria-labelledby="recruiter-title"
+        className="tray flex scroll-mt-[calc(var(--admin-notice,0px)+1rem)] flex-col gap-4 rounded-lg bg-raised p-4 sm:p-5"
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <TypographyTitle id="recruiter-title">Mode recruteur</TypographyTitle>
+          <a
+            href="/fr/cv"
+            target="_blank"
+            rel="noreferrer"
+            className="text-label text-ink underline decoration-seam decoration-2 underline-offset-4 hover:decoration-action-ink"
+          >
+            voir la page /cv
+          </a>
+        </div>
+        <AdminForm
+          action={updateRecruiterAction}
+          revision={revision}
+          submitLabel="Publier"
+          published="Mode recruteur publié"
+        >
+          <LocalizedField
+            name="summary"
+            label="Résumé"
+            hint="sous ton nom, 2 ou 3 phrases"
+            multiline
+            defaultValue={profile.summary}
+          />
+          <LocalizedField
+            name="availability"
+            label="Disponibilité"
+            hint="la pastille verte"
+            defaultValue={profile.availability}
+            placeholder={{
+              fr: "ouvert aux opportunités · Paris ou remote",
+              en: "open to opportunities · Paris or remote",
+            }}
+          />
+          <LanguagesField defaultValue={profile.languages} />
         </AdminForm>
       </section>
     </EditorPage>

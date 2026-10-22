@@ -162,8 +162,6 @@
     "headline": "Développeur fullstack · cofondateur de Predi.GG",
     "location": "Paris, France",
     "photoAlt": "Lucas Bellier, souriant, en noir et blanc",
-    "availability": "ouvert aux opportunités · Paris ou remote",
-    "summary": "Je conçois des sites et des applications de bout en bout, de la première maquette à la production, surtout en TypeScript avec React, Next.js et Node.js. Lauréat de MasterDevFrance 2025, un concours national d'excellence technique en développement logiciel.",
     "experienceTitle": "expériences",
     "projectsTitle": "projets choisis",
     "allProjects": "tous les projets",
@@ -171,12 +169,6 @@
     "skillsNote": "celles que mes projets utilisent le plus",
     "educationTitle": "formation",
     "languagesTitle": "langues",
-    "languages": {
-      "french": "Français",
-      "frenchLevel": "langue maternelle",
-      "english": "Anglais",
-      "englishLevel": "professionnel"
-    },
     "linksTitle": "liens",
     "website": "Site",
     "liveVersion": "Version en ligne, toujours à jour : {url}"

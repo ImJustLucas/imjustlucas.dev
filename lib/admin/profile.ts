@@ -34,6 +34,7 @@ export const updateProfile = (input: Saved & ProfileFields): AdminAction =>
     message: commitMessage("update Profile"),
     documents: documents(content, {
       profile: {
+        ...content.profile,
         links: {
           github: input.links.github,
           linkedin: input.links.linkedin,
@@ -42,7 +43,36 @@ export const updateProfile = (input: Saved & ProfileFields): AdminAction =>
         },
         youtubeChannelId: input.youtubeChannelId,
         discordUserId: input.discordUserId,
-        resumes: content.profile.resumes,
+      },
+    }),
+    entry: ["profile"],
+  }));
+
+/** A text in both Locales as the Owner types it (unvalidated). */
+type LocalizedFields = { readonly en: string; readonly fr: string };
+
+/** What the recruiter mode says of Lucas, as the Owner types it (unvalidated). */
+type RecruiterFields = {
+  readonly summary: LocalizedFields;
+  readonly availability: LocalizedFields;
+  readonly languages: ReadonlyArray<{
+    readonly code: string;
+    readonly name: LocalizedFields;
+    readonly level: LocalizedFields;
+  }>;
+};
+
+/** Edits the recruiter mode's summary, availability and languages. */
+export const updateRecruiter = (input: Saved & RecruiterFields): AdminAction =>
+  saveContent(input.revision, (content) => ({
+    kind: "edited",
+    message: commitMessage("update the recruiter mode"),
+    documents: documents(content, {
+      profile: {
+        ...content.profile,
+        summary: input.summary,
+        availability: input.availability,
+        languages: input.languages,
       },
     }),
     entry: ["profile"],

@@ -36,6 +36,7 @@ import {
   getFeaturedProjects,
   getProfile,
   getProjects,
+  getRecruiter,
   getResume,
 } from "@/lib/content/server";
 import { cvStructuredData, jsonLdScript } from "@/lib/seo/structured-data";
@@ -50,11 +51,6 @@ export const generateMetadata = routeMetadata(ROUTES.cv);
 
 /** How many Techs the skills show: the loadout's most used, not all of it. */
 const SKILLS_SHOWN = 12;
-
-const LANGUAGES = [
-  { key: "french", code: "fr" },
-  { key: "english", code: "en" },
-] as const;
 
 /** A link as a resume prints it: no scheme, no `www.`, no trailing slash. */
 const shownUrl = (url: string) =>
@@ -75,13 +71,15 @@ export default async function RecruiterMode() {
     getTranslations("Experiences.contractTypes"),
     getTranslations("LocaleSwitcher"),
   ]);
-  const [profile, resume, experiences, projects, featured] = await Promise.all([
-    getProfile(),
-    getResume(locale),
-    getExperiences(locale),
-    getProjects(locale),
-    getFeaturedProjects(locale),
-  ]);
+  const [profile, recruiter, resume, experiences, projects, featured] =
+    await Promise.all([
+      getProfile(),
+      getRecruiter(locale),
+      getResume(locale),
+      getExperiences(locale),
+      getProjects(locale),
+      getFeaturedProjects(locale),
+    ]);
 
   const techs = loadout(projects).map((entry) => entry.tech.name);
   const skills = techs.slice(0, SKILLS_SHOWN);
@@ -111,7 +109,7 @@ export default async function RecruiterMode() {
       })),
     alumniOf: DIPLOMAS.map((diploma) => diploma.institution),
     knowsAbout: techs,
-    knowsLanguage: LANGUAGES.map((language) => language.code),
+    knowsLanguage: recruiter.languages.map((language) => language.code),
   });
 
   return (
@@ -185,7 +183,7 @@ export default async function RecruiterMode() {
                 aria-hidden
                 className="size-2 shrink-0 rounded-full bg-online"
               />
-              {t("availability")}
+              {recruiter.availability}
             </TypographyMuted>
             <ul
               aria-label={t("linksTitle")}
@@ -216,7 +214,7 @@ export default async function RecruiterMode() {
           </div>
 
           <TypographyP className="max-w-[65ch] text-pretty text-ink [&:not(:first-child)]:mt-0">
-            {t("summary")}
+            {recruiter.summary}
           </TypographyP>
         </header>
 
@@ -348,20 +346,22 @@ export default async function RecruiterMode() {
               </ol>
             </Section>
 
-            <Section id="languages" title={t("languagesTitle")}>
-              <dl className="flex flex-col gap-2">
-                {LANGUAGES.map((language) => (
-                  <div key={language.key} className="flex flex-col">
-                    <dt className="text-label font-semibold text-ink">
-                      {t(`languages.${language.key}`)}
-                    </dt>
-                    <dd className="text-label text-ink-muted">
-                      {t(`languages.${language.key}Level`)}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Section>
+            {recruiter.languages.length > 0 && (
+              <Section id="languages" title={t("languagesTitle")}>
+                <dl className="flex flex-col gap-2">
+                  {recruiter.languages.map((language) => (
+                    <div key={language.code} className="flex flex-col">
+                      <dt className="text-label font-semibold text-ink">
+                        {language.name}
+                      </dt>
+                      <dd className="text-label text-ink-muted">
+                        {language.level}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </Section>
+            )}
           </aside>
         </div>
 

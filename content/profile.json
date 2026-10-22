@@ -8,7 +8,45 @@
   "youtubeChannelId": "UCLw4N_gccAY1Y4K4S20IPog",
   "discordUserId": "127063570616811520",
   "resumes": {
-    "en": { "asset": "/pdf/cv-lucas.pdf", "lastUpdated": "2025-05-28" },
-    "fr": { "asset": "/pdf/cv-lucas-fr.pdf", "lastUpdated": "2025-10-07" }
-  }
+    "en": {
+      "asset": "/pdf/cv-lucas.pdf",
+      "lastUpdated": "2025-05-28"
+    },
+    "fr": {
+      "asset": "/pdf/cv-lucas-fr.pdf",
+      "lastUpdated": "2025-10-07"
+    }
+  },
+  "summary": {
+    "en": "I build websites and applications end to end, from the first sketch to production, mostly in TypeScript with React, Next.js and Node.js. Winner of MasterDevFrance 2025, a national competition for technical excellence in software development.",
+    "fr": "Je conçois des sites et des applications de bout en bout, de la première maquette à la production, surtout en TypeScript avec React, Next.js et Node.js. Lauréat de MasterDevFrance 2025, un concours national d'excellence technique en développement logiciel."
+  },
+  "availability": {
+    "en": "open to opportunities · Paris or remote",
+    "fr": "ouvert aux opportunités · Paris ou remote"
+  },
+  "languages": [
+    {
+      "code": "fr",
+      "name": {
+        "en": "French",
+        "fr": "Français"
+      },
+      "level": {
+        "en": "native",
+        "fr": "langue maternelle"
+      }
+    },
+    {
+      "code": "en",
+      "name": {
+        "en": "English",
+        "fr": "Anglais"
+      },
+      "level": {
+        "en": "professional",
+        "fr": "professionnel"
+      }
+    }
+  ]
 }
