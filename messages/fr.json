@@ -87,17 +87,37 @@
     "recruiterMode": "mode recruteur",
     "faqTitle": "FAQ",
     "faq": {
-      "whyImjustlucas": {
-        "question": "Pourquoi imjustlucas ?",
-        "answer": "C'est mon rappel pour rester vrai et humble, peu importe où ma carrière me mène."
+      "availability": {
+        "question": "T'es dispo en ce moment ?",
+        "answer": "En freelance, oui : le soir et le week-end. Pour un CDI, on peut en parler… à condition que le projet soit passionnant et que le salaire le soit tout autant."
       },
-      "favoriteLanguages": {
-        "question": "Langages préférés ?",
-        "answer": "JavaScript et TypeScript. JavaScript pour sa polyvalence et son côté dynamique, TypeScript pour la couche de typage et de structure en plus. Ensemble, c'est le duo parfait pour créer des applications solides !"
+      "remote": {
+        "question": "Tu bosses en remote ?",
+        "answer": "Oui, et c'est obligatoire. Je suis basé à Paris, mais je travaille en full remote."
+      },
+      "stack": {
+        "question": "Ta stack préférée en ce moment ?",
+        "answer": "React et TypeScript côté front, et surtout NestJS côté back. Bref, tout l'écosystème TypeScript, du navigateur jusqu'au serveur."
+      },
+      "proudestProject": {
+        "question": "Le projet dont t'es le plus fier ?",
+        "answer": "Predi.GG, sans hésiter. C'est ce que j'ai fait de mieux jusqu'ici et le plus abouti, et tu peux le voir dans mes projets. Hésite pas à installer l'app d'ailleurs ;)"
+      },
+      "howSiteIsMade": {
+        "question": "Comment ce site est fait ?",
+        "answer": "Next.js et React en TypeScript, avec Tailwind. Les sons de clic sont synthétisés en direct dans ton navigateur, ma présence Discord arrive en temps réel, les scores de l'arcade sont rejoués par le serveur pour que personne ne triche, et tout le contenu se modifie depuis mon propre admin, qui commit directement sur GitHub. Il y a aussi quelques secrets, mais je te laisse les trouver."
+      },
+      "lolMain": {
+        "question": "Ton main sur LoL ?",
+        "answer": "Vayne et Yunara, main AD depuis le début mon gars, ça bouge PAS"
       },
       "coffeeOrTea": {
         "question": "Café ou thé ?",
         "answer": "Café, sans hésiter. Paris carbure au café, après tout !"
+      },
+      "whyImjustlucas": {
+        "question": "Pourquoi imjustlucas ?",
+        "answer": "C'est mon rappel pour rester vrai et humble, peu importe où ma carrière me mène."
       }
     },
     "greeting": "Yoooo, moi c'est Lucas Bellier !",
@@ -132,7 +152,8 @@
     "hobbiesTitle": "ce que je fais quand je ne ship pas",
     "goodbye": "c'est tout pour l'instant, merci d'être passé !",
     "goodbyeAlt": "Lucas qui fait au revoir dans sa doudoune à fleurs",
-    "sayHi": "viens dire salut"
+    "sayHi": "viens dire salut",
+    "faqChoices": "questions à poser à Lucas"
   },
   "Experiences": {
     "contractTypes": {
@@ -695,7 +716,8 @@
       },
       "coinRain": {
         "name": "pluie de pièces",
-        "how": "lancer une pièce sur mon chèque masterdevfrance"
+        "how": "lancer une pièce sur mon chèque masterdevfrance",
+        "hint": "certaines victoires méritent un petit bonus"
       },
       "rainyDay": {
         "name": "jour de pluie",

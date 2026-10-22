@@ -1136,5 +1136,37 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/60"
+  },
+  {
+    "version": "2.27",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Ask me anything",
+      "fr": "Pose-moi une question"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The FAQ is now a little chat with me: pick a question and I answer in a bubble, in the right pose 💬",
+          "fr": "La FAQ devient une petite discussion avec moi : choisis une question et je réponds dans une bulle, dans la bonne pose 💬"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "New questions: am I available, do I work remotely, my stack, the project I'm proudest of, how this site is made and my League main",
+          "fr": "De nouvelles questions : si je suis dispo, si je bosse en remote, ma stack, le projet dont je suis le plus fier, comment ce site est fait et mon main sur LoL"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "One trophy went into hiding and turned epic. Good luck finding it 🪙",
+          "fr": "Un trophée s'est caché et il est devenu épique. Bonne chance pour le trouver 🪙"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/63"
   }
 ]

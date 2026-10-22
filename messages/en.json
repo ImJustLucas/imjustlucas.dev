@@ -87,17 +87,37 @@
     "recruiterMode": "recruiter mode",
     "faqTitle": "FAQ",
     "faq": {
-      "whyImjustlucas": {
-        "question": "Why imjustlucas?",
-        "answer": "It's my reminder to keep it real and stay humble, no matter where I go in my career."
+      "availability": {
+        "question": "Are you available right now?",
+        "answer": "For freelance, yes: evenings and weekends. For a full-time job, let's talk… as long as the project is exciting and the salary is just as exciting."
       },
-      "favoriteLanguages": {
-        "question": "Favorite languages?",
-        "answer": "JavaScript and TypeScript. JavaScript for its versatility and dynamic nature, and TypeScript for adding that extra layer of type safety and structure. Together, they're the perfect duo for building robust applications!"
+      "remote": {
+        "question": "Do you work remotely?",
+        "answer": "Yes, and it's a must. I'm based in Paris, but I work fully remote."
+      },
+      "stack": {
+        "question": "Your favorite stack right now?",
+        "answer": "React and TypeScript on the front, and mostly NestJS on the back. Basically the whole TypeScript ecosystem, from the browser to the server."
+      },
+      "proudestProject": {
+        "question": "The project you're proudest of?",
+        "answer": "Predi.GG, no doubt. It's the best and most polished thing I've built so far, and you can check it out in my projects. Feel free to install the app, by the way ;)"
+      },
+      "howSiteIsMade": {
+        "question": "How is this site made?",
+        "answer": "Next.js and React in TypeScript, with Tailwind. The click sounds are synthesized live in your browser, my Discord presence comes in real time, the arcade scores are replayed by the server so nobody can cheat, and all the content is edited from my own admin, which commits straight to GitHub. There are a few secrets too, but I'll let you find them."
+      },
+      "lolMain": {
+        "question": "Your League of Legends main?",
+        "answer": "Vayne and Yunara, AD main since day one my guy, that's NOT changing"
       },
       "coffeeOrTea": {
         "question": "Coffee or tea?",
         "answer": "Definitely coffee. Paris runs on it, after all!"
+      },
+      "whyImjustlucas": {
+        "question": "Why imjustlucas?",
+        "answer": "It's my reminder to keep it real and stay humble, no matter where I go in my career."
       }
     },
     "greeting": "Yoooo, I'm Lucas Bellier!",
@@ -132,7 +152,8 @@
     "hobbiesTitle": "what i do when i'm not shipping",
     "goodbye": "that's it for now, thanks for stopping by!",
     "goodbyeAlt": "Lucas waving goodbye in his flower puffer jacket",
-    "sayHi": "come say hi"
+    "sayHi": "come say hi",
+    "faqChoices": "questions to ask Lucas"
   },
   "Experiences": {
     "contractTypes": {
@@ -695,7 +716,8 @@
       },
       "coinRain": {
         "name": "coin rain",
-        "how": "throw a coin at my masterdevfrance cheque"
+        "how": "throw a coin at my masterdevfrance cheque",
+        "hint": "some wins deserve a little extra"
       },
       "rainyDay": {
         "name": "rainy day",

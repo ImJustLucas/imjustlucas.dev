@@ -53,7 +53,17 @@ export const revalidate = 3600;
 
 export const generateMetadata = routeMetadata(ROUTES.me);
 
-const FAQ = ["whyImjustlucas", "favoriteLanguages", "coffeeOrTea"] as const;
+/** The FAQ's questions, each with the pose Lucas answers it in. */
+const FAQ = [
+  { id: "availability", pose: "banner" },
+  { id: "remote", pose: "music" },
+  { id: "stack", pose: "coding" },
+  { id: "proudestProject", pose: "trophy" },
+  { id: "howSiteIsMade", pose: "coding" },
+  { id: "lolMain", pose: "lol" },
+  { id: "coffeeOrTea", pose: "coffee" },
+  { id: "whyImjustlucas", pose: "chilling" },
+] as const;
 const RARITY_RANK: Record<Rarity, number> = {
   legendary: 3,
   epic: 2,
@@ -252,8 +262,9 @@ export default async function Home() {
       <section aria-labelledby="faq" className="flex flex-col gap-4">
         <TypographyTitle id="faq">{t("faqTitle")}</TypographyTitle>
         <Faq
-          entries={FAQ.map((id) => ({
+          entries={FAQ.map(({ id, pose }) => ({
             id,
+            pose,
             question: t(`faq.${id}.question`),
             answer: t(`faq.${id}.answer`),
           }))}
