@@ -6,6 +6,7 @@ import type { SignedInIdentity } from "@/lib/admin/owner-access";
 import {
   openProfileEditor,
   updateProfile,
+  updateRecruiter,
   uploadResume,
 } from "@/lib/admin/profile";
 import { makeInMemoryRepository } from "@/lib/content/repository-in-memory";
@@ -165,6 +166,86 @@ describe("Admin actions on the Profile", () => {
         },
       });
       expect(yield* commits).toEqual([]);
+    }),
+  );
+});
+
+describe("The recruiter mode's texts", () => {
+  const recruiter = {
+    summary: testProfile.summary,
+    availability: testProfile.availability,
+    languages: testProfile.languages,
+  };
+
+  it.effect("are published as one commit, the rest of the Profile kept", () =>
+    Effect.gen(function* () {
+      const { run, commits, profile } = yield* admin(owner);
+      const english = {
+        code: "en",
+        name: { en: "English", fr: "Anglais" },
+        level: { en: "professional", fr: "professionnel" },
+      };
+
+      const result = yield* run(
+        updateRecruiter({
+          revision: "memory-0",
+          ...recruiter,
+          availability: { en: "freelance only", fr: "freelance seulement" },
+          languages: [...recruiter.languages, english],
+        }),
+      );
+
+      expect(result).toEqual({ kind: "saved", revision: "memory-1" });
+      const made = yield* commits;
+      expect(made).toHaveLength(1);
+      expect(made[0].message).toBe("📝 Admin: update the recruiter mode");
+      expect(yield* profile).toEqual({
+        ...testProfile,
+        availability: { en: "freelance only", fr: "freelance seulement" },
+        languages: [...testProfile.languages, english],
+      });
+    }),
+  );
+
+  it.effect("missing translations and bad codes give field errors", () =>
+    Effect.gen(function* () {
+      const { run, commits } = yield* admin(owner);
+
+      const result = yield* run(
+        updateRecruiter({
+          revision: "memory-0",
+          ...recruiter,
+          summary: { en: "I build websites.", fr: "" },
+          languages: [
+            {
+              code: "French",
+              name: { en: "French", fr: "Français" },
+              level: { en: "", fr: "langue maternelle" },
+            },
+          ],
+        }),
+      );
+
+      expect(result).toEqual({
+        kind: "invalid",
+        fieldErrors: {
+          "summary.fr": "Traduction manquante",
+          "languages.0.code":
+            "Code de langue attendu, par exemple fr, en ou pt-BR",
+          "languages.0.level.en": "Traduction manquante",
+        },
+      });
+      expect(yield* commits).toEqual([]);
+    }),
+  );
+
+  it.effect("are kept when the links are edited", () =>
+    Effect.gen(function* () {
+      const { run, profile } = yield* admin(owner);
+
+      yield* run(updateProfile({ revision: "memory-0", ...fields }));
+
+      expect(yield* profile).toEqual(testProfile);
     }),
   );
 });

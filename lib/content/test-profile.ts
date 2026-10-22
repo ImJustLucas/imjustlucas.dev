@@ -12,4 +12,13 @@ export const testProfile = {
     en: { asset: "/pdf/cv-lucas.pdf", lastUpdated: "2025-05-28" },
     fr: { asset: "/pdf/cv-lucas-fr.pdf", lastUpdated: "2025-10-07" },
   },
+  summary: { en: "I build websites.", fr: "Je fais des sites." },
+  availability: { en: "open to opportunities", fr: "ouvert aux opportunités" },
+  languages: [
+    {
+      code: "fr",
+      name: { en: "French", fr: "Français" },
+      level: { en: "native", fr: "langue maternelle" },
+    },
+  ],
 };

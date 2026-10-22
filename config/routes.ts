@@ -39,6 +39,9 @@ export const ROUTES = {
   },
   // The visitor's own Trophies, linked from the count at the sidebar's foot.
   trophies: { path: "/trophies", messageKey: "trophies", inMenu: false },
+  // The recruiter mode: the profile as one sober, printable page, outside
+  // the client (no sidebar), linked from the sidebar and the home banner.
+  cv: { path: "/cv", messageKey: "cv", inMenu: false },
 } as const satisfies Record<string, Route>;
 
 /**

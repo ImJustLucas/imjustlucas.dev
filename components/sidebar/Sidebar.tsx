@@ -2,7 +2,13 @@
 
 import { useTranslations } from "next-intl";
 
-import { Github, Instagram, Linkedin, Youtube } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  Github,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
 
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { FriendsPanel } from "@/components/presence/FriendsPanel";
@@ -10,7 +16,9 @@ import { QuickMenuButton } from "@/components/quick-menu/QuickMenuTrigger";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { SoundSwitch } from "@/components/sound/SoundSwitch";
 import { ModeToggle } from "@/components/theme-switch";
+import { ROUTES } from "@/config/routes";
 import { useMobileMenu } from "@/contexts/menu-mobile.context";
+import { Link } from "@/i18n/navigation";
 import type { Profile } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
@@ -57,8 +65,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
         <PlayerCard />
       </div>
       <ClientTabs />
-      {/* Below 768px the top bar holds the quick menu's button */}
-      <QuickMenuButton />
+      <div className="flex flex-col gap-2">
+        {/* Below 768px the top bar holds the quick menu's button */}
+        <QuickMenuButton />
+        <RecruiterLink />
+      </div>
       <FriendsPanel />
       <div className="mt-auto flex flex-col gap-4">
         <SettingsRow />
@@ -71,6 +82,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
     </div>
   );
 };
+
+/** The way out of the client to the recruiter mode, the sober printable page. */
+function RecruiterLink() {
+  const { closeMenu } = useMobileMenu();
+  const t = useTranslations("Sidebar");
+  return (
+    <SoundOnPress>
+      <Link
+        href={ROUTES.cv.path}
+        onClick={closeMenu}
+        className="ledge flex h-11 w-full items-center gap-3 rounded-md bg-raised pl-3 pr-2.5 text-label text-ink hover:bg-seam/40"
+      >
+        <BriefcaseBusiness aria-hidden className="size-[18px] shrink-0" />
+        {t("recruiter")}
+      </Link>
+    </SoundOnPress>
+  );
+}
 
 function SettingsRow() {
   const t = useTranslations("Sidebar");

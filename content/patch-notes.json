@@ -1065,5 +1065,30 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/59"
+  },
+  {
+    "version": "2.27",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Recruiter mode",
+      "fr": "Mode recruteur"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Recruiter mode: my whole profile on one calm page, no game, no sound, made for recruiters in a hurry 💼 Find it in the sidebar or on my profile banner",
+          "fr": "Mode recruteur : tout mon profil sur une seule page sobre, sans jeu ni son, pour les recruteurs pressés 💼 Il est dans la barre latérale et sur la bannière de mon profil"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Print it or save it as a PDF: it fits on one A4 sheet, in English or in French 🖨️",
+          "fr": "Imprime-le ou enregistre-le en PDF : il tient sur une feuille A4, en français comme en anglais 🖨️"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/54"
   }
 ]

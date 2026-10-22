@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import profile from "@/content/profile.json";
 
-import { homeStructuredData, jsonLdScript } from "./structured-data";
+import {
+  cvStructuredData,
+  homeStructuredData,
+  jsonLdScript,
+} from "./structured-data";
 
 const data = (locale: "en" | "fr") =>
   homeStructuredData({
@@ -38,6 +42,40 @@ describe("homeStructuredData", () => {
   it("makes the Owner the site's author", () => {
     const person = node("en", "Person");
     expect(node("en", "WebSite").author).toEqual({ "@id": person["@id"] });
+  });
+});
+
+describe("cvStructuredData", () => {
+  const cv = cvStructuredData({
+    locale: "fr",
+    profile,
+    jobTitle: "Développeur fullstack",
+    description: "Une description",
+    worksFor: [{ name: "Predi.GG", url: "https://predi.gg" }],
+    alumniOf: ["IIM"],
+    knowsAbout: ["TypeScript"],
+    knowsLanguage: ["fr", "en"],
+  });
+
+  it("is the recruiter mode's page in the Locale, on the served host", () => {
+    expect(cv["@type"]).toBe("ProfilePage");
+    expect(cv.url).toBe("https://www.imjustlucas.dev/fr/cv");
+  });
+
+  it("is about the same Person as the home page", () => {
+    expect(cv.mainEntity["@id"]).toBe(node("fr", "Person")["@id"]);
+    expect(cv.mainEntity.name).toBe("Lucas Bellier");
+  });
+
+  it("says where he works, where he studied, what he knows", () => {
+    expect(cv.mainEntity.worksFor).toEqual([
+      { "@type": "Organization", name: "Predi.GG", url: "https://predi.gg" },
+    ]);
+    expect(cv.mainEntity.alumniOf).toEqual([
+      { "@type": "EducationalOrganization", name: "IIM" },
+    ]);
+    expect(cv.mainEntity.knowsAbout).toEqual(["TypeScript"]);
+    expect(cv.mainEntity.knowsLanguage).toEqual(["fr", "en"]);
   });
 });
 

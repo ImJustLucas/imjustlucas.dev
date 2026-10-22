@@ -50,6 +50,11 @@
       "label": "trophées",
       "title": "trophées",
       "description": "Les trophées qu'un visiteur débloque en explorant le site de Lucas Bellier, imjustlucas.dev : jouer à l'arcade, trouver les secrets, essayer chaque palette."
+    },
+    "cv": {
+      "label": "mode recruteur",
+      "title": "CV",
+      "description": "Le CV de Lucas Bellier sur une page : développeur fullstack à Paris, ses expériences, projets, compétences, formation et langues, prêt à imprimer."
     }
   },
   "Layout": {
@@ -79,6 +84,7 @@
     "creativeMindset": "J'aime aborder les projets de manière créative. Tout commence souvent par une bonne séance de brainstorming, beaucoup de recherche d'inspiration et une plongée dans les derniers outils tech. Que je parte de zéro ou que j'améliore une idée existante, je cherche à créer avec qualité et originalité.",
     "downloadResume": "Télécharger mon CV",
     "resumeLastUpdated": "mis à jour le {date, date, medium}",
+    "recruiterMode": "mode recruteur",
     "faqTitle": "FAQ",
     "faq": {
       "whyImjustlucas": {
@@ -154,6 +160,24 @@
     "intro": "Là où j'ai joué jusqu'ici, et les diplômes gagnés en chemin 🎓",
     "chibiAlt": "Lucas qui savoure un mug de café fumant"
   },
+  "Recruiter": {
+    "back": "retour au jeu",
+    "print": "imprimer / enregistrer en PDF",
+    "downloadResume": "CV en PDF",
+    "headline": "Développeur fullstack · cofondateur de Predi.GG",
+    "location": "Paris, France",
+    "photoAlt": "Lucas Bellier, souriant, en noir et blanc",
+    "experienceTitle": "expériences",
+    "projectsTitle": "projets choisis",
+    "allProjects": "tous les projets",
+    "skillsTitle": "compétences",
+    "skillsNote": "celles que mes projets utilisent le plus",
+    "educationTitle": "formation",
+    "languagesTitle": "langues",
+    "linksTitle": "liens",
+    "website": "Site",
+    "liveVersion": "Version en ligne, toujours à jour : {url}"
+  },
   "Videos": {
     "new": "Nouveau",
     "watch": "Regarder",
@@ -173,6 +197,7 @@
     "socials": "réseaux",
     "playerLine": "dev fullstack · paris",
     "unread": "nouvelle version",
+    "recruiter": "mode recruteur",
     "trophies": "trophées : {done} sur {total}"
   },
   "Presence": {
@@ -434,6 +459,7 @@
       "contact": "contact message embauche demande d'ami",
       "mdf2025": "masterdevfrance trophée concours victoire légendaire",
       "patchNotes": "notes de version nouveautés mises à jour versions changelog",
+      "cv": "recruteur cv curriculum imprimer pdf embauche une page",
       "project": "projet",
       "game": "jeu jouer arcade",
       "palette": "thème palette couleur",
