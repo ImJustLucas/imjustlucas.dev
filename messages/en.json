@@ -542,7 +542,7 @@
       "label": "trophies unlocked",
       "of": "{done} of {total} trophies unlocked",
       "empty": "nothing yet, go poke around 👀",
-      "latest": "latest: {name}, {date}",
+      "latest": "latest: {name}, <when>{date}</when>",
       "all": "all of them. you're a legend 👑",
       "storage": "kept in this browser only: nothing leaves it, and another browser starts from zero."
     },

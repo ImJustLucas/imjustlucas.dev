@@ -542,7 +542,7 @@
       "label": "trophées débloqués",
       "of": "{done} trophées débloqués sur {total}",
       "empty": "rien pour l'instant, va fouiner 👀",
-      "latest": "dernier : {name}, {date}",
+      "latest": "dernier : {name}, <when>{date}</when>",
       "all": "tous. t'es une légende 👑",
       "storage": "gardés dans ce navigateur uniquement : rien n'en sort, et un autre navigateur repart de zéro."
     },

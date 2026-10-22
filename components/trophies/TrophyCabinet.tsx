@@ -54,7 +54,7 @@ export function TrophyCabinet() {
   return (
     <>
       <Summary progress={progress} hydrated={hydrated} />
-      <div className="grid items-start gap-3 lg:grid-cols-2">
+      <div className="grid items-start gap-3 xl:grid-cols-2">
         {SHELVES.map((rarity) => (
           <Shelf key={rarity} rarity={rarity} progress={progress} />
         ))}
@@ -95,9 +95,14 @@ function Summary({
     : done === total
       ? t("summary.all")
       : latest
-        ? t("summary.latest", {
+        ? t.rich("summary.latest", {
             name: t(`items.${latest.trophy.id}.name`),
             date: day(latest.at),
+            when: (chunks) => (
+              <TypographyData className="text-ink-muted">
+                {chunks}
+              </TypographyData>
+            ),
           })
         : t("summary.empty");
 
@@ -198,12 +203,9 @@ function TrophyRow({
   first: boolean;
 }) {
   const t = useTranslations("Trophies");
-  const day = useDay();
   const at = progress.unlocked[trophy.id];
   const hidden = !at && isSecret(trophy);
   const Icon = hidden ? CircleHelp : TROPHY_ICONS[trophy.id];
-  const count = trophyCount(progress, trophy);
-  const counted = trophy.tally || trophy.everyOther;
 
   return (
     <li
@@ -217,7 +219,7 @@ function TrophyRow({
           "flex size-12 shrink-0 items-center justify-center rounded-full border-2 bg-ground",
           at
             ? cn(RARITY_STYLE[trophy.rarity].frame, "text-ink")
-            : "border-dashed border-seam text-ink-muted",
+            : "border-seam text-ink-muted shadow-[inset_0_2px_0_rgb(var(--ledge))]",
         )}
       >
         <Icon aria-hidden className="size-5" />
@@ -229,52 +231,70 @@ function TrophyRow({
         >
           {hidden ? t("card.secretName") : t(`items.${trophy.id}.name`)}
         </TypographyTitle>
-        <span className="text-pretty text-label text-ink-muted">
+        <span className="text-pretty break-words text-label text-ink-muted">
           {hidden && isSecret(trophy)
             ? t(`items.${trophy.id}.hint`)
             : t(`items.${trophy.id}.how`)}
         </span>
+        {/* On phones what it stands at follows the line */}
+        <span className="mt-1 flex items-center gap-2 sm:hidden">
+          <TrophyMeta trophy={trophy} progress={progress} />
+        </span>
       </span>
-      <span className="flex shrink-0 flex-col items-end gap-1.5 text-right">
-        {at ? (
-          <TypographyData
-            as="time"
-            dateTime={at}
-            className="flex items-center gap-1 text-ink-muted"
-          >
-            <Check aria-hidden className="size-3.5 text-online-ink" />
-            <span aria-hidden>{day(at)}</span>
-            <span className="sr-only">
-              {t("card.unlockedOn", { date: day(at) })}
-            </span>
-          </TypographyData>
-        ) : counted ? (
-          <>
-            <TypographyData className="text-ink-muted">
-              <span aria-hidden>
-                {count.done}/{count.goal}
-              </span>
-              <span className="sr-only">
-                {t("card.progress", { done: count.done, total: count.goal })}
-              </span>
-            </TypographyData>
-            <span
-              aria-hidden
-              className="relative h-1.5 w-14 overflow-hidden rounded-full bg-ground"
-            >
-              <span
-                className="absolute inset-y-0 left-0 rounded-full bg-ink-muted"
-                style={{ width: `${(count.done / count.goal) * 100}%` }}
-              />
-            </span>
-          </>
-        ) : (
-          <>
-            <Lock aria-hidden className="size-4 text-ink-muted" />
-            <span className="sr-only">{t("card.locked")}</span>
-          </>
-        )}
+      <span className="flex shrink-0 flex-col items-end gap-1.5 text-right max-sm:hidden">
+        <TrophyMeta trophy={trophy} progress={progress} />
       </span>
     </li>
+  );
+}
+
+/** What a Trophy stands at: the day it was unlocked, its count, or a lock. */
+function TrophyMeta({
+  trophy,
+  progress,
+}: {
+  trophy: Trophy;
+  progress: TrophyProgress;
+}) {
+  const t = useTranslations("Trophies");
+  const day = useDay();
+  const at = progress.unlocked[trophy.id];
+  const count = trophyCount(progress, trophy);
+  const counted = trophy.tally || trophy.everyOther;
+  return at ? (
+    <TypographyData
+      as="time"
+      dateTime={at}
+      className="flex items-center gap-1 text-ink-muted"
+    >
+      <Check aria-hidden className="size-3.5 text-online-ink" />
+      <span aria-hidden>{day(at)}</span>
+      <span className="sr-only">{t("card.unlockedOn", { date: day(at) })}</span>
+    </TypographyData>
+  ) : counted ? (
+    <>
+      <TypographyData className="text-ink-muted">
+        <span aria-hidden>
+          {count.done}/{count.goal}
+        </span>
+        <span className="sr-only">
+          {t("card.progress", { done: count.done, total: count.goal })}
+        </span>
+      </TypographyData>
+      <span
+        aria-hidden
+        className="relative h-1.5 w-14 overflow-hidden rounded-full bg-ground"
+      >
+        <span
+          className="absolute inset-y-0 left-0 rounded-full bg-ink-muted"
+          style={{ width: `${(count.done / count.goal) * 100}%` }}
+        />
+      </span>
+    </>
+  ) : (
+    <>
+      <Lock aria-hidden className="size-4 text-ink-muted" />
+      <span className="sr-only">{t("card.locked")}</span>
+    </>
   );
 }
