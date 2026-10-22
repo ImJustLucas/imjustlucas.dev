@@ -1,6 +1,7 @@
 import { Clock, Context, Effect, Layer, Schema, SchemaIssue } from "effect";
 
 import type { Locale } from "@/i18n/routing";
+import { parisDay } from "@/lib/paris-time";
 
 import {
   ContentInvalid,
@@ -10,9 +11,14 @@ import {
   type VideosUnavailable,
 } from "./errors";
 import { orOnColdBuild } from "./external-source";
+import {
+  GitHubContributions,
+  type GitHubContributionsUnavailable,
+} from "./github-contributions";
 import { GitHubStars, type GitHubStarsUnavailable } from "./github-stars";
 import { byVersionNewestFirst } from "./patch-version";
 import { byStartMostRecentFirst, type Period } from "./period";
+import { type PlayerLevel, playerLevel } from "./player-level";
 import { ContentRepository, type Revision } from "./repository";
 import {
   type Achievement,
@@ -216,6 +222,14 @@ export class ContentCatalog extends Context.Service<
       ReadonlyArray<Video>,
       VideosUnavailable | CatalogError
     >;
+    /**
+     * Lucas's Level, from the Contributions of the Profile's GitHub account,
+     * with his Streak on today in Paris; none without a GitHub token.
+     */
+    readonly level: Effect.Effect<
+      PlayerLevel | undefined,
+      GitHubContributionsUnavailable | CatalogError
+    >;
     /** Lucas's public identity: links, channel, Discord account, Resumes. */
     readonly profile: Effect.Effect<Profile, CatalogError>;
     /** The same content with its texts in one Locale, for public pages. */
@@ -223,9 +237,9 @@ export class ContentCatalog extends Context.Service<
   }
 >()("content/ContentCatalog") {
   /**
-   * Needs a `ContentRepository` and the external sources `GitHubStars` and
-   * `YouTubeChannel`. A failing source fails the catalog, except on a cold
-   * build (see `PageGeneration`).
+   * Needs a `ContentRepository` and the external sources `GitHubStars`,
+   * `GitHubContributions` and `YouTubeChannel`. A failing source fails the
+   * catalog, except on a cold build (see `PageGeneration`).
    */
   static readonly layer = Layer.effect(
     ContentCatalog,
@@ -233,6 +247,7 @@ export class ContentCatalog extends Context.Service<
       const repository = yield* ContentRepository;
       const stars = yield* GitHubStars;
       const channel = yield* YouTubeChannel;
+      const contributions = yield* GitHubContributions;
       const load = loadContent(repository);
 
       /**
@@ -328,6 +343,18 @@ export class ContentCatalog extends Context.Service<
           }));
       });
 
+      const level = Effect.gen(function* () {
+        const { profile } = yield* load;
+        const login = new URL(profile.links.github).pathname.split("/")[1]!;
+        // No Level shown on a cold build.
+        const history = yield* contributions
+          .history(login)
+          .pipe(orOnColdBuild(undefined));
+        if (!history) return undefined;
+        const now = yield* Clock.currentTimeMillis;
+        return playerLevel(history, parisDay(new Date(now)));
+      });
+
       const profile = Effect.map(load, (content) => content.profile);
       const achievements = Effect.map(load, (content) => content.achievements);
       const hobbies = Effect.map(load, (content) => content.hobbies);
@@ -342,6 +369,7 @@ export class ContentCatalog extends Context.Service<
         projectSlugs,
         experiences,
         videos,
+        level,
         profile,
         achievements,
         hobbies,

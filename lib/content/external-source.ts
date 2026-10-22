@@ -2,10 +2,11 @@ import { Context, Effect } from "effect";
 
 /**
  * How a page is being generated, which decides what a failing external
- * source (GitHub stars, YouTube Videos) does to the content catalog:
+ * source (GitHub stars and Contributions, YouTube Videos) does to the content
+ * catalog:
  *
  * - `"cold-build"`: `next build`, with no earlier page to keep. The catalog
- *   falls back (stars omitted, no Videos) so the build never fails.
+ *   falls back (stars omitted, no Videos, no Level) so the build never fails.
  * - `"revalidation"` (the default): anything else, e.g. a page generated
  *   earlier being refreshed at runtime. The catalog fails, so Next keeps
  *   serving the previous page and retries on a later request.
@@ -20,8 +21,9 @@ export const PageGeneration = Context.Reference<PageGeneration>(
 );
 
 /**
- * The body of `url`, fetched fresh on every page generation. A non-2xx status
- * fails, as does the network.
+ * The body of `url`, fetched fresh on every page generation: a GET, or a POST
+ * of `body` when given (GitHub's GraphQL API). A non-2xx status fails, as
+ * does the network.
  *
  * `cache: "no-store"` keeps the response out of Next's Data Cache, which
  * `next build` would otherwise persist in `.next/cache` (restored between
@@ -33,10 +35,12 @@ export const PageGeneration = Context.Reference<PageGeneration>(
 export const fetchExternalText = (
   url: string,
   headers: Readonly<Record<string, string>> = {},
+  body?: string,
 ): Effect.Effect<string, Error> =>
   Effect.tryPromise({
     try: async (signal) => {
       const response = await fetch(url, {
+        ...(body !== undefined && { method: "POST", body }),
         headers,
         signal,
         cache: "no-store",

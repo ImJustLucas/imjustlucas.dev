@@ -4,6 +4,7 @@ import { join } from "node:path";
 
 import { ContentCatalog } from "./catalog";
 import { PageGeneration } from "./external-source";
+import { GitHubContributions } from "./github-contributions";
 import { GitHubStars } from "./github-stars";
 import { layerLocalFilesystem } from "./repository-local-filesystem";
 import { YouTubeChannel } from "./youtube-channel";
@@ -15,6 +16,7 @@ const repositoryRoot = new URL("../..", import.meta.url).pathname;
 const catalog = ContentCatalog.layer.pipe(
   Layer.provide(layerLocalFilesystem(repositoryRoot)),
   Layer.provide(GitHubStars.layerTest({})),
+  Layer.provide(GitHubContributions.layerTest({})),
   Layer.provide(YouTubeChannel.layerTest({})),
 );
 

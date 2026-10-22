@@ -725,6 +725,31 @@
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/47"
   },
   {
+    "version": "2.13",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Level up",
+      "fr": "Level up"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "My profile has a level now! Every GitHub contribution is 1 xp, so you can watch me grind towards the next one 🎮",
+          "fr": "Mon profil a un niveau ! Chaque contribution GitHub rapporte 1 xp, tu peux me regarder farmer vers le prochain 🎮"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "My commit streak with its little flame, plus my last 20 weeks of coding as a heatmap 🔥",
+          "fr": "Ma série de commits avec sa petite flamme, et mes 20 dernières semaines de code en heatmap 🔥"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/44"
+  },
+  {
     "version": "2.14",
     "date": "2026-10-22",
     "title": {
