@@ -6,6 +6,7 @@ import {
   House,
   type LucideIcon,
   Palmtree,
+  ScrollText,
   Trophy,
   UserRound,
 } from "lucide-react";
@@ -23,6 +24,7 @@ export const ADMIN_TABS: ReadonlyArray<{
   { href: "/admin/achievements", label: "Achievements", icon: Trophy },
   { href: "/admin/hobbies", label: "Hobbies", icon: Palmtree },
   { href: "/admin/profile", label: "Profile", icon: UserRound },
+  { href: "/admin/patch-notes", label: "Patch notes", icon: ScrollText },
   { href: "/admin/arcade", label: "Arcade", icon: Gamepad2 },
 ];
 

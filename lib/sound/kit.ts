@@ -81,7 +81,8 @@ export type Cue =
   | "clink"
   | "hop"
   | "pickup"
-  | "milestone";
+  | "milestone"
+  | "patch";
 
 /**
  * Each menu tab plays its own degree, in menu order, so walking down the
@@ -173,6 +174,15 @@ export const cueSound = (cue: Cue, options: CueOptions = {}): CueSound => {
     case "pickup":
       return {
         plucks: [pluck("F#5", 0, 0.4, 0.35), pluck("A5", 0.06, 0.45, 0.5)],
+      };
+    case "patch":
+      // A notification chime: up to the top, then settling a step below
+      return {
+        plucks: [
+          pluck("D5", 0, 0.5, 0.6),
+          pluck("A5", 0.08, 0.5, 0.6),
+          pluck("F#5", 0.18, 0.55, 1),
+        ],
       };
     case "milestone":
       return {

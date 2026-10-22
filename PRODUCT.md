@@ -33,14 +33,14 @@ Three claims, held equally, with none leading:
 
 ## Operating Context
 
-- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu.
+- Public pages (Routes in `config/routes.ts`): me (home, with Resume download and FAQ), what i've done (Projects, filterable by the loadout of Techs they use), my experiences (Experiences and diplomas), yt videos, arcade (Ollie, a skate game starring the chibi, with more Cabinets to come), contact, plus the MasterDevFrance 2025 page, reachable by URL but kept out of the menu, and the patch notes (the site's changelog, written like a game's, Season 1 the first portfolio and Season 2 the Player Profile), linked from the current version at the foot of the sidebar.
 - Every public page exists in both Locales (English default, French) and is statically generated; Projects and Videos regenerate daily.
 - The sidebar menu sits beside a scrollable content panel; on mobile the sidebar becomes an overlay.
 - The Admin (`/admin`) is French only, private, GitHub sign-in for the Owner alone, and works through forms: one save makes one commit on `main`.
 
 ## Capabilities and Constraints
 
-- Content (Projects, Experiences, Techs, Achievements, Hobbies, Profile) lives as JSON in `content/` and reaches pages only through the content catalog; the domain vocabulary is in `GLOSSARY.md`.
+- Content (Projects, Experiences, Techs, Achievements, Hobbies, Profile, patch notes) lives as JSON in `content/` and reaches pages only through the content catalog; the domain vocabulary is in `GLOSSARY.md`.
 - **Locale parity**: every visible string of a public page exists in both Locales, and no page mixes languages. Proper nouns (Project titles, Tech names, company and school names) and Video titles stay untranslated.
 - Star counts and Videos are never written by hand; when the source is down, the page shows the previous version, or the empty state on a fresh build.
 - The Arcade's leaderboards: a top 10 per game on Upstash Redis (Vercel Marketplace), each score replayed by the server before it is kept; a player's first name is shown publicly and kept in their browser, and the Owner removes a name from the Admin.

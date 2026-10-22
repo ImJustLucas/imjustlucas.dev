@@ -431,6 +431,18 @@ const FRENCH: ReadonlyArray<
     (m) => `Image attendue (PNG, JPEG, WebP ou AVIF) dans ${m[1]}`,
   ],
   [/^Expected a PDF in (\S+)$/, (m) => `PDF attendu dans ${m[1]}`],
+  [
+    /^Expected a version \(e\.g\. 2\.4 or 2\.4\.1\)$/,
+    () => "Version attendue, par exemple 2.4 ou 2.4.1",
+  ],
+  [
+    /^Patch version used more than once: (.*)$/,
+    (m) => `Un Patch porte déjà cette version : ${m[1]}`,
+  ],
+  [/^Expected a date \(YYYY-MM-DD\)$/, () => "Date attendue (AAAA-MM-JJ)"],
+  [/^Expected at least one line$/, () => "Au moins une ligne"],
+  // The Patch tags.
+  [/^Expected "new"( \| "[\w-]+")*$/, () => "Étiquette inconnue"],
   // The Profile's YouTube link must be its channel's URL.
   [/^Expected (https:\/\/\S+)$/, (m) => `Lien attendu : ${m[1]}`],
 ];

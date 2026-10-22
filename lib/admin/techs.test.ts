@@ -52,6 +52,7 @@ const admin = (
       "content/experiences.json": "[]",
       "content/achievements.json": "[]",
       "content/hobbies.json": "[]",
+      "content/patch-notes.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({
@@ -322,6 +323,7 @@ const withoutTechs = (identity: SignedInIdentity | undefined) =>
       "content/experiences.json": "[]",
       "content/achievements.json": "[]",
       "content/hobbies.json": "[]",
+      "content/patch-notes.json": "[]",
       "content/profile.json": JSON.stringify(testProfile),
     });
     const access = AdminAccess.layer({

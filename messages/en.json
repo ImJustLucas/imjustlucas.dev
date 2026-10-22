@@ -40,6 +40,11 @@
       "label": "MDF 2025",
       "title": "MasterDevFrance 2025",
       "description": "Lucas Bellier won the MasterDevFrance 2025 competition, a national recognition for technical excellence in software development."
+    },
+    "patchNotes": {
+      "label": "patch notes",
+      "title": "patch notes",
+      "description": "What's new on Lucas Bellier's site, version by version: the patch notes of imjustlucas.dev, written like a game's."
     }
   },
   "Layout": {
@@ -145,7 +150,8 @@
     "client": "player profile",
     "settings": "settings",
     "socials": "socials",
-    "playerLine": "fullstack dev · paris"
+    "playerLine": "fullstack dev · paris",
+    "unread": "new version"
   },
   "Presence": {
     "listeningBy": "by {artist}",
@@ -314,5 +320,20 @@
       "missed": "this score couldn't be saved",
       "rankedLive": "Saved: you're number {rank} on the leaderboard."
     }
+  },
+  "PatchNotes": {
+    "intro": "Every update to my site, written like a game's patch notes 📜 Here's what changed, version by version.",
+    "chibiAlt": "Lucas coding the next patch",
+    "current": "current version",
+    "version": "v{version}",
+    "tags": {
+      "new": "new",
+      "changed": "changed",
+      "fixed": "fixed"
+    },
+    "link": "behind the scenes on GitHub",
+    "season": "season {number}",
+    "patches": "{count, plural, one {# patch} other {# patches}}",
+    "empty": "No patch notes yet, the first one's on its way 🛠️"
   }
 }

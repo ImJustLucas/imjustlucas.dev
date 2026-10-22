@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 interface ClientLayoutProps {
   children: React.ReactNode;
   profile: Profile;
+  /** The site's current version, the newest patch's; none without one. */
+  version?: string;
 }
 
 /**
@@ -19,7 +21,11 @@ interface ClientLayoutProps {
  * mobile top bar and sheet) and the rounded profile panel, the only part
  * that scrolls.
  */
-export default function ClientLayout({ children, profile }: ClientLayoutProps) {
+export default function ClientLayout({
+  children,
+  profile,
+  version,
+}: ClientLayoutProps) {
   const { isOpen } = useMobileMenu();
   const t = useTranslations("Layout");
   return (
@@ -35,7 +41,7 @@ export default function ClientLayout({ children, profile }: ClientLayoutProps) {
         {t("skipToContent")}
       </a>
       <MobileTopBar />
-      <Sidebar profile={profile} />
+      <Sidebar profile={profile} version={version} />
       {/* Inert behind the open mobile sheet: out of the tab order and the accessibility tree */}
       <main
         id="content"

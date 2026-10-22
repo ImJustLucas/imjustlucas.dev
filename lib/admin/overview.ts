@@ -16,6 +16,7 @@ export const openOverview = (today: string) =>
         .length,
       achievements: content.achievements.length,
       hobbies: content.hobbies.length,
+      patchNotes: content.patchNotes.length,
     },
     resumes: {
       en: content.profile.resumes.en.lastUpdated,

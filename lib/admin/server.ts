@@ -7,6 +7,7 @@ import { contentRepository, ownerGithubId } from "@/lib/admin/config";
 import { openExperiencesEditor } from "@/lib/admin/experiences";
 import { openHobbiesEditor } from "@/lib/admin/hobbies";
 import { openOverview } from "@/lib/admin/overview";
+import { openPatchNotesEditor } from "@/lib/admin/patch-notes";
 import { openProfileEditor } from "@/lib/admin/profile";
 import { openProjectsEditor } from "@/lib/admin/projects";
 import { sessionIdentities } from "@/lib/admin/session";
@@ -63,6 +64,9 @@ export const getAchievementsEditor = () => run(openAchievementsEditor);
 
 /** Reads the Hobbies editor's content from the content branch, with its revision. */
 export const getHobbiesEditor = () => run(openHobbiesEditor);
+
+/** Reads the patch notes editor's content from the content branch, with its revision. */
+export const getPatchNotesEditor = () => run(openPatchNotesEditor);
 
 /**
  * Reads the Admin home's overview of the content branch (counts, Resume

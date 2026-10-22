@@ -12,7 +12,7 @@ import { SoundProvider } from "@/components/sound/SoundProvider";
 import { OWNER_NAME, SITE_URL } from "@/config/site";
 import { MobileMenuProvider } from "@/contexts/menu-mobile.context";
 import { routing } from "@/i18n/routing";
-import { getProfile } from "@/lib/content/server";
+import { getCurrentVersion, getProfile } from "@/lib/content/server";
 import { PALETTE_SCRIPT } from "@/lib/palette";
 
 import ClientLayout from "./ClientLayout";
@@ -49,7 +49,10 @@ export default async function LocaleLayout({
 }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
-  const profile = await getProfile();
+  const [profile, version] = await Promise.all([
+    getProfile(),
+    getCurrentVersion(),
+  ]);
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -70,7 +73,9 @@ export default async function LocaleLayout({
             <SoundProvider>
               <PresenceProvider discordUserId={profile.discordUserId}>
                 <MobileMenuProvider>
-                  <ClientLayout profile={profile}>{children}</ClientLayout>
+                  <ClientLayout profile={profile} version={version}>
+                    {children}
+                  </ClientLayout>
                 </MobileMenuProvider>
               </PresenceProvider>
             </SoundProvider>

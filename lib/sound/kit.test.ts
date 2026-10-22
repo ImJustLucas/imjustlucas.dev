@@ -21,6 +21,7 @@ const CUES: ReadonlyArray<Cue> = [
   "miss",
   "throw",
   "clink",
+  "patch",
 ];
 
 const pitchClass = (midi: number) => midi % 12;
@@ -97,5 +98,12 @@ describe("the sound kit", () => {
     expect(pickup[1]).toBeGreaterThan(pickup[0]);
     const milestone = cueSound("milestone").plucks.map((p) => NOTES[p.note]);
     expect([...milestone].sort((a, b) => a - b)).toEqual(milestone);
+  });
+
+  it("chimes a patch: up to its top note, then settling below it", () => {
+    const patch = cueSound("patch").plucks.map((p) => NOTES[p.note]);
+    expect(patch[1]).toBe(Math.max(...patch));
+    expect(patch[2]).toBeLessThan(patch[1]);
+    expect(patch[2]).toBeGreaterThan(patch[0]);
   });
 });

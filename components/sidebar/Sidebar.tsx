@@ -15,9 +15,12 @@ import { cn } from "@/lib/utils";
 
 import { ClientTabs } from "./ClientTabs";
 import { PlayerCard } from "./PlayerCard";
+import { VersionLink } from "./VersionLink";
 
 type SidebarProps = {
   profile: Profile;
+  /** The site's current version; no version link without one. */
+  version?: string;
 };
 
 /**
@@ -25,7 +28,7 @@ type SidebarProps = {
  * full-screen client sheet below it (opened from the mobile top bar), so
  * there is a single Lanyard connection and a single set of tab sounds.
  */
-export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ profile, version }) => {
   const { isOpen } = useMobileMenu();
   const t = useTranslations("Sidebar");
 
@@ -56,6 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ profile }) => {
       <div className="mt-auto flex flex-col gap-4">
         <SettingsRow />
         <SocialRow profile={profile} />
+        {version && <VersionLink version={version} />}
       </div>
     </div>
   );
@@ -77,7 +81,7 @@ function SettingsRow() {
   );
 }
 
-function SocialRow({ profile }: SidebarProps) {
+function SocialRow({ profile }: Pick<SidebarProps, "profile">) {
   const t = useTranslations("Sidebar");
   const socials = [
     { icon: Linkedin, href: profile.links.linkedin, label: "LinkedIn" },

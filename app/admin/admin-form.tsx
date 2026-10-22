@@ -390,7 +390,7 @@ export const AdminField: React.FC<{
   visualLabel?: React.ReactNode;
   hint?: string;
   defaultValue?: string;
-  type?: "text" | "color" | "number";
+  type?: "text" | "color" | "number" | "date";
   /** A text over several lines (still one value). */
   multiline?: boolean;
   placeholder?: string;
@@ -446,7 +446,10 @@ export const AdminField: React.FC<{
       ) : (
         <input
           type={type}
-          className={cn(INPUT, type === "number" && "tabular-nums")}
+          className={cn(
+            INPUT,
+            (type === "number" || type === "date") && "tabular-nums",
+          )}
           {...shared}
         />
       )}

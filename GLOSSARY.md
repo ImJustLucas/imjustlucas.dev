@@ -64,6 +64,14 @@ _Avoid_: Socials, links
 The downloadable PDF of Lucas's CV, one per Locale, each with the date it was last updated.
 _Avoid_: CV
 
+**Patch**:
+One version of the site in its patch notes: a version (`<season>.<patch>`, an optional hotfix number after), a date, a title and lines tagged new, changed or fixed, in the Owner's voice, optionally linking the pull request that shipped it. The newest Patch's version is the site's current version.
+_Avoid_: Release, changelog entry, update
+
+**Season**:
+The patches sharing a version's first number: Season 1 is the first portfolio, Season 2 the Player Profile.
+_Avoid_: Major version, era
+
 **Locale**:
 One of the two languages the site is published in: English (the default) or French. Every descriptive text in the content exists in both.
 _Avoid_: Language, lang
@@ -75,5 +83,5 @@ Lucas, the only person ever allowed into the Admin.
 _Avoid_: User, admin (for the person)
 
 **Admin**:
-The private space where the Owner edits Projects, Experiences, Techs, Achievements, Hobbies and the Profile.
+The private space where the Owner edits Projects, Experiences, Techs, Achievements, Hobbies, the Profile and the patch notes.
 _Avoid_: Back-office, dashboard
