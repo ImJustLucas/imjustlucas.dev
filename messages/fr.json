@@ -210,7 +210,23 @@
     "all": "tout",
     "techStat": "{count, plural, one {# projet} other {# projets}} · depuis {since, number, ::group-off}",
     "showing": "{count, plural, one {# projet} other {# projets}} sur {total} avec {tech}",
-    "showingAll": "{count, plural, one {# projet} other {les # projets}}"
+    "showingAll": "{count, plural, one {# projet} other {les # projets}}",
+    "moreTechs": "+{count, plural, one {# techno} other {# technos}}",
+    "fewerTechs": "moins de technos",
+    "techButton": "techno : {tech}",
+    "anyTech": "toutes",
+    "techsShort": "technos",
+    "searchTechs": "chercher une techno",
+    "noTech": "aucune techno ne s'appelle comme ça",
+    "closeTechs": "Fermer le loadout",
+    "sortButton": "trier : {sort}",
+    "sortMenu": "Trier les projets",
+    "sorts": {
+      "recent": "plus récents",
+      "rarity": "rareté",
+      "oldest": "plus anciens",
+      "name": "nom (a → z)"
+    }
   },
   "ProjectPage": {
     "back": "retour à l'inventaire",

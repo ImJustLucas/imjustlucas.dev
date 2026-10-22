@@ -210,7 +210,23 @@
     "all": "all",
     "techStat": "{count, plural, one {# project} other {# projects}} · since {since, number, ::group-off}",
     "showing": "{count, plural, one {# project} other {# projects}} of {total} built with {tech}",
-    "showingAll": "{count, plural, one {# project} other {all # projects}}"
+    "showingAll": "{count, plural, one {# project} other {all # projects}}",
+    "moreTechs": "+{count, plural, one {# tech} other {# techs}}",
+    "fewerTechs": "fewer techs",
+    "techButton": "tech: {tech}",
+    "anyTech": "all",
+    "techsShort": "techs",
+    "searchTechs": "search a tech",
+    "noTech": "no tech goes by that name",
+    "closeTechs": "Close the loadout",
+    "sortButton": "sort: {sort}",
+    "sortMenu": "Sort the projects",
+    "sorts": {
+      "recent": "newest",
+      "rarity": "rarity",
+      "oldest": "oldest",
+      "name": "name (a → z)"
+    }
   },
   "ProjectPage": {
     "back": "back to the inventory",
