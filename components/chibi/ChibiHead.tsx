@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 import { usePresence } from "@/components/presence/PresenceProvider";
+import type { DiscordStatus } from "@/components/presence/select-presence";
 import { STATUS_RING } from "@/components/presence/status-style";
 import { cn } from "@/lib/utils";
 
@@ -14,15 +15,19 @@ import { cn } from "@/lib/utils";
 export function ChibiHead({
   size,
   decorative = false,
+  status: shown,
   className,
 }: {
   /** Head diameter in pixels, inside the 3px ring. */
   size: number;
   /** Next to text that already states the status, as in the presence card. */
   decorative?: boolean;
+  /** The status the ring shows, when it is not the live one. */
+  status?: DiscordStatus;
   className?: string;
 }) {
-  const { status } = usePresence();
+  const live = usePresence();
+  const status = shown ?? live.status;
   const t = useTranslations("Presence");
   const tLayout = useTranslations("Layout");
 

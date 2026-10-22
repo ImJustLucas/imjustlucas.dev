@@ -116,3 +116,19 @@ export function useSounds() {
   }
   return context;
 }
+
+const SILENT: SoundContextValue = {
+  state: { enabled: false, reason: "chosen" },
+  play: () => {},
+  toggle: () => {},
+};
+
+/**
+ * For screens that play no sound (the Admin) but show components of the
+ * client that have their notes: every cue is silent.
+ */
+export function SilentSounds({ children }: { children: React.ReactNode }) {
+  return (
+    <SoundContext.Provider value={SILENT}>{children}</SoundContext.Provider>
+  );
+}

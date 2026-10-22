@@ -487,7 +487,7 @@ function Status({
           className="-my-1 size-14 shrink-0"
         />
       ) : (
-        <ChibiHead size={44} decorative className="mx-0.5" />
+        <ChibiHead size={44} decorative status={status} className="mx-0.5" />
       )}
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-1.5">
