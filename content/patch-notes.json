@@ -862,5 +862,30 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/51"
+  },
+  {
+    "version": "2.18",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Inventory sorted",
+      "fr": "Inventaire rangé"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The loadout shows my 8 most used techs, the rest is one press away, and on phones every tech lives in a sheet with a search 🎒",
+          "fr": "Le loadout montre mes 8 technos les plus utilisées, le reste est à un clic, et sur mobile toutes les technos sont dans un panneau avec une recherche 🎒"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Sort the projects: newest, rarity, oldest or by name",
+          "fr": "Trie les projets : plus récents, rareté, plus anciens ou par nom"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/52"
   }
 ]

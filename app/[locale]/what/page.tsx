@@ -14,7 +14,7 @@ export const revalidate = 86400;
 
 export const generateMetadata = routeMetadata(ROUTES.what);
 
-/** The inventory: every Project, filterable by the loadout of Techs they use. */
+/** The inventory: every Project, sortable and filterable by the loadout of Techs they use. */
 export default async function What() {
   const locale = await getLocale();
   const [projects, t] = await Promise.all([
@@ -34,6 +34,8 @@ export default async function What() {
         loadout={loadout(projects)}
         items={projects.map((project) => ({
           key: project.title,
+          title: project.title,
+          rarity: project.rarity,
           techIds: project.techs.map((tech) => tech.id),
           card: <ProjectCard project={project} />,
         }))}
