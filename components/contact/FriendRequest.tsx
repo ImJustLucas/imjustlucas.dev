@@ -7,7 +7,8 @@ import { Check, Github, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { DiscordMark } from "@/components/contact/DiscordMark";
-import { PresenceCard } from "@/components/presence/FriendsPanel";
+import { activityPose } from "@/components/presence/activity-pose";
+import { DeviceMark, PresenceCard } from "@/components/presence/FriendsPanel";
 import { usePresence } from "@/components/presence/PresenceProvider";
 import { STATUS_DOT, STATUS_RING } from "@/components/presence/status-style";
 import { SoundOnPress } from "@/components/sound/SoundOnPress";
@@ -41,7 +42,8 @@ export function FriendRequest({
   const tPresence = useTranslations("Presence");
   const tSidebar = useTranslations("Sidebar");
   const tLevel = useTranslations("Home.level");
-  const { presence, status } = usePresence();
+  const { presence, status, device } = usePresence();
+  const live = activityPose(presence);
   const { play } = useSounds();
   // Nothing is sent from here: the button only opens LinkedIn, and says so.
   const [opened, setOpened] = useState(false);
@@ -64,7 +66,8 @@ export function FriendRequest({
         aria-labelledby="request-name"
         className="tray grid gap-x-8 gap-y-6 rounded-lg border-2 border-seam bg-raised p-4 sm:p-6 md:grid-cols-[240px_1fr] md:px-7 md:py-6"
       >
-        {/* Lucas waving, on his stage disc ringed in his live status */}
+        {/* Lucas waving, or doing what he is doing live, on his stage disc
+            ringed in his live status */}
         <div className="flex flex-col items-center gap-3">
           <div className="relative w-36 shrink-0 md:w-full">
             <span
@@ -75,9 +78,11 @@ export function FriendRequest({
               )}
             />
             <ChibiSprite
-              pose="banner"
-              alt={t("chibiAlt")}
+              pose={live ?? "banner"}
+              alt={live ? tPresence(`poseAlt.${live}`) : t("chibiAlt")}
               sizes="(min-width: 768px) 240px, 144px"
+              playing={live === "music"}
+              followParisNight
               priority
               className="aspect-square w-full"
             />
@@ -85,11 +90,12 @@ export function FriendRequest({
           {/* The live tag, in the status colour */}
           <TypographyTag
             className={cn(
-              "rounded-full px-2.5 py-0.5",
+              "flex items-center gap-1 rounded-full px-2.5 py-0.5",
               STATUS_DOT[status],
               status === "connecting" ? "text-ink" : "text-on-bright",
             )}
           >
+            {device && <DeviceMark device={device} />}
             {tPresence(`status.${status}`)}
           </TypographyTag>
         </div>

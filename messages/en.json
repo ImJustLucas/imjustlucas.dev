@@ -193,7 +193,29 @@
     "announce": {
       "playing": "Lucas is now playing {name}",
       "listening": "Lucas is now listening to {song} by {artist}",
-      "status": "Lucas is now {status}"
+      "status": "Lucas is now {status}",
+      "coding": "Lucas is now coding",
+      "watching": "Lucas is now watching {name}"
+    },
+    "coding": "coding",
+    "codingIn": "coding in {language}",
+    "codingFor": "coding for {elapsed}",
+    "watching": "watching",
+    "watchingFor": "watching for {elapsed}",
+    "listenOnSpotify": "Listen to {song} by {artist} on Spotify (opens in a new tab)",
+    "listenOnSpotifyShort": "listen on Spotify",
+    "device": {
+      "desktop": "on his computer",
+      "mobile": "on his phone",
+      "web": "in a browser"
+    },
+    "poseAlt": {
+      "lol": "Lucas cheering in his headset, fist in the air",
+      "coding": "Lucas coding on a laptop, sitting cross-legged",
+      "series": "Lucas laughing at a series under a blanket, popcorn in his lap",
+      "music": "Lucas singing along in his headphones, eyes closed",
+      "coffee": "Lucas savouring a steaming mug of coffee",
+      "sleeping": "Lucas asleep on a plum cushion"
     }
   },
   "Projects": {

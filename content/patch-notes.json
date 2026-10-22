@@ -887,5 +887,50 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/52"
+  },
+  {
+    "version": "2.19",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Live from my desk",
+      "fr": "En direct de mon bureau"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Catch me coding: the friends panel shows the project and the language I'm on, and the chibi grabs his laptop 💻",
+          "fr": "Prends-moi en train de coder : le panneau d'amis affiche le projet et le langage sur lesquels je bosse, et le chibi sort son portable 💻"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "The chibi on my profile and on the contact screen now does what I'm doing: gaming, coding, a series, music, a coffee break, or a nap 😴",
+          "fr": "Le chibi du profil et de l'écran de contact fait maintenant comme moi : jeu, code, série, musique, pause café ou sieste 😴"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Spotify: a live progress bar on the track, and one click to listen along 🎧",
+          "fr": "Spotify : une barre de progression en direct sur le morceau, et un clic pour l'écouter avec moi 🎧"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "My own status line, straight from Discord, and whether I'm on my computer or my phone",
+          "fr": "Ma propre ligne de statut, en direct de Discord, et si je suis sur mon ordi ou sur mon téléphone"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Shows I'm watching get their own card, with the series pose 🍿",
+          "fr": "Ce que je regarde a sa propre carte, avec la pose série 🍿"
+        }
+      }
+    ]
   }
 ]

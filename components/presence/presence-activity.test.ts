@@ -39,6 +39,29 @@ describe("presenceActivity", () => {
     );
   });
 
+  it("stays the same when the language or project changes", () => {
+    expect(
+      presenceActivity({
+        kind: "coding",
+        editor: "Cursor",
+        language: "TypeScript",
+        project: "imjustlucas.dev",
+      }),
+    ).toBe(
+      presenceActivity({ kind: "coding", editor: "Cursor", language: "Rust" }),
+    );
+  });
+
+  it("stays the same when his own line changes", () => {
+    expect(
+      presenceActivity({
+        kind: "status",
+        status: "online",
+        message: { text: "one" },
+      }),
+    ).toBe(presenceActivity({ kind: "status", status: "online" }));
+  });
+
   it("has nothing to announce while connecting", () => {
     expect(presenceActivity({ kind: "connecting" })).toBeNull();
   });
