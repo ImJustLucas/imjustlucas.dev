@@ -976,5 +976,30 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/56"
+  },
+  {
+    "version": "2.23",
+    "date": "2026-10-22",
+    "title": {
+      "en": "Loading tips",
+      "fr": "Astuces de chargement"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Tips while things load, like in a real game: a feature to find or a little fact about me 💡",
+          "fr": "Des astuces pendant les chargements, comme dans un vrai jeu : une fonctionnalité à trouver ou un petit fait sur moi 💡"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "They only show up when a wait is real (an arcade cabinet, the MDF 2025 trophy), never to slow you down",
+          "fr": "Elles n'apparaissent que si l'attente est réelle (une borne d'arcade, le trophée MDF 2025), jamais pour te ralentir"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/57"
   }
 ]
