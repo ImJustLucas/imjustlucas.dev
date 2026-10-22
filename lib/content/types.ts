@@ -5,6 +5,7 @@ export type {
   ExperienceInLocale,
   HobbyInLocale,
   PatchInLocale,
+  ProjectEntry,
   ProjectInLocale,
   ResolvedExperience,
   ResolvedProject,

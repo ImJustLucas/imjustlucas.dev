@@ -14,7 +14,12 @@ import { ChibiSprite } from "@/components/chibi/ChibiSprite";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { TypographyTag, TypographyTitle } from "@/components/typography";
 import type { Board } from "@/lib/arcade/board";
-import { type Cabinet, type CabinetId, CABINETS } from "@/lib/arcade/cabinets";
+import {
+  ARCADE_OPEN_EVENT,
+  type Cabinet,
+  type CabinetId,
+  CABINETS,
+} from "@/lib/arcade/cabinets";
 import { chibiFrames } from "@/lib/chibi";
 import { cn } from "@/lib/utils";
 
@@ -80,19 +85,38 @@ export function ArcadeFloor() {
     open();
   }, []);
 
-  const choose = useCallback(
+  /** Opens a cabinet and keeps it in the address; false when already open. */
+  const show = useCallback(
     (id: CabinetId) => {
-      if (id === selected) return;
-      play("toggleOn");
+      if (id === selected) return false;
       setBoard(null);
       setSelected(id);
       const url = new URL(window.location.href);
       if (id === CABINETS[0].id) url.searchParams.delete(CABINET_PARAM);
       else url.searchParams.set(CABINET_PARAM, id);
       window.history.replaceState(window.history.state, "", url);
+      return true;
     },
-    [selected, play],
+    [selected],
   );
+
+  const choose = useCallback(
+    (id: CabinetId) => {
+      if (show(id)) play("toggleOn");
+    },
+    [show, play],
+  );
+
+  // The quick menu's "play" commands, while the floor is on screen (the
+  // menu has played its own note)
+  useEffect(() => {
+    const onOpen = (event: Event) => {
+      const asked = (event as CustomEvent<unknown>).detail;
+      if (typeof asked === "string" && isPlayable(asked)) show(asked);
+    };
+    window.addEventListener(ARCADE_OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(ARCADE_OPEN_EVENT, onOpen);
+  }, [show]);
 
   useEffect(() => {
     let current = true;

@@ -351,5 +351,111 @@
     "season": "season {number}",
     "patches": "{count, plural, one {# patch} other {# patches}}",
     "empty": "No patch notes yet, the first one's on its way 🛠️"
+  },
+  "QuickMenu": {
+    "trigger": "quick menu",
+    "open": "Open the quick menu",
+    "title": "quick menu",
+    "description": "Go to a page, a project or a game, or change a setting. Type to search, in English or in French.",
+    "placeholder": "where to? a page, a project…",
+    "close": "Close the quick menu",
+    "empty": "nothing here… try “projects”, “surf” or “dark”. or a secret 👀",
+    "emptyAlt": "Lucas chilling on a beanbag",
+    "results": "{count, plural, =0 {no result} one {# result} other {# results}}",
+    "hints": {
+      "move": "move",
+      "select": "select",
+      "close": "close"
+    },
+    "current": "current",
+    "sections": {
+      "pages": "pages",
+      "projects": "inventory",
+      "arcade": "arcade",
+      "settings": "settings",
+      "links": "links",
+      "secrets": "secrets 👀"
+    },
+    "keywords": {
+      "me": "home profile about me faq",
+      "what": "projects portfolio work inventory",
+      "experiences": "career jobs work diplomas",
+      "videos": "youtube channel replays",
+      "arcade": "games play",
+      "contact": "contact message hire friend request",
+      "mdf2025": "masterdevfrance trophy competition win legendary",
+      "patchNotes": "patch notes changelog updates what's new versions",
+      "project": "project",
+      "game": "game play arcade",
+      "palette": "theme palette colour color",
+      "mode": "theme mode",
+      "locale": "language translate",
+      "sound": "sound audio volume music",
+      "copyLink": "share url copy link",
+      "linkedin": "linkedin dm message contact",
+      "github": "github code repositories",
+      "discord": "discord friend",
+      "resume": "resume cv pdf download"
+    },
+    "commands": {
+      "play": "play {name}",
+      "palette": "{name} palette",
+      "mode": "{name} mode",
+      "locale": "read in French (français)",
+      "mute": "mute the sounds",
+      "unmute": "turn the sounds on",
+      "copyLink": "copy this page's link",
+      "linkedin": "message me on LinkedIn",
+      "github": "my GitHub",
+      "discord": "add me on Discord",
+      "resume": "download my resume"
+    },
+    "copied": {
+      "title": "link copied 📋",
+      "line": "go on, share it with a friend"
+    },
+    "copyFailed": {
+      "title": "couldn't copy the link",
+      "line": "your browser said no, the address bar still works"
+    },
+    "unlocked": "unlocked",
+    "secrets": {
+      "konami": {
+        "label": "↑ ↑ ↓ ↓ ← → ← → B A",
+        "title": "secret move unlocked!",
+        "line": "the ollie, straight out of the arcade 🛹",
+        "alt": "Lucas mid-ollie on his skateboard"
+      },
+      "barrelRoll": {
+        "label": "do a barrel roll",
+        "title": "barrel roll? not today",
+        "line": "your system asked for less motion, so I'm staying put 🙃",
+        "alt": "Lucas laughing"
+      },
+      "coffee": {
+        "label": "brb, coffee",
+        "title": "brb, coffee ☕",
+        "line": "two minutes, I'm brewing",
+        "alt": "Lucas holding a coffee"
+      },
+      "sleep": {
+        "label": "nap time",
+        "title": "zzz… 😴",
+        "line": "wake me up when the next deploy is green",
+        "alt": "Lucas asleep on a cushion"
+      },
+      "gg": {
+        "label": "gg wp",
+        "title": "gg wp 🏆",
+        "line": "thanks for playing my profile",
+        "alt": "Lucas holding up a gold trophy"
+      },
+      "hire": {
+        "label": "sudo hire lucas",
+        "title": "permission granted ✅",
+        "line": "taking you to the contact screen…",
+        "alt": "Lucas waving hello"
+      }
+    }
   }
 }

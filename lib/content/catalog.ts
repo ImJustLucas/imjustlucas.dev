@@ -83,6 +83,12 @@ type ProjectTexts = "description" | "role" | "context" | "built" | "outcome";
 /** How many Projects the home page features, at most. */
 const FEATURED_PROJECTS = 3;
 
+/**
+ * A Project as the quick menu lists it: enough to find it and open its page,
+ * read without any star count.
+ */
+export type ProjectEntry = Pick<Project, "slug" | "title" | "rarity">;
+
 /** An Experience as pages render it. */
 export type ResolvedExperience = Experience;
 
@@ -203,6 +209,11 @@ export class ContentCatalog extends Context.Service<
     >;
     /** Every Project's slug, ordered like `projects`; reads no star count. */
     readonly projectSlugs: Effect.Effect<ReadonlyArray<string>, CatalogError>;
+    /** Every Project's slug, title and rarity, ordered like `projects`; reads no star count. */
+    readonly projectEntries: Effect.Effect<
+      ReadonlyArray<ProjectEntry>,
+      CatalogError
+    >;
     /** Ordered by Period start, most recent first; ongoing first on ties. */
     readonly experiences: Effect.Effect<
       ReadonlyArray<ResolvedExperience>,
@@ -321,6 +332,12 @@ export class ContentCatalog extends Context.Service<
         projectsByPeriod(content).map((project) => project.slug),
       );
 
+      const projectEntries = Effect.map(load, (content) =>
+        projectsByPeriod(content).map(
+          ({ slug, title, rarity }): ProjectEntry => ({ slug, title, rarity }),
+        ),
+      );
+
       const experiences = Effect.map(load, (content) =>
         [...content.experiences].sort((a, b) =>
           byStartMostRecentFirst(a.period, b.period),
@@ -367,6 +384,7 @@ export class ContentCatalog extends Context.Service<
       return {
         projects,
         projectSlugs,
+        projectEntries,
         experiences,
         videos,
         level,
