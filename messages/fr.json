@@ -695,7 +695,8 @@
       },
       "coinRain": {
         "name": "pluie de pièces",
-        "how": "lancer une pièce sur mon chèque masterdevfrance"
+        "how": "lancer une pièce sur mon chèque masterdevfrance",
+        "hint": "certaines victoires méritent un petit bonus"
       },
       "rainyDay": {
         "name": "jour de pluie",

@@ -695,7 +695,8 @@
       },
       "coinRain": {
         "name": "coin rain",
-        "how": "throw a coin at my masterdevfrance cheque"
+        "how": "throw a coin at my masterdevfrance cheque",
+        "hint": "some wins deserve a little extra"
       },
       "rainyDay": {
         "name": "rainy day",
