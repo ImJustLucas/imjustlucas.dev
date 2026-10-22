@@ -48,6 +48,9 @@ export const revalidate = 86400;
 
 export const generateMetadata = routeMetadata(ROUTES.cv);
 
+/** How many Techs the skills show: the loadout's most used, not all of it. */
+const SKILLS_SHOWN = 12;
+
 const LANGUAGES = [
   { key: "french", code: "fr" },
   { key: "english", code: "en" },
@@ -82,7 +85,8 @@ export default async function RecruiterMode() {
     getFeaturedProjects(locale),
   ]);
 
-  const skills = loadout(projects).map((entry) => entry.tech.name);
+  const techs = loadout(projects).map((entry) => entry.tech.name);
+  const skills = techs.slice(0, SKILLS_SHOWN);
   const otherLocale: Locale =
     routing.locales.find((other) => other !== locale) ?? routing.defaultLocale;
   const pageUrl = new URL(localizedPath(ROUTES.cv.path, locale), SITE_URL);
@@ -108,7 +112,7 @@ export default async function RecruiterMode() {
         url: experience.link,
       })),
     alumniOf: DIPLOMAS.map((diploma) => diploma.institution),
-    knowsAbout: skills,
+    knowsAbout: techs,
     knowsLanguage: LANGUAGES.map((language) => language.code),
   });
 
