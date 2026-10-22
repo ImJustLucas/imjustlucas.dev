@@ -20,6 +20,7 @@ const contentWithGitHub = (github: string) =>
     "content/experiences.json": "[]",
     "content/achievements.json": "[]",
     "content/hobbies.json": "[]",
+    "content/patch-notes.json": "[]",
     "content/profile.json": JSON.stringify({
       ...testProfile,
       links: { ...testProfile.links, github },
