@@ -9,6 +9,7 @@ import { SoundOnPress } from "@/components/sound/SoundOnPress";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { TypographyMuted } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { NAME_MAX_LENGTH } from "@/lib/arcade/player-name";
 import { EMOTE_GLYPH, EMOTES, isEmote } from "@/lib/poke/emotes";
 import type { WaveView } from "@/lib/poke/visit";
 import { cn } from "@/lib/utils";
@@ -40,7 +41,12 @@ export function ContactWave() {
         {view?.kind === "sent" ? (
           <WaveSent view={view} />
         ) : (
-          view && <EmoteKeys labelledBy={labelId} />
+          view && (
+            <>
+              <NameField />
+              <EmoteKeys labelledBy={labelId} />
+            </>
+          )
         )}
         {problem && view?.kind !== "sent" && <Problem />}
       </div>
@@ -119,6 +125,38 @@ export function PanelWave() {
 }
 
 /**
+ * The visitor's first name, optional, sent with their waves from anywhere
+ * on the site. Outside the keys' form, so Enter in it never sends a wave.
+ */
+function NameField() {
+  const t = useTranslations("Poke");
+  const { name, setName, nameProblem, sending } = usePoke();
+  const problemId = useId();
+  return (
+    <div className="flex flex-col gap-1.5">
+      <input
+        type="text"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        aria-label={t("nameLabel")}
+        placeholder={t("nameLabel")}
+        autoComplete="given-name"
+        maxLength={NAME_MAX_LENGTH + 8}
+        disabled={sending !== null}
+        aria-invalid={nameProblem !== null}
+        aria-describedby={nameProblem ? problemId : undefined}
+        className="h-11 w-full max-w-[16rem] rounded-md border-2 border-seam bg-ground px-3 text-base text-ink transition-colors duration-hover ease-out placeholder:text-ink-muted/75 hover:border-ink-muted/40 aria-[invalid=true]:border-busy-ink"
+      />
+      {nameProblem && (
+        <span id={problemId} role="alert" className="text-label text-busy-ink">
+          {t(`nameProblems.${nameProblem}`)}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
  * The emote keys, one form: each key submits its emote. The form carries a
  * field no person sees, the honeypot, which only a form-filling bot fills.
  */
@@ -135,8 +173,11 @@ function EmoteKeys({
   fill?: boolean;
 }) {
   const t = useTranslations("Poke");
-  const { sending, send } = usePoke();
+  const { sending, send, nameProblem } = usePoke();
   const first = useRef<HTMLButtonElement>(null);
+  // A name the server would refuse holds the keys on the contact screen;
+  // elsewhere, where it cannot be fixed, the wave goes without it
+  const held = nameProblem !== null && labelledBy !== undefined;
 
   useEffect(() => {
     if (autoFocus) first.current?.focus();
@@ -184,7 +225,7 @@ function EmoteKeys({
               size="icon"
               title={name}
               aria-label={t("send", { emote: name })}
-              disabled={sending !== null}
+              disabled={sending !== null || held}
               className={cn(
                 "text-[1.375rem] leading-none",
                 fill && "min-w-0 flex-1",

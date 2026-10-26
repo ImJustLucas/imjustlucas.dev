@@ -31,6 +31,8 @@ export type PokeReply =
 export type RecentPoke = {
   readonly id: string;
   readonly emote: Emote;
+  /** The first name the visitor gave, if any. */
+  readonly name: string | null;
   /** The page, with its Locale prefix, e.g. `/fr/arcade`. */
   readonly page: string;
   readonly locale: Locale;

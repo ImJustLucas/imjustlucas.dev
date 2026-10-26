@@ -1168,5 +1168,22 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/63"
+  },
+  {
+    "version": "2.28",
+    "date": "2026-10-26",
+    "title": {
+      "en": "Who's waving?",
+      "fr": "Qui me fait coucou ?"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "Add your first name when you wave at me (it's optional), so I know who to wave back at 👋",
+          "fr": "Ajoute ton prénom quand tu me fais coucou (c'est facultatif), que je sache à qui répondre 👋"
+        }
+      }
+    ]
   }
 ]

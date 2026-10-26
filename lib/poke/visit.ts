@@ -9,6 +9,9 @@ import { POKE_LIMITS, POKE_TTL_SECONDS } from "./limits";
 
 export const POKE_STORAGE_KEY = "imjustlucas:poke";
 
+/** The first name the visitor typed for their waves, as typed. */
+export const POKE_NAME_KEY = "imjustlucas:poke:name";
+
 export type VisitPoke = {
   /** None when the server said the visitor had already waved elsewhere. */
   readonly pokeId: string | null;

@@ -71,6 +71,7 @@ describe("countryFlag", () => {
 describe("pokeMessage", () => {
   const base = {
     emote: "surf" as const,
+    name: null,
     page: "/fr/arcade",
     locale: "fr" as const,
     waveBackUrl: "https://www.imjustlucas.dev/admin/pokes#poke-1",
@@ -92,6 +93,11 @@ describe("pokeMessage", () => {
       ].join("\n"),
     );
     expect(embed.timestamp).toBe("2026-10-22T12:00:00.000Z");
+  });
+
+  it("names the visitor when they gave their first name", () => {
+    const [embed] = pokeMessage({ ...base, name: "Léa", place: null }).embeds;
+    expect(embed.title).toBe("🏄 Léa te fait coucou !");
   });
 
   it("leaves the place out when Vercel gave none", () => {

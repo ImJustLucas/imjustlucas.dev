@@ -6,7 +6,8 @@ import { type Emote, EMOTE_GLYPH } from "./emotes";
 /**
  * What a Poke tells Lucas on Discord, and the rules that keep every part of
  * it out of a visitor's hands: the page must be one the site serves, the
- * place comes from Vercel's geo headers only, and the emote from a fixed set.
+ * place comes from Vercel's geo headers only, the emote from a fixed set and
+ * the first name, typed by the visitor, from the Arcade's rule for names.
  * The message is in French, for Lucas.
  */
 
@@ -80,6 +81,8 @@ const ELECTRIC = 0x2f6bff;
 
 export type PokeMessageInput = {
   readonly emote: Emote;
+  /** The visitor's first name, checked by `parseName`; null when not given. */
+  readonly name: string | null;
   readonly page: string;
   readonly locale: Locale;
   readonly place: PokePlace | null;
@@ -92,6 +95,7 @@ export type PokeMessageInput = {
 /** The body of the Discord webhook call: one embed, no mention ever pings. */
 export const pokeMessage = ({
   emote,
+  name,
   page,
   locale,
   place,
@@ -112,7 +116,7 @@ export const pokeMessage = ({
     allowed_mentions: { parse: [] },
     embeds: [
       {
-        title: `${EMOTE_GLYPH[emote]} Quelqu'un te fait coucou !`,
+        title: `${EMOTE_GLYPH[emote]} ${name ?? "Quelqu'un"} te fait coucou !`,
         description: lines.join("\n"),
         color: ELECTRIC,
         timestamp: new Date(at).toISOString(),

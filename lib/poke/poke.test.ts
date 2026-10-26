@@ -46,6 +46,7 @@ describe("a Poke", () => {
         {
           id,
           emote: "wave",
+          name: null,
           page: "/fr/arcade",
           locale: "fr",
           at: expect.any(Number),
@@ -96,6 +97,43 @@ describe("what a Poke may carry", () => {
         expect(yield* recentPokes).toEqual([]);
         // And the bot's address still has its day
         expect((yield* sendPoke(WAVE, request("bot"))).kind).toBe("sent");
+      }).pipe(Effect.provide(layer));
+    },
+  );
+});
+
+describe("the visitor's first name", () => {
+  it.effect("reaches Lucas's Discord and the Admin, tidied", () => {
+    const { discord, layer } = setup();
+    return Effect.gen(function* () {
+      yield* sendPoke({ ...WAVE, name: "  Léa  " }, request("léa"));
+      expect(JSON.stringify(discord[0])).toContain("👋 Léa te fait coucou !");
+      expect((yield* recentPokes)[0].name).toBe("Léa");
+    }).pipe(Effect.provide(layer));
+  });
+
+  it.effect("is optional: an empty one is no name", () => {
+    const { discord, layer } = setup();
+    return Effect.gen(function* () {
+      yield* sendPoke({ ...WAVE, name: "   " }, request("léa"));
+      expect(JSON.stringify(discord[0])).toContain("Quelqu'un te fait coucou");
+      expect((yield* recentPokes)[0].name).toBeNull();
+    }).pipe(Effect.provide(layer));
+  });
+
+  it.effect(
+    "is refused when the Arcade would refuse it, before any limit",
+    () => {
+      const { discord, layer } = setup();
+      return Effect.gen(function* () {
+        for (const name of ["**@everyone**", "connard", "a".repeat(17)]) {
+          expect(yield* sendPoke({ ...WAVE, name }, request("léa"))).toEqual({
+            kind: "refused",
+          });
+        }
+        expect(discord).toEqual([]);
+        // The visitor's day is still theirs
+        expect((yield* sendPoke(WAVE, request("léa"))).kind).toBe("sent");
       }).pipe(Effect.provide(layer));
     },
   );

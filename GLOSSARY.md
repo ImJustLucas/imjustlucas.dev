@@ -45,7 +45,7 @@ Everyone on the site right now, the visitor included, counted from an anonymous 
 _Avoid_: Online users, visitors count, audience
 
 **Poke**:
-A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
+A visitor's wave at Lucas: one emote from a fixed set, sent to his Discord with the page it came from and, if they gave it, their first name, once a day per visitor. Lucas may wave back, which the visitor sees on their next visit. Shown as "wave" ("coucou") on the site.
 _Avoid_: Message, notification, ping
 
 **Trophy**:

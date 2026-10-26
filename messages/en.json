@@ -587,6 +587,12 @@
     "open": "wave at me",
     "contactLabel": "or just wave",
     "trayLabel": "pick an emote",
+    "nameLabel": "your first name (optional)",
+    "nameProblems": {
+      "too-long": "16 characters at most",
+      "characters": "letters, digits, spaces, ' . and - only",
+      "blocked": "pick another name"
+    },
     "close": "close the emotes",
     "emotes": {
       "wave": "hey",

@@ -30,6 +30,8 @@ const Stored = Schema.fromJsonString(
   Schema.Struct({
     id: Schema.String,
     emote: Schema.Literals(EMOTES),
+    // Pokes kept before first names have none
+    name: Schema.optional(Schema.NullOr(Schema.String)),
     page: Schema.String,
     locale: Schema.Literals(routing.locales),
     at: Schema.Number,
@@ -79,7 +81,9 @@ export const layerStoreUpstash = Layer.succeed(PokeStore, {
         const stored = decodeStored(Array.isArray(pokes) ? pokes[i] : null);
         if (stored._tag === "None") return [];
         const wavedBack = Array.isArray(waved) && waved[i] != null;
-        return [{ ...stored.value, wavedBack }];
+        return [
+          { ...stored.value, name: stored.value.name ?? null, wavedBack },
+        ];
       });
     }),
 

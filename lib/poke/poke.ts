@@ -1,5 +1,7 @@
 import { Clock, Context, Data, Effect, Schema } from "effect";
 
+import { parseName } from "@/lib/arcade/player-name";
+
 import { type Emote, isEmote } from "./emotes";
 import { POKE_LIMITS, pokeHour, RECENT_POKES } from "./limits";
 import { pokeMessage, pokePage, type PokePlace } from "./message";
@@ -68,6 +70,8 @@ export class PokeNotifier extends Context.Service<
 const Submission = Schema.Struct({
   emote: Schema.String,
   page: Schema.String,
+  /** The visitor's first name, if they gave one. */
+  name: Schema.optional(Schema.String),
   /** The honeypot: a field no person sees, so only a bot fills it. */
   website: Schema.optional(Schema.String),
 });
@@ -91,8 +95,9 @@ const sent = (pokeId: string, at: number): SentPoke => ({
 });
 
 /**
- * Sends a Poke to Lucas's Discord: the emote must be one of the set and the
- * page one the site serves. The visitor's day is taken first and given back
+ * Sends a Poke to Lucas's Discord: the emote must be one of the set, the
+ * page one the site serves, and a first name, if given, one the Arcade would
+ * take (`parseName`). The visitor's day is taken first and given back
  * if the Poke does not go out, so a busy hour or a Discord hiccup never
  * costs them their wave.
  */
@@ -111,6 +116,11 @@ export const sendPoke = (input: unknown, request: PokeRequest) =>
     const { emote } = submission.value;
     const page = pokePage(submission.value.page, request.known);
     if (!isEmote(emote) || !page) return { kind: "refused" } as SentPoke;
+    // A first name is optional, and held to the Arcade's rule when given
+    const typed = submission.value.name?.trim() ?? "";
+    const parsed = typed ? parseName(typed) : null;
+    if (parsed && !parsed.ok) return { kind: "refused" } as SentPoke;
+    const name = parsed?.ok ? parsed.name : null;
 
     const day = `visitor:${request.visitor}`;
     if (!(yield* store.claim(day, POKE_LIMITS.visitor.seconds))) {
@@ -128,6 +138,7 @@ export const sendPoke = (input: unknown, request: PokeRequest) =>
       .notify(
         pokeMessage({
           emote: emote as Emote,
+          name,
           ...page,
           place: request.place,
           waveBackUrl: request.waveBackUrl(id),
@@ -137,7 +148,7 @@ export const sendPoke = (input: unknown, request: PokeRequest) =>
       .pipe(Effect.tapError(() => Effect.ignore(store.release(day))));
     // Lucas has it: a Poke the Admin cannot list only loses its answer
     yield* Effect.ignore(
-      store.save({ id, emote: emote as Emote, ...page, at: now }),
+      store.save({ id, emote: emote as Emote, name, ...page, at: now }),
       { log: true, message: "A Poke could not be kept" },
     );
     return sent(id, now);
