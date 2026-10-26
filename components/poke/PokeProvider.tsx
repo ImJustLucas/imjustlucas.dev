@@ -14,10 +14,12 @@ import { useTranslations } from "next-intl";
 import { pokeReplyAction, sendPokeAction } from "@/app/[locale]/poke-actions";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { unlockTrophy } from "@/components/trophies/trophy-store";
+import { type NameProblem, parseName } from "@/lib/arcade/player-name";
 import type { Emote } from "@/lib/poke/emotes";
 import type { SentPoke } from "@/lib/poke/result";
 import {
   awaitsReply,
+  POKE_NAME_KEY,
   POKE_STORAGE_KEY,
   readVisitPoke,
   type VisitPoke,
@@ -38,6 +40,11 @@ type PokeContextValue = {
   /** The emote on its way, if one is. */
   readonly sending: Emote | null;
   readonly problem: WaveProblem | null;
+  /** The first name the visitor typed for their waves, remembered. */
+  readonly name: string;
+  readonly setName: (name: string) => void;
+  /** Why the typed name cannot go with a wave; none when empty or fine. */
+  readonly nameProblem: Exclude<NameProblem, "empty"> | null;
   /** Waves at Lucas; `toast` reports the outcome in a toast (the ⌘K command). */
   readonly send: (
     emote: Emote,
@@ -50,6 +57,9 @@ const PokeContext = createContext<PokeContextValue>({
   view: null,
   sending: null,
   problem: null,
+  name: "",
+  setName: () => {},
+  nameProblem: null,
   send: () => {},
 });
 
@@ -69,6 +79,23 @@ const keep = (poke: VisitPoke) => {
   }
 };
 
+const readName = () => {
+  try {
+    return window.localStorage.getItem(POKE_NAME_KEY) ?? "";
+  } catch {
+    return "";
+  }
+};
+
+const keepName = (name: string) => {
+  try {
+    if (name) window.localStorage.setItem(POKE_NAME_KEY, name);
+    else window.localStorage.removeItem(POKE_NAME_KEY);
+  } catch {
+    // Private mode: the name holds for this visit only
+  }
+};
+
 const PROBLEM: {
   readonly [K in Exclude<SentPoke["kind"], "sent">]: WaveProblem;
 } = {
@@ -81,7 +108,8 @@ const PROBLEM: {
 /**
  * The visitor's wave at Lucas (DESIGN.md, Wave), shared by the contact
  * screen, the friends panel and the quick menu: their Poke, kept in the
- * browser, what is on its way, and the toasts. On load it asks once whether
+ * browser, the first name they may give (typed on the contact screen, sent
+ * with every wave), what is on its way, and the toasts. On load it asks once whether
  * Lucas waved back at a Poke he has not answered yet.
  */
 export function PokeProvider({
@@ -98,6 +126,7 @@ export function PokeProvider({
     (poke: VisitPoke | null) => setView(waveView(poke, Date.now())),
     [],
   );
+  const [name, setTypedName] = useState("");
   const [sending, setSending] = useState<Emote | null>(null);
   const [problem, setProblem] = useState<WaveProblem | null>(null);
   const [toast, setToast] = useState<{
@@ -122,6 +151,7 @@ export function PokeProvider({
     if (!enabled) return;
     let current = true;
     const load = () => {
+      setTypedName(readName());
       const stored = read();
       remember(stored);
       if (!stored || !awaitsReply(stored, Date.now())) return;
@@ -149,6 +179,16 @@ export function PokeProvider({
     return () => window.clearTimeout(timer);
   }, [problem]);
 
+  const setName = useCallback((typed: string) => {
+    setTypedName(typed);
+    keepName(typed);
+  }, []);
+  // An empty name is no name; a refused one never leaves the browser
+  const parsed = name.trim() ? parseName(name) : null;
+  const nameProblem =
+    parsed && !parsed.ok && parsed.problem !== "empty" ? parsed.problem : null;
+  const validName = parsed?.ok ? parsed.name : undefined;
+
   const send = useCallback<PokeContextValue["send"]>(
     (emote, options = {}) => {
       if (!enabled || busy.current) return;
@@ -159,6 +199,7 @@ export function PokeProvider({
       sendPokeAction({
         emote,
         page: window.location.pathname,
+        ...(validName && { name: validName }),
         ...(options.website && { website: options.website }),
       })
         .catch((): SentPoke => ({ kind: "unavailable" }))
@@ -203,7 +244,7 @@ export function PokeProvider({
           setSending(null);
         });
     },
-    [enabled, play, remember, showToast, t],
+    [enabled, play, remember, showToast, t, validName],
   );
 
   const value = useMemo<PokeContextValue>(
@@ -212,9 +253,12 @@ export function PokeProvider({
       view,
       sending,
       problem,
+      name,
+      setName,
+      nameProblem,
       send,
     }),
-    [enabled, view, sending, problem, send],
+    [enabled, view, sending, problem, name, setName, nameProblem, send],
   );
 
   return (

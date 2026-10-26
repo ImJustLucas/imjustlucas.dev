@@ -5,10 +5,11 @@ import {
   EditorPage,
   EntryFact,
   EntryList,
+  EntryName,
   EntryTag,
 } from "@/app/admin/editor-frame";
 import { waveBackAction } from "@/app/admin/pokes/actions";
-import { TypographyData, TypographyMuted } from "@/components/typography";
+import { TypographyMuted } from "@/components/typography";
 import { currentOwnerAccess } from "@/lib/admin/session";
 import { EMOTE_GLYPH } from "@/lib/poke/emotes";
 import type { RecentPoke } from "@/lib/poke/result";
@@ -43,7 +44,7 @@ export default async function PokesAdminPage() {
           ? `${recent.pokes.length} cette semaine`
           : undefined
       }
-      intro="Les coucous des visiteurs, comme Discord te les a annoncés. Fais coucou en retour : le visiteur le voit à sa prochaine visite. Ils sont gardés une semaine, sans l'adresse ni la ville du visiteur."
+      intro="Les coucous des visiteurs, comme Discord te les a annoncés. Fais coucou en retour : le visiteur le voit à sa prochaine visite. Ils sont gardés une semaine, avec le prénom du visiteur s'il en a donné un, jamais son adresse ni sa ville."
     >
       <EntryList>
         {!pokeEnabled() ? (
@@ -80,11 +81,13 @@ function PokeRow({ poke }: { poke: RecentPoke }) {
         {EMOTE_GLYPH[poke.emote]}
       </span>
       <div className="flex min-w-0 flex-col gap-0.5">
-        <TypographyData className="truncate text-ink">
-          {poke.page}
-        </TypographyData>
+        {poke.name ? (
+          <EntryName>{poke.name}</EntryName>
+        ) : (
+          <span className="text-label text-ink-muted">Sans prénom</span>
+        )}
         <EntryFact>
-          {SENT_AT.format(poke.at)} · {LANGUAGE[poke.locale]}
+          {poke.page} · {SENT_AT.format(poke.at)} · {LANGUAGE[poke.locale]}
         </EntryFact>
       </div>
       <div className="ml-auto">

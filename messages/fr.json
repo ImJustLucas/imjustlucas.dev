@@ -587,6 +587,12 @@
     "open": "fais-moi coucou",
     "contactLabel": "ou juste un coucou",
     "trayLabel": "choisis un emote",
+    "nameLabel": "ton prénom (facultatif)",
+    "nameProblems": {
+      "too-long": "16 caractères maximum",
+      "characters": "lettres, chiffres, espaces, ' . et - seulement",
+      "blocked": "choisis un autre prénom"
+    },
     "close": "fermer les emotes",
     "emotes": {
       "wave": "salut",
