@@ -1,9 +1,24 @@
 import {
+  blend,
+  drawOverlay,
+  OUTLINE,
+  RIM,
+  STYLE_INK,
+} from "@/components/arcade/canvas-text";
+import {
+  ceilingOf,
+  floorOf,
   type Gate,
+  HAZARD,
+  type Hazard,
   OBSTACLE_WIDTH,
+  type Pickup,
   PLAYER,
   POP_VELOCITY,
+  type SurfAward,
   type SurfState,
+  swellAt,
+  TUBE,
   WORLD,
 } from "@/lib/arcade/surf";
 
@@ -12,9 +27,10 @@ import { sparklePath } from "../ollie/draw";
 /**
  * Draws Surf's sea on a 2D canvas (DESIGN.md, Arcade). The game has its own
  * palette, the sea and sand of the site's "surf" palette carried into a
- * coast by day or by night (Lucas's time in Paris), never the site's
- * palette. Everything is drawn in world units; the caller sets the
- * transform from the world to the canvas.
+ * coast from dawn to day to sunset to night, level by level (always night
+ * by Lucas's night in Paris), never the site's palette. Everything is drawn
+ * in world units; the caller sets the transform from the world to the
+ * canvas.
  */
 
 export type SurfArt = {
@@ -42,9 +58,68 @@ export type SurfScene = {
   readonly ending: SurfEnding | null;
   /** Seconds on a free-running clock, for idle motion (swell, wings). */
   readonly now: number;
+  /** Seconds since the level last went up, for the sky's fade. */
+  readonly tierAge: number;
+  /** Points won lately, with their age in seconds, for the popups. */
+  readonly popups: ReadonlyArray<{
+    readonly award: SurfAward;
+    readonly age: number;
+  }>;
+  /** The level just reached, and its age in seconds, for its banner. */
+  readonly banner: { readonly tier: number; readonly age: number } | null;
+  /** A level's name in the visitor's Locale. */
+  readonly levelLabel: (tier: number) => string;
+  /** The family of the site's Data font, for the text over the sea. */
+  readonly font: string;
 };
 
-const COAST = {
+type Palette = {
+  readonly skyTop: string;
+  readonly skyLow: string;
+  readonly sun: string;
+  readonly cloud: string;
+  readonly headland: string;
+  readonly headlandShade: string;
+  readonly beach: string;
+  readonly lighthouse: string;
+  readonly lighthouseBand: string;
+  readonly beam: string;
+  readonly seaFar: string;
+  readonly seaNear: string;
+  readonly glitter: string;
+  readonly swell: string;
+  readonly swellFoam: string;
+  readonly front: string;
+  readonly frontDeep: string;
+  readonly foam: string;
+  readonly haze: string;
+  readonly shadow: string;
+};
+
+const COAST: Readonly<Record<"dawn" | "day" | "sunset" | "night", Palette>> = {
+  // The first light, pink over a pale sea
+  dawn: {
+    skyTop: "#7fa6d6",
+    skyLow: "#ffd6c2",
+    sun: "#ffe2b8",
+    cloud: "rgba(255, 226, 214, 0.8)",
+    headland: "#a7b8cf",
+    headlandShade: "#95a8c2",
+    beach: "#e8cfb4",
+    lighthouse: "#fffaf0",
+    lighthouseBand: "#e2574c",
+    beam: "rgba(255, 227, 161, 0.1)",
+    seaFar: "#7cc6c6",
+    seaNear: "#2a98a6",
+    glitter: "rgba(255, 236, 220, 0.75)",
+    swell: "#5ab6b8",
+    swellFoam: "rgba(245, 240, 240, 0.7)",
+    front: "#1a7a8a",
+    frontDeep: "#0d5462",
+    foam: "#f6f3f2",
+    haze: "rgba(255, 214, 194, 0.3)",
+    shadow: "rgba(20, 40, 60, 0.22)",
+  },
   day: {
     skyTop: "#8fd8e6",
     skyLow: "#fdf0d5",
@@ -55,7 +130,7 @@ const COAST = {
     beach: "#e9d8b4",
     lighthouse: "#fffaf0",
     lighthouseBand: "#e2574c",
-    beam: null,
+    beam: "rgba(255, 227, 161, 0)",
     seaFar: "#5fd0bd",
     seaNear: "#1fa3a3",
     glitter: "rgba(255, 250, 240, 0.7)",
@@ -66,6 +141,29 @@ const COAST = {
     foam: "#f1f7f6",
     haze: "rgba(253, 240, 213, 0.32)",
     shadow: "rgba(11, 43, 53, 0.22)",
+  },
+  // The sun going down behind the sea
+  sunset: {
+    skyTop: "#3b3f7a",
+    skyLow: "#ff8a5c",
+    sun: "#ffb36b",
+    cloud: "rgba(255, 170, 140, 0.6)",
+    headland: "#5b5a80",
+    headlandShade: "#4d4c72",
+    beach: "#c99a7c",
+    lighthouse: "#f3e6da",
+    lighthouseBand: "#c94c43",
+    beam: "rgba(255, 227, 161, 0.14)",
+    seaFar: "#c7766a",
+    seaNear: "#2c5f73",
+    glitter: "rgba(255, 200, 150, 0.8)",
+    swell: "#3f6f80",
+    swellFoam: "rgba(255, 220, 200, 0.55)",
+    front: "#1d4f60",
+    frontDeep: "#0e3040",
+    foam: "#f6e6dc",
+    haze: "rgba(255, 150, 110, 0.22)",
+    shadow: "rgba(20, 10, 30, 0.3)",
   },
   night: {
     skyTop: "#04161a",
@@ -89,14 +187,42 @@ const COAST = {
     haze: "rgba(4, 22, 26, 0.3)",
     shadow: "rgba(0, 0, 0, 0.35)",
   },
-} as const;
+};
 
-type Coast = (typeof COAST)["day"] | (typeof COAST)["night"];
+/**
+ * How far the day has gone: 0 at dawn, 1 by day, 2 at sunset, 3 at night,
+ * a step a level, each fading in over `SKY_FADE` seconds; by Lucas's night
+ * in Paris it is night from the start.
+ */
+const SKY_FADE = 3;
 
-/** The line around the obstacles, the chibi art's maroon (as in Ollie). */
-const OUTLINE = "#4a1f24";
-/** The sticker rim around the obstacles. */
-const RIM = "#fffaf0";
+export const skyAt = (tier: number, tierAge: number, night: boolean) => {
+  if (night) return 3;
+  const to = Math.min(tier, 4) - 1;
+  if (to === 0) return 0;
+  const from = Math.min(tier - 1, 4) - 1;
+  return from + (to - from) * Math.min(Math.max(tierAge / SKY_FADE, 0), 1);
+};
+
+/** Whether the sky is dark enough for the light ink (from sunset on). */
+export const darkSky = (tier: number, tierAge: number, night: boolean) =>
+  skyAt(tier, tierAge, night) >= 2;
+
+/** The coast's colours at a time of day, with how dark it is (0 to 1). */
+type Coast = Palette & { readonly time: number; readonly dark: number };
+
+let lastCoast: Coast | null = null;
+
+const coastAt = (time: number): Coast => {
+  const key = Math.round(time * 100) / 100;
+  if (lastCoast?.time === key) return lastCoast;
+  lastCoast = {
+    ...blend([COAST.dawn, COAST.day, COAST.sunset, COAST.night], key),
+    time: key,
+    dark: Math.min(Math.max(key - 2, 0), 1),
+  };
+  return lastCoast;
+};
 const ROCK = "#76707c";
 const ROCK_LIGHT = "#948e9a";
 const ROCK_DARK = "#5a5560";
@@ -143,17 +269,35 @@ const sky = (ctx: CanvasRenderingContext2D, coast: Coast, scene: SurfScene) => {
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, WORLD.width, HORIZON);
 
-  if (scene.night) {
+  // The sun climbs from the sea at dawn and sinks into it at sunset
+  if (coast.dark < 1) {
+    const t = coast.time;
+    const y = t <= 1 ? 190 - 40 * t : 150 + 50 * (t - 1);
+    ctx.globalAlpha = 1 - coast.dark;
+    const glow = ctx.createRadialGradient(470, y, 10, 470, y, 110);
+    glow.addColorStop(0, "rgba(255, 244, 207, 0.9)");
+    glow.addColorStop(1, "rgba(255, 244, 207, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(360, 40, 220, HORIZON - 40);
+    ctx.fillStyle = coast.sun;
+    ctx.beginPath();
+    ctx.arc(470, y, 30, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  if (coast.dark > 0) {
     for (let i = 0; i < 52; i++) {
       const twinkle = scene.reducedMotion
         ? 0.7
         : 0.45 + 0.55 * Math.abs(Math.sin(scene.now * 1.2 + i * 1.7));
-      ctx.globalAlpha = twinkle * (0.4 + hash(i, 3) * 0.6);
+      ctx.globalAlpha = coast.dark * twinkle * (0.4 + hash(i, 3) * 0.6);
       ctx.fillStyle = "#fff6e0";
       const size = hash(i, 4) < 0.15 ? 2 : 1.2;
       ctx.fillRect(hash(i, 1) * WORLD.width, hash(i, 2) * 170, size, size);
     }
     ctx.globalAlpha = 1;
+  }
+  if (coast.dark >= 0.5) {
     // The moon, a crescent, over the sea
     ctx.fillStyle = coast.sun;
     ctx.beginPath();
@@ -163,17 +307,6 @@ const sky = (ctx: CanvasRenderingContext2D, coast: Coast, scene: SurfScene) => {
     ctx.beginPath();
     ctx.arc(478, 56, 19, 0, Math.PI * 2);
     ctx.fill();
-  } else {
-    // A low sun, half a glow
-    const glow = ctx.createRadialGradient(470, 150, 10, 470, 150, 110);
-    glow.addColorStop(0, "rgba(255, 244, 207, 0.9)");
-    glow.addColorStop(1, "rgba(255, 244, 207, 0)");
-    ctx.fillStyle = glow;
-    ctx.fillRect(360, 40, 220, HORIZON - 40);
-    ctx.fillStyle = coast.sun;
-    ctx.beginPath();
-    ctx.arc(470, 150, 30, 0, Math.PI * 2);
-    ctx.fill();
   }
 };
 
@@ -182,6 +315,7 @@ const clouds = (
   coast: Coast,
   offset: number,
 ) => {
+  ctx.globalAlpha = 1 - coast.dark;
   ctx.fillStyle = coast.cloud;
   for (const { index, x } of slots(offset, 280)) {
     if (hash(index, 9) < 0.5) continue;
@@ -194,6 +328,7 @@ const clouds = (
     ctx.rect(cx, y, 38, 13);
     ctx.fill();
   }
+  ctx.globalAlpha = 1;
 };
 
 const lighthouse = (
@@ -204,7 +339,7 @@ const lighthouse = (
   scene: SurfScene,
 ) => {
   // The beam sweeps at night, still under reduced motion
-  if (coast.beam) {
+  if (coast.dark > 0 || coast.time < 0.5) {
     const sweep = scene.reducedMotion ? 0.4 : Math.sin(scene.now * 0.9);
     ctx.save();
     ctx.translate(x, base - 50);
@@ -229,7 +364,7 @@ const lighthouse = (
   ctx.fillRect(x - 6.4, base - 18, 12.8, 7);
   ctx.fillRect(x - 5.6, base - 36, 11.2, 7);
   ctx.fillRect(x - 6, base - 52, 12, 8);
-  ctx.fillStyle = coast.beam ? "#ffe3a1" : coast.lighthouse;
+  ctx.fillStyle = coast.dark > 0.5 ? "#ffe3a1" : coast.lighthouse;
   ctx.fillRect(x - 4, base - 50, 8, 5);
 };
 
@@ -292,7 +427,7 @@ const openSea = (
     const shimmer = scene.reducedMotion
       ? 0
       : Math.sin(scene.now * 2 + i * 1.3) * 4;
-    const cx = (scene.night ? 468 : 470) + shimmer;
+    const cx = 470 + shimmer;
     ctx.globalAlpha = 1 - i / 20;
     ctx.fillRect(cx - spread / 2 + hash(i, 5) * 6, y, spread * 0.6, 1.5);
   }
@@ -338,12 +473,17 @@ const swells = (
 const frontSea = (
   ctx: CanvasRenderingContext2D,
   coast: Coast,
-  offset: number,
+  state: SurfState,
   scene: SurfScene,
 ) => {
+  const offset = state.distance;
   const t = scene.reducedMotion ? 0 : scene.now * 2.4;
+  // The swell and the sets he rides, with a ripple on top
   const surface = (x: number) =>
-    WORLD.sea + 5 + Math.sin((x + offset) * 0.035 + t) * 2.5;
+    WORLD.sea +
+    5 -
+    swellAt(state, x) +
+    Math.sin((x + offset) * 0.035 + t) * 2.5;
   const gradient = ctx.createLinearGradient(0, WORLD.sea, 0, WORLD.height);
   gradient.addColorStop(0, coast.front);
   gradient.addColorStop(1, coast.frontDeep);
@@ -402,10 +542,10 @@ const outlined = (ctx: CanvasRenderingContext2D, fill: string) => {
 const gateSeed = (gate: Gate) => Math.round(gate.floor * 31 + gate.ceiling * 7);
 
 /** A sea stack rising from the water to the gap's floor. */
-const rock = (ctx: CanvasRenderingContext2D, gate: Gate) => {
+const rock = (ctx: CanvasRenderingContext2D, gate: Gate, floor: number) => {
   const width = OBSTACLE_WIDTH.rock;
   const left = gate.x - width / 2;
-  const top = WORLD.sea - gate.floor;
+  const top = WORLD.sea - floor;
   const bottom = WORLD.height + 10;
   const seed = gateSeed(gate);
   const bump = (salt: number) => (hash(seed, salt) - 0.5) * 8;
@@ -455,15 +595,20 @@ const rock = (ctx: CanvasRenderingContext2D, gate: Gate) => {
   ctx.stroke();
 };
 
-/** A channel beacon: red and white bands up to a lamp at the gap's floor. */
+/**
+ * A channel beacon on its float: red and white bands up to a lamp at the
+ * gap's floor, bobbing with the swell.
+ */
 const beacon = (
   ctx: CanvasRenderingContext2D,
   gate: Gate,
   scene: SurfScene,
+  floor: number,
+  night: boolean,
 ) => {
   const width = OBSTACLE_WIDTH.buoy;
   const left = gate.x - width / 2;
-  const top = WORLD.sea - gate.floor;
+  const top = WORLD.sea - floor;
   const bottom = WORLD.height + 10;
   // The tower, a little narrower at the top
   ctx.beginPath();
@@ -489,14 +634,12 @@ const beacon = (
   ctx.roundRect(left + 4, top + 2, width - 8, 14, 4);
   outlined(ctx, BEACON_RED);
   const blink =
-    !scene.night ||
-    scene.reducedMotion ||
-    Math.floor(scene.now * 1.5) % 2 === 0;
+    !night || scene.reducedMotion || Math.floor(scene.now * 1.5) % 2 === 0;
   ctx.beginPath();
   ctx.arc(gate.x, top + 2, 6, Math.PI, 0);
   ctx.closePath();
   outlined(ctx, blink ? BEACON_LAMP : "#9a8a5a");
-  if (!rimPass && scene.night && blink) {
+  if (!rimPass && night && blink) {
     const glow = ctx.createRadialGradient(gate.x, top, 2, gate.x, top, 34);
     glow.addColorStop(0, "rgba(255, 216, 77, 0.45)");
     glow.addColorStop(1, "rgba(255, 216, 77, 0)");
@@ -506,10 +649,10 @@ const beacon = (
 };
 
 /** A jetty piling hanging from the deck down to the gap's ceiling. */
-const piling = (ctx: CanvasRenderingContext2D, gate: Gate) => {
+const piling = (ctx: CanvasRenderingContext2D, gate: Gate, ceiling: number) => {
   const width = OBSTACLE_WIDTH.piling;
   const left = gate.x - width / 2;
-  const bottom = WORLD.sea - gate.ceiling;
+  const bottom = WORLD.sea - ceiling;
   // The deck it holds up, across the top of the screen
   ctx.beginPath();
   ctx.rect(left - 22, -10, width + 44, 26);
@@ -602,9 +745,17 @@ const gull = (
   ctx.fill();
 };
 
-/** The flock over the gap, from its ceiling up past the top of the screen. */
-const gulls = (ctx: CanvasRenderingContext2D, gate: Gate, scene: SurfScene) => {
-  const bottom = WORLD.sea - gate.ceiling;
+/**
+ * The flock over the gap, from its ceiling up past the top of the screen;
+ * a diving flock comes down as it nears him.
+ */
+const gulls = (
+  ctx: CanvasRenderingContext2D,
+  gate: Gate,
+  scene: SurfScene,
+  ceiling: number,
+) => {
+  const bottom = WORLD.sea - ceiling;
   const rate = scene.reducedMotion ? 3 : 8;
   for (let k = 0, y = bottom - 14; y > -20; k++, y -= 38) {
     const wingUp = Math.floor(scene.now * rate + k * 0.5) % 2 === 0;
@@ -612,16 +763,245 @@ const gulls = (ctx: CanvasRenderingContext2D, gate: Gate, scene: SurfScene) => {
   }
 };
 
-/** One gate: what rises from the sea, then what comes down from the sky. */
+/**
+ * One gate: what rises from the sea (nothing under a gate to ride
+ * through), then what comes down from the sky.
+ */
 const obstacle = (
   ctx: CanvasRenderingContext2D,
+  state: SurfState,
   gate: Gate,
   scene: SurfScene,
+  coast: Coast,
 ) => {
-  if (gate.low === "rock") rock(ctx, gate);
-  else beacon(ctx, gate, scene);
-  if (gate.high === "piling") piling(ctx, gate);
-  else gulls(ctx, gate, scene);
+  const floor = floorOf(state, gate);
+  if (gate.low === "rock") rock(ctx, gate, floor);
+  else if (gate.low === "buoy") {
+    beacon(ctx, gate, scene, floor, coast.dark > 0.5);
+  }
+  const ceiling = ceilingOf(gate);
+  if (gate.high === "piling") piling(ctx, gate, ceiling);
+  else gulls(ctx, gate, scene, ceiling);
+};
+
+const FIN = "#5d6b78";
+const FIN_DARK = "#46525e";
+const SHELL = "#f7c6a3";
+const SHELL_RIB = "#d9906b";
+const DOLPHIN = "#6aa7c9";
+const DOLPHIN_BELLY = "#d9ecf3";
+
+/** A lone gull, or a shark fin cutting the swell towards him. */
+const hazard = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  item: Hazard,
+  scene: SurfScene,
+  coast: Coast,
+) => {
+  if (item.kind === "gull") {
+    const wingUp =
+      Math.floor(scene.now * (scene.reducedMotion ? 3 : 8)) % 2 === 0;
+    gull(ctx, item.x, WORLD.sea - item.lift - HAZARD.gull.height / 2, wingUp);
+    return;
+  }
+  const base = WORLD.sea - swellAt(state, item.x) + 4;
+  const { width, height } = HAZARD.shark;
+  ctx.beginPath();
+  ctx.moveTo(item.x - width / 2, base);
+  ctx.quadraticCurveTo(
+    item.x - 6,
+    base - height * 0.6,
+    item.x + 4,
+    base - height,
+  );
+  ctx.quadraticCurveTo(
+    item.x + 6,
+    base - height * 0.4,
+    item.x + width / 2,
+    base,
+  );
+  ctx.closePath();
+  outlined(ctx, FIN);
+  if (rimPass) return;
+  ctx.fillStyle = FIN_DARK;
+  ctx.beginPath();
+  ctx.moveTo(item.x + 2, base - height + 6);
+  ctx.quadraticCurveTo(
+    item.x + 5,
+    base - height * 0.4,
+    item.x + width / 2 - 3,
+    base,
+  );
+  ctx.lineTo(item.x + 2, base);
+  ctx.fill();
+  // Its wake, foam trailing behind
+  ctx.strokeStyle = coast.foam;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(item.x + width / 2 + 2, base);
+  ctx.lineTo(item.x + width / 2 + 26, base - 1);
+  ctx.stroke();
+};
+
+/** A dolphin leaping, nose down to the left. */
+const dolphin = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  tilt: number,
+) => {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(tilt);
+  for (const pass of [true, false]) {
+    rimPass = pass;
+    // Tail flukes, then the body, then the fin
+    ctx.beginPath();
+    ctx.moveTo(14, -1);
+    ctx.lineTo(24, -8);
+    ctx.lineTo(21, 0);
+    ctx.lineTo(24, 7);
+    ctx.closePath();
+    outlined(ctx, DOLPHIN);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 17, 7, 0, 0, Math.PI * 2);
+    outlined(ctx, DOLPHIN);
+    ctx.beginPath();
+    ctx.moveTo(-2, -6);
+    ctx.lineTo(4, -13);
+    ctx.lineTo(6, -6);
+    ctx.closePath();
+    outlined(ctx, DOLPHIN);
+  }
+  rimPass = false;
+  ctx.fillStyle = DOLPHIN_BELLY;
+  ctx.beginPath();
+  ctx.ellipse(-3, 3, 11, 2.5, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // The snout and the eye
+  ctx.fillStyle = DOLPHIN;
+  ctx.fillRect(-22, -1, 6, 3);
+  ctx.fillStyle = OUTLINE;
+  ctx.fillRect(-11, -3, 2, 2);
+  ctx.restore();
+};
+
+/** A shell to pick up, or a dolphin. */
+const pickup = (
+  ctx: CanvasRenderingContext2D,
+  item: Pickup,
+  scene: SurfScene,
+) => {
+  const bob = scene.reducedMotion
+    ? 0
+    : Math.sin(scene.now * 4 + item.x * 0.05) * 3;
+  const y = WORLD.sea - item.lift + bob;
+  if (item.kind === "dolphin") {
+    dolphin(
+      ctx,
+      item.x,
+      y,
+      scene.reducedMotion ? 0 : Math.sin(scene.now * 3) * 0.3,
+    );
+    return;
+  }
+  // A scallop: a fan of ribs on a little hinge
+  for (const pass of [true, false]) {
+    rimPass = pass;
+    ctx.beginPath();
+    ctx.moveTo(item.x, y + 9);
+    ctx.lineTo(item.x - 11, y - 1);
+    ctx.quadraticCurveTo(item.x, y - 16, item.x + 11, y - 1);
+    ctx.closePath();
+    outlined(ctx, SHELL);
+  }
+  rimPass = false;
+  ctx.strokeStyle = SHELL_RIB;
+  ctx.lineWidth = 1.5;
+  for (const dx of [-6, 0, 6]) {
+    ctx.beginPath();
+    ctx.moveTo(item.x, y + 7);
+    ctx.lineTo(item.x + dx, y - 6);
+    ctx.stroke();
+  }
+};
+
+/** The tube: the wave's back wall behind him… */
+const tubeWall = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  coast: Coast,
+) => {
+  for (const tube of state.tubes) {
+    const left = tube.from - state.distance;
+    const right = tube.to - state.distance;
+    if (right < 0 || left > WORLD.width) continue;
+    const lip = WORLD.sea - TUBE.lip;
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = coast.front;
+    ctx.beginPath();
+    ctx.moveTo(left - 30, WORLD.sea + 6);
+    ctx.quadraticCurveTo(left - 10, lip, left + 30, lip - 30);
+    ctx.lineTo(right, lip - 30);
+    ctx.lineTo(right + 40, WORLD.sea + 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+};
+
+/** …and its lip curling over him, foam dripping off its edge. */
+const tubeLip = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  coast: Coast,
+  scene: SurfScene,
+) => {
+  for (const tube of state.tubes) {
+    const left = tube.from - state.distance;
+    const right = tube.to - state.distance;
+    if (right < 0 || left > WORLD.width) continue;
+    const lip = WORLD.sea - TUBE.lip + 2;
+    const gradient = ctx.createLinearGradient(0, lip - 48, 0, lip);
+    gradient.addColorStop(0, coast.frontDeep);
+    gradient.addColorStop(1, coast.front);
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.moveTo(right + 40, lip - 48);
+    ctx.lineTo(left + 20, lip - 48);
+    // The curl at the mouth, falling towards the sea
+    ctx.bezierCurveTo(
+      left - 30,
+      lip - 40,
+      left - 34,
+      lip + 30,
+      left - 6,
+      lip + 34,
+    );
+    ctx.quadraticCurveTo(left - 10, lip + 6, left + 14, lip);
+    ctx.lineTo(right + 40, lip);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = coast.foam;
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(left - 6, lip + 34);
+    ctx.quadraticCurveTo(left - 10, lip + 6, left + 14, lip);
+    ctx.lineTo(right + 40, lip);
+    ctx.stroke();
+    // Drips off the lip
+    const t = scene.reducedMotion ? 0 : scene.now * 60;
+    ctx.lineWidth = 2;
+    for (let x = left + 24; x < right; x += 34) {
+      const drop = 4 + ((x + t + state.distance) % 14);
+      ctx.beginPath();
+      ctx.moveTo(x, lip + 2);
+      ctx.lineTo(x, lip + 2 + drop);
+      ctx.stroke();
+    }
+  }
 };
 
 /** Where the board sits in each pose's art, as fractions of the square. */
@@ -789,7 +1169,7 @@ export const drawSurf = (
   state: SurfState,
   scene: SurfScene,
 ) => {
-  const coast = scene.night ? COAST.night : COAST.day;
+  const coast = coastAt(skyAt(state.tier, scene.tierAge, scene.night));
   const parallax = scene.reducedMotion ? PARALLAX.calm : PARALLAX.full;
   const d = state.distance;
 
@@ -804,7 +1184,7 @@ export const drawSurf = (
   }
 
   sky(ctx, coast, scene);
-  if (!scene.night) clouds(ctx, coast, d * parallax.clouds);
+  if (coast.dark < 1) clouds(ctx, coast, d * parallax.clouds);
   headlands(ctx, coast, d * parallax.headlands, scene);
   openSea(ctx, coast, scene);
   swells(ctx, coast, d * parallax.swells, scene);
@@ -813,13 +1193,62 @@ export const drawSurf = (
   ctx.fillStyle = coast.haze;
   ctx.fillRect(0, HORIZON, WORLD.width, WORLD.sea - HORIZON);
 
+  tubeWall(ctx, state, coast);
   for (const pass of [true, false]) {
     rimPass = pass;
-    for (const gate of state.obstacles) obstacle(ctx, gate, scene);
+    for (const gate of state.obstacles) {
+      obstacle(ctx, state, gate, scene, coast);
+    }
+    for (const item of state.hazards) hazard(ctx, state, item, scene, coast);
   }
   rimPass = false;
+  for (const item of state.pickups) {
+    if (!item.taken) pickup(ctx, item, scene);
+  }
+  // The dolphin that swims with him, ready to save him once
+  if (state.player.shield && scene.crashAge === null) {
+    const x = PLAYER.x - 34;
+    const y = WORLD.sea - swellAt(state, x) + 2;
+    const leap = scene.reducedMotion ? 0 : Math.sin(scene.now * 4) * 3;
+    dolphin(ctx, x, y - leap, 0.15);
+  }
   lucas(ctx, state, scene, coast);
-  frontSea(ctx, coast, d, scene);
+  frontSea(ctx, coast, state, scene);
+  tubeLip(ctx, state, coast, scene);
   dazed(ctx, scene);
   ctx.restore();
+  if (state.phase !== "ready") overlay(ctx, state, scene, coast);
 };
+
+/** The sea's own inks, as the score over it wears them. */
+const INK = { day: "#0b2b35", night: "#f3ecdf" } as const;
+const POPUP_INK: Readonly<Record<SurfAward["kind"], string>> = {
+  perfect: STYLE_INK,
+  tube: STYLE_INK,
+  shell: "#1fa3a3",
+};
+
+/** The level, the multiplier, the points won and a new level's banner. */
+const overlay = (
+  ctx: CanvasRenderingContext2D,
+  state: SurfState,
+  scene: SurfScene,
+  coast: Coast,
+) =>
+  drawOverlay(ctx, {
+    level: scene.levelLabel(state.tier),
+    ink: coast.time >= 2 ? INK.night : INK.day,
+    combo: state.combo,
+    popups: scene.popups.map(({ award, age }) => ({
+      ...award,
+      y: WORLD.sea - award.lift,
+      ink: POPUP_INK[award.kind],
+      age,
+    })),
+    banner: scene.banner && {
+      text: scene.levelLabel(scene.banner.tier),
+      age: scene.banner.age,
+    },
+    font: scene.font,
+    reducedMotion: scene.reducedMotion,
+  });

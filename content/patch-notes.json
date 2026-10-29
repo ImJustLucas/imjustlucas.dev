@@ -1186,5 +1186,65 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/64"
+  },
+  {
+    "version": "2.29",
+    "date": "2026-10-29",
+    "title": {
+      "en": "The arcade gets real",
+      "fr": "L'arcade se corse"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Ollie gets harder as you go: a new level every 30 seconds, faster, busier, and night falls on the street 🌙",
+          "fr": "Ollie se corse au fil de la partie : un nouveau niveau toutes les 30 secondes, plus rapide, plus chargé, et la nuit tombe sur la rue 🌙"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Kickflips, bench grinds and combos up to x5 in Ollie: most of your points now come from your tricks 🛹",
+          "fr": "Kickflips, grinds sur les bancs et combos jusqu'à x5 dans Ollie : l'essentiel de tes points vient maintenant de tes figures 🛹"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Sparkles are worth way more, and even more the faster you go ✨",
+          "fr": "Les sparkles valent bien plus, et encore plus quand tu vas vite ✨"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Surf comes alive: a rolling swell, big sets that lift you, tubes to ride low, gates down on the water or way up top, from dawn to night 🌊",
+          "fr": "Surf prend vie : une houle qui roule, des grosses séries qui te soulèvent, des tubes à prendre au ras de l'eau, des portes tout en bas ou tout en haut, de l'aube à la nuit 🌊"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Diving gulls, sharks, shells and a dolphin that saves you once in Surf; perfect passes chain into a x5 combo 🐬",
+          "fr": "Des mouettes en piqué, des requins, des coquillages et un dauphin qui te sauve une fois dans Surf ; les passages parfaits s'enchaînent en combo x5 🐬"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "A how-to-play under each cabinet, and a new trophy for Ollie's x5 combo",
+          "fr": "Un « comment jouer » sous chaque borne, et un nouveau trophée pour le combo x5 d'Ollie"
+        }
+      },
+      {
+        "tag": "changed",
+        "text": {
+          "en": "The Ollie and Surf top 10s start over: the old scores don't compare anymore",
+          "fr": "Les top 10 d'Ollie et de Surf repartent de zéro : les anciens scores ne sont plus comparables"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/65"
   }
 ]

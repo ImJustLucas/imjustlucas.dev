@@ -52,6 +52,7 @@ export type TrophyId =
   | "seenOnline"
   | "coinRain"
   | "rainyDay"
+  | "combo"
   | "top10"
   | "firstSecret"
   | "lost"
@@ -87,6 +88,7 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
   { id: "waved", rarity: "rare" },
   { id: "seenOnline", rarity: "rare", quiet: true },
   { id: "rainyDay", rarity: "rare" },
+  { id: "combo", rarity: "rare" },
   { id: "top10", rarity: "epic" },
   { id: "coinRain", rarity: "epic", secret: true },
   {

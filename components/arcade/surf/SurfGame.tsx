@@ -4,15 +4,28 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import {
+  ArrowBigUpDash,
+  Fish,
+  MoonStar,
+  Shell,
+  Target,
+  Tornado,
+  Waves,
+} from "lucide-react";
+
+import {
   type CabinetScreen,
   Deck,
+  HowToPlay,
   Marquee,
   NameEntry,
   pad,
+  type Rule,
   type RunResult,
   ScreenCards,
   ScreenScore,
 } from "@/components/arcade/CabinetParts";
+import { BANNER_LIFE, POPUP_LIFE } from "@/components/arcade/canvas-text";
 import type { ScreenProps } from "@/components/arcade/screen";
 import { useBest, useBoardRun } from "@/components/arcade/use-board-run";
 import { useParisNight } from "@/components/chibi/use-paris-night";
@@ -23,13 +36,22 @@ import {
   createSurf,
   press,
   score,
+  type SurfAward,
+  type SurfEvent,
   type SurfInput,
   type SurfState,
   WORLD,
 } from "@/lib/arcade/surf";
 import { chibiFrames } from "@/lib/chibi";
+import type { Cue } from "@/lib/sound/kit";
 
-import { drawSurf, END_POSE_AT, type SurfArt, type SurfEnding } from "./draw";
+import {
+  darkSky,
+  drawSurf,
+  END_POSE_AT,
+  type SurfArt,
+  type SurfEnding,
+} from "./draw";
 
 const BEST_KEY = "imjustlucas:arcade:surf:best";
 /** Frames run this long after the crash: the wipeout, then the end pose. */
@@ -37,6 +59,18 @@ const CRASH_SECONDS = END_POSE_AT + 0.9;
 /** A key held through the crash does not start the next run at once. */
 const RETRY_GUARD_MS = 450;
 const POP_KEYS = new Set(["Space", "ArrowUp", "KeyW"]);
+/** The sound kit's cue for each thing that happens on the sea. */
+const CUES: Partial<Record<SurfEvent, Cue>> = {
+  gate: "pickup",
+  perfect: "boop",
+  shell: "pickup",
+  dolphin: "toggleOn",
+  saved: "toggleOff",
+  tube: "confirm",
+  tier: "milestone",
+};
+/** Popups won together stack this many units apart. */
+const POPUP_STACK = 18;
 
 const newSeed = () => Math.floor(Math.random() * 2 ** 31);
 
@@ -44,7 +78,8 @@ const newSeed = () => Math.floor(Math.random() * 2 ** 31);
  * The Surf cabinet (DESIGN.md, Arcade): the marquee, the screen where the
  * sea is drawn on a canvas, and the deck. The game itself is the plain
  * `lib/arcade/surf.ts`; this component feeds it the visitor's presses and
- * the frames, plays its events as the sound kit's cues and draws it. Each run
+ * the frames, plays its events as the sound kit's cues and draws it, with
+ * the points it awards rising as popups and a banner for each level. Each run
  * is one the server handed out: its presses are recorded, and a run that
  * makes the leaderboard is sent back to be replayed there.
  */
@@ -65,18 +100,28 @@ export default function SurfGame(props: ScreenProps) {
   const crashAt = useRef<number | null>(null);
   const clock = useRef(0);
   const inputs = useRef<SurfInput[]>([]);
+  const popups = useRef<Array<{ award: SurfAward; born: number }>>([]);
+  const levelUp = useRef<{ tier: number; born: number } | null>(null);
+  const font = useRef("monospace");
 
   const [screen, setScreen] = useState<CabinetScreen>("ready");
   const [result, setResult] = useState<RunResult | null>(null);
   const [live, setLive] = useState("");
+  // The score's ink follows the sky, light from sunset on
+  const [darkInk, setDarkInk] = useState(night);
+  const darkInkRef = useRef(darkInk);
   const { best, record } = useBest(BEST_KEY);
   const { entry, begin, end, submitName } = useBoardRun("surf", props, setLive);
 
   // What the frame loop reads without restarting
-  const scene = useRef({ night, reducedMotion, play });
+  const levelLabel = useCallback(
+    (level: number) => t("cabinets.surf.level", { level }),
+    [t],
+  );
+  const scene = useRef({ night, reducedMotion, play, levelLabel });
   useEffect(() => {
-    scene.current = { night, reducedMotion, play };
-  }, [night, reducedMotion, play]);
+    scene.current = { night, reducedMotion, play, levelLabel };
+  }, [night, reducedMotion, play, levelLabel]);
 
   /** Draws the current frame at the canvas's size. */
   const render = useCallback(() => {
@@ -87,18 +132,67 @@ export default function SurfGame(props: ScreenProps) {
     // shows a little less of the sea ahead
     const scale = canvas.height / WORLD.height;
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    const { night, reducedMotion } = scene.current;
+    const { night, reducedMotion, levelLabel } = scene.current;
+    const now = clock.current;
+    const up = levelUp.current;
+    const tierAge = up ? now - up.born : Infinity;
     drawSurf(ctx, game.current, {
       night,
       reducedMotion,
       art: art.current,
-      crashAge:
-        crashAt.current === null ? null : clock.current - crashAt.current,
+      crashAge: crashAt.current === null ? null : now - crashAt.current,
       ending: ending.current,
-      now: clock.current,
+      now,
+      tierAge,
+      popups: popups.current.map(({ award, born }) => ({
+        award,
+        age: now - born,
+      })),
+      banner:
+        up && tierAge < BANNER_LIFE ? { tier: up.tier, age: tierAge } : null,
+      levelLabel,
+      font: font.current,
     });
     if (scoreRef.current) {
       scoreRef.current.textContent = pad(score(game.current));
+    }
+    const dark = darkSky(game.current.tier, tierAge, night);
+    if (dark !== darkInkRef.current) {
+      darkInkRef.current = dark;
+      setDarkInk(dark);
+    }
+  }, []);
+
+  /** Plays a frame's events as cues, and keeps its points as popups. */
+  const happened = useCallback((state: SurfState) => {
+    const { play, levelLabel } = scene.current;
+    const now = clock.current;
+    for (const event of new Set(state.events)) {
+      const cue = CUES[event];
+      if (cue) play(cue);
+    }
+    if (state.events.includes("tier")) {
+      levelUp.current = { tier: state.tier, born: now };
+      setLive(levelLabel(state.tier));
+    }
+    popups.current = popups.current.filter(
+      ({ born }) => now - born < POPUP_LIFE,
+    );
+    for (const award of state.awards) {
+      const stacked = popups.current.filter(
+        ({ born }) => now - born < 0.25,
+      ).length;
+      popups.current.push({
+        award: { ...award, lift: award.lift + stacked * POPUP_STACK },
+        born: now,
+      });
+    }
+  }, []);
+
+  // The site's Data font, for the text drawn over the sea
+  useEffect(() => {
+    if (scoreRef.current) {
+      font.current = getComputedStyle(scoreRef.current).fontFamily;
     }
   }, []);
 
@@ -184,11 +278,7 @@ export default function SurfGame(props: ScreenProps) {
       const state = game.current;
       if (screen === "running") {
         advance(state, elapsed);
-        const { play } = scene.current;
-        for (const event of state.events) {
-          if (event === "gate") play("pickup");
-          if (event === "milestone") play("milestone");
-        }
+        happened(state);
         if (state.phase === "over") {
           crashAt.current = clock.current;
           render();
@@ -206,7 +296,7 @@ export default function SurfGame(props: ScreenProps) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [screen, render, finish]);
+  }, [screen, render, finish, happened]);
 
   /** A press: he pops off the swell, recorded at the step it landed on. */
   const pop = useCallback(() => {
@@ -223,6 +313,8 @@ export default function SurfGame(props: ScreenProps) {
     inputs.current = [];
     crashAt.current = null;
     ending.current = null;
+    popups.current = [];
+    levelUp.current = null;
     pop();
     setResult(null);
     setScreen("running");
@@ -293,6 +385,23 @@ export default function SurfGame(props: ScreenProps) {
     }
   };
 
+  const rich = (key: Parameters<typeof t.rich>[0]) =>
+    t.rich(key, { b: (chunks) => <b>{chunks}</b> });
+  const rules: ReadonlyArray<Rule> = [
+    {
+      id: "pop",
+      icon: ArrowBigUpDash,
+      text: rich("cabinets.surf.rules.pop"),
+      touch: rich("cabinets.surf.rules.popTouch"),
+    },
+    { id: "ride", icon: Waves, text: rich("cabinets.surf.rules.ride") },
+    { id: "tube", icon: Tornado, text: rich("cabinets.surf.rules.tube") },
+    { id: "perfect", icon: Target, text: rich("cabinets.surf.rules.perfect") },
+    { id: "shell", icon: Shell, text: rich("cabinets.surf.rules.shell") },
+    { id: "dolphin", icon: Fish, text: rich("cabinets.surf.rules.dolphin") },
+    { id: "level", icon: MoonStar, text: rich("cabinets.surf.rules.level") },
+  ];
+
   return (
     <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
       <Marquee cabinet="surf" best={best} />
@@ -324,7 +433,7 @@ export default function SurfGame(props: ScreenProps) {
           ref={scoreRef}
           best={best}
           hidden={screen === "ready" || screen === "over"}
-          ink={night ? "text-[#f3ecdf]" : "text-[#0b2b35]"}
+          ink={darkInk ? "text-[#f3ecdf]" : "text-[#0b2b35]"}
         />
         <ScreenCards
           screen={screen}
@@ -349,6 +458,8 @@ export default function SurfGame(props: ScreenProps) {
         onPause={pause}
         onResume={resume}
       />
+
+      <HowToPlay rules={rules} />
 
       <span id={descriptionId} className="sr-only">
         {t("cabinets.surf.game")}

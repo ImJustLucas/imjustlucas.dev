@@ -394,23 +394,46 @@
     "cabinets": {
       "ollie": {
         "name": "Ollie",
-        "tagline": "skate down a Paris street and jump the cones",
+        "tagline": "skate a Paris street: kickflips, grinds and combos",
         "poseAlt": "Lucas on his skateboard",
-        "game": "Ollie, a skate game: Lucas rolls down a Paris street, jump the cones, bins, benches and low pigeons, skate under the high ones, and pick up sparkles.",
-        "hint": "space, ↑ or click to jump, hold for a higher ollie, esc to pause",
-        "hintTouch": "tap the street to jump, hold for a higher ollie",
-        "started": "Run started. Jump with space.",
-        "empty": "nobody on the board yet, your turn 🛹"
+        "game": "Ollie, a skate game: Lucas rolls down a Paris street that gets faster and busier level after level. Jump the cones, bins, benches and low pigeons, skate under the high ones, press again in the air for a kickflip, land on a bench to grind it, chain tricks for a combo up to x5 and pick up sparkles, worth more the faster you go.",
+        "hint": "space, ↑ or click to jump, again in the air to kickflip, esc to pause",
+        "hintTouch": "tap to jump, tap again in the air to kickflip",
+        "started": "Run started. Jump with space, press again in the air to kickflip.",
+        "empty": "nobody on the board yet, your turn 🛹",
+        "level": "level {level}",
+        "rules": {
+          "jump": "<b>jump</b> space, ↑ or click, hold to fly higher",
+          "jumpTouch": "<b>jump</b> tap the street, hold to fly higher",
+          "kickflip": "<b>kickflip</b> press again in the air, and land it: touch down mid-flip and you're on the pavement",
+          "kickflipTouch": "<b>kickflip</b> tap again in the air, and land it: touch down mid-flip and you're on the pavement",
+          "grind": "<b>grind</b> land on a bench and ride it, points all the way",
+          "combo": "<b>combo</b> clear things with a kickflip, a grind or under a pigeon to climb up to x5. a plain jump over something drops it back to x1",
+          "pigeon": "<b>high pigeons</b> stay on the ground and skate under them",
+          "sparkle": "<b>sparkles</b> worth more the faster you go, times your combo",
+          "level": "<b>levels</b> every 30 seconds: faster, busier, and night falls"
+        }
       },
       "surf": {
         "name": "Surf",
-        "tagline": "ride the swell between rocks and gulls",
+        "tagline": "ride the swell, the tubes and the gulls",
         "poseAlt": "Lucas with his surfboard",
-        "game": "Surf, a surf game: Lucas rides the swell, pop him up to fly through each gap between the rocks and beacons below and the jetty pilings and gulls above.",
+        "game": "Surf, a surf game: Lucas rides a living swell. Pop him up through each gap between the rocks and buoys below and the pilings and gulls above, ride through the gates down on the water, stay low through the tubes, pass right in the middle of a gap for a perfect, chain perfects for a combo up to x5, pick up shells, worth more the faster you go, and catch a dolphin to be saved from one hit. A new level every 10 gates.",
         "hint": "space, ↑ or click to pop up, again to climb higher, esc to pause",
-        "hintTouch": "tap the sea to pop up, again to climb higher",
+        "hintTouch": "tap to pop up, again to climb higher",
         "started": "Run started. Pop up with space.",
-        "empty": "nobody on the board yet, your turn 🏄"
+        "empty": "nobody on the board yet, your turn 🏄",
+        "level": "level {level}",
+        "rules": {
+          "pop": "<b>pop up</b> space, ↑ or click, again in the air to climb higher",
+          "popTouch": "<b>pop up</b> tap the sea, again in the air to climb higher",
+          "ride": "<b>ride</b> no press and you ride the swell: the low gates are passed on the water, and a big set lifts you for free",
+          "tube": "<b>tube</b> when the wave closes, stay low on the water: points all the way, a pop and you hit the lip",
+          "perfect": "<b>perfect</b> right through the middle of a gap (or riding a low gate) for a bonus, in a row for a combo up to x5. any other pass drops it to x1",
+          "shell": "<b>shells</b> off the easy line, worth more the faster you go, times your combo",
+          "dolphin": "<b>dolphin</b> a rare one swims with you and saves you from one hit",
+          "level": "<b>levels</b> every 10 gates: faster, narrower, diving gulls and sharks, from dawn to night"
+        }
       }
     },
     "loading": "loading the cabinet…",
@@ -427,6 +450,7 @@
     "over": "Game over: {score} points. Best: {best}.",
     "overBest": "Game over: {score} points, a new best!",
     "pausedLive": "Paused.",
+    "howToPlay": "how to play",
     "board": {
       "title": "top {size}",
       "you": "you",
@@ -728,6 +752,10 @@
       "rainyDay": {
         "name": "rainy day",
         "how": "listen to the radio with the rain on"
+      },
+      "combo": {
+        "name": "on fire",
+        "how": "reach a x5 combo in Ollie"
       },
       "top10": {
         "name": "top 10",
