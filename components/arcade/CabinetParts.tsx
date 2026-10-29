@@ -3,7 +3,15 @@
 import { type FormEvent, useEffect, useId, useRef } from "react";
 import { useTranslations } from "next-intl";
 
-import { Hand, Keyboard, Pause, Play, RotateCcw, Trophy } from "lucide-react";
+import {
+  Hand,
+  Keyboard,
+  type LucideIcon,
+  Pause,
+  Play,
+  RotateCcw,
+  Trophy,
+} from "lucide-react";
 
 import type { Entry } from "@/components/arcade/use-board-run";
 import { useSounds } from "@/components/sound/SoundProvider";
@@ -19,8 +27,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * The parts every cabinet shares (DESIGN.md, Arcade): the marquee, the cards
- * over the game's screen, the first-name strip and the deck. Each game only
- * brings its screen: its rules, its inputs and its canvas.
+ * over the game's screen, the first-name strip, the deck and the how-to-play
+ * strip. Each game only brings its screen: its rules, its inputs and its
+ * canvas.
  */
 
 export type CabinetScreen = "ready" | "running" | "paused" | "over";
@@ -356,5 +365,50 @@ export function Deck({
         {screen === "paused" ? t("resume") : t("pause")}
       </Button>
     </div>
+  );
+}
+
+/** One line of a game's rules, its keyboard and touch wordings. */
+export type Rule = {
+  readonly id: string;
+  readonly icon: LucideIcon;
+  readonly text: React.ReactNode;
+  /** The wording on a touch screen, when it differs. */
+  readonly touch?: React.ReactNode;
+};
+
+/** Under the deck: how to play, a line per rule, two columns from 640px. */
+export function HowToPlay({ rules }: { rules: ReadonlyArray<Rule> }) {
+  const t = useTranslations("Arcade");
+  const titleId = useId();
+  return (
+    <section
+      aria-labelledby={titleId}
+      className="flex flex-col gap-3 rounded-md bg-ground p-3 sm:p-4"
+    >
+      <TypographyTitle as="h3" id={titleId}>
+        {t("howToPlay")}
+      </TypographyTitle>
+      <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+        {rules.map(({ id, icon: Icon, text, touch }) => (
+          <li
+            key={id}
+            className="flex gap-2 text-label text-ink-muted [&_b]:font-semibold [&_b]:text-ink"
+          >
+            <Icon aria-hidden className="mt-0.5 size-4 shrink-0" />
+            {touch ? (
+              <>
+                <span className="[@media(pointer:coarse)]:hidden">{text}</span>
+                <span className="hidden [@media(pointer:coarse)]:inline">
+                  {touch}
+                </span>
+              </>
+            ) : (
+              <span>{text}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

@@ -1,19 +1,31 @@
 import {
+  blend,
+  drawOverlay,
+  OUTLINE,
+  RIM,
+  STYLE_INK,
+} from "@/components/arcade/canvas-text";
+import {
+  FLIP_TIME,
   JUMP_VELOCITY,
   type Obstacle,
   OBSTACLE_SIZE,
+  type OllieAward,
   type OllieState,
   PLAYER,
   type Sparkle,
   SPARKLE_RADIUS,
+  TIER_TIME,
+  tierAt,
   WORLD,
 } from "@/lib/arcade/ollie";
 
 /**
  * Draws Ollie's street on a 2D canvas (DESIGN.md, Arcade). The game has its
- * own palette, a Paris street by day or by night (Lucas's time in Paris),
- * never the site's palette. Everything is drawn in world units; the caller
- * sets the transform from the world to the canvas.
+ * own palette, a Paris street that goes from day to dusk to night level by
+ * level (always night by Lucas's night in Paris), never the site's palette.
+ * Everything is drawn in world units; the caller sets the transform from the
+ * world to the canvas.
  */
 
 export type OllieArt = {
@@ -42,9 +54,44 @@ export type OllieScene = {
   readonly ending: OllieEnding | null;
   /** Seconds on a free-running clock, for idle motion (stars, wings). */
   readonly now: number;
+  /** Points won lately, with their age in seconds, for the popups. */
+  readonly popups: ReadonlyArray<{
+    readonly award: OllieAward;
+    readonly age: number;
+  }>;
+  /** The level just reached, and its age in seconds, for its banner. */
+  readonly banner: { readonly tier: number; readonly age: number } | null;
+  /** A level's name in the visitor's Locale. */
+  readonly levelLabel: (tier: number) => string;
+  /** The family of the site's Data font, for the text on the street. */
+  readonly font: string;
 };
 
-const STREET = {
+type Palette = {
+  readonly skyTop: string;
+  readonly skyLow: string;
+  readonly sun: string;
+  readonly cloud: string;
+  readonly far: string;
+  readonly farShade: string;
+  readonly stone: readonly [string, string, string];
+  readonly stoneLine: string;
+  readonly window: string;
+  readonly windowLit: string;
+  readonly zinc: string;
+  readonly zincDark: string;
+  readonly iron: string;
+  readonly shop: string;
+  readonly shopGlass: string;
+  readonly walk: string;
+  readonly walkLine: string;
+  readonly curb: string;
+  readonly lampGlow: string;
+  readonly shadow: string;
+  readonly haze: string;
+};
+
+const STREET: Readonly<Record<"day" | "dusk" | "night", Palette>> = {
   day: {
     skyTop: "#9fd3f2",
     skyLow: "#ffe8c8",
@@ -64,9 +111,33 @@ const STREET = {
     walk: "#ddd5c6",
     walkLine: "#c8bfad",
     curb: "#b3a995",
-    lampGlow: null,
+    lampGlow: "rgba(255, 207, 107, 0)",
     shadow: "rgba(43, 47, 58, 0.22)",
     haze: "rgba(250, 244, 232, 0.5)",
+  },
+  // The street at sunset, between day and night
+  dusk: {
+    skyTop: "#3d4a8a",
+    skyLow: "#ff9e6b",
+    sun: "#ffc47a",
+    cloud: "rgba(255, 196, 170, 0.6)",
+    far: "#6b6a96",
+    farShade: "#5d5c88",
+    stone: ["#d9b9a0", "#d1ad94", "#dcc0aa"],
+    stoneLine: "#b8937c",
+    window: "#5d6a94",
+    windowLit: "#ffcf6b",
+    zinc: "#5f6d8f",
+    zincDark: "#4c5878",
+    iron: "#22252f",
+    shop: "#2e2838",
+    shopGlass: "#ffd98a",
+    walk: "#b9a9a0",
+    walkLine: "#a6958d",
+    curb: "#8e7f7c",
+    lampGlow: "rgba(255, 207, 107, 0.16)",
+    shadow: "rgba(43, 30, 40, 0.28)",
+    haze: "rgba(255, 190, 150, 0.3)",
   },
   night: {
     skyTop: "#070d26",
@@ -91,19 +162,66 @@ const STREET = {
     shadow: "rgba(0, 0, 0, 0.35)",
     haze: "rgba(7, 13, 38, 0.38)",
   },
-} as const;
+};
+
+/**
+ * How far the street has gone towards night: 0 by day, 1 at dusk, 2 at
+ * night. Each level takes it half a step further, over `EVENING_FADE`
+ * seconds; by Lucas's night in Paris it is night from the start.
+ */
+const EVENING = [0, 0.5, 1, 1.5, 2] as const;
+const EVENING_FADE = 4;
+
+export const eveningAt = (time: number, night: boolean) => {
+  if (night) return 2;
+  const tier = Math.min(tierAt(time), EVENING.length);
+  if (tier === 1) return 0;
+  const from = EVENING[tier - 2];
+  const to = EVENING[tier - 1];
+  const fade = Math.min((time - (tier - 1) * TIER_TIME) / EVENING_FADE, 1);
+  return from + (to - from) * Math.max(fade, 0);
+};
+
+/** Whether the sky is dark enough for the light ink (from dusk on). */
+export const darkSky = (time: number, night: boolean) =>
+  eveningAt(time, night) >= 1;
+
+/** The street's colours at an evening, with how dark it has got (0 to 1). */
+type Street = Palette & { readonly dark: number; readonly dusk: number };
+
+let lastStreet: { readonly evening: number; readonly street: Street } | null =
+  null;
+
+const streetAt = (evening: number): Street => {
+  const key = Math.round(evening * 100) / 100;
+  if (lastStreet?.evening === key) return lastStreet.street;
+  const street = {
+    ...blend([STREET.day, STREET.dusk, STREET.night], key),
+    dark: Math.max(key - 1, 0),
+    dusk: Math.min(key, 1),
+  };
+  lastStreet = { evening: key, street };
+  return street;
+};
 
 /** Café awnings: tomato, bottle green, navy, mustard. */
 const AWNINGS = ["#d4513f", "#2f6b4f", "#2b3a6e", "#d9a23b"] as const;
-/** The line around the street furniture, the chibi art's maroon. */
-const OUTLINE = "#4a1f24";
-/** The sticker rim around the street furniture. */
-const RIM = "#fffaf0";
 const CONE = "#ff8a3d";
 const BIN = "#3fae5c";
 const BENCH = "#c9803f";
 const PIGEON = "#9aa1b6";
 const SPARKLE_FILL = "#fffaf0";
+/** The sparks off a grind. */
+const SPARK = "#ffd84d";
+/** The popups' ink: style in tomato, sparkles in the sparkle's blue. */
+const POPUP_INK: Readonly<Record<OllieAward["kind"], string>> = {
+  clear: OUTLINE,
+  kickflip: STYLE_INK,
+  trick: STYLE_INK,
+  grind: STYLE_INK,
+  under: STYLE_INK,
+  sparkle: "#2f6bff",
+};
 const SPARKLE_LINE = "#2f6bff";
 
 /** A stable pseudo-random number in [0, 1) for a slot of the street. */
@@ -113,8 +231,6 @@ const hash = (n: number, salt = 0) => {
   x ^= x >>> 16;
   return (x >>> 0) / 4294967296;
 };
-
-type Street = (typeof STREET)["day"] | (typeof STREET)["night"];
 
 /** The slots of a repeating layer that are on screen, with their left x. */
 const slots = (offset: number, width: number) => {
@@ -137,17 +253,28 @@ const sky = (
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, WORLD.width, WORLD.height);
 
-  if (scene.night) {
+  // The sun sets behind the roofs, then the stars come out with the moon
+  if (street.dusk < 1.2) {
+    ctx.globalAlpha = 1 - street.dark;
+    ctx.fillStyle = street.sun;
+    ctx.beginPath();
+    ctx.arc(510, 70 + street.dusk * 150, 28, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  if (street.dark > 0) {
     for (let i = 0; i < 46; i++) {
       const twinkle = scene.reducedMotion
         ? 0.7
         : 0.45 + 0.55 * Math.abs(Math.sin(scene.now * 1.3 + i * 2.1));
-      ctx.globalAlpha = twinkle * (0.4 + hash(i, 3) * 0.6);
+      ctx.globalAlpha = street.dark * twinkle * (0.4 + hash(i, 3) * 0.6);
       ctx.fillStyle = "#fff6e0";
       const size = hash(i, 4) < 0.15 ? 2 : 1.2;
       ctx.fillRect(hash(i, 1) * WORLD.width, hash(i, 2) * 190, size, size);
     }
     ctx.globalAlpha = 1;
+  }
+  if (street.dark >= 0.5) {
     // The moon, a crescent
     ctx.fillStyle = street.sun;
     ctx.beginPath();
@@ -157,11 +284,6 @@ const sky = (
     ctx.beginPath();
     ctx.arc(522, 54, 19, 0, Math.PI * 2);
     ctx.fill();
-  } else {
-    ctx.fillStyle = street.sun;
-    ctx.beginPath();
-    ctx.arc(510, 70, 28, 0, Math.PI * 2);
-    ctx.fill();
   }
 };
 
@@ -170,6 +292,7 @@ const clouds = (
   street: Street,
   offset: number,
 ) => {
+  ctx.globalAlpha = 1 - street.dark;
   ctx.fillStyle = street.cloud;
   for (const { index, x } of slots(offset, 260)) {
     if (hash(index, 9) < 0.45) continue;
@@ -182,6 +305,7 @@ const clouds = (
     ctx.rect(cx, y, 42, 15);
     ctx.fill();
   }
+  ctx.globalAlpha = 1;
 };
 
 const eiffel = (ctx: CanvasRenderingContext2D, x: number, base: number) => {
@@ -240,7 +364,6 @@ const facades = (
   ctx: CanvasRenderingContext2D,
   street: Street,
   offset: number,
-  night: boolean,
 ) => {
   const width = 172;
   const base = WORLD.ground;
@@ -269,7 +392,9 @@ const facades = (
       const dx = x + 26 + d * 50;
       ctx.fillRect(dx, top - 20, 16, 16);
       ctx.fillStyle =
-        night && hash(index, 40 + d) < 0.3 ? street.windowLit : street.window;
+        hash(index, 40 + d) < 0.3 * street.dark
+          ? street.windowLit
+          : street.window;
       ctx.fillRect(dx + 4, top - 15, 8, 11);
       ctx.fillStyle = street.zincDark;
     }
@@ -279,7 +404,8 @@ const facades = (
       const y = top + f * floorHeight + 6;
       for (let w = 0; w < 3; w++) {
         const wx = x + 22 + w * 50;
-        const lit = night && hash(index * 7 + f, 50 + w) < 0.38;
+        // The lights come on one by one as night falls
+        const lit = hash(index * 7 + f, 50 + w) < 0.38 * street.dark;
         ctx.fillStyle = lit ? street.windowLit : street.window;
         ctx.fillRect(wx, y, 18, 20);
         ctx.fillStyle = street.stoneLine;
@@ -299,10 +425,10 @@ const facades = (
     ctx.fillStyle = street.shop;
     ctx.fillRect(x + 6, shopTop, width - 12, shopHeight);
     ctx.fillStyle = street.shopGlass;
-    ctx.globalAlpha = night ? 0.85 : 0.7;
+    ctx.globalAlpha = 0.7 + street.dusk * 0.15;
     ctx.fillRect(x + 16, shopTop + 14, width - 66, shopHeight - 18);
     ctx.globalAlpha = 1;
-    ctx.fillStyle = night ? street.window : street.stoneLine;
+    ctx.fillStyle = street.dark > 0.5 ? street.window : street.stoneLine;
     ctx.fillRect(x + width - 40, shopTop + 10, 22, shopHeight - 10);
     const awning = AWNINGS[Math.floor(hash(index, 60) * AWNINGS.length)];
     ctx.fillStyle = awning;
@@ -343,7 +469,7 @@ const lamps = (
 ) => {
   for (const { x } of slots(offset, 300)) {
     const lx = x + 150;
-    if (street.lampGlow) {
+    if (street.dusk > 0) {
       const glow = ctx.createRadialGradient(lx, 228, 4, lx, 228, 70);
       glow.addColorStop(0, street.lampGlow);
       glow.addColorStop(1, "rgba(255, 207, 107, 0)");
@@ -360,7 +486,7 @@ const lamps = (
     ctx.lineTo(lx + 6, 234);
     ctx.lineTo(lx - 6, 234);
     ctx.fill();
-    ctx.fillStyle = street.lampGlow ? "#ffe3a1" : "#f5efe2";
+    ctx.fillStyle = street.dusk >= 1 ? "#ffe3a1" : "#f5efe2";
     ctx.fillRect(lx - 5, 222, 10, 10);
     ctx.fillStyle = street.iron;
     ctx.fillRect(lx - 10, 216, 20, 4);
@@ -631,10 +757,31 @@ const lucas = (
     dy = Math.floor(state.distance / 28) % 2 === 0 ? 0 : -0.8;
   }
 
+  // A kickflip spins him round once, nose to tail (still under reduced
+  // motion, where the popup alone says it)
+  const spin =
+    airborne && player.flip > 0 && !scene.reducedMotion
+      ? Math.cos((1 - player.flip / FLIP_TIME) * Math.PI * 2)
+      : 1;
+
+  // Grinding: sparks fly off the trucks on the bench
+  if (player.rail && !crashed && !scene.reducedMotion) {
+    ctx.fillStyle = SPARK;
+    for (let i = 0; i < 5; i++) {
+      const seed = Math.floor(scene.now * 30) * 5 + i;
+      ctx.fillRect(
+        cx - 30 - hash(seed, 70) * 26,
+        bottom - 2 - hash(seed, 71) * 12,
+        2.5,
+        2.5,
+      );
+    }
+  }
+
   ctx.save();
   ctx.translate(cx + dx, bottom + dy);
   ctx.rotate(angle);
-  if (key === "air") ctx.scale(-1, 1);
+  if (key === "air") ctx.scale(-spin, 1);
   ctx.drawImage(
     art,
     -ANCHOR[key].x * SPRITE,
@@ -667,6 +814,7 @@ const furniture = (
   ctx: CanvasRenderingContext2D,
   obstacle: Obstacle,
   scene: OllieScene,
+  street: Street,
 ) => {
   switch (obstacle.kind) {
     case "cone":
@@ -680,7 +828,7 @@ const furniture = (
       );
       break;
     case "bin":
-      bin(ctx, obstacle.x, scene.night);
+      bin(ctx, obstacle.x, street.dark > 0.5);
       break;
     case "bench":
       bench(ctx, obstacle.x);
@@ -697,13 +845,43 @@ const PARALLAX = {
   calm: { clouds: 0, skyline: 0, facades: 0.15 },
 } as const;
 
+/** The site's own inks, as the score over the street wears them. */
+const INK = { day: "#10131f", night: "#f6f3ea" } as const;
+
+/** The level, the multiplier, the points won and a new level's banner. */
+const overlay = (
+  ctx: CanvasRenderingContext2D,
+  state: OllieState,
+  scene: OllieScene,
+  street: Street,
+) => {
+  if (state.phase === "ready") return;
+  drawOverlay(ctx, {
+    level: scene.levelLabel(state.tier),
+    ink: street.dusk >= 1 ? INK.night : INK.day,
+    combo: state.combo,
+    popups: scene.popups.map(({ award, age }) => ({
+      ...award,
+      y: WORLD.ground - award.lift,
+      ink: POPUP_INK[award.kind],
+      age,
+    })),
+    banner: scene.banner && {
+      text: scene.levelLabel(scene.banner.tier),
+      age: scene.banner.age,
+    },
+    font: scene.font,
+    reducedMotion: scene.reducedMotion,
+  });
+};
+
 /** Draws one frame of the street. */
 export const drawOllie = (
   ctx: CanvasRenderingContext2D,
   state: OllieState,
   scene: OllieScene,
 ) => {
-  const street = scene.night ? STREET.night : STREET.day;
+  const street = streetAt(eveningAt(state.time, scene.night));
   const parallax = scene.reducedMotion ? PARALLAX.calm : PARALLAX.full;
   const d = state.distance;
 
@@ -718,9 +896,9 @@ export const drawOllie = (
   }
 
   sky(ctx, street, scene);
-  if (!scene.night) clouds(ctx, street, d * parallax.clouds);
+  if (street.dark < 1) clouds(ctx, street, d * parallax.clouds);
   skyline(ctx, street, d * parallax.skyline);
-  facades(ctx, street, d * parallax.facades, scene.night);
+  facades(ctx, street, d * parallax.facades);
   lamps(ctx, street, d * parallax.facades);
   // A haze over the background, so the street furniture stands out
   ctx.fillStyle = street.haze;
@@ -737,9 +915,12 @@ export const drawOllie = (
   }
   for (const pass of [true, false]) {
     rimPass = pass;
-    for (const obstacle of state.obstacles) furniture(ctx, obstacle, scene);
+    for (const obstacle of state.obstacles) {
+      furniture(ctx, obstacle, scene, street);
+    }
   }
   rimPass = false;
   lucas(ctx, state, scene, street);
   ctx.restore();
+  overlay(ctx, state, scene, street);
 };

@@ -36,6 +36,7 @@ Where each Trophy unlocks:
 | inspector, whatsNew, tour, bilingual, dayNight, painter, seenOnline | `TrophyLayer` |
 | ollie, surf | a finished run, `useBoardRun` (`components/arcade/use-board-run.ts`), with the game's id |
 | top10 | a run landing on the Leaderboard, same file |
+| combo | a x5 combo in Ollie (`components/arcade/ollie/OllieGame.tsx`) |
 | friendRequest | the add-friend button on Contact (`components/contact/FriendRequest.tsx`) |
 | waved | a Poke that went out to Lucas's Discord (`components/poke/PokeProvider.tsx`, docs/poke.md) |
 | coinRain | a coin thrown on MasterDevFrance 2025 (`master-dev-scene.tsx`) |

@@ -213,11 +213,12 @@ const playSurf = (seed: number, gates: number) => {
       (g) => g.x + 40 > surf.PLAYER.x - 10 && g.x - surf.PLAYER.x < 260,
     );
     const aim = next ? next.floor + 8 : 30;
-    const going = surf.score(state) < gates;
+    const going = state.gates < gates;
     if (going && state.player.lift < aim && state.player.velocity <= 0) pop();
   }
   return {
     inputs,
+    gates: state.gates,
     score: surf.score(state),
     seconds: state.steps * surf.STEP,
   };
@@ -229,7 +230,8 @@ describe("a Surf run sent to the leaderboard", () => {
       const started = yield* startRun("surf", "1.2.3.4");
       if (started.kind !== "started") throw new Error("not started");
       const run = playSurf(started.seed, 6);
-      expect(run.score).toBe(6);
+      // Riding on through a low gate or a tube may add a gate or two
+      expect(run.gates).toBeGreaterThanOrEqual(6);
       yield* TestClock.adjust(`${Math.ceil(run.seconds) + 1} seconds`);
       const result = yield* submitRun(
         {
@@ -240,9 +242,13 @@ describe("a Surf run sent to the leaderboard", () => {
         },
         "1.2.3.4",
       );
-      expect(result).toMatchObject({ kind: "ranked", score: 6, rank: 1 });
+      expect(result).toMatchObject({
+        kind: "ranked",
+        score: run.score,
+        rank: 1,
+      });
       expect(yield* leaderboard("surf")).toEqual([
-        { playerId: LEA, name: "Léa", score: 6 },
+        { playerId: LEA, name: "Léa", score: run.score },
       ]);
       expect(yield* leaderboard("ollie")).toEqual([]);
     }).pipe(Effect.provide(layerInMemory())),
