@@ -14,11 +14,12 @@ export type Cabinet = {
   readonly status: "playable" | "soon";
 };
 
-export type CabinetId = "ollie" | "surf";
+export type CabinetId = "ollie" | "surf" | "cafe";
 
 export const CABINETS: ReadonlyArray<Cabinet> = [
   { id: "ollie", pose: "skate", status: "playable" },
   { id: "surf", pose: "surf", status: "playable" },
+  { id: "cafe", pose: "coffee", status: "playable" },
 ];
 
 /**

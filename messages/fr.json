@@ -392,6 +392,47 @@
     "nowPlaying": "en jeu",
     "soon": "bientôt",
     "cabinets": {
+      "cafe": {
+        "name": "Café",
+        "tagline": "débarrasse la terrasse sans renverser une tasse",
+        "poseAlt": "Lucas avec son café",
+        "game": "Café, un démineur sur une terrasse de café parisien : retourne les soucoupes sans renverser les 10 tasses cachées dessous. Le chiffre en latte art dit combien de tasses se cachent autour de sa soucoupe. Pose un sucre sur une soucoupe qui cache une tasse. Débarrasse la table le plus vite possible : la première soucoupe est toujours sûre, et aucune table ne se joue à pile ou face.",
+        "hint": "clic pour retourner une soucoupe, clic droit pour un sucre, flèches et espace au clavier, échap pour la pause",
+        "hintTouch": "tape une soucoupe pour la retourner, appuie longtemps pour un sucre",
+        "started": "Partie lancée. Flèches pour choisir une soucoupe, espace pour la retourner, F pour un sucre, C pour un petit café.",
+        "empty": "personne au classement pour l'instant, à toi de jouer ☕",
+        "rules": {
+          "turn": "<b>retourner</b> clic sur une soucoupe. si elle cache une tasse, le café se renverse et c'est perdu",
+          "turnTouch": "<b>retourner</b> tape une soucoupe. si elle cache une tasse, le café se renverse et c'est perdu",
+          "numbers": "<b>latte art</b> le chiffre dans la tasse dit combien de tasses se cachent autour de sa soucoupe",
+          "sugar": "<b>sucre</b> clic droit sur une soucoupe qui cache une tasse, encore pour l'enlever",
+          "sugarTouch": "<b>sucre</b> appuie longtemps sur une soucoupe qui cache une tasse, encore pour l'enlever",
+          "serve": "<b>servir</b> clic sur un chiffre qui a tous ses sucres autour pour retourner les autres soucoupes d'un coup",
+          "serveTouch": "<b>servir</b> tape un chiffre qui a tous ses sucres autour pour retourner les autres soucoupes d'un coup",
+          "hint": "<b>petit café</b> une fois par partie, il retourne une soucoupe sûre près de toi, mais ajoute 10 secondes",
+          "keys": "<b>au clavier</b> flèches pour choisir, espace ou entrée pour retourner, F pour un sucre, C pour un petit café",
+          "fair": "<b>sans hasard</b> la première soucoupe est toujours sûre, et chaque table se résout sans jamais deviner",
+          "time": "<b>chrono</b> il part à la première soucoupe : les plus rapides entrent dans le top 10"
+        },
+        "cupsLeft": "tasses",
+        "petitCafe": "petit café",
+        "petitCafeLabel": "Petit café : retourne une soucoupe sûre, 10 secondes de plus",
+        "time": "temps",
+        "cleared": "table débarrassée !",
+        "spilled": "renversé !",
+        "overWon": "Table débarrassée en {time}. Record : {best}.",
+        "overBest": "Table débarrassée en {time}, nouveau record !",
+        "overLost": "Une tasse renversée, c'est perdu.",
+        "hintLive": "Petit café servi : une soucoupe sûre retournée, 10 secondes de plus.",
+        "cell": "ligne {row}, colonne {col} : {what}",
+        "what": {
+          "closed": "soucoupe à retourner",
+          "sugar": "un sucre",
+          "empty": "rien autour",
+          "number": "{count, plural, one {# tasse autour} other {# tasses autour}}",
+          "cup": "une tasse renversée"
+        }
+      },
       "ollie": {
         "name": "Ollie",
         "tagline": "skate dans une rue de Paris : kickflips, grinds et combos",
@@ -708,6 +749,10 @@
         "name": "première vague",
         "how": "jouer une partie de Surf"
       },
+      "cafe": {
+        "name": "premier espresso",
+        "how": "jouer une partie de Café"
+      },
       "bilingual": {
         "name": "bilingue",
         "how": "voir le site en anglais et en français"
@@ -735,6 +780,10 @@
       "friendRequest": {
         "name": "demande d'ami",
         "how": "m'envoyer une demande d'ami depuis contact"
+      },
+      "noSugar": {
+        "name": "sans un sucre",
+        "how": "débarrasser une table de Café sans poser un seul sucre"
       },
       "waved": {
         "name": "coucou toi",

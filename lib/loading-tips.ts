@@ -114,6 +114,7 @@ export const TRIED_KEYS: { readonly [F in TipFeature]: ReadonlyArray<string> } =
       "imjustlucas:arcade:player",
       "imjustlucas:arcade:ollie:best",
       "imjustlucas:arcade:surf:best",
+      "imjustlucas:arcade:cafe:best",
     ],
     "patch-notes": ["imjustlucas.patch-seen"],
   };

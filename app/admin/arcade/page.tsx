@@ -8,10 +8,15 @@ import {
 } from "@/app/admin/editor-frame";
 import { TypographyData, TypographyMuted } from "@/components/typography";
 import { currentOwnerAccess } from "@/lib/admin/session";
-import { LEADERBOARD_GAMES, LEADERBOARD_SIZE } from "@/lib/arcade/board";
+import {
+  formatScore,
+  LEADERBOARD_GAMES,
+  LEADERBOARD_SIZE,
+  SCORE_ORDER,
+} from "@/lib/arcade/board";
 import { getArcadeBoard } from "@/lib/arcade/server";
 
-const GAME_NAMES = { ollie: "Ollie", surf: "Surf" } as const;
+const GAME_NAMES = { ollie: "Ollie", surf: "Surf", cafe: "Café" } as const;
 
 /**
  * The Arcade's leaderboards, as visitors see them: the Owner takes off a
@@ -53,7 +58,11 @@ export default async function ArcadeAdminPage() {
                   {String(index + 1).padStart(2, "0")}
                 </TypographyData>
                 <EntryName>{entry.name}</EntryName>
-                <EntryFact>{entry.score} points</EntryFact>
+                <EntryFact>
+                  {SCORE_ORDER[game] === "lowest"
+                    ? formatScore(game, entry.score)
+                    : `${entry.score} points`}
+                </EntryFact>
                 <AdminForm
                   action={removeArcadeEntryAction}
                   revision=""

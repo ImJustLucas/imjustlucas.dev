@@ -392,6 +392,47 @@
     "nowPlaying": "playing",
     "soon": "soon",
     "cabinets": {
+      "cafe": {
+        "name": "Café",
+        "tagline": "clear a terrace table without knocking a cup over",
+        "poseAlt": "Lucas with his coffee",
+        "game": "Café, a minesweeper on a Paris café terrace: turn the saucers over without knocking over the 10 cups hidden under them. The number in latte art says how many cups hide around its saucer. Put a sugar cube on a saucer hiding a cup. Clear the table as fast as you can: the first saucer is always safe, and no table ever comes down to a coin toss.",
+        "hint": "click to turn a saucer, right-click for a sugar, arrows and space on the keyboard, esc to pause",
+        "hintTouch": "tap a saucer to turn it, long-press for a sugar",
+        "started": "Run started. Arrows to pick a saucer, space to turn it, F for a sugar, C for a petit café.",
+        "empty": "nobody on the board yet, your turn ☕",
+        "rules": {
+          "turn": "<b>turn</b> click a saucer. if it hides a cup, the coffee spills and you lose",
+          "turnTouch": "<b>turn</b> tap a saucer. if it hides a cup, the coffee spills and you lose",
+          "numbers": "<b>latte art</b> the number in the cup says how many cups hide around its saucer",
+          "sugar": "<b>sugar</b> right-click a saucer hiding a cup, again to take it off",
+          "sugarTouch": "<b>sugar</b> long-press a saucer hiding a cup, again to take it off",
+          "serve": "<b>serve</b> click a number with all its sugars around to turn its other saucers at once",
+          "serveTouch": "<b>serve</b> tap a number with all its sugars around to turn its other saucers at once",
+          "hint": "<b>petit café</b> once a run, it turns a safe saucer near you, but adds 10 seconds",
+          "keys": "<b>keyboard</b> arrows to pick, space or enter to turn, F for a sugar, C for a petit café",
+          "fair": "<b>no luck</b> the first saucer is always safe, and every table is solved without ever guessing",
+          "time": "<b>clock</b> it starts on the first saucer: the fastest make the top 10"
+        },
+        "cupsLeft": "cups",
+        "petitCafe": "petit café",
+        "petitCafeLabel": "Petit café: turns a safe saucer, 10 more seconds",
+        "time": "time",
+        "cleared": "table cleared!",
+        "spilled": "spilled!",
+        "overWon": "Table cleared in {time}. Best: {best}.",
+        "overBest": "Table cleared in {time}, a new best!",
+        "overLost": "A cup knocked over, you lose.",
+        "hintLive": "Petit café served: a safe saucer turned, 10 more seconds.",
+        "cell": "row {row}, column {col}: {what}",
+        "what": {
+          "closed": "saucer to turn",
+          "sugar": "a sugar",
+          "empty": "nothing around",
+          "number": "{count, plural, one {# cup around} other {# cups around}}",
+          "cup": "a cup knocked over"
+        }
+      },
       "ollie": {
         "name": "Ollie",
         "tagline": "skate a Paris street: kickflips, grinds and combos",
@@ -708,6 +749,10 @@
         "name": "first wave",
         "how": "play a run of Surf"
       },
+      "cafe": {
+        "name": "first espresso",
+        "how": "play a game of Café"
+      },
       "bilingual": {
         "name": "bilingual",
         "how": "see the site in english and in french"
@@ -735,6 +780,10 @@
       "friendRequest": {
         "name": "friend request",
         "how": "send me a friend request from contact"
+      },
+      "noSugar": {
+        "name": "no sugar",
+        "how": "clear a Café table without placing a single sugar"
       },
       "waved": {
         "name": "hey you",

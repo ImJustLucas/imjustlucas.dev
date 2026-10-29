@@ -1,6 +1,11 @@
 import { Effect, Layer, Ref } from "effect";
 
-import { type LeaderboardEntry, type LeaderboardGame } from "./board";
+import {
+  beats,
+  type LeaderboardEntry,
+  type LeaderboardGame,
+  SCORE_ORDER,
+} from "./board";
 import { type OpenRun, Scores } from "./leaderboard";
 
 type State = {
@@ -46,13 +51,20 @@ export const layerInMemory = () =>
           top: (game, count) =>
             Effect.map(Ref.get(state), (s) =>
               [...board(s, game).values()]
-                .sort((a, b) => b.score - a.score)
+                .sort((a, b) =>
+                  SCORE_ORDER[game] === "lowest"
+                    ? a.score - b.score
+                    : b.score - a.score,
+                )
                 .slice(0, count),
             ),
           record: (game, entry) =>
             Ref.update(state, (s) => {
               const current = board(s, game).get(entry.playerId);
-              const best = Math.max(current?.score ?? 0, entry.score);
+              const best =
+                current && !beats(SCORE_ORDER[game], entry.score, current.score)
+                  ? current.score
+                  : entry.score;
               return withBoard(
                 s,
                 game,
