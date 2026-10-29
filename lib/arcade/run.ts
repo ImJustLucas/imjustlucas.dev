@@ -12,9 +12,19 @@ export const random = (seed: number): readonly [number, number] => {
   return [((t ^ (t >>> 14)) >>> 0) / 4294967296, next];
 };
 
-/** The better of a stored best and a finished run. */
-export const bestOf = (stored: number | null, run: number) =>
-  Math.max(stored ?? 0, run);
+/**
+ * The better of a stored best and a finished run: the higher, or for a
+ * time the lower (a run of 0, a table not cleared, never beats a time).
+ */
+export const bestOf = (
+  stored: number | null,
+  run: number,
+  order: "highest" | "lowest" = "highest",
+) => {
+  if (order === "highest") return Math.max(stored ?? 0, run);
+  if (run <= 0) return stored;
+  return stored === null ? run : Math.min(stored, run);
+};
 
 /** A stored best score, or null when it is missing or not a score. */
 export const parseBest = (raw: string | null): number | null => {

@@ -1246,5 +1246,37 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/65"
+  },
+  {
+    "version": "2.30",
+    "date": "2026-10-29",
+    "title": {
+      "en": "A coffee break",
+      "fr": "Une pause café"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A third cabinet in the arcade: Café, a minesweeper on a Paris café terrace ☕ turn the saucers without knocking over the cups hidden under them, the numbers are poured in latte art",
+          "fr": "Une troisième borne dans l'arcade : Café, un démineur sur une terrasse parisienne ☕ retourne les soucoupes sans renverser les tasses cachées dessous, les chiffres sont en latte art"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Every table is fair: your first saucer is always safe and you never have to guess. Stuck? A petit café turns a safe saucer for you, for 10 more seconds",
+          "fr": "Chaque table est juste : ta première soucoupe est toujours sûre et tu n'as jamais à deviner. Bloqué ? Un petit café retourne une soucoupe sûre pour toi, contre 10 secondes de plus"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Its own top 10, ranked on your time, and two new trophies, one of them for clearing a table without a single sugar",
+          "fr": "Son propre top 10, classé au chrono, et deux nouveaux trophées, dont un pour débarrasser une table sans poser un seul sucre"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/66"
   }
 ]

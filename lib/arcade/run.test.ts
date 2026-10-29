@@ -22,6 +22,12 @@ describe("the best score", () => {
     expect(bestOf(null, 120)).toBe(120);
     expect(bestOf(300, 120)).toBe(300);
     expect(bestOf(100, 120)).toBe(120);
+    // A time: the lower, and a table not cleared never beats one
+    expect(bestOf(null, 4210, "lowest")).toBe(4210);
+    expect(bestOf(3990, 4210, "lowest")).toBe(3990);
+    expect(bestOf(5000, 4210, "lowest")).toBe(4210);
+    expect(bestOf(5000, 0, "lowest")).toBe(5000);
+    expect(bestOf(null, 0, "lowest")).toBeNull();
   });
 
   it("reads only a whole, non-negative stored score", () => {

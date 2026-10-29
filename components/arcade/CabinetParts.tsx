@@ -50,9 +50,15 @@ const INPUT =
 export function Marquee({
   cabinet,
   best,
+  format = pad,
+  empty = "-----",
 }: {
   cabinet: CabinetId;
   best: number | null;
+  /** How the game writes a score (Café: a time). */
+  format?: (score: number) => string;
+  /** The best before a first run. */
+  empty?: string;
 }) {
   const t = useTranslations("Arcade");
   return (
@@ -62,7 +68,7 @@ export function Marquee({
       </TypographyTitle>
       <TypographyData className="text-ink-muted">
         {t("best")}{" "}
-        <span className="text-ink">{best === null ? "-----" : pad(best)}</span>
+        <span className="text-ink">{best === null ? empty : format(best)}</span>
       </TypographyData>
     </div>
   );
@@ -108,14 +114,22 @@ export function ScreenScore({
 export function ScreenCard({
   children,
   bare = false,
+  className,
 }: {
   children: React.ReactNode;
   /** On phones, the button stands alone on the screen, with no card. */
   bare?: boolean;
+  /** Where the card stands, when not clear of the left quarter. */
+  className?: string;
 }) {
   return (
     // Clear of Lucas, who rides in the left quarter of the screen
-    <div className="absolute inset-y-0 left-[27%] right-0 flex items-center justify-center p-3">
+    <div
+      className={cn(
+        "absolute inset-y-0 left-[27%] right-0 flex items-center justify-center p-3",
+        className,
+      )}
+    >
       <div
         className={cn(
           "float flex max-w-full flex-col items-center gap-2 rounded-lg border-2 border-seam bg-raised px-3 py-2.5 text-center sm:gap-4 sm:px-6 sm:py-5",
@@ -321,24 +335,40 @@ export function NameEntry({
   );
 }
 
-/** Under the screen: the hint, and pause / resume pushed right. */
+/**
+ * Under the screen: the hint, and pause / resume pushed right, after the
+ * game's own buttons (`children`).
+ */
 export function Deck({
   cabinet,
   hintId,
   screen,
   onPause,
   onResume,
+  children,
 }: {
   cabinet: CabinetId;
   hintId: string;
   screen: CabinetScreen;
   onPause: () => void;
   onResume: () => void;
+  children?: React.ReactNode;
 }) {
   const t = useTranslations("Arcade");
   return (
-    <div className="flex items-center gap-x-4 gap-y-3 sm:px-1">
-      <TypographyMuted className="flex items-center gap-2">
+    // With the game's own buttons, a phone gives the hint its own line
+    <div
+      className={cn(
+        "flex items-center gap-x-4 gap-y-3 sm:px-1",
+        children && "max-sm:flex-wrap",
+      )}
+    >
+      <TypographyMuted
+        className={cn(
+          "flex items-center gap-2",
+          children && "max-sm:basis-full",
+        )}
+      >
         <span id={hintId} className="contents">
           <Keyboard
             aria-hidden
@@ -356,8 +386,9 @@ export function Deck({
           </span>
         </span>
       </TypographyMuted>
+      {children}
       <Button
-        className="ml-auto shrink-0"
+        className={cn("shrink-0", children ? "max-sm:ml-auto" : "ml-auto")}
         disabled={screen !== "running" && screen !== "paused"}
         onClick={screen === "paused" ? onResume : onPause}
       >

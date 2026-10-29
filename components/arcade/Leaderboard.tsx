@@ -8,11 +8,9 @@ import {
   TypographyTag,
   TypographyTitle,
 } from "@/components/typography";
-import { type Board, LEADERBOARD_SIZE } from "@/lib/arcade/board";
+import { type Board, formatScore, LEADERBOARD_SIZE } from "@/lib/arcade/board";
 import type { CabinetId } from "@/lib/arcade/cabinets";
 import { cn } from "@/lib/utils";
-
-const pad = (value: number) => String(value).padStart(5, "0");
 
 /**
  * A cabinet's leaderboard (DESIGN.md, Arcade): the ten best players, best
@@ -82,7 +80,7 @@ export function Leaderboard({
                   </TypographyTag>
                 )}
                 <TypographyData className="ml-auto shrink-0 text-ink">
-                  {pad(entry.score)}
+                  {formatScore(cabinet, entry.score)}
                 </TypographyData>
               </li>
             );

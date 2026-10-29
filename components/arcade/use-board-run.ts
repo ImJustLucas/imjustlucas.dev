@@ -7,7 +7,13 @@ import { startRunAction, submitRunAction } from "@/app/[locale]/arcade/actions";
 import type { ScreenProps } from "@/components/arcade/screen";
 import { useSounds } from "@/components/sound/SoundProvider";
 import { unlockTrophy } from "@/components/trophies/trophy-store";
-import { type LeaderboardGame, wouldRank } from "@/lib/arcade/board";
+import {
+  type LeaderboardGame,
+  type RunInput,
+  SCORE_ORDER,
+  type ScoreOrder,
+  wouldRank,
+} from "@/lib/arcade/board";
 import { type NameProblem, parseName } from "@/lib/arcade/player-name";
 import { bestOf, parseBest } from "@/lib/arcade/run";
 
@@ -19,12 +25,9 @@ export type Entry =
   | { readonly kind: "ranked"; readonly rank: number }
   | { readonly kind: "missed" };
 
-/** A press or release, at the step the run had reached. */
-type Input = { readonly step: number; readonly press: boolean };
-
 /** A run handed out by the server, and the inputs made in it. */
 type Run = { readonly runId: string; readonly seed: number };
-type FinishedRun = Run & { readonly inputs: ReadonlyArray<Input> };
+type FinishedRun = Run & { readonly inputs: ReadonlyArray<RunInput> };
 
 /**
  * A cabinet's runs and the leaderboard (docs/arcade.md): each run is one
@@ -113,7 +116,7 @@ export const useBoardRun = (
 
   /** The run is over with `points`: sent when it would make the board. */
   const end = useCallback(
-    (points: number, inputs: ReadonlyArray<Input>) => {
+    (points: number, inputs: ReadonlyArray<RunInput>) => {
       unlockTrophy(game);
       const run = activeRun.current;
       activeRun.current = null;
@@ -122,7 +125,7 @@ export const useBoardRun = (
         run &&
         player &&
         board?.kind === "board" &&
-        wouldRank(board.top, player.id, points)
+        wouldRank(board.top, player.id, points, SCORE_ORDER[game])
       ) {
         finished.current = { ...run, inputs };
         if (player.name) send(player.name);
@@ -152,9 +155,10 @@ export const useBoardRun = (
 
 /**
  * The visitor's own best at a game, kept in their browser under `key` (for
- * the visit only when storage refuses). Null before a first run.
+ * the visit only when storage refuses), the highest score or, for a time,
+ * the lowest (`order`). Null before a first run (a first cleared table).
  */
-export const useBest = (key: string) => {
+export const useBest = (key: string, order: ScoreOrder = "highest") => {
   const [best, setBest] = useState<number | null>(null);
   const stored = useRef<number | null>(null);
 
@@ -173,8 +177,13 @@ export const useBest = (key: string) => {
   /** A finished run's score: the new best, and whether it beat the old one. */
   const record = useCallback(
     (points: number) => {
-      const newBest = points > 0 && points > (stored.current ?? 0);
-      const next = bestOf(stored.current, points);
+      const newBest =
+        points > 0 &&
+        (order === "lowest" && stored.current !== null
+          ? points < stored.current
+          : points > (stored.current ?? 0));
+      // A time is only recorded once its table is cleared, so never null
+      const next = bestOf(stored.current, points, order) ?? points;
       if (newBest) {
         try {
           window.localStorage.setItem(key, String(next));
@@ -186,7 +195,7 @@ export const useBest = (key: string) => {
       setBest(next);
       return { best: next, newBest };
     },
-    [key],
+    [key, order],
   );
 
   return { best, record };

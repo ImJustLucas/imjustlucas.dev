@@ -24,14 +24,24 @@ import {
 import { chibiFrames } from "@/lib/chibi";
 import { cn } from "@/lib/utils";
 
-/** The cabinet's shape while its game loads (no layout shift), and a tip. */
-function CabinetLoading() {
+/**
+ * The cabinet's shape while its game loads (no layout shift), and a tip;
+ * `tall` for a screen of 4:5 on phones and 4:3 from 640px (Café's table).
+ */
+function CabinetLoading({ tall = false }: { tall?: boolean }) {
   const t = useTranslations("Arcade");
   return (
     <div className="tray flex flex-col gap-3 rounded-lg bg-raised p-3 sm:gap-4 sm:p-4">
       <div className="h-8 px-1" />
       {/* On a phone the ring sits a little high, leaving the foot to the tip */}
-      <div className="relative flex aspect-[3/2] items-center justify-center rounded-md bg-ground pb-10 sm:aspect-video sm:pb-0">
+      <div
+        className={cn(
+          "relative flex items-center justify-center rounded-md bg-ground pb-10 sm:pb-0",
+          tall
+            ? "aspect-[4/5] sm:aspect-[4/3]"
+            : "aspect-[3/2] sm:aspect-video",
+        )}
+      >
         <div
           role="status"
           aria-label={t("loading")}
@@ -48,11 +58,15 @@ function CabinetLoading() {
 const SCREENS: Record<CabinetId, React.ComponentType<ScreenProps> | null> = {
   ollie: dynamic(() => import("./ollie/OllieGame"), {
     ssr: false,
-    loading: CabinetLoading,
+    loading: () => <CabinetLoading />,
   }),
   surf: dynamic(() => import("./surf/SurfGame"), {
     ssr: false,
-    loading: CabinetLoading,
+    loading: () => <CabinetLoading />,
+  }),
+  cafe: dynamic(() => import("./cafe/CafeGame"), {
+    ssr: false,
+    loading: () => <CabinetLoading tall />,
   }),
 };
 

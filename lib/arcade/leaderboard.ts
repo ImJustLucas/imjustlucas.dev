@@ -1,13 +1,17 @@
 import { Clock, Context, Data, Effect, Random, Schema } from "effect";
 
 import {
+  type CellInput,
   LEADERBOARD_GAMES,
   LEADERBOARD_SIZE,
   type LeaderboardEntry,
   type LeaderboardGame,
+  type PressInput,
+  type RunInput,
   type StartedRun,
   type SubmittedRun,
 } from "@/lib/arcade/board";
+import * as cafe from "@/lib/arcade/cafe";
 import * as ollie from "@/lib/arcade/ollie";
 import { isPlayerId, parseName } from "@/lib/arcade/player-name";
 import * as surf from "@/lib/arcade/surf";
@@ -18,7 +22,8 @@ import * as surf from "@/lib/arcade/surf";
  * score is never taken from the browser: the server hands out each run's
  * seed, the browser sends back the presses it made, and the server replays
  * the run with the game's own rules to know its score. The plain shapes are
- * in `board.ts`.
+ * in `board.ts`; a game's best is its highest score, or its lowest time
+ * (`SCORE_ORDER`).
  */
 
 /** How long a run handed out stays open for its result (3 hours). */
@@ -33,33 +38,56 @@ export const LIMITS = {
 /** What a replay says of a run: how many steps it took, and its score. */
 type Replayed = { readonly steps: number; readonly points: number };
 
-type Input = { readonly step: number; readonly press: boolean };
+/** The inputs, when they are all presses (Ollie, Surf); else null. */
+const presses = (inputs: ReadonlyArray<RunInput>) =>
+  inputs.every((input) => "press" in input)
+    ? (inputs as ReadonlyArray<PressInput>)
+    : null;
+
+/** The inputs, when they are all actions on a cell (Café); else null. */
+const cellInputs = (inputs: ReadonlyArray<RunInput>) =>
+  inputs.every((input) => "cell" in input)
+    ? (inputs as ReadonlyArray<CellInput>)
+    : null;
 
 /**
  * Each game's own rules, replaying a run from its seed and inputs: null when
- * the inputs do not make a run that could have been played.
+ * the inputs do not make a run that could have been played (or, in Café, a
+ * table that was not cleared).
  */
 const REPLAY: {
   readonly [G in LeaderboardGame]: {
     readonly step: number;
     readonly replay: (
       seed: number,
-      inputs: ReadonlyArray<Input>,
+      inputs: ReadonlyArray<RunInput>,
     ) => Replayed | null;
   };
 } = {
   ollie: {
     step: ollie.STEP,
     replay: (seed, inputs) => {
-      const run = ollie.replayOllie(seed, inputs);
+      const pressed = presses(inputs);
+      const run = pressed && ollie.replayOllie(seed, pressed);
       return run && { steps: run.steps, points: ollie.score(run) };
     },
   },
   surf: {
     step: surf.STEP,
     replay: (seed, inputs) => {
-      const run = surf.replaySurf(seed, inputs);
+      const pressed = presses(inputs);
+      const run = pressed && surf.replaySurf(seed, pressed);
       return run && { steps: run.steps, points: surf.score(run) };
+    },
+  },
+  cafe: {
+    step: cafe.STEP,
+    replay: (seed, inputs) => {
+      const actions = cellInputs(inputs);
+      const run = actions && cafe.replayCafe(seed, actions);
+      return run?.phase === "won"
+        ? { steps: run.steps, points: cafe.score(run) }
+        : null;
     },
   },
 };
@@ -139,7 +167,14 @@ const Submission = Schema.Struct({
   playerId: Schema.String,
   name: Schema.String,
   inputs: Schema.Array(
-    Schema.Struct({ step: Schema.Number, press: Schema.Boolean }),
+    Schema.Union([
+      Schema.Struct({ step: Schema.Number, press: Schema.Boolean }),
+      Schema.Struct({
+        step: Schema.Number,
+        cell: Schema.Number,
+        action: Schema.Literals(cafe.CAFE_ACTIONS),
+      }),
+    ]),
   ).check(Schema.isMaxLength(MAX_INPUTS)),
 });
 
@@ -167,7 +202,7 @@ export const submitRun = (input: unknown, client: string) =>
     const run = yield* scores.takeRun(runId);
     if (!run) return { kind: "expired" } as SubmittedRun;
 
-    // The game's own rules play the run again
+    // The game's own rules play the run again (Café's only a cleared table)
     const rules = REPLAY[run.game];
     const played = rules.replay(run.seed, inputs);
     if (!played) return { kind: "refused" } as SubmittedRun;

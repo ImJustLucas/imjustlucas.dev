@@ -2,6 +2,7 @@ import { Effect, Random } from "effect";
 import { TestClock } from "effect/testing";
 
 import { LEADERBOARD_SIZE, wouldRank } from "./board";
+import * as cafe from "./cafe";
 import {
   leaderboard,
   LIMITS,
@@ -338,5 +339,110 @@ describe("whether a run would rank", () => {
   it("ranks a player already on the board only above their best", () => {
     expect(wouldRank(board, "p3", 85)).toBe(false);
     expect(wouldRank(board, "p3", 86)).toBe(true);
+  });
+});
+
+/**
+ * Plays a Café run of `seed` as the cabinet would: the middle saucer, then
+ * every safe one, one every `pace` hundredths; `spill` knocks a cup over
+ * instead of clearing.
+ */
+const playCafe = (seed: number, pace: number, spill = false) => {
+  const state = cafe.createCafe(seed);
+  const inputs: cafe.CafeInput[] = [];
+  let step = 0;
+  const input = (cell: number) => {
+    const made = { step, cell, action: "reveal" as const };
+    cafe.act(state, made);
+    if (state.events.length > 0) inputs.push(made);
+    step += pace;
+  };
+  input(40);
+  if (spill) input(state.cups.indexOf(true));
+  for (let cell = 0; cell < cafe.CELLS; cell += 1) {
+    if (state.phase !== "running") break;
+    if (!state.open[cell] && !state.cups[cell]) input(cell);
+  }
+  return {
+    inputs,
+    score: cafe.score(state),
+    seconds: state.steps * cafe.STEP,
+  };
+};
+
+const sendCafe = (playerId: string, pace: number, spill = false) =>
+  Effect.gen(function* () {
+    const started = yield* startRun("cafe", "1.2.3.4");
+    if (started.kind !== "started") throw new Error("not started");
+    const run = playCafe(started.seed, pace, spill);
+    yield* TestClock.adjust(`${Math.ceil(run.seconds) + 1} seconds`);
+    const result = yield* submitRun(
+      { runId: started.runId, playerId, name: "Léa", inputs: run.inputs },
+      `client-${playerId}`,
+    );
+    return { run, result };
+  });
+
+describe("a Café run sent to the leaderboard", () => {
+  it.effect("is replayed, and its time kept, the fastest first", () =>
+    Effect.gen(function* () {
+      const slow = yield* sendCafe(LEA, 90);
+      const fast = yield* sendCafe(TOM, 30);
+      expect(slow.result).toMatchObject({ kind: "ranked", rank: 1 });
+      expect(fast.result).toMatchObject({
+        kind: "ranked",
+        score: fast.run.score,
+        rank: 1,
+      });
+      const board = yield* leaderboard("cafe");
+      expect(board.map((entry) => entry.playerId)).toEqual([TOM, LEA]);
+      expect(board[0].score).toBeLessThan(board[1].score);
+      expect(yield* leaderboard("ollie")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("cafe")),
+  );
+
+  it.effect("keeps a player's fastest time, not their last", () =>
+    Effect.gen(function* () {
+      const fast = yield* sendCafe(LEA, 30);
+      const slow = yield* sendCafe(LEA, 90);
+      expect(slow.result.kind).toBe("unranked");
+      expect(yield* leaderboard("cafe")).toEqual([
+        { playerId: LEA, name: "Léa", score: fast.run.score },
+      ]);
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("cafe")),
+  );
+
+  it.effect("refuses a table not cleared, and Ollie's presses", () =>
+    Effect.gen(function* () {
+      const spilled = yield* sendCafe(LEA, 40, true);
+      expect(spilled.result).toEqual({ kind: "refused" });
+      const started = yield* startRun("cafe", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      yield* TestClock.adjust("1 hour");
+      const presses = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs: [{ step: 0, press: true }],
+        },
+        "1.2.3.4",
+      );
+      expect(presses).toEqual({ kind: "refused" });
+      expect(yield* leaderboard("cafe")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory())),
+  );
+
+  it("would rank a time below the board's slowest", () => {
+    const times = Array.from({ length: LEADERBOARD_SIZE }, (_, i) => ({
+      playerId: `p${i}`,
+      name: `P${i}`,
+      score: 3000 + i * 500,
+    }));
+    expect(wouldRank(times, null, 7499, "lowest")).toBe(true);
+    expect(wouldRank(times, null, 7500, "lowest")).toBe(false);
+    expect(wouldRank(times, "p2", 4000, "lowest")).toBe(false);
+    expect(wouldRank(times, "p2", 3999, "lowest")).toBe(true);
+    expect(wouldRank(times, null, 0, "lowest")).toBe(false);
   });
 });
