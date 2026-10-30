@@ -16,7 +16,12 @@ import {
 } from "@/lib/arcade/board";
 import { getArcadeBoard } from "@/lib/arcade/server";
 
-const GAME_NAMES = { ollie: "Ollie", surf: "Surf", cafe: "Café" } as const;
+const GAME_NAMES = {
+  ollie: "Ollie",
+  surf: "Surf",
+  cafe: "Café",
+  merge: "Merge",
+} as const;
 
 /**
  * The Arcade's leaderboards, as visitors see them: the Owner takes off a

@@ -1,4 +1,5 @@
 import type { CafeAction } from "@/lib/arcade/cafe";
+import type { Move } from "@/lib/arcade/merge";
 
 /**
  * The Arcade's leaderboards as plain data: what the server returns and the
@@ -7,7 +8,7 @@ import type { CafeAction } from "@/lib/arcade/cafe";
  */
 
 /** The games with a leaderboard. */
-export const LEADERBOARD_GAMES = ["ollie", "surf", "cafe"] as const;
+export const LEADERBOARD_GAMES = ["ollie", "surf", "cafe", "merge"] as const;
 export type LeaderboardGame = (typeof LEADERBOARD_GAMES)[number];
 
 export const isLeaderboardGame = (game: string): game is LeaderboardGame =>
@@ -23,6 +24,7 @@ export const SCORE_ORDER: { readonly [G in LeaderboardGame]: ScoreOrder } = {
   ollie: "highest",
   surf: "highest",
   cafe: "lowest",
+  merge: "highest",
 };
 
 /** Whether `score` beats `than` in a game going `order`. */
@@ -45,7 +47,7 @@ export const formatScore = (game: LeaderboardGame, score: number) =>
 
 /**
  * What a run sends back: a press or release at the step it landed on
- * (Ollie, Surf), or an action on a cell (Café).
+ * (Ollie, Surf), an action on a cell (Café), or a move (Merge).
  */
 export type PressInput = { readonly step: number; readonly press: boolean };
 export type CellInput = {
@@ -53,7 +55,8 @@ export type CellInput = {
   readonly cell: number;
   readonly action: CafeAction;
 };
-export type RunInput = PressInput | CellInput;
+export type MoveInput = { readonly step: number; readonly move: Move };
+export type RunInput = PressInput | CellInput | MoveInput;
 
 /** How many players a leaderboard shows. */
 export const LEADERBOARD_SIZE = 10;

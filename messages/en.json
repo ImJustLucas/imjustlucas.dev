@@ -433,6 +433,52 @@
           "cup": "a cup knocked over"
         }
       },
+      "merge": {
+        "name": "Merge",
+        "tagline": "merge commits all the way to v2.0",
+        "poseAlt": "Lucas coding on his laptop",
+        "game": "Merge, a 2048 in git: slide the tiles on a 4 by 4 board, and two equal tiles meeting merge into one worth both. Two typo fixes make a commit, two commits a branch, then a PR, a review, a feature, a hotfix, a sprint, a milestone, a release candidate, and at 2048 you ship v2.0. A new tile lands after every move, and the run ends when no move is left.",
+        "hint": "arrows or WASD to slide the tiles, R reads the board, esc to pause",
+        "hintTouch": "swipe the board to slide the tiles",
+        "started": "Run started. Arrows or WASD slide every tile, R reads the board.",
+        "empty": "nobody on the board yet, your turn 💻",
+        "rules": {
+          "move": "<b>slide</b> arrows or WASD push every tile as far as it goes",
+          "moveTouch": "<b>slide</b> swipe the board to push every tile as far as it goes",
+          "merge": "<b>merge</b> two equal tiles meeting become one, worth both. a tile merges once a move",
+          "ladder": "<b>the ladder</b> typo fix, commit, branch, PR, review, feature, hotfix, sprint, milestone, RC, then v2.0",
+          "rarity": "<b>rarity</b> common, rare, then epic as you climb. v2.0 is legendary",
+          "spawn": "<b>new code</b> after every move a 2 lands on an empty cell, sometimes a 4",
+          "score": "<b>score</b> every merge adds the value it makes",
+          "ship": "<b>ship it</b> reach 2048 to ship v2.0, then keep going for v3.0",
+          "conflict": "<b>merge conflict</b> no move left and the run is over: the best make the top 10",
+          "keys": "<b>keyboard</b> arrows or WASD to slide, R reads the board out loud, esc to pause"
+        },
+        "tiers": {
+          "typo": "typo fix",
+          "commit": "commit",
+          "branch": "branch",
+          "pr": "PR",
+          "review": "review",
+          "feature": "feature",
+          "hotfix": "hotfix",
+          "sprint": "sprint",
+          "milestone": "milestone",
+          "rc": "RC"
+        },
+        "file": "release.ts",
+        "branch": "main",
+        "merged": "merged",
+        "shipped": "v2.0 shipped!",
+        "shippedLive": "2048 reached: v2.0 shipped! Keep going.",
+        "topLive": "New top tile: {value}, {name}.",
+        "over": "merge conflict!",
+        "overLive": "Merge conflict, no move left. Score {score}, top tile {top}. Best: {best}.",
+        "overBest": "Merge conflict, no move left. Score {score}, a new best! Top tile {top}.",
+        "top": "top tile",
+        "row": "row {row}: {cells}",
+        "emptyCell": "empty"
+      },
       "ollie": {
         "name": "Ollie",
         "tagline": "skate a Paris street: kickflips, grinds and combos",
@@ -753,6 +799,10 @@
         "name": "first espresso",
         "how": "play a game of Café"
       },
+      "merge": {
+        "name": "first merge",
+        "how": "play a game of Merge"
+      },
       "bilingual": {
         "name": "bilingual",
         "how": "see the site in english and in french"
@@ -784,6 +834,10 @@
       "noSugar": {
         "name": "no sugar",
         "how": "clear a Café table without placing a single sugar"
+      },
+      "shipped": {
+        "name": "shipped it",
+        "how": "ship v2.0: reach 2048 in Merge"
       },
       "waved": {
         "name": "hey you",

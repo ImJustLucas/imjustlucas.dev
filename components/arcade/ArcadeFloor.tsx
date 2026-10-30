@@ -26,7 +26,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * The cabinet's shape while its game loads (no layout shift), and a tip;
- * `tall` for a screen of 4:5 on phones and 4:3 from 640px (Café's table).
+ * `tall` for a screen of 4:5 on phones and 4:3 from 640px (Café's table,
+ * Merge's editor).
  */
 function CabinetLoading({ tall = false }: { tall?: boolean }) {
   const t = useTranslations("Arcade");
@@ -65,6 +66,10 @@ const SCREENS: Record<CabinetId, React.ComponentType<ScreenProps> | null> = {
     loading: () => <CabinetLoading />,
   }),
   cafe: dynamic(() => import("./cafe/CafeGame"), {
+    ssr: false,
+    loading: () => <CabinetLoading tall />,
+  }),
+  merge: dynamic(() => import("./merge/MergeGame"), {
     ssr: false,
     loading: () => <CabinetLoading tall />,
   }),

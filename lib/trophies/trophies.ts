@@ -42,6 +42,7 @@ export type TrophyId =
   | "ollie"
   | "surf"
   | "cafe"
+  | "merge"
   | "bilingual"
   | "dayNight"
   | "whatsNew"
@@ -50,6 +51,7 @@ export type TrophyId =
   | "painter"
   | "friendRequest"
   | "noSugar"
+  | "shipped"
   | "waved"
   | "seenOnline"
   | "coinRain"
@@ -81,6 +83,7 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
   { id: "ollie", rarity: "common" },
   { id: "surf", rarity: "common" },
   { id: "cafe", rarity: "common" },
+  { id: "merge", rarity: "common" },
   { id: "bilingual", rarity: "common", tally: { of: "locales" } },
   { id: "dayNight", rarity: "common", tally: { of: "modes" } },
   { id: "whatsNew", rarity: "common" },
@@ -94,6 +97,7 @@ export const TROPHIES: ReadonlyArray<Trophy> = [
   { id: "rainyDay", rarity: "rare" },
   { id: "combo", rarity: "rare" },
   { id: "top10", rarity: "epic" },
+  { id: "shipped", rarity: "epic" },
   { id: "coinRain", rarity: "epic", secret: true },
   {
     id: "firstSecret",

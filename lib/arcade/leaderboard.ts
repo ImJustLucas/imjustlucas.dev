@@ -6,12 +6,14 @@ import {
   LEADERBOARD_SIZE,
   type LeaderboardEntry,
   type LeaderboardGame,
+  type MoveInput,
   type PressInput,
   type RunInput,
   type StartedRun,
   type SubmittedRun,
 } from "@/lib/arcade/board";
 import * as cafe from "@/lib/arcade/cafe";
+import * as merge from "@/lib/arcade/merge";
 import * as ollie from "@/lib/arcade/ollie";
 import { isPlayerId, parseName } from "@/lib/arcade/player-name";
 import * as surf from "@/lib/arcade/surf";
@@ -48,6 +50,12 @@ const presses = (inputs: ReadonlyArray<RunInput>) =>
 const cellInputs = (inputs: ReadonlyArray<RunInput>) =>
   inputs.every((input) => "cell" in input)
     ? (inputs as ReadonlyArray<CellInput>)
+    : null;
+
+/** The inputs, when they are all moves (Merge); else null. */
+const moves = (inputs: ReadonlyArray<RunInput>) =>
+  inputs.every((input) => "move" in input)
+    ? (inputs as ReadonlyArray<MoveInput>)
     : null;
 
 /**
@@ -90,10 +98,25 @@ const REPLAY: {
         : null;
     },
   },
+  merge: {
+    step: merge.STEP,
+    replay: (seed, inputs) => {
+      const moved = moves(inputs);
+      const run = moved && merge.replayMerge(seed, moved);
+      return run && { steps: run.steps, points: merge.score(run) };
+    },
+  },
 };
 
-/** The most inputs a result may carry: one press and release every 5 steps. */
-const MAX_INPUTS = Math.max(ollie.MAX_RUN_STEPS, surf.MAX_RUN_STEPS) / 10;
+/**
+ * The most inputs a result may carry: one press and release every 5 steps,
+ * or Merge's most moves.
+ */
+const MAX_INPUTS = Math.max(
+  ollie.MAX_RUN_STEPS / 10,
+  surf.MAX_RUN_STEPS / 10,
+  merge.MAX_MOVES,
+);
 
 /** A run handed out, waiting for its result. */
 export const OpenRun = Schema.Struct({
@@ -173,6 +196,10 @@ const Submission = Schema.Struct({
         step: Schema.Number,
         cell: Schema.Number,
         action: Schema.Literals(cafe.CAFE_ACTIONS),
+      }),
+      Schema.Struct({
+        step: Schema.Number,
+        move: Schema.Literals(merge.MOVES),
       }),
     ]),
   ).check(Schema.isMaxLength(MAX_INPUTS)),

@@ -1278,5 +1278,36 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/66"
+  },
+  {
+    "version": "2.31",
+    "date": "2026-10-30",
+    "title": {
+      "en": "Ship it",
+      "fr": "On livre"
+    },
+    "entries": [
+      {
+        "tag": "new",
+        "text": {
+          "en": "A fourth cabinet in the arcade: Merge, a 2048 in git 💻 slide the tiles and merge typo fixes into commits, commits into branches, all the way up to 2048 to ship v2.0",
+          "fr": "Une quatrième borne dans l'arcade : Merge, un 2048 version git 💻 fais glisser les tuiles et merge des typos en commits, des commits en branches, jusqu'à 2048 pour livrer la v2.0"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "The tiles wear the site's rarities as you climb, common, rare, epic, and v2.0 is legendary. Shipping it doesn't end the run: keep going for v3.0",
+          "fr": "Les tuiles prennent les raretés du site à mesure que tu montes, commune, rare, épique, et la v2.0 est légendaire. La livrer ne termine pas la partie : continue pour la v3.0"
+        }
+      },
+      {
+        "tag": "new",
+        "text": {
+          "en": "Arrows, WASD or a swipe on your phone, its own top 10, and two new trophies, one of them for shipping v2.0",
+          "fr": "Les flèches, ZQSD ou un glissé sur ton téléphone, son propre top 10, et deux nouveaux trophées, dont un pour livrer la v2.0"
+        }
+      }
+    ]
   }
 ]

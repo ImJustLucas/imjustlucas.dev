@@ -151,6 +151,9 @@ export function ScreenCards({
   entry,
   onPlay,
   onResume,
+  overTitle,
+  extra,
+  place,
 }: {
   screen: CabinetScreen;
   best: number | null;
@@ -158,6 +161,12 @@ export function ScreenCards({
   entry: Entry;
   onPlay: () => void;
   onResume: () => void;
+  /** The game's own words for a run over ("merge conflict!"). */
+  overTitle?: string;
+  /** A line of the game's own under the score, once over. */
+  extra?: React.ReactNode;
+  /** Where the cards stand, when not clear of the left quarter. */
+  place?: string;
 }) {
   const t = useTranslations("Arcade");
   const { play } = useSounds();
@@ -165,7 +174,7 @@ export function ScreenCards({
 
   if (screen === "ready") {
     return (
-      <ScreenCard bare>
+      <ScreenCard bare className={place}>
         <TypographyData className="hidden text-ink-muted sm:block">
           {best === null ? (
             t("firstRun")
@@ -192,7 +201,7 @@ export function ScreenCards({
 
   if (screen === "paused") {
     return (
-      <ScreenCard>
+      <ScreenCard className={place}>
         <TypographyTitle as="p">{t("paused")}</TypographyTitle>
         <Button
           variant="play"
@@ -208,16 +217,17 @@ export function ScreenCards({
 
   if (screen !== "over" || !result) return null;
   return (
-    <ScreenCard>
+    <ScreenCard className={place}>
       <div className="flex flex-col items-center gap-1">
         <TypographyTitle as="p">
-          {result.newBest ? t("newBest") : t("gameOver")}
+          {result.newBest ? t("newBest") : (overTitle ?? t("gameOver"))}
         </TypographyTitle>
         <TypographyData className="whitespace-nowrap text-ink-muted">
           {t("score")} <span className="text-ink">{pad(result.score)}</span>
           {"  "}
           {t("best")} <span className="text-ink">{pad(result.best)}</span>
         </TypographyData>
+        {extra}
         {entry.kind === "ranked" && (
           <TypographyData className="flex items-center gap-1.5 text-action-ink">
             <Trophy aria-hidden className="size-4" />
