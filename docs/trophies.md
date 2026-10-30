@@ -34,11 +34,12 @@ Where each Trophy unlocks:
 | Trophy | Where |
 | --- | --- |
 | inspector, whatsNew, tour, bilingual, dayNight, painter, seenOnline | `TrophyLayer` |
-| ollie, surf, cafe | a finished run, `useBoardRun` (`components/arcade/use-board-run.ts`), with the game's id |
+| ollie, surf, cafe, merge | a finished run, `useBoardRun` (`components/arcade/use-board-run.ts`), with the game's id |
 | top10 | a run landing on the Leaderboard, same file |
 | combo | a x5 combo in Ollie (`components/arcade/ollie/OllieGame.tsx`) |
 | friendRequest | the add-friend button on Contact (`components/contact/FriendRequest.tsx`) |
 | noSugar | a Café table cleared without a sugar ever put down (`components/arcade/cafe/CafeGame.tsx`) |
+| shipped | v2.0 shipped, the first 2048 of a Merge run (`components/arcade/merge/MergeGame.tsx`) |
 | waved | a Poke that went out to Lucas's Discord (`components/poke/PokeProvider.tsx`, docs/poke.md) |
 | coinRain | a coin thrown on MasterDevFrance 2025 (`master-dev-scene.tsx`) |
 | radio, rainyDay | a radio track actually playing, the second with the rain on (`components/radio/RadioProvider.tsx`) |

@@ -12,6 +12,7 @@ import {
   submitRun,
 } from "./leaderboard";
 import { layerInMemory } from "./leaderboard-in-memory";
+import * as merge from "./merge";
 import {
   advance,
   createOllie,
@@ -445,4 +446,107 @@ describe("a Café run sent to the leaderboard", () => {
     expect(wouldRank(times, "p2", 3999, "lowest")).toBe(true);
     expect(wouldRank(times, null, 0, "lowest")).toBe(false);
   });
+});
+
+/**
+ * Plays a Merge run of `seed` as the cabinet would, a move every `pace`
+ * hundredths, trying the moves in `order` until one moves something, to
+ * the end (or for `moves` moves only).
+ */
+const playMerge = (
+  seed: number,
+  pace: number,
+  order: ReadonlyArray<merge.Move>,
+  moves = Infinity,
+) => {
+  const state = merge.createMerge(seed);
+  const inputs: merge.MergeInput[] = [];
+  let step = 0;
+  while (state.phase === "running" && inputs.length < moves) {
+    step += pace;
+    for (const move of order) {
+      const made = { step, move };
+      merge.act(state, made);
+      if (state.events.length > 0) {
+        inputs.push(made);
+        break;
+      }
+    }
+  }
+  return {
+    inputs,
+    score: merge.score(state),
+    seconds: state.steps * merge.STEP,
+  };
+};
+
+const CORNER = ["down", "left", "right", "up"] as const;
+const CLUMSY = ["up", "right", "down", "left"] as const;
+
+const sendMerge = (
+  playerId: string,
+  order: ReadonlyArray<merge.Move>,
+  options: { readonly moves?: number; readonly wait?: boolean } = {},
+) =>
+  Effect.gen(function* () {
+    const started = yield* startRun("merge", "1.2.3.4");
+    if (started.kind !== "started") throw new Error("not started");
+    const run = playMerge(started.seed, 20, order, options.moves);
+    if (options.wait !== false) {
+      yield* TestClock.adjust(`${Math.ceil(run.seconds) + 1} seconds`);
+    }
+    const result = yield* submitRun(
+      { runId: started.runId, playerId, name: "Léa", inputs: run.inputs },
+      `client-${playerId}`,
+    );
+    return { run, result };
+  });
+
+describe("a Merge run sent to the leaderboard", () => {
+  it.effect("is replayed, and its score kept, the highest first", () =>
+    Effect.gen(function* () {
+      const low = yield* sendMerge(LEA, CLUMSY);
+      const high = yield* sendMerge(TOM, CORNER);
+      expect(low.result).toMatchObject({ kind: "ranked", rank: 1 });
+      expect(high.result).toMatchObject({
+        kind: "ranked",
+        score: high.run.score,
+      });
+      const board = yield* leaderboard("merge");
+      expect(board.map((entry) => entry.score)).toEqual(
+        [low.run.score, high.run.score].sort((a, b) => b - a),
+      );
+      expect(yield* leaderboard("cafe")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("merge")),
+  );
+
+  it.effect("refuses a run sent faster than its moves could be made", () =>
+    Effect.gen(function* () {
+      const sent = yield* sendMerge(LEA, CORNER, { wait: false });
+      expect(sent.run.seconds).toBeGreaterThan(1);
+      expect(sent.result).toEqual({ kind: "refused" });
+      expect(yield* leaderboard("merge")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("merge")),
+  );
+
+  it.effect("refuses a run not over, and Café's actions", () =>
+    Effect.gen(function* () {
+      const unfinished = yield* sendMerge(LEA, CORNER, { moves: 30 });
+      expect(unfinished.result).toEqual({ kind: "refused" });
+      const started = yield* startRun("merge", "1.2.3.4");
+      if (started.kind !== "started") throw new Error("not started");
+      yield* TestClock.adjust("1 hour");
+      const cells = yield* submitRun(
+        {
+          runId: started.runId,
+          playerId: LEA,
+          name: "Léa",
+          inputs: [{ step: 0, cell: 4, action: "reveal" }],
+        },
+        "1.2.3.4",
+      );
+      expect(cells).toEqual({ kind: "refused" });
+      expect(yield* leaderboard("merge")).toEqual([]);
+    }).pipe(Effect.provide(layerInMemory()), Random.withSeed("merge")),
+  );
 });

@@ -433,6 +433,52 @@
           "cup": "une tasse renversée"
         }
       },
+      "merge": {
+        "name": "Merge",
+        "tagline": "merge tes commits jusqu'à la v2.0",
+        "poseAlt": "Lucas qui code sur son ordi",
+        "game": "Merge, un 2048 version git : fais glisser les tuiles sur un plateau de 4 sur 4, et deux tuiles égales qui se rencontrent fusionnent en une qui vaut les deux. Deux typos font un commit, deux commits une branche, puis une PR, une review, une feature, un hotfix, un sprint, un jalon, une release candidate, et à 2048 tu livres la v2.0. Une nouvelle tuile arrive après chaque coup, et la partie s'arrête quand plus aucun coup n'est possible.",
+        "hint": "flèches ou ZQSD pour glisser les tuiles, R lit le plateau, échap pour la pause",
+        "hintTouch": "glisse sur le plateau pour déplacer les tuiles",
+        "started": "Partie lancée. Les flèches ou ZQSD font glisser toutes les tuiles, R lit le plateau.",
+        "empty": "personne au classement pour l'instant, à toi de jouer 💻",
+        "rules": {
+          "move": "<b>glisser</b> les flèches ou ZQSD poussent toutes les tuiles jusqu'au bout",
+          "moveTouch": "<b>glisser</b> glisse sur le plateau pour pousser toutes les tuiles jusqu'au bout",
+          "merge": "<b>merger</b> deux tuiles égales qui se rencontrent n'en font qu'une, qui vaut les deux. une tuile fusionne une fois par coup",
+          "ladder": "<b>l'échelle</b> typo, commit, branche, PR, review, feature, hotfix, sprint, jalon, RC, puis v2.0",
+          "rarity": "<b>rareté</b> commune, rare, puis épique à mesure que tu montes. la v2.0 est légendaire",
+          "spawn": "<b>du nouveau code</b> après chaque coup un 2 arrive sur une case vide, parfois un 4",
+          "score": "<b>score</b> chaque fusion ajoute la valeur qu'elle crée",
+          "ship": "<b>livrer</b> atteins 2048 pour livrer la v2.0, puis continue pour la v3.0",
+          "conflict": "<b>conflit de merge</b> plus aucun coup possible et la partie est finie : les meilleurs entrent dans le top 10",
+          "keys": "<b>au clavier</b> flèches ou ZQSD pour glisser, R lit le plateau à voix haute, échap pour la pause"
+        },
+        "tiers": {
+          "typo": "typo",
+          "commit": "commit",
+          "branch": "branche",
+          "pr": "PR",
+          "review": "review",
+          "feature": "feature",
+          "hotfix": "hotfix",
+          "sprint": "sprint",
+          "milestone": "jalon",
+          "rc": "RC"
+        },
+        "file": "release.ts",
+        "branch": "main",
+        "merged": "mergé",
+        "shipped": "v2.0 en prod !",
+        "shippedLive": "2048 atteint : la v2.0 est en prod ! Continue.",
+        "topLive": "Nouvelle meilleure tuile : {value}, {name}.",
+        "over": "conflit de merge !",
+        "overLive": "Conflit de merge, plus aucun coup possible. Score {score}, meilleure tuile {top}. Record : {best}.",
+        "overBest": "Conflit de merge, plus aucun coup possible. Score {score}, nouveau record ! Meilleure tuile {top}.",
+        "top": "meilleure tuile",
+        "row": "ligne {row} : {cells}",
+        "emptyCell": "vide"
+      },
       "ollie": {
         "name": "Ollie",
         "tagline": "skate dans une rue de Paris : kickflips, grinds et combos",
@@ -753,6 +799,10 @@
         "name": "premier espresso",
         "how": "jouer une partie de Café"
       },
+      "merge": {
+        "name": "premier merge",
+        "how": "jouer une partie de Merge"
+      },
       "bilingual": {
         "name": "bilingue",
         "how": "voir le site en anglais et en français"
@@ -784,6 +834,10 @@
       "noSugar": {
         "name": "sans un sucre",
         "how": "débarrasser une table de Café sans poser un seul sucre"
+      },
+      "shipped": {
+        "name": "en prod",
+        "how": "livrer la v2.0 : atteindre 2048 dans Merge"
       },
       "waved": {
         "name": "coucou toi",
