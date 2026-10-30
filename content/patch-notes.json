@@ -1310,5 +1310,23 @@
       }
     ],
     "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/67"
+  },
+  {
+    "version": "2.32",
+    "date": "2026-10-30",
+    "title": {
+      "en": "Hi, who's this?",
+      "fr": "Salut, c'est qui ?"
+    },
+    "entries": [
+      {
+        "tag": "changed",
+        "text": {
+          "en": "Waving from the friends panel now asks for your first name too (still optional), so I know who's saying hi 👋",
+          "fr": "Faire coucou depuis le panneau d'amis demande aussi ton prénom (toujours facultatif), que je sache qui me dit salut 👋"
+        }
+      }
+    ],
+    "link": "https://github.com/ImJustLucas/imjustlucas.dev/pull/68"
   }
 ]
