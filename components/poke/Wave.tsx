@@ -55,12 +55,12 @@ export function ContactWave() {
 }
 
 /**
- * The friends panel's row: a ledge button that opens the emote keys in its
- * own place, so the sidebar never moves.
+ * The friends panel's row: a ledge button that opens, in its place, the
+ * first-name field over the emote keys.
  */
 export function PanelWave() {
   const t = useTranslations("Poke");
-  const { enabled, view, problem } = usePoke();
+  const { enabled, view, problem, name } = usePoke();
   const { play } = useSounds();
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -79,24 +79,28 @@ export function PanelWave() {
     <div className="flex flex-col gap-2">
       {open ? (
         <div
-          className="flex h-11 items-center gap-1"
+          className="flex flex-col gap-2"
           onKeyDown={(event) => {
             if (event.key === "Escape") close();
           }}
         >
-          {/* The keys share the panel's width with the close key */}
-          <EmoteKeys label={t("trayLabel")} autoFocus fill />
-          <SoundOnPress cue={null} tick>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={close}
-              className="w-9 shrink-0"
-            >
-              <X aria-hidden className="!size-5" />
-              <span className="sr-only">{t("close")}</span>
-            </Button>
-          </SoundOnPress>
+          {/* The name first while there is none, the keys once there is */}
+          <NameField autoFocus={!name} wide />
+          <div className="flex h-11 items-center gap-1">
+            {/* The keys share the panel's width with the close key */}
+            <EmoteKeys label={t("trayLabel")} autoFocus={!!name} fill />
+            <SoundOnPress cue={null} tick>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={close}
+                className="w-9 shrink-0"
+              >
+                <X aria-hidden className="!size-5" />
+                <span className="sr-only">{t("close")}</span>
+              </Button>
+            </SoundOnPress>
+          </div>
         </div>
       ) : (
         <Button
@@ -128,13 +132,29 @@ export function PanelWave() {
  * The visitor's first name, optional, sent with their waves from anywhere
  * on the site. Outside the keys' form, so Enter in it never sends a wave.
  */
-function NameField() {
+function NameField({
+  autoFocus = false,
+  wide = false,
+}: {
+  autoFocus?: boolean;
+  /** Takes the row's whole width (the friends panel). */
+  wide?: boolean;
+}) {
   const t = useTranslations("Poke");
   const { name, setName, nameProblem, sending } = usePoke();
   const problemId = useId();
+  const field = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus) field.current?.focus();
+    // Only on mount: typing must not move the focus
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex flex-col gap-1.5">
       <input
+        ref={field}
         type="text"
         value={name}
         onChange={(event) => setName(event.target.value)}
@@ -145,7 +165,10 @@ function NameField() {
         disabled={sending !== null}
         aria-invalid={nameProblem !== null}
         aria-describedby={nameProblem ? problemId : undefined}
-        className="h-11 w-full max-w-[16rem] rounded-md border-2 border-seam bg-ground px-3 text-base text-ink transition-colors duration-hover ease-out placeholder:text-ink-muted/75 hover:border-ink-muted/40 aria-[invalid=true]:border-busy-ink"
+        className={cn(
+          "h-11 w-full rounded-md border-2 border-seam bg-ground px-3 text-base text-ink transition-colors duration-hover ease-out placeholder:text-ink-muted/75 hover:border-ink-muted/40 aria-[invalid=true]:border-busy-ink",
+          !wide && "max-w-[16rem]",
+        )}
       />
       {nameProblem && (
         <span id={problemId} role="alert" className="text-label text-busy-ink">
@@ -175,13 +198,15 @@ function EmoteKeys({
   const t = useTranslations("Poke");
   const { sending, send, nameProblem } = usePoke();
   const first = useRef<HTMLButtonElement>(null);
-  // A name the server would refuse holds the keys on the contact screen;
-  // elsewhere, where it cannot be fixed, the wave goes without it
-  const held = nameProblem !== null && labelledBy !== undefined;
+  // A name the server would refuse holds the keys, which always sit under
+  // the field; only the quick menu, which has none, sends without it
+  const held = nameProblem !== null;
 
   useEffect(() => {
     if (autoFocus) first.current?.focus();
-  }, [autoFocus]);
+    // Only on mount: the keys take focus when the tray opens, not later
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <form
