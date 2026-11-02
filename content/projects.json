@@ -239,6 +239,7 @@
       "aws",
       "python"
     ],
+    "externalLink": "https://www.thesongslaboratory.com/",
     "openSource": false,
     "rarity": "rare",
     "role": {
@@ -250,8 +251,8 @@
       "fr": "TSL, pour The Songs Laboratory, c'est le karaoké de BAM pour les clients pros : le catalogue de chansons, le logiciel qui tourne dans les salles et les abonnements des lieux équipés. J'y bosse en parallèle de BAM Karaoke."
     },
     "built": {
-      "en": "The TSL Admin back-office, front and API: business customers, venues, rooms, subscriptions (offers, licences, commissions, cancellations, automatic reminders) and reporting with MRR and its history 📈 On the catalog side: songs, genres, publishers and suppliers.\n\nFor Battles, the mode where karaoke scores your voice, I wired an \"Analyze\" button on a song's page: it runs a Python AWS Lambda that analyses the frequencies syllable by syllable, then tells the back-office in real time when the song is ready to be scored.\n\nIn the in-room software: games shown in a modal (including iframe games, like a quiz) and sound effects on the roulette and end-of-session animations.",
-      "fr": "Le back-office TSL Admin, front et API : entreprises clientes, lieux, salles, abonnements (offres, licences, commissions, résiliations, relances automatiques) et un reporting avec le MRR et son historique 📈 Côté catalogue : chansons, genres, éditeurs et fournisseurs.\n\nPour les Battles, le mode où le karaoké note ta voix, j'ai branché un bouton « Analyser » sur la page d'une chanson : il lance une Lambda AWS en Python qui analyse les fréquences syllabe par syllabe, puis prévient le back-office en temps réel quand la chanson est prête à être notée.\n\nDans le logiciel en salle : des jeux affichés dans une modale (dont des jeux en iframe, comme un quiz) et des effets sonores sur les animations de roulette et de fin de session."
+      "en": "The TSL Admin back-office, front and API: business customers, venues, rooms, subscriptions (offers, licences, commissions, cancellations, automatic reminders) and reporting with MRR and its history 📈 On the catalog side: songs, genres, publishers and suppliers.",
+      "fr": "Le back-office TSL Admin, front et API : entreprises clientes, lieux, salles, abonnements (offres, licences, commissions, résiliations, relances automatiques) et un reporting avec le MRR et son historique 📈 Côté catalogue : chansons, genres, éditeurs et fournisseurs."
     }
   },
   {
